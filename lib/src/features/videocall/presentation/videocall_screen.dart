@@ -50,47 +50,63 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               child: Center(child: _buildLocalVideo()),
             ),
           ),
-          // Hang Up Button
-          Positioned(
-            bottom: 40,
-            left: MediaQuery.of(context).size.width / 2 - 30,
-            child: FloatingActionButton(
-              backgroundColor: Colors.red,
-              onPressed: () async {
-                await _controller.leave();
-                if (context.mounted) Navigator.pop(context);
-              },
-              child: const Icon(Icons.call_end, color: Colors.white),
-            ),
-          ),
-          // Camera switch button
-          Positioned(
-            bottom: 40,
-            right: 20,
-            child: FloatingActionButton(
-              heroTag: 'switch-camera',
-              backgroundColor: Colors.blueGrey,
-              onPressed: () => _controller.switchCamera(),
-              child: const Icon(Icons.cameraswitch, color: Colors.white),
-            ),
-          ),
-          // Mute and unmute button
-          Positioned(
-            bottom: 40,
-            left: 20,
-            child: ValueListenableBuilder<bool>(
-              valueListenable: _controller.isMuted,
-              builder: (_, muted, __) {
-                return FloatingActionButton(
-                  heroTag: 'mute-audio',
-                  backgroundColor: muted ? Colors.orange : Colors.green,
-                  onPressed: _controller.toggleMute,
-                  child: Icon(
-                    muted ? Icons.mic_off : Icons.mic,
-                    color: Colors.white,
+          // Botones de control centrados en la parte inferior
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 32.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Turn On/OFF camara button
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _controller.isCameraOff,
+                    builder: (_, cameraOff, __) {
+                      return _buildControlButton(
+                        icon: cameraOff ? Icons.videocam_off : Icons.videocam,
+                        color: cameraOff ? Colors.orange : Colors.green,
+                        onPressed: _controller.toggleCamera,
+                        heroTag: 'toggle-camera',
+                      );
+                    },
                   ),
-                );
-              },
+                  const SizedBox(width: 16),
+
+                  // Mute and unmute button
+                  ValueListenableBuilder<bool>(
+                    valueListenable: _controller.isMuted,
+                    builder: (_, muted, __) {
+                      return _buildControlButton(
+                        icon: muted ? Icons.mic_off : Icons.mic,
+                        color: muted ? Colors.orange : Colors.green,
+                        onPressed: _controller.toggleMute,
+                        heroTag: 'toggle-mic',
+                      );
+                    },
+                  ),
+                  const SizedBox(width: 16),
+
+                  // Camera switch button
+                  _buildControlButton(
+                    icon: Icons.cameraswitch,
+                    color: Colors.blueGrey,
+                    onPressed: _controller.switchCamera,
+                    heroTag: 'switch-camera',
+                  ),
+                  const SizedBox(width: 16),
+
+                  // Hang Up Button
+                  _buildControlButton(
+                    icon: Icons.call_end,
+                    color: Colors.red,
+                    onPressed: () async {
+                      await _controller.leave();
+                      if (context.mounted) Navigator.pop(context);
+                    },
+                    heroTag: 'hangup',
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -130,6 +146,20 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           return const Text('Esperando a otro usuario...');
         }
       },
+    );
+  }
+
+  Widget _buildControlButton({
+    required IconData icon,
+    required Color color,
+    required VoidCallback onPressed,
+    required String heroTag,
+  }) {
+    return FloatingActionButton(
+      heroTag: heroTag,
+      backgroundColor: color,
+      onPressed: onPressed,
+      child: Icon(icon, color: Colors.white),
     );
   }
 }

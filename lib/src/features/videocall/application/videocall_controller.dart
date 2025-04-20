@@ -12,6 +12,7 @@ class VideoCallController {
   final ValueNotifier<int?> remoteUid = ValueNotifier(null);
 
   final ValueNotifier<bool> isMuted = ValueNotifier(false);
+  final ValueNotifier<bool> isCameraOff = ValueNotifier(false);
 
   VideoCallController({
     required this.token,
@@ -92,5 +93,10 @@ class VideoCallController {
   Future<void> toggleMute() async {
     isMuted.value = !isMuted.value;
     await engine.muteLocalAudioStream(isMuted.value);
+  }
+
+  Future<void> toggleCamera() async {
+    isCameraOff.value = !isCameraOff.value;
+    await engine.muteLocalVideoStream(isCameraOff.value);
   }
 }
