@@ -74,6 +74,25 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               child: const Icon(Icons.cameraswitch, color: Colors.white),
             ),
           ),
+          // Mute and unmute button
+          Positioned(
+            bottom: 40,
+            left: 20,
+            child: ValueListenableBuilder<bool>(
+              valueListenable: _controller.isMuted,
+              builder: (_, muted, __) {
+                return FloatingActionButton(
+                  heroTag: 'mute-audio',
+                  backgroundColor: muted ? Colors.orange : Colors.green,
+                  onPressed: _controller.toggleMute,
+                  child: Icon(
+                    muted ? Icons.mic_off : Icons.mic,
+                    color: Colors.white,
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

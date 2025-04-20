@@ -11,6 +11,8 @@ class VideoCallController {
   final ValueNotifier<bool> localUserJoined = ValueNotifier(false);
   final ValueNotifier<int?> remoteUid = ValueNotifier(null);
 
+  final ValueNotifier<bool> isMuted = ValueNotifier(false);
+
   VideoCallController({
     required this.token,
     required this.channelName,
@@ -32,7 +34,7 @@ class VideoCallController {
 
   Future<void> _initAgoraEngine() async {
     _engine = createAgoraRtcEngine();
-    await _engine.initialize(RtcEngineContext(
+    await _engine.initialize(const RtcEngineContext(
       appId: AgoraConstants.appId,
       channelProfile: ChannelProfileType.channelProfileCommunication,
     ));
@@ -85,5 +87,10 @@ class VideoCallController {
 
   Future<void> switchCamera() async {
     await engine.switchCamera();
+  }
+
+  Future<void> toggleMute() async {
+    isMuted.value = !isMuted.value;
+    await engine.muteLocalAudioStream(isMuted.value);
   }
 }
