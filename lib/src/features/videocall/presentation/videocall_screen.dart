@@ -63,6 +63,17 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               child: const Icon(Icons.call_end, color: Colors.white),
             ),
           ),
+          // Camera switch button
+          Positioned(
+            bottom: 40,
+            right: 20,
+            child: FloatingActionButton(
+              heroTag: 'switch-camera',
+              backgroundColor: Colors.blueGrey,
+              onPressed: () => _controller.switchCamera(),
+              child: const Icon(Icons.cameraswitch, color: Colors.white),
+            ),
+          ),
         ],
       ),
     );

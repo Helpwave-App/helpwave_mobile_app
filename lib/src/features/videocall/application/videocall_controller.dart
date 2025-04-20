@@ -82,4 +82,8 @@ class VideoCallController {
     await _engine.leaveChannel();
     await _engine.release();
   }
+
+  Future<void> switchCamera() async {
+    await engine.switchCamera();
+  }
 }
