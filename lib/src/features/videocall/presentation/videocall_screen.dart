@@ -58,13 +58,13 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Turn On/OFF camara button
+                  // Botón de cámara ON/OFF
                   ValueListenableBuilder<bool>(
-                    valueListenable: _controller.isCameraOff,
+                    valueListenable: _controller.isCameraMuted,
                     builder: (_, cameraOff, __) {
                       return _buildControlButton(
                         icon: cameraOff ? Icons.videocam_off : Icons.videocam,
-                        color: cameraOff ? Colors.orange : Colors.green,
+                        color: cameraOff ? Colors.blueGrey : Colors.blueGrey,
                         onPressed: _controller.toggleCamera,
                         heroTag: 'toggle-camera',
                       );
@@ -72,13 +72,13 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   ),
                   const SizedBox(width: 16),
 
-                  // Mute and unmute button
+                  // Botón de mute/unmute micrófono
                   ValueListenableBuilder<bool>(
                     valueListenable: _controller.isMuted,
                     builder: (_, muted, __) {
                       return _buildControlButton(
                         icon: muted ? Icons.mic_off : Icons.mic,
-                        color: muted ? Colors.orange : Colors.green,
+                        color: muted ? Colors.blueGrey : Colors.blueGrey,
                         onPressed: _controller.toggleMute,
                         heroTag: 'toggle-mic',
                       );
@@ -86,7 +86,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   ),
                   const SizedBox(width: 16),
 
-                  // Camera switch button
+                  // Botón para cambiar cámara
                   _buildControlButton(
                     icon: Icons.cameraswitch,
                     color: Colors.blueGrey,
@@ -95,7 +95,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   ),
                   const SizedBox(width: 16),
 
-                  // Hang Up Button
+                  // Botón para colgar videollamada
                   _buildControlButton(
                     icon: Icons.call_end,
                     color: Colors.red,
@@ -118,14 +118,46 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     return ValueListenableBuilder<bool>(
       valueListenable: _controller.localUserJoined,
       builder: (_, joined, __) {
-        return joined
-            ? AgoraVideoView(
+        if (!joined) return const CircularProgressIndicator();
+
+        return ValueListenableBuilder<bool>(
+          valueListenable: _controller.isCameraMuted,
+          builder: (_, muted, __) {
+            if (!muted) {
+              return AgoraVideoView(
                 controller: VideoViewController(
                   rtcEngine: _controller.engine,
                   canvas: const VideoCanvas(uid: 0),
                 ),
-              )
-            : const CircularProgressIndicator();
+              );
+            } else {
+              return Container(
+                color: Colors.grey.shade800,
+                child: Center(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white24,
+                        ),
+                        padding: const EdgeInsets.all(24),
+                        child: const Icon(Icons.person,
+                            size: 48, color: Colors.white),
+                      ),
+                      const SizedBox(height: 12),
+                      const Text(
+                        "Test User",
+                        style: TextStyle(color: Colors.white, fontSize: 16),
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+          },
+        );
       },
     );
   }
@@ -135,17 +167,50 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       valueListenable: _controller.remoteUid,
       builder: (_, uid, __) {
         if (uid != null) {
-          return AgoraVideoView(
-            controller: VideoViewController.remote(
-              rtcEngine: _controller.engine,
-              canvas: VideoCanvas(uid: uid),
-              connection: RtcConnection(channelId: widget.channelName),
-            ),
+          return ValueListenableBuilder<bool>(
+            valueListenable: _controller.isRemoteCameraOn,
+            builder: (_, isOn, __) {
+              if (isOn) {
+                return AgoraVideoView(
+                  controller: VideoViewController.remote(
+                    rtcEngine: _controller.engine,
+                    canvas: VideoCanvas(uid: uid),
+                    connection: RtcConnection(channelId: widget.channelName),
+                  ),
+                );
+              } else {
+                // Cámara del usuario remoto está apagada
+                return _buildPlaceholderView();
+              }
+            },
           );
         } else {
           return const Text('Esperando a otro usuario...');
         }
       },
+    );
+  }
+
+  Widget _buildPlaceholderView() {
+    return Container(
+      color: Colors.grey[900],
+      child: const Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            CircleAvatar(
+              radius: 40,
+              backgroundColor: Colors.grey,
+              child: Icon(Icons.person, size: 40, color: Colors.white),
+            ),
+            SizedBox(height: 8),
+            Text(
+              'Test User',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ],
+        ),
+      ),
     );
   }
 

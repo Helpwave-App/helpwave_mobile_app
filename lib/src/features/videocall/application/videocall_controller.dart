@@ -12,7 +12,10 @@ class VideoCallController {
   final ValueNotifier<int?> remoteUid = ValueNotifier(null);
 
   final ValueNotifier<bool> isMuted = ValueNotifier(false);
-  final ValueNotifier<bool> isCameraOff = ValueNotifier(false);
+  final ValueNotifier<bool> isCameraMuted =
+      ValueNotifier(false); // Local camara. false = cámara encendida
+  final ValueNotifier<bool> isRemoteCameraOn =
+      ValueNotifier(true); // Remote camara (simulated)
 
   VideoCallController({
     required this.token,
@@ -26,6 +29,7 @@ class VideoCallController {
     await _initAgoraEngine();
     _setupEventHandlers();
     await _startPreview();
+    isCameraMuted.value = false;
     await _joinChannel();
   }
 
@@ -49,6 +53,29 @@ class VideoCallController {
   void _setupEventHandlers() {
     _engine.registerEventHandler(
       RtcEngineEventHandler(
+        // Función temporal para el manejo de encendido y apagado de cámara remota sin backend
+        onRemoteVideoStateChanged: (
+          RtcConnection connection,
+          int uid,
+          RemoteVideoState state,
+          RemoteVideoStateReason reason,
+          int elapsed,
+        ) {
+          debugPrint(
+              'Remote video state changed: uid=$uid, state=$state, reason=$reason');
+
+          // Guarda el UID si aún no se había capturado
+          remoteUid.value ??= uid;
+
+          if (state == RemoteVideoState.remoteVideoStateStopped &&
+              reason ==
+                  RemoteVideoStateReason.remoteVideoStateReasonRemoteMuted) {
+            isRemoteCameraOn.value = false;
+          } else if (state == RemoteVideoState.remoteVideoStateDecoding) {
+            isRemoteCameraOn.value = true;
+          }
+        },
+
         onJoinChannelSuccess: (RtcConnection connection, int elapsed) {
           debugPrint('Local user joined');
           localUserJoined.value = true;
@@ -96,7 +123,7 @@ class VideoCallController {
   }
 
   Future<void> toggleCamera() async {
-    isCameraOff.value = !isCameraOff.value;
-    await engine.muteLocalVideoStream(isCameraOff.value);
+    isCameraMuted.value = !isCameraMuted.value;
+    await engine.muteLocalVideoStream(isCameraMuted.value);
   }
 }
