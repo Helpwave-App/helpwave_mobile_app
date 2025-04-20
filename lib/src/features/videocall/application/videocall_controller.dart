@@ -78,7 +78,7 @@ class VideoCallController {
     );
   }
 
-  Future<void> dispose() async {
+  Future<void> leave() async {
     await _engine.leaveChannel();
     await _engine.release();
   }

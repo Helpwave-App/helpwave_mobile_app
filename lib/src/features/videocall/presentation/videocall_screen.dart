@@ -31,7 +31,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller.leave();
     super.dispose();
   }
 
@@ -48,6 +48,19 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               width: 100,
               height: 150,
               child: Center(child: _buildLocalVideo()),
+            ),
+          ),
+          // Hang Up Button
+          Positioned(
+            bottom: 40,
+            left: MediaQuery.of(context).size.width / 2 - 30,
+            child: FloatingActionButton(
+              backgroundColor: Colors.red,
+              onPressed: () async {
+                await _controller.leave();
+                if (context.mounted) Navigator.pop(context);
+              },
+              child: const Icon(Icons.call_end, color: Colors.white),
             ),
           ),
         ],
