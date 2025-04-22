@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../common/animations/animated_route.dart';
 import 'sign_up_screen.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -11,11 +13,17 @@ class SignInScreen extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 80),
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            child: Icon(Icons.account_balance_wallet,
-                color: Theme.of(context).colorScheme.tertiary, size: 40),
+          Hero(
+            tag: 'app-logo',
+            child: CircleAvatar(
+              radius: 40,
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              child: Icon(
+                Icons.account_balance_wallet,
+                color: Theme.of(context).colorScheme.tertiary,
+                size: 40,
+              ),
+            ),
           ),
           const SizedBox(height: 20),
           Text(
@@ -76,11 +84,12 @@ class SignInScreen extends StatelessWidget {
                         const Text("¿Aún no tienes una cuenta?",
                             style: TextStyle(color: Colors.grey)),
                         TextButton(
-                          onPressed: () => Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (_) => const SignUpScreen()),
-                          ),
+                          onPressed: () {
+                            Navigator.of(context).push(animatedRouteTo(
+                                const SignUpScreen(),
+                                duration: Duration(milliseconds: 200),
+                                curve: Curves.easeInOut));
+                          },
                           child: Text("Regístrate ahora",
                               style: TextStyle(
                                   color:

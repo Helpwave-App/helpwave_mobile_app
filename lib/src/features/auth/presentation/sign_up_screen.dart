@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../common/animations/animated_route.dart';
+import 'sign_in_screen.dart';
+
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
 
@@ -10,19 +13,25 @@ class SignUpScreen extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 60),
-          Align(
+          /*Align(
             alignment: Alignment.topLeft,
             child: IconButton(
               icon: Icon(Icons.arrow_back,
                   color: Theme.of(context).colorScheme.surface),
               onPressed: () => Navigator.pop(context),
             ),
-          ),
-          CircleAvatar(
-            radius: 40,
-            backgroundColor: Theme.of(context).colorScheme.surface,
-            child: Icon(Icons.account_balance_wallet,
-                color: Theme.of(context).colorScheme.tertiary, size: 40),
+          ),*/
+          Hero(
+            tag: 'app-logo',
+            child: CircleAvatar(
+              radius: 40,
+              backgroundColor: Theme.of(context).colorScheme.surface,
+              child: Icon(
+                Icons.account_balance_wallet,
+                color: Theme.of(context).colorScheme.tertiary,
+                size: 40,
+              ),
+            ),
           ),
           const SizedBox(height: 20),
           Text(
@@ -85,7 +94,7 @@ class SignUpScreen extends StatelessWidget {
                         minimumSize: const Size.fromHeight(50),
                         backgroundColor: Theme.of(context).colorScheme.tertiary,
                       ),
-                      child: const Text("Registrarse"),
+                      child: const Text("Siguiente"),
                     ),
                     const SizedBox(height: 16),
                     Center(
@@ -95,7 +104,12 @@ class SignUpScreen extends StatelessWidget {
                           const Text("¿Ya tienes una cuenta?",
                               style: TextStyle(color: Colors.grey)),
                           TextButton(
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () {
+                              Navigator.of(context).push(animatedRouteTo(
+                                  const SignInScreen(),
+                                  duration: Duration(milliseconds: 200),
+                                  curve: Curves.easeInOut));
+                            },
                             child: Text("Inicia sesión",
                                 style: TextStyle(
                                     color: Theme.of(context)

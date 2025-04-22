@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+
+import '../../../common/animations/animated_route.dart';
 import 'sign_in_screen.dart';
 import 'sign_up_screen.dart';
 
@@ -15,13 +17,16 @@ class WelcomeScreen extends StatelessWidget {
           Center(
             child: Column(
               children: [
-                CircleAvatar(
-                  radius: 48,
-                  backgroundColor: Theme.of(context).colorScheme.surface,
-                  child: Icon(
-                    Icons.volunteer_activism,
-                    color: Theme.of(context).colorScheme.tertiary,
-                    size: 48,
+                Hero(
+                  tag: 'app-logo',
+                  child: CircleAvatar(
+                    radius: 48,
+                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    child: Icon(
+                      Icons.volunteer_activism,
+                      color: Theme.of(context).colorScheme.tertiary,
+                      size: 48,
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -65,10 +70,9 @@ class WelcomeScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const SignInScreen()),
-                    );
+                    Navigator.of(context).push(animatedRouteTo(
+                        const SignInScreen(),
+                        curve: Curves.easeInOutBack));
                   },
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
@@ -79,10 +83,9 @@ class WelcomeScreen extends StatelessWidget {
                 const SizedBox(height: 16),
                 OutlinedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const SignUpScreen()),
-                    );
+                    Navigator.of(context).push(animatedRouteTo(
+                        const SignUpScreen(),
+                        curve: Curves.easeInOutBack));
                   },
                   style: OutlinedButton.styleFrom(
                     minimumSize: const Size.fromHeight(50),
