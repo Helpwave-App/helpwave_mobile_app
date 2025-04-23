@@ -22,12 +22,12 @@ class VolunteerSkillsScreen extends StatelessWidget {
         'Trámites digitales',
         'Consejos prácticos o tutoriales',
       ],
-      finishButtonText: 'Finalizar registro',
+      finishButtonText: 'Siguiente',
       onFinish: () {
         // TODO: guardar selección
         Navigator.of(context).push(animatedRouteTo(
           context,
-          AppRouter.registrationCompletedVolunteerRoute,
+          AppRouter.volunteerAvailabilityRoute,
           duration: const Duration(milliseconds: 300),
           type: RouteTransitionType.pureFade,
           curve: Curves.easeInOut,

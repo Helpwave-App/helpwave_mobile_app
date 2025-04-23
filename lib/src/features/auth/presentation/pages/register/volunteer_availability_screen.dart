@@ -3,31 +3,26 @@ import 'package:flutter/material.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
 
-class TermsAndConditionsScreen extends StatefulWidget {
-  const TermsAndConditionsScreen({super.key});
+class VolunteerAvailabilityScreen extends StatefulWidget {
+  const VolunteerAvailabilityScreen({super.key});
 
   @override
-  State<TermsAndConditionsScreen> createState() =>
-      _TermsAndConditionsScreenState();
+  State<VolunteerAvailabilityScreen> createState() =>
+      _VolunteerAvailabilityScreenState();
 }
 
-class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
-  bool _accepted = false;
-
-  void _onCheckboxChanged(bool? value) {
-    setState(() {
-      _accepted = value ?? false;
-    });
-  }
-
+class _VolunteerAvailabilityScreenState
+    extends State<VolunteerAvailabilityScreen> {
   void _onNextPressed() {
-    if (_accepted) {
-      Navigator.of(context).push(animatedRouteTo(
-          context, AppRouter.userTypeRoute,
-          duration: const Duration(milliseconds: 300),
-          type: RouteTransitionType.pureFade,
-          curve: Curves.easeInOut));
-    }
+    Navigator.of(context).push(
+      animatedRouteTo(
+        context,
+        AppRouter.homeVolunteerRoute,
+        duration: const Duration(milliseconds: 1000),
+        type: RouteTransitionType.pureFade,
+        curve: Curves.easeInOutBack,
+      ),
+    );
   }
 
   @override
@@ -49,7 +44,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Términos y condiciones',
+                    'Disponibilidad',
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.surface,
                       fontSize: 24,
@@ -73,34 +68,21 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Text(
-                        'Al usar esta aplicación, aceptas participar de una comunidad basada en el respeto, la colaboración y la ayuda mutua.\n\n'
-                        'Te comprometes a brindar y recibir asistencia con buena voluntad, a respetar la privacidad de los demás usuarios y a utilizar esta plataforma exclusivamente para los fines permitidos.\n\n'
-                        'HelpWave no se responsabiliza por el contenido de las interacciones, pero se reserva el derecho de suspender cuentas en caso de mal uso.',
-                        style: TextStyle(fontSize: 16),
+                        "¿En qué días y horarios puedes brindar ayuda?",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Theme.of(context).colorScheme.onTertiary),
                       ),
                     ),
                   ),
-                  Row(
-                    children: [
-                      Checkbox(
-                        value: _accepted,
-                        onChanged: _onCheckboxChanged,
-                      ),
-                      Expanded(
-                        child: Text(
-                          'He leído y acepto los términos y condiciones.',
-                        ),
-                      ),
-                    ],
-                  ),
                   const SizedBox(height: 16),
                   ElevatedButton(
-                    onPressed: _accepted ? _onNextPressed : null,
+                    onPressed: _onNextPressed,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(50),
                       backgroundColor: Theme.of(context).colorScheme.tertiary,
                     ),
-                    child: const Text('Siguiente'),
+                    child: const Text('Finalizar registro'),
                   ),
                 ],
               ),

@@ -7,6 +7,7 @@ import '../features/auth/presentation/pages/register/terms_and_conditions_screen
 import '../features/auth/presentation/pages/register/user_type_selection_screen.dart';
 import '../features/auth/presentation/pages/register/requester_interests_screen.dart';
 import '../features/auth/presentation/pages/register/volunteer_skills_screen.dart';
+import '../features/auth/presentation/pages/register/volunteer_availability_screen.dart';
 import '../features/auth/presentation/pages/register/registration_completed_requester_screen.dart';
 import '../features/auth/presentation/pages/register/registration_completed_volunteer_screen.dart';
 import '../features/home/presentation/pages/home_requester_screen.dart';
@@ -21,6 +22,7 @@ class AppRouter {
   static const String userTypeRoute = '/user-type';
   static const String requesterInterestsRoute = '/requester-interests';
   static const String volunteerSkillsRoute = '/volunteer-skills';
+  static const String volunteerAvailabilityRoute = '/volunteer-availability';
   static const String registrationCompletedRequesterRoute =
       '/registration-completed-requester';
   static const String registrationCompletedVolunteerRoute =
@@ -49,6 +51,9 @@ class AppRouter {
 
       case volunteerSkillsRoute:
         return const VolunteerSkillsScreen();
+
+      case volunteerAvailabilityRoute:
+        return const VolunteerAvailabilityScreen();
 
       case registrationCompletedRequesterRoute:
         return const RegistrationCompletedRequesterScreen();
@@ -103,6 +108,10 @@ class AppRouter {
 
       case volunteerSkillsRoute:
         return MaterialPageRoute(builder: (_) => const VolunteerSkillsScreen());
+
+      case volunteerAvailabilityRoute:
+        return MaterialPageRoute(
+            builder: (_) => const VolunteerAvailabilityScreen());
 
       case registrationCompletedRequesterRoute:
         return MaterialPageRoute(
