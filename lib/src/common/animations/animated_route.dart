@@ -18,7 +18,7 @@ enum RouteTransitionType {
   modalFromBottom, // From bottom to top
 }
 
-Route animatedRouteTo(Widget page,
+Route animatedRouteTo(BuildContext context, Widget page,
     {Duration duration = const Duration(milliseconds: 1000),
     RouteTransitionType type = RouteTransitionType.fadeUp,
     Curve curve = Curves.fastOutSlowIn}) {

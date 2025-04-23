@@ -71,7 +71,7 @@ class WelcomeScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(animatedRouteTo(
-                        const SignInScreen(),
+                        context, const SignInScreen(),
                         curve: Curves.easeInOutBack));
                   },
                   style: ElevatedButton.styleFrom(
@@ -84,7 +84,7 @@ class WelcomeScreen extends StatelessWidget {
                 OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(animatedRouteTo(
-                        const SignUpScreen(),
+                        context, const SignUpScreen(),
                         curve: Curves.easeInOutBack));
                   },
                   style: OutlinedButton.styleFrom(

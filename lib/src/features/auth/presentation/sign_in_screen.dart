@@ -86,7 +86,7 @@ class SignInScreen extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).push(animatedRouteTo(
-                                const SignUpScreen(),
+                                context, const SignUpScreen(),
                                 duration: Duration(milliseconds: 200),
                                 curve: Curves.easeInOut));
                           },

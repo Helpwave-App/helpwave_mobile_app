@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import '../../../common/animations/animated_route.dart';
+import '../../../routing/app_router.dart';
 import 'sign_in_screen.dart';
+import 'terms_and_conditions_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -89,7 +91,12 @@ class SignUpScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).push(animatedRouteTo(
+                            context, const TermsAndConditionsScreen(),
+                            duration: Duration(milliseconds: 200),
+                            curve: Curves.easeInOut));
+                      },
                       style: ElevatedButton.styleFrom(
                         minimumSize: const Size.fromHeight(50),
                         backgroundColor: Theme.of(context).colorScheme.tertiary,
@@ -106,7 +113,7 @@ class SignUpScreen extends StatelessWidget {
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).push(animatedRouteTo(
-                                  const SignInScreen(),
+                                  context, const SignInScreen(),
                                   duration: Duration(milliseconds: 200),
                                   curve: Curves.easeInOut));
                             },
