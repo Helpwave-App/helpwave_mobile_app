@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../common/animations/animated_route.dart';
+import '../../../../routing/app_router.dart';
+
 class TermsAndConditionsScreen extends StatefulWidget {
   const TermsAndConditionsScreen({super.key});
 
@@ -19,10 +22,11 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
 
   void _onNextPressed() {
     if (_accepted) {
-      // Aquí iría la navegación a la siguiente pantalla
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Continuando con el registro...')),
-      );
+      Navigator.of(context).push(animatedRouteTo(
+          context, AppRouter.userTypeRoute,
+          duration: const Duration(milliseconds: 300),
+          type: RouteTransitionType.pureFade,
+          curve: Curves.easeInOut));
     }
   }
 
@@ -34,16 +38,26 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
         children: [
           const SizedBox(height: 80),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Text(
-              'Términos y condiciones',
-              style: TextStyle(
-                color: Theme.of(context).colorScheme.surface,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  IconButton(
+                    icon: Icon(Icons.arrow_back,
+                        color: Theme.of(context).colorScheme.surface),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                  const SizedBox(height: 8),
+                  Text(
+                    'Términos y condiciones',
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.surface,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              )),
           const SizedBox(height: 16),
           Expanded(
             child: Container(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/animations/animated_route.dart';
-import 'sign_up_screen.dart';
+import '../../../../common/animations/animated_route.dart';
+import '../../../../routing/app_router.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
@@ -86,7 +86,7 @@ class SignInScreen extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).push(animatedRouteTo(
-                                context, const SignUpScreen(),
+                                context, AppRouter.registerRoute,
                                 duration: Duration(milliseconds: 200),
                                 curve: Curves.easeInOut));
                           },

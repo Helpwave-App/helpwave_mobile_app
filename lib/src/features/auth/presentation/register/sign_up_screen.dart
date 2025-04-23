@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/animations/animated_route.dart';
-import '../../../routing/app_router.dart';
-import 'sign_in_screen.dart';
-import 'terms_and_conditions_screen.dart';
+import '../../../../common/animations/animated_route.dart';
+import '../../../../routing/app_router.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});
@@ -15,14 +13,6 @@ class SignUpScreen extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 60),
-          /*Align(
-            alignment: Alignment.topLeft,
-            child: IconButton(
-              icon: Icon(Icons.arrow_back,
-                  color: Theme.of(context).colorScheme.surface),
-              onPressed: () => Navigator.pop(context),
-            ),
-          ),*/
           Hero(
             tag: 'app-logo',
             child: CircleAvatar(
@@ -93,8 +83,8 @@ class SignUpScreen extends StatelessWidget {
                     ElevatedButton(
                       onPressed: () {
                         Navigator.of(context).push(animatedRouteTo(
-                            context, const TermsAndConditionsScreen(),
-                            duration: Duration(milliseconds: 200),
+                            context, AppRouter.termsRoute,
+                            duration: Duration(milliseconds: 300),
                             curve: Curves.easeInOut));
                       },
                       style: ElevatedButton.styleFrom(
@@ -113,7 +103,7 @@ class SignUpScreen extends StatelessWidget {
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).push(animatedRouteTo(
-                                  context, const SignInScreen(),
+                                  context, AppRouter.loginRoute,
                                   duration: Duration(milliseconds: 200),
                                   curve: Curves.easeInOut));
                             },

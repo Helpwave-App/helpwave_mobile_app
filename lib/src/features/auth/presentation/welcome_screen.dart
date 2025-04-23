@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../common/animations/animated_route.dart';
-import 'sign_in_screen.dart';
-import 'sign_up_screen.dart';
+import '../../../routing/app_router.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
@@ -71,7 +70,7 @@ class WelcomeScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(animatedRouteTo(
-                        context, const SignInScreen(),
+                        context, AppRouter.loginRoute,
                         curve: Curves.easeInOutBack));
                   },
                   style: ElevatedButton.styleFrom(
@@ -84,7 +83,7 @@ class WelcomeScreen extends StatelessWidget {
                 OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(animatedRouteTo(
-                        context, const SignUpScreen(),
+                        context, AppRouter.registerRoute,
                         curve: Curves.easeInOutBack));
                   },
                   style: OutlinedButton.styleFrom(
