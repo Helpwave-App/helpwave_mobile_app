@@ -1,10 +1,39 @@
 import 'package:flutter/material.dart';
 
-import '../../../../common/animations/animated_route.dart';
 import '../../../../routing/app_router.dart';
+import '../../../../common/animations/animated_route.dart';
 
-class RegistrationCompletedScreen extends StatelessWidget {
-  const RegistrationCompletedScreen({super.key});
+class RegistrationCompletedWidgetScreen extends StatelessWidget {
+  final String title;
+  final String message;
+  final String? subtitle;
+  final IconData icon;
+  final String userType; // 'requester' o 'volunteer'
+
+  const RegistrationCompletedWidgetScreen({
+    super.key,
+    required this.title,
+    required this.message,
+    required this.userType,
+    this.subtitle,
+    this.icon = Icons.volunteer_activism,
+  });
+
+  void _onNextPressed(BuildContext context) {
+    final route = userType == "requester"
+        ? AppRouter.homeRequesterRoute
+        : AppRouter.homeVolunteerRoute;
+
+    Navigator.of(context).push(
+      animatedRouteTo(
+        context,
+        route,
+        duration: const Duration(milliseconds: 1000),
+        type: RouteTransitionType.pureFade,
+        curve: Curves.easeInOutBack,
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -18,13 +47,13 @@ class RegistrationCompletedScreen extends StatelessWidget {
             children: [
               const Spacer(),
               Icon(
-                Icons.volunteer_activism,
+                icon,
                 color: theme.colorScheme.secondary,
                 size: 90,
               ),
               const SizedBox(height: 32),
               Text(
-                '¡Te has registrado con éxito!',
+                title,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 28,
@@ -33,22 +62,24 @@ class RegistrationCompletedScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                'Bienvenido a HelpWave. Aquí encontrarás voluntarios listos para ayudarte con lo que necesites, cuando lo necesites.',
+                message,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   fontSize: 18,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 12),
-              Text(
-                'Gracias por ser parte de esta comunidad solidaria.',
-                style: theme.textTheme.bodyLarge?.copyWith(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+              if (subtitle != null) ...[
+                const SizedBox(height: 12),
+                Text(
+                  subtitle!,
+                  style: theme.textTheme.bodyLarge?.copyWith(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
+              ],
               const Spacer(),
               SizedBox(
                 width: double.infinity,
@@ -61,13 +92,7 @@ class RegistrationCompletedScreen extends StatelessWidget {
                     backgroundColor: theme.colorScheme.tertiary,
                     foregroundColor: theme.colorScheme.onTertiary,
                   ),
-                  onPressed: () {
-                    Navigator.of(context).push(animatedRouteTo(
-                        context, AppRouter.homeRoute,
-                        type: RouteTransitionType.pureFade,
-                        duration: const Duration(milliseconds: 800),
-                        curve: Curves.easeInOutBack));
-                  },
+                  onPressed: () => _onNextPressed(context),
                   child: const Text(
                     'Ir al inicio',
                     style: TextStyle(fontSize: 20),

@@ -1,8 +1,18 @@
 import 'package:flutter/material.dart';
-import '../../../routing/app_router.dart';
 
-class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+import '../../../../routing/app_router.dart';
+
+class HomeWidget extends StatelessWidget {
+  final String greeting;
+  final String subtitle;
+  final String buttonText;
+
+  const HomeWidget({
+    super.key,
+    required this.greeting,
+    required this.subtitle,
+    required this.buttonText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +41,7 @@ class HomeScreen extends StatelessWidget {
             children: [
               const SizedBox(height: 32),
               Text(
-                '¡Hola!',
+                greeting,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
@@ -40,7 +50,7 @@ class HomeScreen extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                '¿Listo para recibir ayuda hoy?',
+                subtitle,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontSize: 22,
                   fontWeight: FontWeight.w500,
@@ -48,8 +58,6 @@ class HomeScreen extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 40),
-
-              // Botón circular grande
               Center(
                 child: SizedBox(
                   width: 180,
@@ -65,7 +73,7 @@ class HomeScreen extends StatelessWidget {
                     onPressed: () {
                       const String channelName = 'testchannel';
                       const String token =
-                          '007eJxTYHhlFtV2ad6zJ4ZR5fqWhQfTI0WqC8tYHjo33C/d/zffRUOBwTzZ3NTMJMU4KdHExMTcIjnJwCTVyDDJ3MTIwCTFINFyChdzRkMgI8OJp0tYGRkgEMTnZihJLS5JzkjMy0vNYWAAACPOIeI=';
+                          '007eJxTYJBwXVz3ibf6cnSET4XwlLR1Kx+79/j5JAnf/aS6NfySiqcCg3myuamZSYpxUqKJiYm5RXKSgUmqkWGSuYmRgUmKQaKlXD5HRkMgI0PNriBmRgYIBPG5GUpSi0uSMxLz8lJzGBgAqMogFg==';
 
                       Navigator.of(context).pushNamed(
                         AppRouter.videoCallRoute,
@@ -75,10 +83,10 @@ class HomeScreen extends StatelessWidget {
                         },
                       );
                     },
-                    child: const Text(
-                      'Solicitar\nasistencia',
+                    child: Text(
+                      buttonText,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                         fontWeight: FontWeight.bold,
                       ),

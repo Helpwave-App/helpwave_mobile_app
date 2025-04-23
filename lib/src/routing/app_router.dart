@@ -1,25 +1,32 @@
 import 'package:flutter/material.dart';
-import 'package:helpwave_mobile_app/src/features/auth/presentation/register/registration_completed_screen.dart';
-import 'package:helpwave_mobile_app/src/features/auth/presentation/register/requester_interests_screen.dart';
-import 'package:helpwave_mobile_app/src/features/auth/presentation/register/terms_and_conditions_screen.dart';
-import 'package:helpwave_mobile_app/src/features/auth/presentation/register/user_type_selection_screen.dart';
 
-import '../features/auth/presentation/login/sign_in_screen.dart';
-import '../features/auth/presentation/register/sign_up_screen.dart';
-import '../features/auth/presentation/welcome_screen.dart';
-import '../features/home/presentation/home_screen.dart';
+import '../features/auth/presentation/pages/welcome_screen.dart';
+import '../features/auth/presentation/pages/login/sign_in_screen.dart';
+import '../features/auth/presentation/pages/register/sign_up_screen.dart';
+import '../features/auth/presentation/pages/register/terms_and_conditions_screen.dart';
+import '../features/auth/presentation/pages/register/user_type_selection_screen.dart';
+import '../features/auth/presentation/pages/register/requester_interests_screen.dart';
+import '../features/auth/presentation/pages/register/volunteer_skills_screen.dart';
+import '../features/auth/presentation/pages/register/registration_completed_requester_screen.dart';
+import '../features/auth/presentation/pages/register/registration_completed_volunteer_screen.dart';
+import '../features/home/presentation/pages/home_requester_screen.dart';
+import '../features/home/presentation/pages/home_volunteer_screen.dart';
 import '../features/videocall/presentation/videocall_screen.dart';
 
 class AppRouter {
   static const String welcomeRoute = '/';
+  static const String loginRoute = '/login';
   static const String registerRoute = '/register';
   static const String termsRoute = '/terms-and-conditions';
   static const String userTypeRoute = '/user-type';
   static const String requesterInterestsRoute = '/requester-interests';
   static const String volunteerSkillsRoute = '/volunteer-skills';
-  static const String registrationCompletedRoute = '/registration-completed';
-  static const String loginRoute = '/login';
-  static const String homeRoute = '/home';
+  static const String registrationCompletedRequesterRoute =
+      '/registration-completed-requester';
+  static const String registrationCompletedVolunteerRoute =
+      '/registration-completed-volunteer';
+  static const String homeRequesterRoute = '/home-requester';
+  static const String homeVolunteerRoute = '/home-volunteer';
   static const String videoCallRoute = '/videocall';
 
   static Widget? getPageFromRoute(String routeName,
@@ -40,14 +47,23 @@ class AppRouter {
       case requesterInterestsRoute:
         return const RequesterInterestsScreen();
 
-      case registrationCompletedRoute:
-        return const RegistrationCompletedScreen();
+      case volunteerSkillsRoute:
+        return const VolunteerSkillsScreen();
+
+      case registrationCompletedRequesterRoute:
+        return const RegistrationCompletedRequesterScreen();
+
+      case registrationCompletedVolunteerRoute:
+        return const RegistrationCompletedVolunteerScreen();
 
       case loginRoute:
         return const SignInScreen();
 
-      case homeRoute:
-        return const HomeScreen();
+      case homeRequesterRoute:
+        return const HomeRequesterScreen();
+
+      case homeVolunteerRoute:
+        return const HomeVolunteerScreen();
 
       case videoCallRoute:
         if (args == null ||
@@ -85,15 +101,25 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => const RequesterInterestsScreen());
 
-      case registrationCompletedRoute:
+      case volunteerSkillsRoute:
+        return MaterialPageRoute(builder: (_) => const VolunteerSkillsScreen());
+
+      case registrationCompletedRequesterRoute:
         return MaterialPageRoute(
-            builder: (_) => const RegistrationCompletedScreen());
+            builder: (_) => const RegistrationCompletedRequesterScreen());
+
+      case registrationCompletedVolunteerRoute:
+        return MaterialPageRoute(
+            builder: (_) => const RegistrationCompletedVolunteerScreen());
 
       case loginRoute:
         return MaterialPageRoute(builder: (_) => const SignInScreen());
 
-      case homeRoute:
-        return MaterialPageRoute(builder: (_) => const HomeScreen());
+      case homeRequesterRoute:
+        return MaterialPageRoute(builder: (_) => const HomeRequesterScreen());
+
+      case homeVolunteerRoute:
+        return MaterialPageRoute(builder: (_) => const HomeVolunteerScreen());
 
       case videoCallRoute:
         final args = settings.arguments as Map<String, dynamic>;

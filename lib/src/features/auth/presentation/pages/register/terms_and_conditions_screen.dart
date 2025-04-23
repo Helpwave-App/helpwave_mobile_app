@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../../common/animations/animated_route.dart';
-import '../../../../routing/app_router.dart';
+import '../../../../../common/animations/animated_route.dart';
+import '../../../../../routing/app_router.dart';
 
 class TermsAndConditionsScreen extends StatefulWidget {
   const TermsAndConditionsScreen({super.key});

@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 
-import '../../../../common/animations/animated_route.dart';
-import '../../../../routing/app_router.dart';
+class SelectableOptionsWidgetScreen extends StatefulWidget {
+  final String title;
+  final String subtitle;
+  final List<String> options;
+  final VoidCallback onFinish;
+  final String finishButtonText;
 
-class RequesterInterestsScreen extends StatefulWidget {
-  const RequesterInterestsScreen({super.key});
+  const SelectableOptionsWidgetScreen({
+    super.key,
+    required this.title,
+    required this.subtitle,
+    required this.options,
+    required this.onFinish,
+    this.finishButtonText = 'Finalizar',
+  });
 
   @override
-  State<RequesterInterestsScreen> createState() =>
-      _RequesterInterestsScreenState();
+  State<SelectableOptionsWidgetScreen> createState() =>
+      _SelectableOptionsScreenState();
 }
 
-class _RequesterInterestsScreenState extends State<RequesterInterestsScreen> {
-  final List<String> _options = [
-    'Asistencia general',
-    'Asistencia tecnológica',
-    'Verificación de información',
-    'Acompañamiento emocional',
-    'Apoyo para leer o entender documentos',
-    'Ayuda con electrodomésticos',
-    'Identificación de objetos o lugares',
-    'Orientación en trámites digitales',
-  ];
-
+class _SelectableOptionsScreenState
+    extends State<SelectableOptionsWidgetScreen> {
   final Set<String> _selectedOptions = {};
 
   void _onOptionToggled(String option) {
@@ -33,15 +33,6 @@ class _RequesterInterestsScreenState extends State<RequesterInterestsScreen> {
         _selectedOptions.add(option);
       }
     });
-  }
-
-  void _onFinish() {
-    print('Opciones seleccionadas: $_selectedOptions');
-    Navigator.of(context).push(animatedRouteTo(
-        context, AppRouter.registrationCompletedRoute,
-        duration: const Duration(milliseconds: 300),
-        type: RouteTransitionType.pureFade,
-        curve: Curves.easeInOut));
   }
 
   @override
@@ -64,13 +55,12 @@ class _RequesterInterestsScreenState extends State<RequesterInterestsScreen> {
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
-                    '¿Cómo qué te gustaría que te ayudemos?',
+                    widget.title,
                     style: TextStyle(
                       color: colors.surface,
                       fontSize: 20,
                       fontWeight: FontWeight.bold,
                     ),
-                    softWrap: true,
                   ),
                 ),
               ],
@@ -89,16 +79,16 @@ class _RequesterInterestsScreenState extends State<RequesterInterestsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Puedes marcar más de una opción',
+                    widget.subtitle,
                     style: TextStyle(fontSize: 16, color: Colors.grey[700]),
                   ),
                   const SizedBox(height: 8),
                   Expanded(
                     child: ListView.separated(
-                      itemCount: _options.length,
+                      itemCount: widget.options.length,
                       separatorBuilder: (_, __) => const SizedBox(height: 8),
                       itemBuilder: (context, index) {
-                        final option = _options[index];
+                        final option = widget.options[index];
                         final isSelected = _selectedOptions.contains(option);
 
                         return GestureDetector(
@@ -147,12 +137,13 @@ class _RequesterInterestsScreenState extends State<RequesterInterestsScreen> {
                   ),
                   const SizedBox(height: 24),
                   ElevatedButton(
-                    onPressed: _selectedOptions.isNotEmpty ? _onFinish : null,
+                    onPressed:
+                        _selectedOptions.isNotEmpty ? widget.onFinish : null,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(50),
                       backgroundColor: colors.tertiary,
                     ),
-                    child: const Text('Finalizar registro'),
+                    child: Text(widget.finishButtonText),
                   ),
                 ],
               ),
