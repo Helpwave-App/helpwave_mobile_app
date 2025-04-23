@@ -67,7 +67,7 @@ class HomeWidget extends StatelessWidget {
                       shape: const CircleBorder(),
                       padding: EdgeInsets.zero,
                       backgroundColor: theme.colorScheme.tertiary,
-                      foregroundColor: theme.colorScheme.onTertiary,
+                      foregroundColor: theme.colorScheme.onSecondary,
                       elevation: 6,
                     ),
                     onPressed: () {

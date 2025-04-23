@@ -90,10 +90,10 @@ class RegistrationCompletedWidgetScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(24),
                     ),
                     backgroundColor: theme.colorScheme.tertiary,
-                    foregroundColor: theme.colorScheme.onTertiary,
+                    foregroundColor: theme.colorScheme.onSecondary,
                   ),
                   onPressed: () => _onNextPressed(context),
-                  child: const Text(
+                  child: Text(
                     'Ir al inicio',
                     style: TextStyle(fontSize: 20),
                   ),

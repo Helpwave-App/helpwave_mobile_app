@@ -127,7 +127,6 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
               ),
               child: Column(
                 children: [
-                  // 1. Zona scrollable con las dos opciones
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(

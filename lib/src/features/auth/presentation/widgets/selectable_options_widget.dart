@@ -80,7 +80,9 @@ class _SelectableOptionsScreenState
                 children: [
                   Text(
                     widget.subtitle,
-                    style: TextStyle(fontSize: 16, color: Colors.grey[700]),
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Theme.of(context).colorScheme.onTertiary),
                   ),
                   const SizedBox(height: 8),
                   Expanded(
@@ -98,11 +100,17 @@ class _SelectableOptionsScreenState
                             decoration: BoxDecoration(
                               color: isSelected
                                   ? colors.tertiary.withOpacity(0.2)
-                                  : Colors.grey[100],
+                                  : Theme.of(context)
+                                      .colorScheme
+                                      .surface
+                                      .withOpacity(0.1), //Colors.grey[100]
                               border: Border.all(
                                 color: isSelected
                                     ? colors.tertiary
-                                    : Colors.grey[300]!,
+                                    : Theme.of(context)
+                                        .colorScheme
+                                        .primary
+                                        .withOpacity(0.3), //grey[300]!
                                 width: 2,
                               ),
                               borderRadius: BorderRadius.circular(12),
@@ -115,7 +123,10 @@ class _SelectableOptionsScreenState
                                       : Icons.circle_outlined,
                                   color: isSelected
                                       ? colors.tertiary
-                                      : Colors.grey[600],
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .primary
+                                          .withOpacity(0.6), //grey[600]
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
@@ -124,7 +135,9 @@ class _SelectableOptionsScreenState
                                     style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.w500,
-                                      color: Colors.grey[800],
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onTertiary, // grey[800]
                                     ),
                                   ),
                                 ),

@@ -63,7 +63,7 @@ class SignInScreen extends StatelessWidget {
                     onPressed: null, // Desactivado inicialmente
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(50),
-                      backgroundColor: Colors.grey[300],
+                      backgroundColor: Theme.of(context).colorScheme.tertiary,
                     ),
                     child: const Text("Iniciar Sesión"),
                   ),
@@ -81,8 +81,10 @@ class SignInScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("¿Aún no tienes una cuenta?",
-                            style: TextStyle(color: Colors.grey)),
+                        Text("¿Aún no tienes una cuenta?",
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onTertiary)),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).push(animatedRouteTo(

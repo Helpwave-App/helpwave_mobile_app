@@ -77,7 +77,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                         'Al usar esta aplicación, aceptas participar de una comunidad basada en el respeto, la colaboración y la ayuda mutua.\n\n'
                         'Te comprometes a brindar y recibir asistencia con buena voluntad, a respetar la privacidad de los demás usuarios y a utilizar esta plataforma exclusivamente para los fines permitidos.\n\n'
                         'HelpWave no se responsabiliza por el contenido de las interacciones, pero se reserva el derecho de suspender cuentas en caso de mal uso.',
-                        style: TextStyle(fontSize: 16, color: Colors.grey[800]),
+                        style: TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
@@ -90,7 +90,6 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                       Expanded(
                         child: Text(
                           'He leído y acepto los términos y condiciones.',
-                          style: TextStyle(color: Colors.grey[700]),
                         ),
                       ),
                     ],

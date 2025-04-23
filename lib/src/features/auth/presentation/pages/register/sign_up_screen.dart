@@ -98,8 +98,11 @@ class SignUpScreen extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Text("¿Ya tienes una cuenta?",
-                              style: TextStyle(color: Colors.grey)),
+                          Text("¿Ya tienes una cuenta?",
+                              style: TextStyle(
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .onTertiary)),
                           TextButton(
                             onPressed: () {
                               Navigator.of(context).push(animatedRouteTo(
