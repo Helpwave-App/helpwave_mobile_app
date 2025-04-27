@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../../routing/app_router.dart';
 import '../../../../common/animations/animated_route.dart';
 
-class RegistrationCompletedWidgetScreen extends StatelessWidget {
+class RegistrationCompletedWidget extends StatelessWidget {
   final String title;
   final String message;
   final String? subtitle;
   final IconData icon;
-  final String userType; // 'requester' o 'volunteer'
+  final String userType;
 
-  const RegistrationCompletedWidgetScreen({
+  const RegistrationCompletedWidget({
     super.key,
     required this.title,
     required this.message,
@@ -89,8 +89,6 @@ class RegistrationCompletedWidgetScreen extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
-                    backgroundColor: theme.colorScheme.tertiary,
-                    foregroundColor: theme.colorScheme.onSecondary,
                   ),
                   onPressed: () => _onNextPressed(context),
                   child: Text(

@@ -8,6 +8,8 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Column(
@@ -73,25 +75,15 @@ class WelcomeScreen extends StatelessWidget {
                         context, AppRouter.loginRoute,
                         curve: Curves.easeInOutBack));
                   },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50),
-                    backgroundColor: Theme.of(context).colorScheme.tertiary,
-                  ),
                   child: const Text("Iniciar sesión"),
                 ),
                 const SizedBox(height: 16),
                 OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(animatedRouteTo(
-                        context, AppRouter.registerRoute,
+                        context, AppRouter.userTypeRoute,
                         curve: Curves.easeInOutBack));
                   },
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50),
-                    foregroundColor: Theme.of(context).colorScheme.tertiary,
-                    side: BorderSide(
-                        color: Theme.of(context).colorScheme.tertiary),
-                  ),
                   child: const Text("Crear cuenta"),
                 ),
               ],

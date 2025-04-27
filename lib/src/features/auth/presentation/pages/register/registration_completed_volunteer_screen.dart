@@ -7,7 +7,7 @@ class RegistrationCompletedVolunteerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const RegistrationCompletedWidgetScreen(
+    return const RegistrationCompletedWidget(
       title: '¡Gracias por registrarte como voluntario!',
       message:
           'Ahora formas parte de HelpWave, donde podrás brindar apoyo a personas que lo necesitan de forma remota.',

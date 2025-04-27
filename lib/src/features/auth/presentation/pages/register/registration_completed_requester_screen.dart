@@ -7,7 +7,7 @@ class RegistrationCompletedRequesterScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const RegistrationCompletedWidgetScreen(
+    return const RegistrationCompletedWidget(
       title: '¡Te has registrado con éxito!',
       message:
           'Bienvenido a HelpWave. Aquí encontrarás voluntarios listos para ayudarte con lo que necesites, cuando lo necesites.',

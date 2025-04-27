@@ -51,7 +51,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               child: Center(child: _buildLocalVideo()),
             ),
           ),
-          // Botones de control centrados en la parte inferior
+          // Controls buttons centered at the bottom of the screen
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
@@ -73,7 +73,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   ),
                   const SizedBox(width: 16),
 
-                  // Botón de mute/unmute micrófono
+                  // Mute and unmute microphone button
                   ValueListenableBuilder<bool>(
                     valueListenable: _controller.isMuted,
                     builder: (_, muted, __) {
@@ -87,7 +87,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   ),
                   const SizedBox(width: 16),
 
-                  // Botón para cambiar cámara
+                  // Change camera button
                   _buildControlButton(
                     icon: Icons.cameraswitch,
                     color: Colors.blueGrey,
@@ -96,7 +96,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   ),
                   const SizedBox(width: 16),
 
-                  // Botón para colgar videollamada
+                  // Hang up button
                   _buildControlButton(
                     icon: Icons.call_end,
                     color: Colors.red,

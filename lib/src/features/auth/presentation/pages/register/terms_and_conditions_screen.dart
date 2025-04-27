@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
+import 'user_type_selection_screen.dart';
 
 class TermsAndConditionsScreen extends StatefulWidget {
   const TermsAndConditionsScreen({super.key});
@@ -13,6 +14,22 @@ class TermsAndConditionsScreen extends StatefulWidget {
 
 class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
   bool _accepted = false;
+  late final UserType userType;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    final typeString = args?['userType'] as String?;
+    if (typeString == 'volunteer') {
+      userType = UserType.volunteer;
+    } else {
+      userType = UserType.requester;
+    }
+  }
 
   void _onCheckboxChanged(bool? value) {
     setState(() {
@@ -22,8 +39,11 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
 
   void _onNextPressed() {
     if (_accepted) {
-      Navigator.of(context).push(animatedRouteTo(
-          context, AppRouter.userTypeRoute,
+      final route = userType == UserType.volunteer
+          ? AppRouter.signUpVolunteerRoute
+          : AppRouter.signUpRequesterRoute;
+
+      Navigator.of(context).push(animatedRouteTo(context, route,
           duration: const Duration(milliseconds: 300),
           type: RouteTransitionType.pureFade,
           curve: Curves.easeInOut));
@@ -32,8 +52,10 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: theme.secondary,
       body: Column(
         children: [
           const SizedBox(height: 80),
@@ -43,15 +65,14 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back,
-                        color: Theme.of(context).colorScheme.surface),
+                    icon: Icon(Icons.arrow_back, color: theme.surface),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Términos y condiciones',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.surface,
+                      color: theme.surface,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -63,7 +84,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
             child: Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: theme.surface,
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(24)),
               ),
@@ -96,10 +117,6 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _accepted ? _onNextPressed : null,
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      backgroundColor: Theme.of(context).colorScheme.tertiary,
-                    ),
                     child: const Text('Siguiente'),
                   ),
                 ],

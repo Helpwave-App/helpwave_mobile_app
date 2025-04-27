@@ -18,24 +18,24 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
   static const String imagePath = 'lib/src/assets/images/';
 
   void _onNextPressed() {
-    if (_selectedType != null) {
-      final route = _selectedType == UserType.requester
-          ? AppRouter.requesterInterestsRoute
-          : AppRouter.volunteerSkillsRoute;
+    if (_selectedType == null) return;
 
-      Navigator.of(context).push(animatedRouteTo(
-        context,
-        route,
-        duration: const Duration(milliseconds: 1000),
-        type: RouteTransitionType.pureFade,
-        curve: Curves.easeInOutBack,
-      ));
-    }
+    // convierte UserType.volunteer -> "volunteer"
+    final userType = _selectedType!.toString().split('.').last;
+
+    Navigator.of(context).push(animatedRouteTo(
+      context,
+      AppRouter.termsRoute,
+      args: {'userType': userType},
+      duration: const Duration(milliseconds: 1000),
+      type: RouteTransitionType.pureFade,
+      curve: Curves.easeInOutBack,
+    ));
   }
 
   Widget _buildOption(UserType type, String label, String assetName) {
     final isSelected = _selectedType == type;
-    final colors = Theme.of(context).colorScheme;
+    final theme = Theme.of(context).colorScheme;
 
     return GestureDetector(
       onTap: () => setState(() => _selectedType = type),
@@ -43,7 +43,7 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
         margin: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           border: Border.all(
-            color: isSelected ? colors.tertiary : Colors.transparent,
+            color: isSelected ? theme.tertiary : Colors.transparent,
             width: 3,
           ),
           borderRadius: BorderRadius.circular(16),
@@ -58,14 +58,14 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                   value: type,
                   groupValue: _selectedType,
                   onChanged: (val) => setState(() => _selectedType = val),
-                  activeColor: colors.tertiary,
+                  activeColor: theme.tertiary,
                 ),
                 const SizedBox(width: 8),
                 Text(
                   label,
                   style: TextStyle(
                     fontSize: 18,
-                    color: colors.primary,
+                    color: theme.primary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -89,10 +89,10 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final colors = Theme.of(context).colorScheme;
+    final theme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: colors.secondary,
+      backgroundColor: theme.secondary,
       body: Column(
         children: [
           const SizedBox(height: 80),
@@ -101,14 +101,14 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
             child: Row(
               children: [
                 IconButton(
-                  icon: Icon(Icons.arrow_back, color: colors.surface),
+                  icon: Icon(Icons.arrow_back, color: theme.surface),
                   onPressed: () => Navigator.pop(context),
                 ),
                 const SizedBox(width: 8),
                 Text(
                   'Tipo de usuario',
                   style: TextStyle(
-                    color: colors.surface,
+                    color: theme.surface,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
@@ -121,7 +121,7 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
             child: Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: colors.surface,
+                color: theme.surface,
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(24)),
               ),
@@ -152,10 +152,6 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: _selectedType != null ? _onNextPressed : null,
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
-                        backgroundColor: colors.tertiary,
-                      ),
                       child: const Text('Siguiente'),
                     ),
                   ),

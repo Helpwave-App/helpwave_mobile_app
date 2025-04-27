@@ -8,6 +8,8 @@ class SignInScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Column(
@@ -88,7 +90,7 @@ class SignInScreen extends StatelessWidget {
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).push(animatedRouteTo(
-                                context, AppRouter.registerRoute,
+                                context, AppRouter.userTypeRoute,
                                 duration: Duration(milliseconds: 200),
                                 curve: Curves.easeInOut));
                           },

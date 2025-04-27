@@ -32,6 +32,10 @@ Route animatedRouteTo(BuildContext context, String routeName,
     Curve curve = Curves.fastOutSlowIn}) {
   final page = AppRouter.getPageFromRoute(routeName, args: args);
   return PageRouteBuilder(
+    settings: RouteSettings(
+      name: routeName,
+      arguments: args,
+    ),
     transitionDuration: duration,
     pageBuilder: (context, animation, secondaryAnimation) => page!,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {

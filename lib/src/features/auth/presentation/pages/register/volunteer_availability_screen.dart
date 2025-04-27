@@ -17,7 +17,7 @@ class _VolunteerAvailabilityScreenState
     Navigator.of(context).push(
       animatedRouteTo(
         context,
-        AppRouter.homeVolunteerRoute,
+        AppRouter.registrationCompletedVolunteerRoute,
         duration: const Duration(milliseconds: 1000),
         type: RouteTransitionType.pureFade,
         curve: Curves.easeInOutBack,
@@ -27,8 +27,10 @@ class _VolunteerAvailabilityScreenState
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context).colorScheme;
+
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: theme.secondary,
       body: Column(
         children: [
           const SizedBox(height: 80),
@@ -38,15 +40,14 @@ class _VolunteerAvailabilityScreenState
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back,
-                        color: Theme.of(context).colorScheme.surface),
+                    icon: Icon(Icons.arrow_back, color: theme.surface),
                     onPressed: () => Navigator.pop(context),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Disponibilidad',
                     style: TextStyle(
-                      color: Theme.of(context).colorScheme.surface,
+                      color: theme.surface,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
@@ -58,7 +59,7 @@ class _VolunteerAvailabilityScreenState
             child: Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
+                color: theme.surface,
                 borderRadius:
                     const BorderRadius.vertical(top: Radius.circular(24)),
               ),
@@ -69,19 +70,13 @@ class _VolunteerAvailabilityScreenState
                     child: SingleChildScrollView(
                       child: Text(
                         "¿En qué días y horarios puedes brindar ayuda?",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Theme.of(context).colorScheme.onTertiary),
+                        style: TextStyle(fontSize: 16, color: theme.onTertiary),
                       ),
                     ),
                   ),
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _onNextPressed,
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      backgroundColor: Theme.of(context).colorScheme.tertiary,
-                    ),
                     child: const Text('Finalizar registro'),
                   ),
                 ],
