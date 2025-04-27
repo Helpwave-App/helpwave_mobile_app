@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../widgets/registration_completed_widget.dart';
+import '../../widgets/registration_completed.dart';
 
 class RegistrationCompletedRequesterScreen extends StatelessWidget {
   const RegistrationCompletedRequesterScreen({super.key});

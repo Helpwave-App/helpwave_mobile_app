@@ -73,7 +73,7 @@ class HomeWidget extends StatelessWidget {
                     onPressed: () {
                       const String channelName = 'testchannel';
                       const String token =
-                          '007eJxTYAh/17X8d9OltAo1+wlMlV82rtwUWXi8SVi6o2GphNadl48VGMyTzU3NTFKMkxJNTEzMLZKTDExSjQyTzE2MDExSDBItRVO5MhoCGRliH2uwMjJAIIjPzVCSWlySnJGYl5eaw8AAAHR5Iig=';
+                          '007eJxTYPCpSvpXxGHIvPq92vIz3Dvtb/68sjTINkHtTc79EE+tlT4KDObJ5qZmJinGSYkmJibmFslJBiapRoZJ5iZGBiYpBomWnB18GQ2BjAx3HRexMjJAIIjPzVCSWlySnJGYl5eaw8AAAPFyIQ0=';
 
                       Navigator.of(context).pushNamed(
                         AppRouter.videoCallRoute,
