@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/animations/animated_route.dart';
-import 'sign_in_screen.dart';
-import 'sign_up_screen.dart';
+import '../../../../common/animations/animated_route.dart';
+import '../../../../routing/app_router.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Column(
@@ -71,28 +72,18 @@ class WelcomeScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     Navigator.of(context).push(animatedRouteTo(
-                        const SignInScreen(),
+                        context, AppRouter.loginRoute,
                         curve: Curves.easeInOutBack));
                   },
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50),
-                    backgroundColor: Theme.of(context).colorScheme.tertiary,
-                  ),
                   child: const Text("Iniciar sesión"),
                 ),
                 const SizedBox(height: 16),
                 OutlinedButton(
                   onPressed: () {
                     Navigator.of(context).push(animatedRouteTo(
-                        const SignUpScreen(),
+                        context, AppRouter.userTypeRoute,
                         curve: Curves.easeInOutBack));
                   },
-                  style: OutlinedButton.styleFrom(
-                    minimumSize: const Size.fromHeight(50),
-                    foregroundColor: Theme.of(context).colorScheme.tertiary,
-                    side: BorderSide(
-                        color: Theme.of(context).colorScheme.tertiary),
-                  ),
                   child: const Text("Crear cuenta"),
                 ),
               ],

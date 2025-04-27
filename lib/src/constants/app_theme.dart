@@ -9,7 +9,7 @@ class AppTheme {
       secondary: Color(0xFF376AF6),
       onSecondary: Colors.white,
       tertiary: Color(0xFF8BBF56),
-      onTertiary: Colors.white,
+      onTertiary: Color.fromARGB(255, 98, 98, 98),
       surface: Color(0xFFF2F2F2),
       onSurface: Color(0xFF042940),
       error: Color(0xFFB00020),
@@ -27,8 +27,9 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFF042940),
+        backgroundColor: Color(0xFF8BBF56),
         foregroundColor: Colors.white,
+        minimumSize: Size.fromHeight(50),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
@@ -37,11 +38,13 @@ class AppTheme {
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: Colors.white,
+        foregroundColor: Color(0xFF8BBF56),
+        minimumSize: Size.fromHeight(50),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
+        side: BorderSide(color: Color(0xFF8BBF56)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
@@ -66,8 +69,10 @@ class AppTheme {
       brightness: Brightness.dark,
       primary: Color(0xFF049DBF),
       onPrimary: Colors.black,
-      secondary: Color(0xFF84BF5A),
+      secondary: Color(0xFF8BBF56),
       onSecondary: Colors.black,
+      tertiary: Color(0xFF8BBF56), // TO FIX: this should be a different color
+      onTertiary: Colors.grey,
       surface: Color(0xFF042940),
       onSurface: Color(0xFFF2F2F2),
       error: Color(0xFFCF6679),
@@ -87,10 +92,22 @@ class AppTheme {
       style: ElevatedButton.styleFrom(
         backgroundColor: Color(0xFF049DBF),
         foregroundColor: Colors.black,
+        minimumSize: Size.fromHeight(50),
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
+      ),
+    ),
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: Color(0xFF049DBF),
+        minimumSize: Size.fromHeight(50),
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12)),
+        ),
+        side: BorderSide(color: Color(0xFF049DBF)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(

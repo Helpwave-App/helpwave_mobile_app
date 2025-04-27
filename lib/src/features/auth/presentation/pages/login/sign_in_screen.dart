@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/animations/animated_route.dart';
-import 'sign_up_screen.dart';
+import '../../../../../common/animations/animated_route.dart';
+import '../../../../../routing/app_router.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: Column(
@@ -63,7 +65,7 @@ class SignInScreen extends StatelessWidget {
                     onPressed: null, // Desactivado inicialmente
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size.fromHeight(50),
-                      backgroundColor: Colors.grey[300],
+                      backgroundColor: Theme.of(context).colorScheme.tertiary,
                     ),
                     child: const Text("Iniciar Sesión"),
                   ),
@@ -81,12 +83,14 @@ class SignInScreen extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text("¿Aún no tienes una cuenta?",
-                            style: TextStyle(color: Colors.grey)),
+                        Text("¿Aún no tienes una cuenta?",
+                            style: TextStyle(
+                                color:
+                                    Theme.of(context).colorScheme.onTertiary)),
                         TextButton(
                           onPressed: () {
                             Navigator.of(context).push(animatedRouteTo(
-                                const SignUpScreen(),
+                                context, AppRouter.userTypeRoute,
                                 duration: Duration(milliseconds: 200),
                                 curve: Curves.easeInOut));
                           },
