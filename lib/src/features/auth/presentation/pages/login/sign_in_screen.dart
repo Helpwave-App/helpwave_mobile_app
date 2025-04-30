@@ -2,16 +2,64 @@ import 'package:flutter/material.dart';
 
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
+import '../../../../../utils/secure_storage.dart';
+import '../../../data/auth_service.dart';
+import '../../../domain/login_request_model.dart';
 
-class SignInScreen extends StatelessWidget {
+class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
   @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
+
+  Future<void> _submit() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+
+    final request = LoginRequest(
+      username: _usernameController.text.trim(),
+      password: _passwordController.text.trim(),
+    );
+
+    try {
+      final response = await AuthService().login(request);
+
+      await SecureStorage.saveToken(response.token);
+
+      if (!mounted) return;
+
+      if (response.role == 'requester') {
+        Navigator.of(context)
+            .pushReplacementNamed(AppRouter.homeRequesterRoute);
+      } else if (response.role == 'volunteer') {
+        Navigator.of(context)
+            .pushReplacementNamed(AppRouter.homeVolunteerRoute);
+      } else {
+        throw Exception('Rol no reconocido: ${response.role}');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: theme.secondary,
       body: Column(
         children: [
           const SizedBox(height: 80),
@@ -19,90 +67,96 @@ class SignInScreen extends StatelessWidget {
             tag: 'app-logo',
             child: CircleAvatar(
               radius: 40,
-              backgroundColor: Theme.of(context).colorScheme.surface,
-              child: Icon(
-                Icons.account_balance_wallet,
-                color: Theme.of(context).colorScheme.tertiary,
-                size: 40,
-              ),
+              backgroundColor: theme.surface,
+              child: Icon(Icons.account_balance_wallet,
+                  color: theme.tertiary, size: 40),
             ),
           ),
           const SizedBox(height: 20),
-          Text(
-            'HelpWave',
-            style: TextStyle(
-                color: Theme.of(context).colorScheme.surface,
-                fontSize: 24,
-                fontWeight: FontWeight.bold),
-          ),
+          Text('HelpWave',
+              style: TextStyle(
+                  color: theme.surface,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold)),
           const SizedBox(height: 30),
           Expanded(
             child: Container(
               padding: const EdgeInsets.all(24),
               decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.surface,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+                color: theme.surface,
+                borderRadius:
+                    const BorderRadius.vertical(top: Radius.circular(24)),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text("Iniciar Sesión",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 20),
-                  const TextField(
-                    decoration: InputDecoration(
-                        labelText: 'Email', border: OutlineInputBorder()),
-                  ),
-                  const SizedBox(height: 16),
-                  const TextField(
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        labelText: 'Contraseña', border: OutlineInputBorder()),
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: null, // Desactivado inicialmente
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      backgroundColor: Theme.of(context).colorScheme.tertiary,
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text("Iniciar Sesión",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                    const SizedBox(height: 20),
+                    TextFormField(
+                      controller: _usernameController,
+                      decoration: const InputDecoration(
+                          labelText: 'Usuario', border: OutlineInputBorder()),
+                      validator: (value) =>
+                          value == null || value.trim().isEmpty
+                              ? 'El usuario es obligatorio'
+                              : null,
                     ),
-                    child: const Text("Iniciar Sesión"),
-                  ),
-                  const SizedBox(height: 16),
-                  Center(
-                    child: TextButton(
-                      onPressed: () {},
-                      child: Text("¿Olvidaste tu contraseña?",
-                          style: TextStyle(
-                              color: Theme.of(context).colorScheme.tertiary)),
+                    const SizedBox(height: 16),
+                    TextFormField(
+                      controller: _passwordController,
+                      obscureText: true,
+                      decoration: const InputDecoration(
+                          labelText: 'Contraseña',
+                          border: OutlineInputBorder()),
+                      validator: (value) => value == null || value.length < 6
+                          ? 'Mínimo 6 caracteres'
+                          : null,
                     ),
-                  ),
-                  const Spacer(),
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text("¿Aún no tienes una cuenta?",
-                            style: TextStyle(
-                                color:
-                                    Theme.of(context).colorScheme.onTertiary)),
-                        TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(animatedRouteTo(
-                                context, AppRouter.userTypeRoute,
-                                duration: Duration(milliseconds: 200),
-                                curve: Curves.easeInOut));
-                          },
-                          child: Text("Regístrate ahora",
-                              style: TextStyle(
-                                  color:
-                                      Theme.of(context).colorScheme.tertiary)),
-                        )
-                      ],
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _isLoading ? null : _submit,
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(50),
+                        backgroundColor: theme.tertiary,
+                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text("Iniciar Sesión"),
                     ),
-                  )
-                ],
+                    const SizedBox(height: 16),
+                    Center(
+                      child: TextButton(
+                        onPressed: () {},
+                        child: Text("¿Olvidaste tu contraseña?",
+                            style: TextStyle(color: theme.tertiary)),
+                      ),
+                    ),
+                    const Spacer(),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("¿Aún no tienes una cuenta?",
+                              style: TextStyle(color: theme.onTertiary)),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(animatedRouteTo(
+                                  context, AppRouter.userTypeRoute,
+                                  duration: const Duration(milliseconds: 200),
+                                  curve: Curves.easeInOut));
+                            },
+                            child: Text("Regístrate ahora",
+                                style: TextStyle(color: theme.tertiary)),
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           )

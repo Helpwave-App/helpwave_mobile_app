@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../../routing/app_router.dart';
+import '../../../../utils/secure_storage.dart';
 
 class HomeWidget extends StatelessWidget {
   final String greeting;
@@ -30,6 +31,21 @@ class HomeWidget extends StatelessWidget {
             style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Cerrar sesión',
+            onPressed: () async {
+              await SecureStorage.deleteToken();
+              if (context.mounted) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRouter.loginRoute,
+                  (route) => false,
+                );
+              }
+            },
+          )
+        ],
         elevation: 0,
         backgroundColor: theme.colorScheme.secondary,
         foregroundColor: theme.colorScheme.onSecondary,

@@ -49,8 +49,6 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           widget.fields[i].label, _controllers[i].text);
     }
 
-    print('Datos en Riverpod: ${ref.read(signUpFormControllerProvider)}');
-
     Navigator.of(context).push(animatedRouteTo(
       context,
       widget.nextRoute,

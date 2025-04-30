@@ -17,7 +17,7 @@ class HelpWaveApp extends StatelessWidget {
       title: 'HelpWave',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      initialRoute: AppRouter.welcomeRoute,
+      initialRoute: AppRouter.startupRoute,
       onGenerateRoute: AppRouter.generateRoute,
     );
   }
