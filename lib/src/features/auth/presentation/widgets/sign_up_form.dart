@@ -1,23 +1,25 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 
 import '../../../../common/animations/animated_route.dart';
-import '../../application/sign_up_form_controller.dart';
+import '../../../../constants/providers.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
   final String title;
   final List<FormFieldData> fields;
   final String nextRoute;
   final String buttonText;
+  final String userType;
 
-  const SignUpForm({
-    super.key,
-    required this.title,
-    required this.fields,
-    required this.nextRoute,
-    required this.buttonText,
-  });
+  const SignUpForm(
+      {super.key,
+      required this.title,
+      required this.fields,
+      required this.nextRoute,
+      required this.buttonText,
+      required this.userType});
 
   @override
   ConsumerState<SignUpForm> createState() => _SignUpFormState();
@@ -25,11 +27,13 @@ class SignUpForm extends ConsumerStatefulWidget {
 
 class _SignUpFormState extends ConsumerState<SignUpForm> {
   final List<TextEditingController> _controllers = [];
+  List<String?> _errorMessages = [];
 
   @override
   void initState() {
     super.initState();
     _controllers.addAll(widget.fields.map((_) => TextEditingController()));
+    _errorMessages = List<String?>.filled(widget.fields.length, null);
   }
 
   @override
@@ -40,21 +44,92 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     super.dispose();
   }
 
-  void _onNextPressed() {
+  Future<void> _onNextPressed() async {
     final signUpFormController =
         ref.read(signUpFormControllerProvider.notifier);
 
+    bool hasError = false;
     for (int i = 0; i < widget.fields.length; i++) {
-      signUpFormController.updateField(
-          widget.fields[i].label, _controllers[i].text);
+      final value = _controllers[i].text.trim();
+      final field = widget.fields[i].label;
+
+      if (value.isEmpty) {
+        _errorMessages[i] = 'Este campo es obligatorio';
+        hasError = true;
+        continue;
+      }
+
+      if (field == "Número de teléfono") {
+        if (!RegExp(r'^\d{9}$').hasMatch(value)) {
+          _errorMessages[i] = 'Ingresa un número de 9 dígitos válido';
+          hasError = true;
+          continue;
+        }
+      }
+
+      if (field == "Nombre de usuario") {
+        if (!RegExp(r'^[a-zA-Z0-9_]{4,}$').hasMatch(value)) {
+          _errorMessages[i] = 'Usa al menos 4 caracteres alfanuméricos';
+          hasError = true;
+          continue;
+        }
+      }
+
+      if (field == "Contraseña") {
+        if (value.length < 6) {
+          _errorMessages[i] = 'La contraseña debe tener al menos 6 caracteres';
+          hasError = true;
+          continue;
+        }
+      }
+
+      _errorMessages[i] = null;
+      signUpFormController.updateField(field, value);
     }
 
-    Navigator.of(context).push(animatedRouteTo(
-      context,
-      widget.nextRoute,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    ));
+    setState(() {});
+    if (hasError) return;
+
+    try {
+      final result = await ref
+          .read(signUpFormControllerProvider.notifier)
+          .submit(widget.userType);
+
+      if (result == null || result.containsKey('error')) {
+        final idx =
+            widget.fields.indexWhere((f) => f.label == 'Nombre de usuario');
+        if (idx != -1) {
+          _errorMessages[idx] = result?['error'] ?? 'Error desconocido';
+          setState(() {});
+        }
+        return;
+      }
+
+      final idProfile = result['idProfile'];
+      if (kDebugMode) {
+        print('idProfile obtenido después del registro: $idProfile');
+      }
+      if (!mounted) return;
+
+      Navigator.of(context).pushReplacement(animatedRouteTo(
+        context,
+        widget.nextRoute,
+        args: {'idProfile': idProfile},
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      ));
+    } catch (e) {
+      _showError('Ocurrió un error inesperado. Intenta de nuevo.');
+      if (kDebugMode) {
+        print('Error en submit(): $e');
+      }
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
@@ -106,14 +181,20 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                     final field = widget.fields[index];
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: TextField(
-                        controller: _controllers[index],
-                        obscureText: field.obscureText,
-                        keyboardType: field.keyboardType,
-                        decoration: InputDecoration(
-                          labelText: field.label,
-                          border: const OutlineInputBorder(),
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextField(
+                            controller: _controllers[index],
+                            obscureText: field.obscureText,
+                            keyboardType: field.keyboardType,
+                            decoration: InputDecoration(
+                              labelText: field.label,
+                              border: const OutlineInputBorder(),
+                              errorText: _errorMessages[index],
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   }),

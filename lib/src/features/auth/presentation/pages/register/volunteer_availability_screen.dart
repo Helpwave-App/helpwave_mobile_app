@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../data/availability_service.dart';
+import '../../../domain/availability_model.dart';
 import '../../widgets/add_time_modal.dart';
 import '../../widgets/day_availability_tile.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
 
-class VolunteerAvailabilityScreen extends StatefulWidget {
-  const VolunteerAvailabilityScreen({super.key});
+class VolunteerAvailabilityScreen extends ConsumerStatefulWidget {
+  final int idProfile;
+  const VolunteerAvailabilityScreen({super.key, required this.idProfile});
 
   @override
-  State<VolunteerAvailabilityScreen> createState() =>
+  ConsumerState<VolunteerAvailabilityScreen> createState() =>
       _VolunteerAvailabilityScreenState();
 }
 
 class _VolunteerAvailabilityScreenState
-    extends State<VolunteerAvailabilityScreen> {
+    extends ConsumerState<VolunteerAvailabilityScreen> {
   final Map<String, List<TimeRange>> availability = {
     'Lunes': [],
     'Martes': [],
@@ -25,16 +29,62 @@ class _VolunteerAvailabilityScreenState
     'Domingo': [],
   };
 
-  void _handleNext() {
-    Navigator.of(context).push(
-      animatedRouteTo(
-        context,
-        AppRouter.registrationCompletedVolunteerRoute,
-        duration: const Duration(milliseconds: 1000),
-        type: RouteTransitionType.pureFade,
-        curve: Curves.easeInOutBack,
-      ),
+  int _dayNameToNumber(String name) {
+    const map = {
+      'Lunes': 1,
+      'Martes': 2,
+      'Miércoles': 3,
+      'Jueves': 4,
+      'Viernes': 5,
+      'Sábado': 6,
+      'Domingo': 7,
+    };
+    return map[name]!;
+  }
+
+  String _formatTime24H(TimeOfDay time) {
+    final hour = time.hour.toString().padLeft(2, '0');
+    final minute = time.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+
+  Future<void> _handleNext() async {
+    final List<Map<String, String>> availList = [];
+
+    availability.forEach((dayName, slots) {
+      final dayIndex = _dayNameToNumber(dayName);
+      for (final slot in slots) {
+        availList.add({
+          'day': '$dayIndex',
+          'hourStart': _formatTime24H(slot.start),
+          'hourEnd': _formatTime24H(slot.end),
+        });
+      }
+    });
+
+    final payload = {
+      'idProfile': widget.idProfile,
+      'availabilities': availList,
+    };
+
+    final success = await AvailabilityService.saveAvailability(
+      AvailabilityPayload.fromMap(payload),
     );
+
+    if (!success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error al guardar disponibilidad')),
+      );
+      return;
+    }
+
+    Navigator.of(context).pushReplacement(animatedRouteTo(
+      context,
+      AppRouter.registrationCompletedVolunteerRoute,
+      type: RouteTransitionType.pureFade,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOutBack,
+    ));
   }
 
   bool get isScheduleComplete =>
@@ -97,79 +147,71 @@ class _VolunteerAvailabilityScreenState
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      backgroundColor: theme.secondary,
-      body: Column(
-        children: [
-          const SizedBox(height: 80),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back, color: theme.surface),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                const SizedBox(width: 8),
-                Text(
+    return PopScope(
+        canPop: false,
+        child: Scaffold(
+          backgroundColor: theme.secondary,
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
                   'Disponibilidad',
                   style: TextStyle(
                     color: theme.surface,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.left,
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: theme.surface,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(24)),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "¿En qué días y horarios puedes brindar ayuda?",
-                    style: TextStyle(fontSize: 16, color: theme.onTertiary),
+              const SizedBox(height: 16),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: theme.surface,
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(24)),
                   ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: availability.keys.map((day) {
-                          final slots = availability[day] ?? [];
-                          return DayAvailabilityTile(
-                            day: day,
-                            slots: slots,
-                            onAdd: () => _handleOpenAddTimeDialog(day),
-                            onDeleteSlot: (slot) =>
-                                _handleDeleteSlot(day, slot),
-                          );
-                        }).toList(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "¿En qué días y horarios puedes brindar ayuda?",
+                        style: TextStyle(fontSize: 16, color: theme.onTertiary),
                       ),
-                    ),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: availability.keys.map((day) {
+                              final slots = availability[day] ?? [];
+                              return DayAvailabilityTile(
+                                day: day,
+                                slots: slots,
+                                onAdd: () => _handleOpenAddTimeDialog(day),
+                                onDeleteSlot: (slot) =>
+                                    _handleDeleteSlot(day, slot),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: isScheduleComplete ? _handleNext : null,
+                          child: const Text('Finalizar registro'),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: isScheduleComplete ? _handleNext : null,
-                      child: const Text('Finalizar registro'),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }
 

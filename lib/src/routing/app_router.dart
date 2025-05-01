@@ -55,10 +55,12 @@ class AppRouter {
         return const UserTypeSelectionScreen();
 
       case volunteerSkillsRoute:
-        return const VolunteerSkillsScreen();
+        final idProfile = args?['idProfile'] as int? ?? 0;
+        return VolunteerSkillsScreen(idProfile: idProfile);
 
       case volunteerAvailabilityRoute:
-        return const VolunteerAvailabilityScreen();
+        final idProfile = args?['idProfile'] as int? ?? 0;
+        return VolunteerAvailabilityScreen(idProfile: idProfile);
 
       case registrationCompletedRequesterRoute:
         return const RegistrationCompletedRequesterScreen();
@@ -114,11 +116,18 @@ class AppRouter {
             builder: (_) => const UserTypeSelectionScreen());
 
       case volunteerSkillsRoute:
-        return MaterialPageRoute(builder: (_) => const VolunteerSkillsScreen());
+        final args = settings.arguments as Map<String, dynamic>?;
+        final idProfile = args != null ? args['idProfile'] as int : 0;
+        return MaterialPageRoute(
+          builder: (_) => VolunteerSkillsScreen(idProfile: idProfile),
+        );
 
       case volunteerAvailabilityRoute:
+        final args = settings.arguments as Map<String, dynamic>?;
+        final idProfile = args != null ? args['idProfile'] as int : 0;
         return MaterialPageRoute(
-            builder: (_) => const VolunteerAvailabilityScreen());
+          builder: (_) => VolunteerAvailabilityScreen(idProfile: idProfile),
+        );
 
       case registrationCompletedRequesterRoute:
         return MaterialPageRoute(

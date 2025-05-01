@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:helpwave_mobile_app/src/constants/providers.dart';
 
 import '../../../../routing/app_router.dart';
-import '../../../../utils/secure_storage.dart';
 
-class HomeWidget extends StatelessWidget {
+class HomeWidget extends ConsumerWidget {
   final String greeting;
   final String subtitle;
   final String buttonText;
@@ -16,7 +17,7 @@ class HomeWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -36,7 +37,8 @@ class HomeWidget extends StatelessWidget {
             icon: const Icon(Icons.logout),
             tooltip: 'Cerrar sesión',
             onPressed: () async {
-              await SecureStorage.deleteToken();
+              final authService = ref.read(authServiceProvider);
+              await authService.logout();
               if (context.mounted) {
                 Navigator.of(context).pushNamedAndRemoveUntil(
                   AppRouter.loginRoute,
