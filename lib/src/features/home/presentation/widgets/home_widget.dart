@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:helpwave_mobile_app/src/constants/providers.dart';
 
 import '../../../../routing/app_router.dart';
 
-class HomeWidget extends StatelessWidget {
+class HomeWidget extends ConsumerWidget {
   final String greeting;
   final String subtitle;
   final String buttonText;
@@ -15,7 +17,7 @@ class HomeWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -30,6 +32,22 @@ class HomeWidget extends StatelessWidget {
             style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           ),
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            tooltip: 'Cerrar sesión',
+            onPressed: () async {
+              final authService = ref.read(authServiceProvider);
+              await authService.logout();
+              if (context.mounted) {
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                  AppRouter.loginRoute,
+                  (route) => false,
+                );
+              }
+            },
+          )
+        ],
         elevation: 0,
         backgroundColor: theme.colorScheme.secondary,
         foregroundColor: theme.colorScheme.onSecondary,

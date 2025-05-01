@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class AddTimeModal extends StatefulWidget {
   final String day;
   final void Function(TimeOfDay start, TimeOfDay end, bool applyAll) onSave;
-  final void Function(String message) onError; // <-- nuevo callback
+  final void Function(String message) onError;
 
   const AddTimeModal({
-    Key? key,
+    super.key,
     required this.day,
     required this.onSave,
     required this.onError,
-  }) : super(key: key);
+  });
 
   @override
   _AddTimeModalState createState() => _AddTimeModalState();

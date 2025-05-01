@@ -14,21 +14,30 @@ class TermsAndConditionsScreen extends StatefulWidget {
 
 class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
   bool _accepted = false;
-  late final UserType userType;
+
+  UserType userType = UserType.requester;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
 
-    final args =
-        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+    Future.microtask(() {
+      final route = ModalRoute.of(context);
+      if (route != null && route.settings.arguments is Map<String, dynamic>) {
+        final args = route.settings.arguments as Map<String, dynamic>;
+        final typeString = args['userType'] as String?;
 
-    final typeString = args?['userType'] as String?;
-    if (typeString == 'volunteer') {
-      userType = UserType.volunteer;
-    } else {
-      userType = UserType.requester;
-    }
+        if (typeString == 'volunteer') {
+          setState(() {
+            userType = UserType.volunteer;
+          });
+        } else {
+          setState(() {
+            userType = UserType.requester;
+          });
+        }
+      }
+    });
   }
 
   void _onCheckboxChanged(bool? value) {
@@ -43,10 +52,16 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
           ? AppRouter.signUpVolunteerRoute
           : AppRouter.signUpRequesterRoute;
 
-      Navigator.of(context).push(animatedRouteTo(context, route,
-          duration: const Duration(milliseconds: 300),
-          type: RouteTransitionType.pureFade,
-          curve: Curves.easeInOut));
+      Navigator.of(context).push(animatedRouteTo(
+        context,
+        route,
+        args: {
+          'userType': userType.name,
+        },
+        duration: const Duration(milliseconds: 300),
+        type: RouteTransitionType.pureFade,
+        curve: Curves.easeInOut,
+      ));
     }
   }
 

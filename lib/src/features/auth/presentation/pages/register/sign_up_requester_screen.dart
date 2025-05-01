@@ -15,12 +15,13 @@ class SignUpRequesterScreen extends StatelessWidget {
         fields: [
           FormFieldData(label: 'Nombre'),
           FormFieldData(label: 'Apellido'),
-          FormFieldData(
-              label: 'Número de teléfono', keyboardType: TextInputType.phone),
+          FormFieldData(label: 'Nombre de usuario'),
+          //FormFieldData(label: 'Número de teléfono', keyboardType: TextInputType.phone),
           FormFieldData(label: 'Contraseña', obscureText: true),
         ],
         nextRoute: AppRouter.registrationCompletedRequesterRoute,
         buttonText: 'Finalizar registro',
+        userType: "requester",
       ),
     );
   }

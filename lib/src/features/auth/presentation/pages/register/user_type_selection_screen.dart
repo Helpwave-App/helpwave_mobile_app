@@ -26,7 +26,10 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
     Navigator.of(context).push(animatedRouteTo(
       context,
       AppRouter.termsRoute,
-      args: {'userType': userType},
+      args: {
+        'userType': userType,
+        'nextRoute': AppRouter.signUpRequesterRoute,
+      },
       duration: const Duration(milliseconds: 1000),
       type: RouteTransitionType.pureFade,
       curve: Curves.easeInOutBack,
