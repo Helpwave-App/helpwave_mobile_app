@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
-import '../../../constants/api.dart';
+import '../../../utils/api.dart';
 import '../../../utils/secure_storage.dart';
 import '../domain/login_request_model.dart';
 import 'auth_response.dart';

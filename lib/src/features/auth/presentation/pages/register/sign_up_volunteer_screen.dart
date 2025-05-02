@@ -15,8 +15,10 @@ class SignUpVolunteerScreen extends StatelessWidget {
         fields: [
           FormFieldData(label: 'Nombre'),
           FormFieldData(label: 'Apellido'),
+          FormFieldData(
+              label: 'Correo electrónico',
+              keyboardType: TextInputType.emailAddress),
           FormFieldData(label: 'Nombre de usuario'),
-          //FormFieldData(label: 'Correo electrónico', keyboardType: TextInputType.emailAddress),
           FormFieldData(label: 'Contraseña', obscureText: true),
         ],
         nextRoute: AppRouter.volunteerSkillsRoute,

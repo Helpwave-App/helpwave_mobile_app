@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 
 import '../../../../common/animations/animated_route.dart';
-import '../../../../constants/providers.dart';
+import '../../../../utils/providers.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
   final String title;
@@ -28,12 +28,14 @@ class SignUpForm extends ConsumerStatefulWidget {
 class _SignUpFormState extends ConsumerState<SignUpForm> {
   final List<TextEditingController> _controllers = [];
   List<String?> _errorMessages = [];
+  late List<bool> _obscureTextStates;
 
   @override
   void initState() {
     super.initState();
     _controllers.addAll(widget.fields.map((_) => TextEditingController()));
     _errorMessages = List<String?>.filled(widget.fields.length, null);
+    _obscureTextStates = widget.fields.map((f) => f.obscureText).toList();
   }
 
   @override
@@ -68,8 +70,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       }
 
       if (field == "Nombre de usuario") {
-        if (!RegExp(r'^[a-zA-Z0-9_]{4,}$').hasMatch(value)) {
-          _errorMessages[i] = 'Usa al menos 4 caracteres alfanuméricos';
+        if (!RegExp(r'^[a-zA-Z0-9_]{6,}$').hasMatch(value)) {
+          _errorMessages[i] = 'Usa al menos 6 caracteres alfanuméricos';
           hasError = true;
           continue;
         }
@@ -111,10 +113,24 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       }
       if (!mounted) return;
 
+      final usernameIndex =
+          widget.fields.indexWhere((f) => f.label == 'Nombre de usuario');
+      final passwordIndex =
+          widget.fields.indexWhere((f) => f.label == 'Contraseña');
+
+      if (usernameIndex == -1 || passwordIndex == -1) {
+        _showError('Error interno: faltan campos de usuario o contraseña.');
+        return;
+      }
+
       Navigator.of(context).pushReplacement(animatedRouteTo(
         context,
         widget.nextRoute,
-        args: {'idProfile': idProfile},
+        args: {
+          'idProfile': idProfile,
+          'username': _controllers[usernameIndex].text.trim(),
+          'password': _controllers[passwordIndex].text.trim(),
+        },
         duration: const Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       ));
@@ -192,6 +208,21 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                               labelText: field.label,
                               border: const OutlineInputBorder(),
                               errorText: _errorMessages[index],
+                              suffixIcon: field.obscureText
+                                  ? IconButton(
+                                      icon: Icon(
+                                        _obscureTextStates[index]
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _obscureTextStates[index] =
+                                              !_obscureTextStates[index];
+                                        });
+                                      },
+                                    )
+                                  : null,
                             ),
                           ),
                         ],

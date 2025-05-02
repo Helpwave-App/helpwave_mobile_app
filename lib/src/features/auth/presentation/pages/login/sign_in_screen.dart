@@ -18,6 +18,14 @@ class _SignInScreenState extends State<SignInScreen> {
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   bool _isLoading = false;
+  bool _obscurePassword = true;
+
+  @override
+  void dispose() {
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
@@ -31,23 +39,17 @@ class _SignInScreenState extends State<SignInScreen> {
 
     try {
       final response = await AuthService().login(request);
-
       await SecureStorage.saveToken(response.token);
 
       if (!mounted) return;
 
-      if (response.role == 'requester') {
-        Navigator.of(context)
-            .pushReplacementNamed(AppRouter.homeRequesterRoute);
-      } else if (response.role == 'volunteer') {
-        Navigator.of(context)
-            .pushReplacementNamed(AppRouter.homeVolunteerRoute);
-      } else {
-        throw Exception('Rol no reconocido: ${response.role}');
-      }
+      Navigator.of(context).pushReplacementNamed(AppRouter.loadingRoute);
     } catch (e) {
+      final errorMessage = e.toString().contains('401')
+          ? 'Credenciales inválidas'
+          : 'Ocurrió un error. Intenta nuevamente.';
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
+        SnackBar(content: Text(errorMessage)),
       );
     } finally {
       if (mounted) setState(() => _isLoading = false);
@@ -116,10 +118,23 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(height: 16),
                         TextFormField(
                           controller: _passwordController,
-                          obscureText: true,
-                          decoration: const InputDecoration(
-                              labelText: 'Contraseña',
-                              border: OutlineInputBorder()),
+                          obscureText: _obscurePassword,
+                          decoration: InputDecoration(
+                            labelText: 'Contraseña',
+                            border: const OutlineInputBorder(),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                _obscurePassword
+                                    ? Icons.visibility_off
+                                    : Icons.visibility,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _obscurePassword = !_obscurePassword;
+                                });
+                              },
+                            ),
+                          ),
                           validator: (value) =>
                               value == null || value.length < 6
                                   ? 'Mínimo 6 caracteres'

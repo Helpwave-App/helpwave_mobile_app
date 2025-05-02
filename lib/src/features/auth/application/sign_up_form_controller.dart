@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../constants/providers.dart';
+import '../../../utils/providers.dart';
 
 class SignUpFormController extends StateNotifier<Map<String, String>> {
   final Ref _ref;
@@ -20,7 +20,7 @@ class SignUpFormController extends StateNotifier<Map<String, String>> {
       "username": username,
       "password": state["Contraseña"]?.trim(),
       "state": true,
-      "idRole": userType == "volunteer" ? 2 : 1,
+      "idRole": userType == "volunteer" ? 1 : 2,
       "profile": {
         "name": state["Nombre"]?.trim(),
         "lastName": state["Apellido"]?.trim(),
@@ -31,7 +31,6 @@ class SignUpFormController extends StateNotifier<Map<String, String>> {
     final response = await authService.registerUser(payload);
 
     if (userType == "volunteer") {
-      // Guardar temporalmente en Riverpod para completar el perfil luego
       _ref.read(tempVolunteerProfileProvider.notifier).state = {
         "username": username,
         "profile": payload["profile"],

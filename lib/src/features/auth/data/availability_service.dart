@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../../../constants/api.dart';
+import '../../../utils/api.dart';
 import '../domain/availability_model.dart';
 
 class AvailabilityService {

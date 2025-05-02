@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../features/auth/presentation/pages/startup_screen.dart';
+import '../common/pages/loading_screen.dart';
 import '../features/auth/presentation/pages/welcome_screen.dart';
 import '../features/auth/presentation/pages/login/sign_in_screen.dart';
 import '../features/auth/presentation/pages/register/sign_up_requester_screen.dart';
@@ -14,9 +14,10 @@ import '../features/auth/presentation/pages/register/registration_completed_volu
 import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
 import '../features/videocall/presentation/videocall_screen.dart';
+import '../features/settings/presentation/settings_screen.dart';
 
 class AppRouter {
-  static const String startupRoute = '/';
+  static const String loadingRoute = '/';
   static const String welcomeRoute = '/welcome';
   static const String loginRoute = '/login';
   static const String userTypeRoute = '/user-type';
@@ -32,12 +33,13 @@ class AppRouter {
   static const String homeRequesterRoute = '/home-requester';
   static const String homeVolunteerRoute = '/home-volunteer';
   static const String videoCallRoute = '/videocall';
+  static const String settingsRoute = '/settings';
 
   static Widget? getPageFromRoute(String routeName,
       {Map<String, dynamic>? args}) {
     switch (routeName) {
-      case startupRoute:
-        return const StartupScreen();
+      case loadingRoute:
+        return const LoadingScreen();
 
       case welcomeRoute:
         return const WelcomeScreen();
@@ -55,12 +57,16 @@ class AppRouter {
         return const UserTypeSelectionScreen();
 
       case volunteerSkillsRoute:
-        final idProfile = args?['idProfile'] as int? ?? 0;
-        return VolunteerSkillsScreen(idProfile: idProfile);
+        return VolunteerSkillsScreen(
+            idProfile: args?['idProfile'] as int? ?? 0,
+            username: args?['username'],
+            password: args?['password']);
 
       case volunteerAvailabilityRoute:
-        final idProfile = args?['idProfile'] as int? ?? 0;
-        return VolunteerAvailabilityScreen(idProfile: idProfile);
+        return VolunteerAvailabilityScreen(
+            idProfile: args?['idProfile'] as int? ?? 0,
+            username: args?['username'],
+            password: args?['password']);
 
       case registrationCompletedRequesterRoute:
         return const RegistrationCompletedRequesterScreen();
@@ -87,6 +93,8 @@ class AppRouter {
           token: args['token'],
           channelName: args['channelName'],
         );
+      case settingsRoute:
+        return const SettingsScreen();
       default:
         return const Scaffold(body: Center(child: Text('Ruta no encontrada')));
     }
@@ -95,8 +103,8 @@ class AppRouter {
   // Traditional way to navigate using named routes
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-      case startupRoute:
-        return MaterialPageRoute(builder: (_) => const StartupScreen());
+      case loadingRoute:
+        return MaterialPageRoute(builder: (_) => const LoadingScreen());
 
       case welcomeRoute:
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
@@ -117,16 +125,20 @@ class AppRouter {
 
       case volunteerSkillsRoute:
         final args = settings.arguments as Map<String, dynamic>?;
-        final idProfile = args != null ? args['idProfile'] as int : 0;
         return MaterialPageRoute(
-          builder: (_) => VolunteerSkillsScreen(idProfile: idProfile),
+          builder: (_) => VolunteerSkillsScreen(
+              idProfile: args != null ? args['idProfile'] as int : 0,
+              username: args != null ? args['username'] as String : '',
+              password: args != null ? args['password'] as String : ''),
         );
 
       case volunteerAvailabilityRoute:
         final args = settings.arguments as Map<String, dynamic>?;
-        final idProfile = args != null ? args['idProfile'] as int : 0;
         return MaterialPageRoute(
-          builder: (_) => VolunteerAvailabilityScreen(idProfile: idProfile),
+          builder: (_) => VolunteerAvailabilityScreen(
+              idProfile: args != null ? args['idProfile'] as int : 0,
+              username: args != null ? args['username'] as String : '',
+              password: args != null ? args['password'] as String : ''),
         );
 
       case registrationCompletedRequesterRoute:
@@ -157,6 +169,9 @@ class AppRouter {
             channelName: channelName,
           ),
         );
+
+      case settingsRoute:
+        return MaterialPageRoute(builder: (_) => const SettingsScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(

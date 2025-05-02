@@ -10,7 +10,15 @@ import '../../../../../routing/app_router.dart';
 
 class VolunteerAvailabilityScreen extends ConsumerStatefulWidget {
   final int idProfile;
-  const VolunteerAvailabilityScreen({super.key, required this.idProfile});
+  final String username;
+  final String password;
+
+  const VolunteerAvailabilityScreen({
+    super.key,
+    required this.idProfile,
+    required this.username,
+    required this.password,
+  });
 
   @override
   ConsumerState<VolunteerAvailabilityScreen> createState() =>
@@ -20,26 +28,13 @@ class VolunteerAvailabilityScreen extends ConsumerStatefulWidget {
 class _VolunteerAvailabilityScreenState
     extends ConsumerState<VolunteerAvailabilityScreen> {
   final Map<String, List<TimeRange>> availability = {
-    'Lunes': [],
-    'Martes': [],
-    'Miércoles': [],
-    'Jueves': [],
-    'Viernes': [],
-    'Sábado': [],
-    'Domingo': [],
+    for (final day in weekDays) day: [],
   };
 
   int _dayNameToNumber(String name) {
-    const map = {
-      'Lunes': 1,
-      'Martes': 2,
-      'Miércoles': 3,
-      'Jueves': 4,
-      'Viernes': 5,
-      'Sábado': 6,
-      'Domingo': 7,
-    };
-    return map[name]!;
+    final index = weekDays.indexOf(name);
+    if (index == -1) throw ArgumentError('Nombre de día inválido: $name');
+    return index + 1;
   }
 
   String _formatTime24H(TimeOfDay time) {
@@ -84,6 +79,10 @@ class _VolunteerAvailabilityScreenState
       type: RouteTransitionType.pureFade,
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOutBack,
+      args: {
+        'username': widget.username,
+        'password': widget.password,
+      },
     ));
   }
 
@@ -214,6 +213,16 @@ class _VolunteerAvailabilityScreenState
         ));
   }
 }
+
+const List<String> weekDays = [
+  'Lunes',
+  'Martes',
+  'Miércoles',
+  'Jueves',
+  'Viernes',
+  'Sábado',
+  'Domingo',
+];
 
 class TimeRange {
   final TimeOfDay start;

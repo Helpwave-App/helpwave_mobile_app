@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-import '../../../../routing/app_router.dart';
-import '../../../../utils/secure_storage.dart';
+import '../../routing/app_router.dart';
+import '../../utils/secure_storage.dart';
 
-class StartupScreen extends StatefulWidget {
-  const StartupScreen({super.key});
+class LoadingScreen extends StatefulWidget {
+  const LoadingScreen({super.key});
 
   @override
-  State<StartupScreen> createState() => _StartupScreenState();
+  State<LoadingScreen> createState() => _LoadingScreenState();
 }
 
-class _StartupScreenState extends State<StartupScreen> {
+class _LoadingScreenState extends State<LoadingScreen> {
   @override
   void initState() {
     super.initState();
@@ -19,6 +19,8 @@ class _StartupScreenState extends State<StartupScreen> {
   }
 
   Future<void> _checkAuthStatus() async {
+    await Future.delayed(const Duration(seconds: 2));
+
     final token = await SecureStorage.getToken();
 
     if (token != null && !JwtDecoder.isExpired(token)) {
@@ -45,8 +47,12 @@ class _StartupScreenState extends State<StartupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(child: CircularProgressIndicator()),
+    return Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(
+          color: Theme.of(context).colorScheme.secondary,
+        ),
+      ),
     );
   }
 }

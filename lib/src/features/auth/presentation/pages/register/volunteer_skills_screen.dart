@@ -3,14 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../common/animations/animated_route.dart';
-import '../../../../../constants/providers.dart';
+import '../../../../../utils/providers.dart';
 import '../../../../../routing/app_router.dart';
 import '../../../domain/skill_model.dart';
 
 class VolunteerSkillsScreen extends ConsumerStatefulWidget {
   final int idProfile;
+  final String username;
+  final String password;
 
-  const VolunteerSkillsScreen({super.key, required this.idProfile});
+  const VolunteerSkillsScreen({
+    super.key,
+    required this.idProfile,
+    required this.username,
+    required this.password,
+  });
 
   @override
   ConsumerState<VolunteerSkillsScreen> createState() =>
@@ -67,7 +74,11 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
     navigator.push(animatedRouteTo(
       context,
       AppRouter.volunteerAvailabilityRoute,
-      args: {'idProfile': widget.idProfile},
+      args: {
+        'idProfile': widget.idProfile,
+        'username': widget.username,
+        'password': widget.password,
+      },
       duration: const Duration(milliseconds: 300),
       type: RouteTransitionType.pureFade,
       curve: Curves.easeInOut,
@@ -79,7 +90,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
     final theme = Theme.of(context).colorScheme;
 
     return PopScope(
-        canPop: false, // Evita el retroceso
+        canPop: false,
         child: Scaffold(
           backgroundColor: theme.secondary,
           body: Column(

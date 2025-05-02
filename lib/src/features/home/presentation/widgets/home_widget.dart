@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:helpwave_mobile_app/src/constants/providers.dart';
+import 'package:helpwave_mobile_app/src/utils/providers.dart';
 
 import '../../../../routing/app_router.dart';
 
@@ -34,17 +34,10 @@ class HomeWidget extends ConsumerWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.logout),
-            tooltip: 'Cerrar sesión',
-            onPressed: () async {
-              final authService = ref.read(authServiceProvider);
-              await authService.logout();
-              if (context.mounted) {
-                Navigator.of(context).pushNamedAndRemoveUntil(
-                  AppRouter.loginRoute,
-                  (route) => false,
-                );
-              }
+            icon: const Icon(Icons.settings),
+            tooltip: 'Configuración',
+            onPressed: () {
+              Navigator.of(context).pushNamed(AppRouter.settingsRoute);
             },
           )
         ],

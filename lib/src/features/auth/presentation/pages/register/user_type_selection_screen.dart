@@ -20,8 +20,8 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
   void _onNextPressed() {
     if (_selectedType == null) return;
 
-    // convierte UserType.volunteer -> "volunteer"
-    final userType = _selectedType!.toString().split('.').last;
+    final userType =
+        _selectedType == UserType.volunteer ? 'volunteer' : 'requester';
 
     Navigator.of(context).push(animatedRouteTo(
       context,
@@ -137,8 +137,7 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                         children: [
                           _buildOption(
                             UserType.requester,
-                            // TODO: Cambiar el texto por uno mejor
-                            'Persona que necesita ayuda',
+                            'Asistido',
                             'requester.png',
                           ),
                           _buildOption(

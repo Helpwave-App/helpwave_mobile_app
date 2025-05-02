@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
+import '../../../../common/pages/loading_screen.dart';
 import '../../../../routing/app_router.dart';
-import '../../../../common/animations/animated_route.dart';
+import '../../../../utils/secure_storage.dart';
+import '../../data/auth_service.dart';
+import '../../domain/login_request_model.dart';
 
 class RegistrationCompletedWidget extends StatelessWidget {
   final String title;
@@ -9,30 +12,47 @@ class RegistrationCompletedWidget extends StatelessWidget {
   final String? subtitle;
   final IconData icon;
   final String userType;
+  final String? username;
+  final String? password;
 
   const RegistrationCompletedWidget({
     super.key,
     required this.title,
     required this.message,
     required this.userType,
+    this.username,
+    this.password,
     this.subtitle,
     this.icon = Icons.volunteer_activism,
   });
 
-  void _onNextPressed(BuildContext context) {
-    final route = userType == "requester"
-        ? AppRouter.homeRequesterRoute
-        : AppRouter.homeVolunteerRoute;
+  void _onNextPressed(BuildContext context) async {
+    if (username == null || password == null) return;
 
-    Navigator.of(context).push(
-      animatedRouteTo(
-        context,
-        route,
-        duration: const Duration(milliseconds: 1000),
-        type: RouteTransitionType.pureFade,
-        curve: Curves.easeInOutBack,
-      ),
-    );
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    try {
+      final request = LoginRequest(
+        username: username!.trim(),
+        password: password!.trim(),
+      );
+
+      final response = await AuthService().login(request);
+      await SecureStorage.saveToken(response.token);
+
+      if (context.mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const LoadingScreen()),
+        );
+      }
+    } catch (e) {
+      if (context.mounted) {
+        scaffoldMessenger.showSnackBar(
+          SnackBar(content: Text('Error al iniciar sesión: $e')),
+        );
+        Navigator.of(context).pushReplacementNamed(AppRouter.loginRoute);
+      }
+    }
   }
 
   @override
