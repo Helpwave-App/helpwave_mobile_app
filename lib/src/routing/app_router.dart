@@ -15,6 +15,7 @@ import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
 import '../features/videocall/presentation/videocall_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
+import '../features/profile/presentation/profile_screen.dart';
 
 class AppRouter {
   static const String loadingRoute = '/';
@@ -34,6 +35,7 @@ class AppRouter {
   static const String homeVolunteerRoute = '/home-volunteer';
   static const String videoCallRoute = '/videocall';
   static const String settingsRoute = '/settings';
+  static const String profileRoute = '/profile';
 
   static Widget? getPageFromRoute(String routeName,
       {Map<String, dynamic>? args}) {
@@ -95,6 +97,8 @@ class AppRouter {
         );
       case settingsRoute:
         return const SettingsScreen();
+      case profileRoute:
+        return const ProfileScreen();
       default:
         return const Scaffold(body: Center(child: Text('Ruta no encontrada')));
     }
@@ -172,6 +176,10 @@ class AppRouter {
 
       case settingsRoute:
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
+
+      case profileRoute:
+        return MaterialPageRoute(builder: (_) => const ProfileScreen());
+
       default:
         return MaterialPageRoute(
           builder: (_) => const Scaffold(

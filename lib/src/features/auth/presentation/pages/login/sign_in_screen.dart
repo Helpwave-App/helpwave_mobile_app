@@ -40,6 +40,7 @@ class _SignInScreenState extends State<SignInScreen> {
     try {
       final response = await AuthService().login(request);
       await SecureStorage.saveToken(response.token);
+      await SecureStorage.saveIdUser(response.idUser);
 
       if (!mounted) return;
 

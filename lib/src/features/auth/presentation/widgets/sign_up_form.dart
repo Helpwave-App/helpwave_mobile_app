@@ -61,8 +61,18 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
         continue;
       }
 
+      if (field == "Nombre" || field == "Apellido") {
+        final cleaned = value.trim();
+        if (!RegExp(r'^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$').hasMatch(cleaned)) {
+          _errorMessages[i] = 'Usa solo letras y espacios válidos';
+          hasError = true;
+          continue;
+        }
+      }
+
       if (field == "Número de teléfono") {
-        if (!RegExp(r'^\d{9}$').hasMatch(value)) {
+        final cleaned = value.trim();
+        if (!RegExp(r'^\d{9}$').hasMatch(cleaned)) {
           _errorMessages[i] = 'Ingresa un número de 9 dígitos válido';
           hasError = true;
           continue;
@@ -70,7 +80,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       }
 
       if (field == "Nombre de usuario") {
-        if (!RegExp(r'^[a-zA-Z0-9_]{6,}$').hasMatch(value)) {
+        final cleaned = value.trim();
+        if (!RegExp(r'^[a-zA-Z0-9_]{6,}$').hasMatch(cleaned)) {
           _errorMessages[i] = 'Usa al menos 6 caracteres alfanuméricos';
           hasError = true;
           continue;

@@ -28,9 +28,9 @@ class SettingsScreen extends ConsumerWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Editar perfil'),
+              title: const Text('Ver perfil'),
               onTap: () {
-                // Navegar a editar perfil
+                Navigator.of(context).pushNamed(AppRouter.profileRoute);
               },
             ),
             ListTile(
@@ -55,6 +55,9 @@ class SettingsScreen extends ConsumerWidget {
               onTap: () async {
                 final authService = ref.read(authServiceProvider);
                 await authService.logout();
+
+                clearUserSession(ref);
+
                 if (context.mounted) {
                   Navigator.of(context).pushNamedAndRemoveUntil(
                     AppRouter.loginRoute,
@@ -68,4 +71,11 @@ class SettingsScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+void clearUserSession(WidgetRef ref) {
+  ref.invalidate(profileFutureProvider);
+  ref.invalidate(profileProvider);
+  ref.invalidate(tempVolunteerProfileProvider);
+  ref.invalidate(signUpFormControllerProvider);
 }

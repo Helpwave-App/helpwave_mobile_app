@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../data/availability_service.dart';
+import '../../../../availability/data/availability_service.dart';
 import '../../../domain/availability_model.dart';
 import '../../widgets/add_time_modal.dart';
 import '../../widgets/day_availability_tile.dart';

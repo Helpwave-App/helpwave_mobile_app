@@ -20,11 +20,12 @@ class SignUpFormController extends StateNotifier<Map<String, String>> {
       "username": username,
       "password": state["Contraseña"]?.trim(),
       "state": true,
-      "idRole": userType == "volunteer" ? 1 : 2,
+      "idRole": userType == "volunteer" ? 1 : 2, // 1: volunteer, 2: requester
       "profile": {
         "name": state["Nombre"]?.trim(),
         "lastName": state["Apellido"]?.trim(),
         "scoreProfile": 0.0,
+        "idLevel": userType == "volunteer" ? 1 : 0,
       }
     };
 

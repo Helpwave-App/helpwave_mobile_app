@@ -1,15 +1,15 @@
-class Profile {
+class User {
   final int id;
   final String username;
   final String role;
 
-  Profile({
+  User({
     required this.id,
     required this.username,
     required this.role,
   });
 
-  factory Profile.fromJson(Map<String, dynamic> json) => Profile(
+  factory User.fromJson(Map<String, dynamic> json) => User(
         id: json['idProfile'],
         username: json['username'],
         role: json['role'],

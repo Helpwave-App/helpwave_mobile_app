@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:helpwave_mobile_app/src/utils/providers.dart';
 
 import '../../../../routing/app_router.dart';
 
