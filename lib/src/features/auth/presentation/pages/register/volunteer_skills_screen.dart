@@ -27,6 +27,7 @@ class VolunteerSkillsScreen extends ConsumerStatefulWidget {
 class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
   final Set<int> _selectedSkillIds = {};
   late Future<List<Skill>> _skillsFuture;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -47,7 +48,8 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
     });
   }
 
-  Future<void> _onFinish() async {
+  Future<void> _onNextPressed() async {
+    setState(() => _isLoading = true);
     final messenger = ScaffoldMessenger.of(context);
     final navigator = Navigator.of(context);
 
@@ -65,6 +67,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
     if (!mounted) return;
 
     if (!success) {
+      setState(() => _isLoading = false);
       messenger.showSnackBar(
         const SnackBar(content: Text('Error al guardar habilidades')),
       );
@@ -90,133 +93,141 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
     final theme = Theme.of(context).colorScheme;
 
     return PopScope(
-        canPop: false,
-        child: Scaffold(
-          backgroundColor: theme.secondary,
-          body: Column(
-            children: [
-              const SizedBox(height: 80),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24),
-                child: Text(
-                  '¿En qué áreas puedes brindar ayuda?',
-                  style: TextStyle(
-                    color: theme.surface,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: theme.secondary,
+        body: Column(
+          children: [
+            const SizedBox(height: 80),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Text(
+                '¿En qué áreas puedes brindar ayuda?',
+                style: TextStyle(
+                  color: theme.surface,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.left,
+              ),
+            ),
+            const SizedBox(height: 16),
+            Expanded(
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: theme.surface,
+                  borderRadius: const BorderRadius.vertical(
+                    top: Radius.circular(24),
                   ),
-                  textAlign: TextAlign.left,
+                ),
+                child: FutureBuilder<List<Skill>>(
+                  future: _skillsFuture,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                            'Error al cargar habilidades: ${snapshot.error}'),
+                      );
+                    }
+
+                    final skills = snapshot.data ?? [];
+
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Puedes marcar más de una opción',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: theme.onTertiary,
+                          ),
+                        ),
+                        const SizedBox(height: 8),
+                        Expanded(
+                          child: ListView.separated(
+                            itemCount: skills.length,
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(height: 8),
+                            itemBuilder: (context, index) {
+                              final skill = skills[index];
+                              final isSelected =
+                                  _selectedSkillIds.contains(skill.idSkill);
+
+                              return GestureDetector(
+                                onTap: () => _onOptionToggled(skill.idSkill),
+                                child: Container(
+                                  padding: const EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: isSelected
+                                        ? theme.tertiary.withOpacity(0.2)
+                                        : theme.surface.withOpacity(0.1),
+                                    border: Border.all(
+                                      color: isSelected
+                                          ? theme.tertiary
+                                          : theme.primary.withOpacity(0.3),
+                                      width: 2,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(
+                                        isSelected
+                                            ? Icons.check_circle
+                                            : Icons.circle_outlined,
+                                        color: isSelected
+                                            ? theme.tertiary
+                                            : theme.primary.withOpacity(0.6),
+                                      ),
+                                      const SizedBox(width: 12),
+                                      Expanded(
+                                        child: Text(
+                                          skill.skillDesc,
+                                          style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w500,
+                                            color: theme.onTertiary,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        SizedBox(
+                          width: double.infinity,
+                          height: 48,
+                          child: ElevatedButton(
+                            onPressed:
+                                (_selectedSkillIds.isNotEmpty && !_isLoading)
+                                    ? _onNextPressed
+                                    : null,
+                            child: _isLoading
+                                ? const CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
+                                        Colors.white),
+                                  )
+                                : const Text('Siguiente'),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
-              const SizedBox(height: 16),
-              Expanded(
-                child: Container(
-                    padding: const EdgeInsets.all(24),
-                    decoration: BoxDecoration(
-                      color: theme.surface,
-                      borderRadius: const BorderRadius.vertical(
-                        top: Radius.circular(24),
-                      ),
-                    ),
-                    child: FutureBuilder<List<Skill>>(
-                      future: _skillsFuture,
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState ==
-                            ConnectionState.waiting) {
-                          return const Center(
-                              child: CircularProgressIndicator());
-                        }
-
-                        if (snapshot.hasError) {
-                          return Center(
-                            child: Text(
-                                'Error al cargar habilidades: ${snapshot.error}'),
-                          );
-                        }
-
-                        final skills = snapshot.data ?? [];
-
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Puedes marcar más de una opción',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: theme.onTertiary,
-                              ),
-                            ),
-                            const SizedBox(height: 8),
-                            Expanded(
-                              child: ListView.separated(
-                                itemCount: skills.length,
-                                separatorBuilder: (_, __) =>
-                                    const SizedBox(height: 8),
-                                itemBuilder: (context, index) {
-                                  final skill = skills[index];
-                                  final isSelected =
-                                      _selectedSkillIds.contains(skill.idSkill);
-
-                                  return GestureDetector(
-                                    onTap: () =>
-                                        _onOptionToggled(skill.idSkill),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(16),
-                                      decoration: BoxDecoration(
-                                        color: isSelected
-                                            ? theme.tertiary.withOpacity(0.2)
-                                            : theme.surface.withOpacity(0.1),
-                                        border: Border.all(
-                                          color: isSelected
-                                              ? theme.tertiary
-                                              : theme.primary.withOpacity(0.3),
-                                          width: 2,
-                                        ),
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Icon(
-                                            isSelected
-                                                ? Icons.check_circle
-                                                : Icons.circle_outlined,
-                                            color: isSelected
-                                                ? theme.tertiary
-                                                : theme.primary
-                                                    .withOpacity(0.6),
-                                          ),
-                                          const SizedBox(width: 12),
-                                          Expanded(
-                                            child: Text(
-                                              skill.skillDesc,
-                                              style: TextStyle(
-                                                fontSize: 16,
-                                                fontWeight: FontWeight.w500,
-                                                color: theme.onTertiary,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            ElevatedButton(
-                              onPressed: _selectedSkillIds.isNotEmpty
-                                  ? _onFinish
-                                  : null,
-                              child: const Text('Siguiente'),
-                            ),
-                          ],
-                        );
-                      },
-                    )),
-              ),
-            ],
-          ),
-        ));
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -27,6 +27,8 @@ class VolunteerAvailabilityScreen extends ConsumerStatefulWidget {
 
 class _VolunteerAvailabilityScreenState
     extends ConsumerState<VolunteerAvailabilityScreen> {
+  bool _isLoading = false;
+
   final Map<String, List<TimeRange>> availability = {
     for (final day in weekDays) day: [],
   };
@@ -44,6 +46,7 @@ class _VolunteerAvailabilityScreenState
   }
 
   Future<void> _handleNext() async {
+    setState(() => _isLoading = true);
     final List<Map<String, String>> availList = [];
 
     availability.forEach((dayName, slots) {
@@ -67,11 +70,17 @@ class _VolunteerAvailabilityScreenState
     );
 
     if (!success) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error al guardar disponibilidad')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error al guardar disponibilidad')),
+        );
+        setState(() => _isLoading = false);
+      }
       return;
     }
+
+    if (!mounted) return;
+    setState(() => _isLoading = false);
 
     Navigator.of(context).pushReplacement(animatedRouteTo(
       context,
@@ -200,8 +209,17 @@ class _VolunteerAvailabilityScreenState
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: isScheduleComplete ? _handleNext : null,
-                          child: const Text('Finalizar registro'),
+                          onPressed: (isScheduleComplete && !_isLoading)
+                              ? _handleNext
+                              : null,
+                          child: _isLoading
+                              ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child:
+                                      CircularProgressIndicator(strokeWidth: 2),
+                                )
+                              : const Text('Finalizar registro'),
                         ),
                       ),
                     ],

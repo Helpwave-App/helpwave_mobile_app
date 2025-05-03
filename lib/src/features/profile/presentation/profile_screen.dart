@@ -2,14 +2,44 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../utils/providers.dart';
+import '../../../utils/secure_storage.dart';
+import 'widgets/profile_info_card.dart';
+import 'widgets/skills_card.dart';
+import 'widgets/availability_card.dart';
 
-class ProfileScreen extends ConsumerWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  String? userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    final role = await SecureStorage.getRole();
+    setState(() {
+      userRole = role;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final profileAsyncValue = ref.watch(profileFutureProvider);
+
+    if (userRole == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    final isVolunteer = userRole == 'volunteer';
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -31,6 +61,7 @@ class ProfileScreen extends ConsumerWidget {
           }
 
           final skillsAsyncValue = ref.watch(skillsFutureProvider);
+          final availabilityAsyncValue = ref.watch(availabilityFutureProvider);
 
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
@@ -57,113 +88,23 @@ class ProfileScreen extends ConsumerWidget {
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 32),
-                Card(
-                  elevation: 2,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16)),
-                  child: Column(
-                    children: [
-                      _ProfileTile(
-                          icon: Icons.email,
-                          label: 'Correo',
-                          value: profile.email),
-                      _ProfileTile(
-                          icon: Icons.phone,
-                          label: 'Teléfono',
-                          value: profile.phone),
-                      _ProfileTile(
-                        icon: Icons.cake,
-                        label: 'Cumpleaños',
-                        value: profile.birthday != null
-                            ? _formatDate(profile.birthday!)
-                            : 'No especificado',
-                      ),
-                      _ProfileTile(
-                          icon: Icons.emoji_events,
-                          label: 'Nivel',
-                          value: profile.level.toString()),
-                      _ProfileTile(
-                          icon: Icons.star,
-                          label: 'Puntaje',
-                          value: profile.scoreProfile.toStringAsFixed(1)),
-                    ],
+                ProfileInfoCard(profile: profile),
+                if (isVolunteer) ...[
+                  const SizedBox(height: 24),
+                  skillsAsyncValue.when(
+                    loading: () => const CircularProgressIndicator(),
+                    error: (e, _) => const Text('Error al cargar habilidades'),
+                    data: (skills) => SkillsCard(skills: skills),
                   ),
-                ),
-                const SizedBox(height: 24),
-                skillsAsyncValue.when(
-                  loading: () => const CircularProgressIndicator(),
-                  error: (e, _) => Text('Error al cargar habilidades'),
-                  data: (skills) => Card(
-                    elevation: 2,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            children: [
-                              Icon(Icons.handyman,
-                                  color: theme.colorScheme.primary),
-                              const SizedBox(width: 8),
-                              Text(
-                                'Habilidades',
-                                style: theme.textTheme.titleMedium!
-                                    .copyWith(fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 12),
-                          Wrap(
-                            spacing: 8,
-                            runSpacing: 8,
-                            children: skills
-                                .map((s) => Chip(label: Text(s)))
-                                .toList(),
-                          ),
-                        ],
-                      ),
-                    ),
+                  const SizedBox(height: 24),
+                  availabilityAsyncValue.when(
+                    loading: () => const CircularProgressIndicator(),
+                    error: (e, _) =>
+                        const Text('Error al cargar disponibilidad'),
+                    data: (availabilities) =>
+                        AvailabilityCard(availabilities: availabilities),
                   ),
-                ),
-                const SizedBox(height: 24),
-                ref.watch(availabilityFutureProvider).when(
-                      loading: () => const CircularProgressIndicator(),
-                      error: (e, _) => Text('Error al cargar disponibilidad'),
-                      data: (availabilities) => Card(
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(Icons.access_time,
-                                      color: theme.colorScheme.primary),
-                                  const SizedBox(width: 8),
-                                  Text(
-                                    'Disponibilidad',
-                                    style: theme.textTheme.titleMedium!
-                                        .copyWith(fontWeight: FontWeight.bold),
-                                  ),
-                                ],
-                              ),
-                              const SizedBox(height: 12),
-                              ...availabilities.map((a) => ListTile(
-                                    leading: const Icon(Icons.calendar_today),
-                                    title: Text(_dayLabel(a.day)),
-                                    subtitle:
-                                        Text('${a.hourStart} - ${a.hourEnd}'),
-                                  )),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                ],
               ],
             ),
           );
@@ -171,43 +112,4 @@ class ProfileScreen extends ConsumerWidget {
       ),
     );
   }
-
-  String _formatDate(DateTime date) {
-    return '${date.day.toString().padLeft(2, '0')}/${date.month.toString().padLeft(2, '0')}/${date.year}';
-  }
-}
-
-class _ProfileTile extends StatelessWidget {
-  final IconData icon;
-  final String label;
-  final String value;
-
-  const _ProfileTile({
-    required this.icon,
-    required this.label,
-    required this.value,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return ListTile(
-      leading: Icon(icon, color: theme.colorScheme.primary),
-      title: Text(label),
-      subtitle: Text(value.isNotEmpty ? value : 'No especificado'),
-    );
-  }
-}
-
-String _dayLabel(String day) {
-  const days = {
-    '1': 'Lunes',
-    '2': 'Martes',
-    '3': 'Miércoles',
-    '4': 'Jueves',
-    '5': 'Viernes',
-    '6': 'Sábado',
-    '7': 'Domingo',
-  };
-  return days[day] ?? 'Día desconocido';
 }

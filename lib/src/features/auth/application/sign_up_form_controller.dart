@@ -24,6 +24,8 @@ class SignUpFormController extends StateNotifier<Map<String, String>> {
       "profile": {
         "name": state["Nombre"]?.trim(),
         "lastName": state["Apellido"]?.trim(),
+        "email": state["Correo electrónico"]?.trim(),
+        "phoneNumber": state["Número de teléfono"]?.trim(),
         "scoreProfile": 0.0,
         "idLevel": userType == "volunteer" ? 1 : 0,
       }

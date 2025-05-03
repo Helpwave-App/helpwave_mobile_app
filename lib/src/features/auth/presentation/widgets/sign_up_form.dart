@@ -29,6 +29,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   final List<TextEditingController> _controllers = [];
   List<String?> _errorMessages = [];
   late List<bool> _obscureTextStates;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -47,6 +48,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   }
 
   Future<void> _onNextPressed() async {
+    setState(() => _isLoading = true);
     final signUpFormController =
         ref.read(signUpFormControllerProvider.notifier);
 
@@ -101,7 +103,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     }
 
     setState(() {});
-    if (hasError) return;
+    if (hasError) {
+      setState(() => _isLoading = false);
+      return;
+    }
 
     try {
       final result = await ref
@@ -150,6 +155,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       if (kDebugMode) {
         print('Error en submit(): $e');
       }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
@@ -213,7 +220,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                         children: [
                           TextField(
                             controller: _controllers[index],
-                            obscureText: field.obscureText,
+                            obscureText: _obscureTextStates[index],
                             keyboardType: field.keyboardType,
                             decoration: InputDecoration(
                               labelText: field.label,
@@ -242,8 +249,14 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                   }),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: _onNextPressed,
-                    child: Text(widget.buttonText),
+                    onPressed: _isLoading ? null : _onNextPressed,
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                      backgroundColor: theme.tertiary,
+                    ),
+                    child: _isLoading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(widget.buttonText),
                   ),
                   const SizedBox(height: 16),
                   Center(

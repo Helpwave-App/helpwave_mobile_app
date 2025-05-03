@@ -39,6 +39,8 @@ class RegistrationCompletedWidget extends StatelessWidget {
 
       final response = await AuthService().login(request);
       await SecureStorage.saveToken(response.token);
+      await SecureStorage.saveIdUser(response.idUser);
+      await SecureStorage.saveRole(response.role);
 
       if (context.mounted) {
         Navigator.of(context).pushReplacement(
