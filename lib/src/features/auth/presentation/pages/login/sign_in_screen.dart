@@ -49,7 +49,7 @@ class _SignInScreenState extends State<SignInScreen> {
     } catch (e) {
       final errorMessage = e.toString().contains('401')
           ? 'Credenciales inválidas'
-          : 'Ocurrió un error. Intenta nuevamente.';
+          : 'Usuario o contraseña incorrectos';
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorMessage)),
       );

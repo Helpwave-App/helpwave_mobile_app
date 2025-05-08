@@ -1,6 +1,6 @@
 class Profile {
   final int id;
-  final String firtsName;
+  final String firstName;
   final String lastName;
   final String email;
   final String phone;
@@ -11,7 +11,7 @@ class Profile {
 
   Profile({
     required this.id,
-    required this.firtsName,
+    required this.firstName,
     required this.lastName,
     required this.email,
     required this.phone,
@@ -24,7 +24,7 @@ class Profile {
   factory Profile.fromJson(Map<String, dynamic> json) {
     return Profile(
       id: json['id'] != null ? int.tryParse(json['id'].toString()) ?? 0 : 0,
-      firtsName: json['name']?.toString() ?? '',
+      firstName: json['name']?.toString() ?? '',
       lastName: json['lastName']?.toString() ?? '',
       email: json['email']?.toString() ?? '',
       phone: json['phoneNumber']?.toString() ?? '',

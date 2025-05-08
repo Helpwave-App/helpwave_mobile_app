@@ -3,8 +3,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
-import '../../utils/api.dart';
-import '../../features/auth/domain/skill_model.dart';
+import '../../../utils/api.dart';
+import '../domain/skill_model.dart';
 
 class SkillService {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
@@ -28,53 +28,26 @@ class SkillService {
     required int idProfile,
     required List<int> skillIds,
   }) async {
-    if (kDebugMode) {
-      print('Enviando habilidades al backend con idProfile: $idProfile');
-      print('Habilidades seleccionadas: $skillIds');
-    }
     final url = Uri.parse('$baseUrl/skillProfiles/batch');
     final response = await http.post(
       url,
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: jsonEncode({
         'idProfile': idProfile,
         'skillIds': skillIds,
       }),
     );
 
+    if (kDebugMode) {
+      print('→ POST $url');
+      print('← Status: ${response.statusCode}');
+      print('← Body: ${response.body}');
+    }
+
     return response.statusCode == 200 || response.statusCode == 201;
   }
 
-  Future<bool> updateVolunteerSkills(
-      String username, List<String> skills) async {
-    final url = Uri.parse('$baseUrl/user/skills');
-    final payload = {
-      'username': username,
-      'skills': skills,
-    };
-
-    if (kDebugMode) {
-      print('→ PUT $url');
-      print('Payload: ${jsonEncode(payload)}');
-    }
-
-    final response = await http.put(
-      url,
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(payload),
-    );
-
-    if (kDebugMode) {
-      print('← Status: ${response.statusCode}');
-      print('← Response: ${response.body}');
-    }
-
-    return response.statusCode == 200;
-  }
-
-  Future<List<String>> getSkillsByProfileId() async {
-    print('📥 Iniciando obtención de habilidades para el perfil');
-
+  Future<List<Map<String, dynamic>>> getSkillsByProfileId() async {
     final String? idUserString = await _secureStorage.read(key: 'id_user');
     final String? jwtToken = await _secureStorage.read(key: 'jwt_token');
 
@@ -90,13 +63,9 @@ class SkillService {
     final response = await http.get(
       Uri.parse('$baseUrl/skillProfiles/user/$idUser'),
       headers: {
-        'Content-Type': 'application/json',
         'Authorization': 'Bearer $jwtToken',
       },
     );
-
-    print('🔄 Respuesta de skillProfiles: ${response.statusCode}');
-    print('📦 Body skillProfiles: ${response.body}');
 
     if (response.statusCode != 200) {
       throw Exception('Error obteniendo skillProfiles');
@@ -105,34 +74,48 @@ class SkillService {
     final List<dynamic> skillProfiles =
         jsonDecode(utf8.decode(response.bodyBytes));
 
-    final List<String> skillNames = [];
+    final List<Map<String, dynamic>> detailedSkills = [];
 
     for (final sp in skillProfiles) {
       final idSkill = sp['idSkill'];
-      print('➡️ Consultando skill con ID: $idSkill');
+      final idSkillProfile = sp['idSkillProfile'];
 
       final skillRes = await http.get(
         Uri.parse('$baseUrl/skills/$idSkill'),
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': 'Bearer $jwtToken',
         },
       );
 
-      print('🔄 Respuesta de skill $idSkill: ${skillRes.statusCode}');
-      print('📦 Body skill $idSkill: ${skillRes.body}');
-
       if (skillRes.statusCode == 200) {
         final skillData = jsonDecode(utf8.decode(skillRes.bodyBytes));
-        final skillDesc = skillData['skillDesc'];
-        skillNames.add(skillDesc);
-        print('✅ Skill obtenida: $skillDesc');
-      } else {
-        print('⚠️ Error al obtener skill con ID $idSkill');
+        detailedSkills.add({
+          'idSkill': idSkill,
+          'idSkillProfile': idSkillProfile,
+          'skillDesc': skillData['skillDesc'],
+        });
       }
     }
 
-    print('🎯 Lista final de skills: $skillNames');
-    return skillNames;
+    return detailedSkills;
+  }
+
+  Future<bool> deleteSkillProfile(int idSkillProfile) async {
+    final String? jwtToken = await _secureStorage.read(key: 'jwt_token');
+
+    if (jwtToken == null) {
+      throw Exception('Token not found');
+    }
+
+    final url = Uri.parse('$baseUrl/skillProfiles/$idSkillProfile');
+    final response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $jwtToken',
+      },
+    );
+
+    return response.statusCode == 200 || response.statusCode == 204;
   }
 }

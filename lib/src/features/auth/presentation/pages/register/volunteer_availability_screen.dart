@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../availability/data/availability_service.dart';
 import '../../../domain/availability_model.dart';
-import '../../widgets/add_time_modal.dart';
+import '../../../domain/add_time_modal.dart';
 import '../../widgets/day_availability_tile.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';

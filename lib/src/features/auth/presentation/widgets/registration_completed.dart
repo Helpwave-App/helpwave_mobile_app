@@ -6,7 +6,7 @@ import '../../../../utils/secure_storage.dart';
 import '../../data/auth_service.dart';
 import '../../domain/login_request_model.dart';
 
-class RegistrationCompletedWidget extends StatelessWidget {
+class RegistrationCompletedWidget extends StatefulWidget {
   final String title;
   final String message;
   final String? subtitle;
@@ -26,15 +26,28 @@ class RegistrationCompletedWidget extends StatelessWidget {
     this.icon = Icons.volunteer_activism,
   });
 
-  void _onNextPressed(BuildContext context) async {
-    if (username == null || password == null) return;
+  @override
+  State<RegistrationCompletedWidget> createState() =>
+      _RegistrationCompletedWidgetState();
+}
+
+class _RegistrationCompletedWidgetState
+    extends State<RegistrationCompletedWidget> {
+  bool _isLoading = false;
+
+  Future<void> _onNextPressed() async {
+    if (widget.username == null || widget.password == null) return;
 
     final scaffoldMessenger = ScaffoldMessenger.of(context);
 
+    setState(() {
+      _isLoading = true;
+    });
+
     try {
       final request = LoginRequest(
-        username: username!.trim(),
-        password: password!.trim(),
+        username: widget.username!.trim(),
+        password: widget.password!.trim(),
       );
 
       final response = await AuthService().login(request);
@@ -42,17 +55,23 @@ class RegistrationCompletedWidget extends StatelessWidget {
       await SecureStorage.saveIdUser(response.idUser);
       await SecureStorage.saveRole(response.role);
 
-      if (context.mounted) {
+      if (mounted) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => const LoadingScreen()),
         );
       }
     } catch (e) {
-      if (context.mounted) {
+      if (mounted) {
         scaffoldMessenger.showSnackBar(
           SnackBar(content: Text('Error al iniciar sesión: $e')),
         );
         Navigator.of(context).pushReplacementNamed(AppRouter.loginRoute);
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -69,13 +88,13 @@ class RegistrationCompletedWidget extends StatelessWidget {
             children: [
               const Spacer(),
               Icon(
-                icon,
+                widget.icon,
                 color: theme.colorScheme.secondary,
                 size: 90,
               ),
               const SizedBox(height: 32),
               Text(
-                title,
+                widget.title,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 28,
@@ -84,17 +103,17 @@ class RegistrationCompletedWidget extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                message,
+                widget.message,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   fontSize: 18,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
               ),
-              if (subtitle != null) ...[
+              if (widget.subtitle != null) ...[
                 const SizedBox(height: 12),
                 Text(
-                  subtitle!,
+                  widget.subtitle!,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -106,17 +125,26 @@ class RegistrationCompletedWidget extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
+                  onPressed: _isLoading ? null : _onNextPressed,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
-                  onPressed: () => _onNextPressed(context),
-                  child: Text(
-                    'Ir al inicio',
-                    style: TextStyle(fontSize: 20),
-                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text(
+                          'Ir al inicio',
+                          style: TextStyle(fontSize: 20),
+                        ),
                 ),
               ),
             ],

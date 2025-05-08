@@ -23,13 +23,28 @@ class AuthService {
   }
 
   Future<int?> getProfileIdByUsername(String username) async {
-    final url = Uri.parse('$baseUrl/profiles?username=$username');
+    final sanitizedUsername = username.trim(); // <-- quita espacios
+    final url = Uri.parse('$baseUrl/profiles?username=$sanitizedUsername');
     final response = await http.get(url);
 
-    if (response.statusCode == 200) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      return data['idProfile'] as int?;
+    if (kDebugMode) {
+      print('→ GET $url');
+      print('← Status: ${response.statusCode}');
+      print('← Body: "${response.body}"');
     }
+
+    if (response.statusCode == 200 && response.body.isNotEmpty) {
+      try {
+        final data = jsonDecode(response.body) as Map<String, dynamic>;
+        return data['idProfile'] as int?;
+      } catch (e) {
+        if (kDebugMode) {
+          print('❌ Error al parsear JSON del perfil: $e');
+        }
+        return null;
+      }
+    }
+
     return null;
   }
 

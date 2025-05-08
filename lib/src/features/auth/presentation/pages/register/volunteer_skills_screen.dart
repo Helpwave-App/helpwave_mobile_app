@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../utils/providers.dart';
 import '../../../../../routing/app_router.dart';
-import '../../../domain/skill_model.dart';
+import '../../../../profile/domain/skill_model.dart';
 
 class VolunteerSkillsScreen extends ConsumerStatefulWidget {
   final int idProfile;
