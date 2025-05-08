@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../utils/week_days.dart';
+import '../../../../availability/application/user_availability_controller.dart';
 import '../../../../availability/data/availability_service.dart';
-import '../../../domain/availability_model.dart';
-import '../../../domain/add_time_modal.dart';
+import '../../../../availability/domain/availability_payload_model.dart';
+import '../../../../availability/domain/add_time_modal.dart';
 import '../../widgets/day_availability_tile.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
@@ -200,7 +202,7 @@ class _VolunteerAvailabilityScreenState
                                 slots: slots,
                                 onAdd: () => _handleOpenAddTimeDialog(day),
                                 onDeleteSlot: (slot) =>
-                                    _handleDeleteSlot(day, slot),
+                                    _handleDeleteSlot(day, slot as TimeRange),
                               );
                             }).toList(),
                           ),
@@ -229,30 +231,5 @@ class _VolunteerAvailabilityScreenState
             ],
           ),
         ));
-  }
-}
-
-const List<String> weekDays = [
-  'Lunes',
-  'Martes',
-  'Miércoles',
-  'Jueves',
-  'Viernes',
-  'Sábado',
-  'Domingo',
-];
-
-class TimeRange {
-  final TimeOfDay start;
-  final TimeOfDay end;
-
-  TimeRange({required this.start, required this.end});
-
-  String formatStart(BuildContext context) {
-    return start.format(context);
-  }
-
-  String formatEnd(BuildContext context) {
-    return end.format(context);
   }
 }

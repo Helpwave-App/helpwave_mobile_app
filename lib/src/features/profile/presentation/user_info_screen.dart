@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../utils/providers.dart';
-import '../domain/profile_model.dart';
 
 class UserInfoScreen extends ConsumerStatefulWidget {
   const UserInfoScreen({super.key});
@@ -13,95 +12,14 @@ class UserInfoScreen extends ConsumerStatefulWidget {
 
 class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
   bool isEditing = false;
-  bool isLoading = false;
 
   final _formKey = GlobalKey<FormState>();
-
-  late TextEditingController emailController;
-  late TextEditingController phoneController;
-  late TextEditingController birthdayController;
-
-  bool controllersInitialized = false;
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    phoneController.dispose();
-    birthdayController.dispose();
-    super.dispose();
-  }
-
-  void initControllers(Profile profile) {
-    emailController = TextEditingController(text: profile.email);
-    phoneController = TextEditingController(text: profile.phone);
-    birthdayController = TextEditingController(
-      text: profile.birthday != null
-          ? '${profile.birthday!.day.toString().padLeft(2, '0')}/${profile.birthday!.month.toString().padLeft(2, '0')}/${profile.birthday!.year}'
-          : '',
-    );
-  }
-
-  DateTime? _parseDate(String dateStr) {
-    try {
-      if (dateStr.isEmpty) return null;
-      final parts = dateStr.split('/');
-      if (parts.length != 3) return null;
-      final day = int.parse(parts[0]);
-      final month = int.parse(parts[1]);
-      final year = int.parse(parts[2]);
-      final date = DateTime(year, month, day);
-      if (date.month != month || date.day != day) return null;
-      return date;
-    } catch (_) {
-      return null;
-    }
-  }
-
-  Future<void> _saveProfileChanges(Profile profile) async {
-    if (_formKey.currentState == null || !_formKey.currentState!.validate()) {
-      return;
-    }
-
-    setState(() => isLoading = true);
-
-    final parsedBirthday = _parseDate(birthdayController.text);
-    if (parsedBirthday == null) {
-      setState(() => isLoading = false);
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Fecha de nacimiento inválida.')),
-      );
-      return;
-    }
-
-    final result = await ref.read(profileServiceProvider).updateProfile(
-          email: emailController.text,
-          phone: phoneController.text,
-          birthday: parsedBirthday,
-        );
-
-    if (mounted) {
-      setState(() {
-        isEditing = false;
-        isLoading = false;
-      });
-
-      final message = result
-          ? 'Perfil actualizado con éxito'
-          : 'Hubo un error al actualizar el perfil';
-
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(message)));
-
-      if (result) {
-        ref.invalidate(profileFutureProvider);
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final profileAsyncValue = ref.watch(profileFutureProvider);
+    final controller = ref.read(userInfoControllerProvider.notifier);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -114,7 +32,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
         actions: [
           if (isEditing)
             IconButton(
-              icon: isLoading
+              icon: controller.isLoading
                   ? const CircularProgressIndicator(
                       strokeWidth: 2, color: Colors.white)
                   : const Icon(Icons.check),
@@ -124,7 +42,8 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                       orElse: () => null,
                     );
                 if (profile != null) {
-                  _saveProfileChanges(profile);
+                  controller.saveProfileChanges(context, _formKey, profile,
+                      () => setState(() => isEditing = false));
                 }
               },
             )
@@ -148,9 +67,9 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
             return const Center(child: Text('No se pudo cargar el perfil.'));
           }
 
-          if (!controllersInitialized) {
-            initControllers(profile);
-            controllersInitialized = true;
+          if (!controller.controllersInitialized) {
+            controller.initControllers(profile);
+            controller.controllersInitialized = true;
           }
 
           return SingleChildScrollView(
@@ -182,7 +101,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                     children: [
                       TextFormField(
                         enabled: isEditing,
-                        controller: emailController,
+                        controller: controller.emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: const InputDecoration(
                           labelText: 'Correo electrónico',
@@ -201,7 +120,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                       const SizedBox(height: 20),
                       TextFormField(
                         enabled: isEditing,
-                        controller: phoneController,
+                        controller: controller.phoneController,
                         keyboardType: TextInputType.phone,
                         decoration: const InputDecoration(
                           labelText: 'Teléfono',
@@ -217,7 +136,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                       const SizedBox(height: 20),
                       TextFormField(
                         enabled: isEditing,
-                        controller: birthdayController,
+                        controller: controller.birthdayController,
                         keyboardType: TextInputType.datetime,
                         decoration: const InputDecoration(
                           labelText: 'Fecha de nacimiento (dd/mm/yyyy)',
@@ -227,7 +146,7 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                           if (value == null || value.isEmpty) {
                             return 'La fecha es requerida';
                           }
-                          if (_parseDate(value) == null) {
+                          if (controller.parseDate(value) == null) {
                             return 'Formato de fecha inválido';
                           }
                           return null;

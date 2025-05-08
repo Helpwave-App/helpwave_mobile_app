@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpwave_mobile_app/src/features/profile/presentation/user_availability_screen.dart';
 
 import '../common/pages/loading_screen.dart';
 import '../features/auth/presentation/pages/welcome_screen.dart';
@@ -108,6 +109,8 @@ class AppRouter {
         return const UserInfoScreen();
       case skillsRoute:
         return const UserSkillsScreen();
+      case availabilityRoute:
+        return UserAvailabilityScreen();
 
       default:
         return const Scaffold(body: Center(child: Text('Ruta no encontrada')));
@@ -195,6 +198,10 @@ class AppRouter {
 
       case skillsRoute:
         return MaterialPageRoute(builder: (_) => const UserSkillsScreen());
+
+      case availabilityRoute:
+        return MaterialPageRoute(
+            builder: (_) => const UserAvailabilityScreen());
 
       default:
         return MaterialPageRoute(

@@ -3,6 +3,8 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../features/auth/application/sign_up_form_controller.dart';
 import '../features/auth/data/auth_service.dart';
+import '../features/availability/application/user_availability_controller.dart';
+import '../features/profile/application/user_info_controller.dart';
 import '../features/profile/application/user_skills_controller.dart';
 import '../features/profile/data/skill_service.dart';
 import '../features/auth/domain/user_model.dart';
@@ -57,3 +59,13 @@ final userSkillsControllerProvider =
     StateNotifierProvider<UserSkillsController, List<Map<String, dynamic>>>(
   (ref) => UserSkillsController(ref),
 );
+
+final userAvailabilityControllerProvider = StateNotifierProvider.autoDispose<
+    UserAvailabilityController, AsyncValue<Map<String, List<TimeRange>>>>(
+  (ref) => UserAvailabilityController(ref),
+);
+
+final userInfoControllerProvider =
+    StateNotifierProvider<UserInfoController, bool>((ref) {
+  return UserInfoController(ref);
+});

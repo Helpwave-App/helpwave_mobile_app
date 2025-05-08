@@ -3,7 +3,6 @@ import '../../../utils/providers.dart';
 
 class UserSkillsController extends StateNotifier<List<Map<String, dynamic>>> {
   final Ref ref;
-  bool isEditMode = false;
   List<Map<String, dynamic>> _allSkills = [];
   Map<String, dynamic>? selectedSkill;
 
@@ -30,11 +29,6 @@ class UserSkillsController extends StateNotifier<List<Map<String, dynamic>>> {
 
   void selectSkill(Map<String, dynamic>? skill) {
     selectedSkill = skill;
-  }
-
-  void toggleEditMode() {
-    isEditMode = !isEditMode;
-    state = [...state]; // Trigger rebuild
   }
 
   Future<void> addSelectedSkill() async {

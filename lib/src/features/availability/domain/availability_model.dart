@@ -1,11 +1,11 @@
 class Availability {
-  final int id;
+  final int? id;
   final String day;
   final String hourStart;
   final String hourEnd;
 
   Availability({
-    required this.id,
+    this.id,
     required this.day,
     required this.hourStart,
     required this.hourEnd,
@@ -18,5 +18,14 @@ class Availability {
       hourStart: json['hourStart'],
       hourEnd: json['hourEnd'],
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      if (id != null) 'idAvailability': id,
+      'day': day,
+      'hourStart': hourStart,
+      'hourEnd': hourEnd,
+    };
   }
 }

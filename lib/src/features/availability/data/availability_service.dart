@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import '../../../utils/api.dart';
 import '../domain/availability_model.dart';
-import '../../auth/domain/availability_model.dart';
+import '../domain/availability_payload_model.dart';
 
 class AvailabilityService {
   final _secureStorage = const FlutterSecureStorage();
@@ -34,6 +34,8 @@ class AvailabilityService {
       throw Exception('Usuario o token no encontrados');
     }
 
+    print('ID USER: $idUser');
+
     final response = await http.get(
       Uri.parse('$baseUrl/availabilities/user/$idUser'),
       headers: {
@@ -47,5 +49,23 @@ class AvailabilityService {
 
     final List<dynamic> data = jsonDecode(utf8.decode(response.bodyBytes));
     return data.map((e) => Availability.fromJson(e)).toList();
+  }
+
+  Future<bool> deleteAvailability(String idAvailability) async {
+    final token = await _secureStorage.read(key: 'jwt_token');
+
+    if (token == null) {
+      throw Exception('Token no encontrados');
+    }
+
+    final response = await http.delete(
+      Uri.parse('$baseUrl/availabilities/$idAvailability'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    return response.statusCode == 200 || response.statusCode == 204;
   }
 }

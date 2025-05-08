@@ -11,11 +11,12 @@ class UserSkillsScreen extends ConsumerStatefulWidget {
 }
 
 class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
+  bool isEditing = false;
+
   @override
   Widget build(BuildContext context) {
     final skills = ref.watch(userSkillsControllerProvider);
     final controller = ref.read(userSkillsControllerProvider.notifier);
-    final isEditing = controller.isEditMode;
     final availableSkills = controller.availableSkills;
     final selected = controller.selectedSkill;
     final theme = Theme.of(context).colorScheme;
@@ -27,7 +28,9 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
           IconButton(
             icon: Icon(isEditing ? Icons.check : Icons.edit),
             onPressed: () {
-              controller.toggleEditMode();
+              setState(() {
+                isEditing = !isEditing; // Cambiar el estado de edición
+              });
               FocusScope.of(context).unfocus();
             },
           ),
