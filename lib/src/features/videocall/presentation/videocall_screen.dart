@@ -51,7 +51,6 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               child: Center(child: _buildLocalVideo()),
             ),
           ),
-          // Controls buttons centered at the bottom of the screen
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(

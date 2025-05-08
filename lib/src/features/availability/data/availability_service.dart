@@ -34,8 +34,6 @@ class AvailabilityService {
       throw Exception('Usuario o token no encontrados');
     }
 
-    print('ID USER: $idUser');
-
     final response = await http.get(
       Uri.parse('$baseUrl/availabilities/user/$idUser'),
       headers: {
@@ -66,6 +64,6 @@ class AvailabilityService {
       },
     );
 
-    return response.statusCode == 200 || response.statusCode == 204;
+    return response.statusCode == 200;
   }
 }
