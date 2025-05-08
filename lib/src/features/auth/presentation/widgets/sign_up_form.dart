@@ -222,6 +222,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                             controller: _controllers[index],
                             obscureText: _obscureTextStates[index],
                             keyboardType: field.keyboardType,
+                            enabled: !_isLoading,
                             decoration: InputDecoration(
                               labelText: field.label,
                               border: const OutlineInputBorder(),
@@ -233,12 +234,14 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                                             ? Icons.visibility_off
                                             : Icons.visibility,
                                       ),
-                                      onPressed: () {
-                                        setState(() {
-                                          _obscureTextStates[index] =
-                                              !_obscureTextStates[index];
-                                        });
-                                      },
+                                      onPressed: _isLoading
+                                          ? null
+                                          : () {
+                                              setState(() {
+                                                _obscureTextStates[index] =
+                                                    !_obscureTextStates[index];
+                                              });
+                                            },
                                     )
                                   : null,
                             ),
@@ -266,14 +269,22 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                         Text("¿Ya tienes una cuenta?",
                             style: TextStyle(color: theme.onTertiary)),
                         TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(animatedRouteTo(
-                                context, AppRouter.loginRoute,
-                                duration: const Duration(milliseconds: 200),
-                                curve: Curves.easeInOut));
-                          },
-                          child: Text("Inicia sesión",
-                              style: TextStyle(color: theme.tertiary)),
+                          onPressed: _isLoading
+                              ? null
+                              : () {
+                                  Navigator.of(context).push(animatedRouteTo(
+                                    context,
+                                    AppRouter.loginRoute,
+                                    duration: const Duration(milliseconds: 200),
+                                    curve: Curves.easeInOut,
+                                  ));
+                                },
+                          child: Text(
+                            "Inicia sesión",
+                            style: TextStyle(
+                              color: _isLoading ? Colors.grey : theme.tertiary,
+                            ),
+                          ),
                         )
                       ],
                     ),

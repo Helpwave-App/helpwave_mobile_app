@@ -101,13 +101,15 @@ class _VolunteerAvailabilityScreenState
       availability.values.any((times) => times.isNotEmpty);
 
   void _handleDeleteSlot(String day, TimeRange slot) {
+    if (_isLoading) return;
     setState(() {
       availability[day]?.remove(slot);
     });
   }
 
   void _handleOpenAddTimeDialog(String day) async {
-    final rootContext = context; // guardamos el context principal
+    if (_isLoading) return;
+    final rootContext = context;
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -203,6 +205,7 @@ class _VolunteerAvailabilityScreenState
                                 onAdd: () => _handleOpenAddTimeDialog(day),
                                 onDeleteSlot: (slot) =>
                                     _handleDeleteSlot(day, slot as TimeRange),
+                                canEdit: !_isLoading,
                               );
                             }).toList(),
                           ),

@@ -159,7 +159,9 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                   _selectedSkillIds.contains(skill.idSkill);
 
                               return GestureDetector(
-                                onTap: () => _onOptionToggled(skill.idSkill),
+                                onTap: _isLoading
+                                    ? null
+                                    : () => _onOptionToggled(skill.idSkill),
                                 child: Container(
                                   padding: const EdgeInsets.all(16),
                                   decoration: BoxDecoration(

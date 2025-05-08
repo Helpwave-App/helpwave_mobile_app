@@ -7,6 +7,7 @@ class DayAvailabilityTile extends StatelessWidget {
   final List<TimeRange> slots;
   final VoidCallback onAdd;
   final Function(TimeRange) onDeleteSlot;
+  final bool canEdit;
 
   const DayAvailabilityTile({
     super.key,
@@ -14,6 +15,7 @@ class DayAvailabilityTile extends StatelessWidget {
     required this.slots,
     required this.onAdd,
     required this.onDeleteSlot,
+    this.canEdit = true,
   });
 
   @override
@@ -31,19 +33,22 @@ class DayAvailabilityTile extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            IconButton(
-              icon: const Icon(Icons.add),
-              onPressed: onAdd,
-            ),
+            if (canEdit)
+              IconButton(
+                icon: const Icon(Icons.add),
+                onPressed: onAdd,
+              ),
           ],
         ),
         ...slots.map((slot) => ListTile(
               title: Text(
                   '${slot.formatStart(context)} - ${slot.formatEnd(context)}'),
-              trailing: IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () => onDeleteSlot(slot),
-              ),
+              trailing: canEdit
+                  ? IconButton(
+                      icon: const Icon(Icons.delete),
+                      onPressed: () => onDeleteSlot(slot),
+                    )
+                  : null,
             )),
         const Divider(),
       ],

@@ -109,6 +109,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(height: 20),
                         TextFormField(
                           controller: _usernameController,
+                          enabled: !_isLoading,
                           decoration: const InputDecoration(
                               labelText: 'Usuario',
                               border: OutlineInputBorder()),
@@ -120,6 +121,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(height: 16),
                         TextFormField(
                           controller: _passwordController,
+                          enabled: !_isLoading, // <-- También aquí
                           obscureText: _obscurePassword,
                           decoration: InputDecoration(
                             labelText: 'Contraseña',
@@ -130,11 +132,13 @@ class _SignInScreenState extends State<SignInScreen> {
                                     ? Icons.visibility_off
                                     : Icons.visibility,
                               ),
-                              onPressed: () {
-                                setState(() {
-                                  _obscurePassword = !_obscurePassword;
-                                });
-                              },
+                              onPressed: _isLoading
+                                  ? null
+                                  : () {
+                                      setState(() {
+                                        _obscurePassword = !_obscurePassword;
+                                      });
+                                    },
                             ),
                           ),
                           validator: (value) =>

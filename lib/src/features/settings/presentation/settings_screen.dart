@@ -53,16 +53,37 @@ class SettingsScreen extends ConsumerWidget {
               title: const Text('Cerrar sesión',
                   style: TextStyle(color: Colors.red)),
               onTap: () async {
-                final authService = ref.read(authServiceProvider);
-                await authService.logout();
+                final confirm = await showDialog<bool>(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Confirmar cierre de sesión'),
+                    content: const Text(
+                        '¿Estás seguro de que deseas cerrar sesión?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, false),
+                        child: const Text('Cancelar'),
+                      ),
+                      TextButton(
+                        onPressed: () => Navigator.pop(context, true),
+                        child: const Text('Cerrar sesión'),
+                      ),
+                    ],
+                  ),
+                );
 
-                clearUserSession(ref);
+                if (confirm == true) {
+                  final authService = ref.read(authServiceProvider);
+                  await authService.logout();
 
-                if (context.mounted) {
-                  Navigator.of(context).pushNamedAndRemoveUntil(
-                    AppRouter.loginRoute,
-                    (route) => false,
-                  );
+                  clearUserSession(ref);
+
+                  if (context.mounted) {
+                    Navigator.of(context).pushNamedAndRemoveUntil(
+                      AppRouter.loginRoute,
+                      (route) => false,
+                    );
+                  }
                 }
               },
             ),

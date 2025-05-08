@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:helpwave_mobile_app/src/routing/app_router.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfileScreen extends StatelessWidget {
+import '../../../routing/app_router.dart';
+import '../../../utils/providers.dart';
+
+class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final authService = ref.read(authServiceProvider);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -19,34 +23,49 @@ class ProfileScreen extends StatelessWidget {
         foregroundColor: theme.colorScheme.onSecondary,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.info_outline),
-              title: const Text('Información de usuario'),
-              onTap: () {
-                Navigator.of(context).pushNamed(AppRouter.userInfoRoute);
-              },
+      body: FutureBuilder<String?>(
+        future: authService.getUserRole(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(child: CircularProgressIndicator());
+          }
+
+          final role = snapshot.data;
+          final isVolunteer = role == 'volunteer';
+
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  leading: const Icon(Icons.info_outline),
+                  title: const Text('Información de usuario'),
+                  onTap: () {
+                    Navigator.of(context).pushNamed(AppRouter.userInfoRoute);
+                  },
+                ),
+                if (isVolunteer)
+                  ListTile(
+                    leading: const Icon(Icons.star_outline),
+                    title: const Text('Habilidades'),
+                    onTap: () {
+                      Navigator.of(context).pushNamed(AppRouter.skillsRoute);
+                    },
+                  ),
+                if (isVolunteer)
+                  ListTile(
+                    leading: const Icon(Icons.schedule),
+                    title: const Text('Disponibilidad'),
+                    onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(AppRouter.availabilityRoute);
+                    },
+                  ),
+              ],
             ),
-            ListTile(
-              leading: const Icon(Icons.star_outline),
-              title: const Text('Habilidades'),
-              onTap: () {
-                Navigator.of(context).pushNamed(AppRouter.skillsRoute);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.schedule),
-              title: const Text('Disponibilidad'),
-              onTap: () {
-                Navigator.of(context).pushNamed(AppRouter.availabilityRoute);
-              },
-            ),
-          ],
-        ),
+          );
+        },
       ),
     );
   }

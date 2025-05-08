@@ -8,6 +8,10 @@ import '../domain/login_request_model.dart';
 import 'auth_response.dart';
 
 class AuthService {
+  Future<String?> getUserRole() async {
+    return await SecureStorage.getRole();
+  }
+
   Future<bool> checkUsername(String username) async {
     final url = Uri.parse('$baseUrl/user/check-username?username=$username');
     final response = await http.get(url);

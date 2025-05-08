@@ -76,9 +76,6 @@ class ProfileService {
             .first, // yyyy-MM-dd
       };
 
-      print('Datos enviados a la API para actualización:');
-      print(body);
-
       final response = await http.put(
         Uri.parse('$baseUrl/profiles/$idUser'),
         headers: {
@@ -88,9 +85,7 @@ class ProfileService {
         body: json.encode(body),
       );
 
-      print('Respuesta de la API: ${response.statusCode}');
       if (response.statusCode == 200) {
-        print('Perfil actualizado exitosamente');
         return true;
       } else {
         throw Exception(
@@ -98,7 +93,6 @@ class ProfileService {
         );
       }
     } catch (e) {
-      print('Error al actualizar perfil: $e');
       throw Exception('Error updating profile: $e');
     }
   }
