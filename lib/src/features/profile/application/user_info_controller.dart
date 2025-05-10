@@ -14,11 +14,7 @@ class UserInfoController extends StateNotifier<bool> {
   final phoneController = TextEditingController();
   final birthdayController = TextEditingController();
 
-  bool controllersInitialized = false;
-
   void initControllers(Profile profile) {
-    if (controllersInitialized) return;
-
     emailController.text = profile.email;
     phoneController.text = profile.phone;
     birthdayController.text = profile.birthday != null
@@ -26,8 +22,6 @@ class UserInfoController extends StateNotifier<bool> {
             '${profile.birthday!.month.toString().padLeft(2, '0')}/'
             '${profile.birthday!.year}'
         : '';
-
-    controllersInitialized = true;
   }
 
   DateTime? parseDate(String dateStr) {
@@ -51,18 +45,17 @@ class UserInfoController extends StateNotifier<bool> {
     Profile profile,
     VoidCallback? onSuccess,
   ) async {
-    state = true;
-
     if (!formKey.currentState!.validate()) return;
 
     final parsedBirthday = parseDate(birthdayController.text);
     if (parsedBirthday == null) {
-      state = false;
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(content: Text('Fecha de nacimiento inválida.')),
       );
       return;
     }
+
+    state = true;
 
     final result = await ref.read(profileServiceProvider).updateProfile(
           email: emailController.text,
@@ -72,10 +65,17 @@ class UserInfoController extends StateNotifier<bool> {
 
     state = false;
 
-    onSuccess?.call();
-
     if (result) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Perfil editado exitosamente.')),
+      );
+
       ref.invalidate(profileFutureProvider);
+      onSuccess?.call();
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Error al guardar los cambios.')),
+      );
     }
   }
 

@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
+import '../../../../../utils/providers.dart';
 import '../../../../../utils/secure_storage.dart';
 import '../../../data/auth_service.dart';
 import '../../../domain/login_request_model.dart';
 
-class SignInScreen extends StatefulWidget {
+class SignInScreen extends ConsumerStatefulWidget {
   const SignInScreen({super.key});
 
   @override
-  State<SignInScreen> createState() => _SignInScreenState();
+  ConsumerState<SignInScreen> createState() => _SignInScreenState();
 }
 
-class _SignInScreenState extends State<SignInScreen> {
+class _SignInScreenState extends ConsumerState<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
   final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -42,6 +44,8 @@ class _SignInScreenState extends State<SignInScreen> {
       await SecureStorage.saveToken(response.token);
       await SecureStorage.saveIdUser(response.idUser);
       await SecureStorage.saveRole(response.role);
+
+      ref.invalidate(profileFutureProvider); // Refrescar el provider del perfil
 
       if (!mounted) return;
 
@@ -121,7 +125,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         const SizedBox(height: 16),
                         TextFormField(
                           controller: _passwordController,
-                          enabled: !_isLoading, // <-- También aquí
+                          enabled: !_isLoading,
                           obscureText: _obscurePassword,
                           decoration: InputDecoration(
                             labelText: 'Contraseña',

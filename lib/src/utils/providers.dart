@@ -12,6 +12,8 @@ import '../features/availability/data/availability_service.dart';
 import '../features/profile/data/profile_service.dart';
 import '../features/profile/domain/profile_model.dart';
 
+final secureStorageProvider = Provider((ref) => const FlutterSecureStorage());
+
 final signUpFormControllerProvider =
     StateNotifierProvider<SignUpFormController, Map<String, String>>(
   (ref) => SignUpFormController(ref),
@@ -29,11 +31,11 @@ final skillServiceProvider = Provider<SkillService>((ref) {
 });
 
 final profileServiceProvider = Provider<ProfileService>((ref) {
-  return ProfileService(FlutterSecureStorage());
+  return ProfileService(ref.watch(secureStorageProvider));
 });
 
 final profileFutureProvider = FutureProvider<Profile?>((ref) async {
-  final service = ref.read(profileServiceProvider);
+  final service = ref.watch(profileServiceProvider);
   return service.getProfile();
 });
 
@@ -68,4 +70,9 @@ final userAvailabilityControllerProvider = StateNotifierProvider.autoDispose<
 final userInfoControllerProvider =
     StateNotifierProvider<UserInfoController, bool>((ref) {
   return UserInfoController(ref);
+});
+
+final userRoleProvider = FutureProvider<String?>((ref) async {
+  final authService = ref.read(authServiceProvider);
+  return authService.getUserRole();
 });

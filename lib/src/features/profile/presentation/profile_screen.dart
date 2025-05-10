@@ -10,7 +10,7 @@ class ProfileScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
-    final authService = ref.read(authServiceProvider);
+    final userRoleAsync = ref.watch(userRoleProvider);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -23,14 +23,8 @@ class ProfileScreen extends ConsumerWidget {
         foregroundColor: theme.colorScheme.onSecondary,
         elevation: 0,
       ),
-      body: FutureBuilder<String?>(
-        future: authService.getUserRole(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState != ConnectionState.done) {
-            return const Center(child: CircularProgressIndicator());
-          }
-
-          final role = snapshot.data;
+      body: userRoleAsync.when(
+        data: (role) {
           final isVolunteer = role == 'volunteer';
 
           return Padding(
@@ -42,6 +36,8 @@ class ProfileScreen extends ConsumerWidget {
                   leading: const Icon(Icons.info_outline),
                   title: const Text('Información de usuario'),
                   onTap: () {
+                    // Forzamos una recarga del perfil al entrar
+                    ref.invalidate(profileFutureProvider);
                     Navigator.of(context).pushNamed(AppRouter.userInfoRoute);
                   },
                 ),
@@ -66,6 +62,8 @@ class ProfileScreen extends ConsumerWidget {
             ),
           );
         },
+        loading: () => const Center(child: CircularProgressIndicator()),
+        error: (error, _) => Center(child: Text('Error al cargar el rol')),
       ),
     );
   }

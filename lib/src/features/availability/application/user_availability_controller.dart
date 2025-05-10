@@ -34,11 +34,20 @@ class UserAvailabilityController
     }
   }
 
-  void addTimeSlot(String day, TimeRange slot) {
+  void addTimeSlot(String day, TimeRange slot, bool applyToAllDays) {
     final current = state.valueOrNull;
     if (current == null) return;
+
     final updated = {...current};
-    updated[day] = [...updated[day]!, slot];
+
+    if (applyToAllDays) {
+      for (var currentDay in weekDays) {
+        updated[currentDay] = [...updated[currentDay]!, slot];
+      }
+    } else {
+      updated[day] = [...updated[day]!, slot];
+    }
+
     state = AsyncData(updated);
   }
 

@@ -29,7 +29,7 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
             icon: Icon(isEditing ? Icons.check : Icons.edit),
             onPressed: () {
               setState(() {
-                isEditing = !isEditing; // Cambiar el estado de edición
+                isEditing = !isEditing;
               });
               FocusScope.of(context).unfocus();
             },
@@ -39,123 +39,130 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
         foregroundColor: theme.onSecondary,
         elevation: 0,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            ...skills.map((skill) {
-              return Padding(
-                padding: const EdgeInsets.symmetric(vertical: 4),
-                child: SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.8,
-                  child: Container(
-                    height: 48,
-                    alignment: Alignment.centerLeft,
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).chipTheme.backgroundColor,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: Colors.grey.shade300),
-                    ),
-                    padding: const EdgeInsets.symmetric(horizontal: 12),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                          child: Text(
-                            skill['skillDesc'],
-                            overflow: TextOverflow.ellipsis,
+      body: controller.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ...skills.map((skill) {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 4),
+                      child: SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.8,
+                        child: Container(
+                          height: 48,
+                          alignment: Alignment.centerLeft,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).chipTheme.backgroundColor,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: Colors.grey.shade300),
+                          ),
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                child: Text(
+                                  skill['skillDesc'],
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                              if (isEditing)
+                                GestureDetector(
+                                  onTap: () async {
+                                    // Verificar que el usuario tenga más de una habilidad
+                                    if (skills.length > 1) {
+                                      final confirm = await showDialog<bool>(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          title: const Text(
+                                              'Confirmar eliminación'),
+                                          content: const Text(
+                                              '¿Estás seguro de eliminar esta habilidad?'),
+                                          actions: [
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, false),
+                                              child: const Text('Cancelar'),
+                                            ),
+                                            TextButton(
+                                              onPressed: () =>
+                                                  Navigator.pop(context, true),
+                                              child: const Text('Eliminar'),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                      if (confirm == true) {
+                                        try {
+                                          await controller.removeSkill(
+                                              skill['idSkillProfile']);
+                                        } catch (e) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            SnackBar(
+                                                content: Text(e.toString())),
+                                          );
+                                        }
+                                      }
+                                    } else {
+                                      // Mostrar mensaje si solo queda una habilidad
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(
+                                        const SnackBar(
+                                          content: Text(
+                                              'Debes mantener al menos una habilidad.'),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  child: const Icon(Icons.close, size: 20),
+                                ),
+                            ],
                           ),
                         ),
-                        if (isEditing)
-                          GestureDetector(
-                            onTap: () async {
-                              // Verificar que el usuario tenga más de una habilidad
-                              if (skills.length > 1) {
-                                final confirm = await showDialog<bool>(
-                                  context: context,
-                                  builder: (context) => AlertDialog(
-                                    title: const Text('Confirmar eliminación'),
-                                    content: const Text(
-                                        '¿Estás seguro de eliminar esta habilidad?'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, false),
-                                        child: const Text('Cancelar'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () =>
-                                            Navigator.pop(context, true),
-                                        child: const Text('Eliminar'),
-                                      ),
-                                    ],
-                                  ),
-                                );
-                                if (confirm == true) {
-                                  try {
-                                    await controller
-                                        .removeSkill(skill['idSkillProfile']);
-                                  } catch (e) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(e.toString())),
-                                    );
-                                  }
-                                }
-                              } else {
-                                // Mostrar mensaje si solo queda una habilidad
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        'Debes mantener al menos una habilidad.'),
-                                  ),
-                                );
-                              }
-                            },
-                            child: const Icon(Icons.close, size: 20),
-                          ),
-                      ],
-                    ),
-                  ),
-                ),
-              );
-            }),
-            if (isEditing) ...[
-              const SizedBox(height: 16),
-              DropdownButtonFormField<Map<String, dynamic>>(
-                value: selected,
-                items: availableSkills
-                    .map((skill) => DropdownMenuItem<Map<String, dynamic>>(
-                          value: skill,
-                          child: Text(skill['skillDesc']),
-                        ))
-                    .toList(),
-                onChanged: (value) => controller.selectSkill(value),
-                decoration: const InputDecoration(
-                  labelText: 'Selecciona una habilidad',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-              const SizedBox(height: 16),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    await controller.addSelectedSkill();
-                  } catch (e) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(e.toString())),
+                      ),
                     );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: theme.primary,
-                ),
-                child: const Text('Agregar habilidad'),
+                  }),
+                  if (isEditing) ...[
+                    const SizedBox(height: 16),
+                    DropdownButtonFormField<Map<String, dynamic>>(
+                      value: selected,
+                      items: availableSkills
+                          .map(
+                              (skill) => DropdownMenuItem<Map<String, dynamic>>(
+                                    value: skill,
+                                    child: Text(skill['skillDesc']),
+                                  ))
+                          .toList(),
+                      onChanged: (value) => controller.selectSkill(value),
+                      decoration: const InputDecoration(
+                        labelText: 'Selecciona una habilidad',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: () async {
+                        try {
+                          await controller.addSelectedSkill();
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())),
+                          );
+                        }
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: theme.primary,
+                      ),
+                      child: const Text('Agregar habilidad'),
+                    ),
+                  ],
+                ],
               ),
-            ],
-          ],
-        ),
-      ),
+            ),
     );
   }
 }

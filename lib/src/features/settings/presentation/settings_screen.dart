@@ -95,8 +95,22 @@ class SettingsScreen extends ConsumerWidget {
 }
 
 void clearUserSession(WidgetRef ref) {
+  // Invalidar los proveedores relacionados con el perfil
   ref.invalidate(profileFutureProvider);
   ref.invalidate(profileProvider);
   ref.invalidate(tempVolunteerProfileProvider);
+
+  // Invalidar proveedores de habilidades y disponibilidad
+  ref.invalidate(skillsFutureProvider);
+  ref.invalidate(userSkillsProvider);
+  ref.invalidate(availabilityFutureProvider);
+
+  // Invalidar el rol de usuario
+  ref.invalidate(userRoleProvider);
+
+  // Invalidar el formulario de registro (si es relevante)
   ref.invalidate(signUpFormControllerProvider);
+
+  // Invalidar controladores de habilidades y disponibilidad
+  ref.invalidate(userSkillsControllerProvider);
 }

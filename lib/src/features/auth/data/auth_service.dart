@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../../utils/api.dart';
 import '../../../utils/secure_storage.dart';
@@ -10,6 +11,14 @@ import 'auth_response.dart';
 class AuthService {
   Future<String?> getUserRole() async {
     return await SecureStorage.getRole();
+  }
+
+  Future<bool> isTokenValid() async {
+    final token = await SecureStorage.getToken();
+    if (token == null) {
+      return false;
+    }
+    return !JwtDecoder.isExpired(token);
   }
 
   Future<bool> checkUsername(String username) async {
@@ -27,7 +36,7 @@ class AuthService {
   }
 
   Future<int?> getProfileIdByUsername(String username) async {
-    final sanitizedUsername = username.trim(); // <-- quita espacios
+    final sanitizedUsername = username.trim();
     final url = Uri.parse('$baseUrl/profiles?username=$sanitizedUsername');
     final response = await http.get(url);
 
@@ -99,5 +108,7 @@ class AuthService {
 
   Future<void> logout() async {
     await SecureStorage.deleteToken();
+    await SecureStorage.deleteRole();
+    await SecureStorage.deleteIdUser();
   }
 }

@@ -145,16 +145,15 @@ class _UserAvailabilityScreenState
                         builder: (_) {
                           return AddTimeModal(
                             day: day,
-                            onSave: (start, end, _) {
+                            onSave: (start, end, applyToAllDays) {
                               controller.addTimeSlot(
-                                day,
-                                TimeRange(start: start, end: end),
-                              );
+                                  day,
+                                  TimeRange(start: start, end: end),
+                                  applyToAllDays);
                             },
                             onError: (msg) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(msg)),
-                              );
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(content: Text(msg)));
                             },
                           );
                         },

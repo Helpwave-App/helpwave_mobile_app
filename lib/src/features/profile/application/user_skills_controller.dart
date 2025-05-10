@@ -5,21 +5,29 @@ class UserSkillsController extends StateNotifier<List<Map<String, dynamic>>> {
   final Ref ref;
   List<Map<String, dynamic>> _allSkills = [];
   Map<String, dynamic>? selectedSkill;
+  bool isLoading = true;
 
   UserSkillsController(this.ref) : super([]) {
     _loadSkills();
   }
 
   Future<void> _loadSkills() async {
-    final userSkills =
-        await ref.read(skillServiceProvider).getSkillsByProfileId();
-    _allSkills = (await ref.read(skillServiceProvider).fetchSkills())
-        .map((s) => {
-              'idSkill': s.idSkill,
-              'skillDesc': s.skillDesc,
-            })
-        .toList();
-    state = userSkills;
+    try {
+      state = [];
+      isLoading = true;
+      final userSkills =
+          await ref.read(skillServiceProvider).getSkillsByProfileId();
+      _allSkills = (await ref.read(skillServiceProvider).fetchSkills())
+          .map((s) => {
+                'idSkill': s.idSkill,
+                'skillDesc': s.skillDesc,
+              })
+          .toList();
+      state = userSkills;
+    } finally {
+      isLoading = false;
+      state = [...state];
+    }
   }
 
   List<Map<String, dynamic>> get availableSkills {

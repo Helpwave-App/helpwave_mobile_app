@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../common/pages/loading_screen.dart';
 import '../../../../routing/app_router.dart';
+import '../../../../utils/providers.dart';
 import '../../../../utils/secure_storage.dart';
 import '../../data/auth_service.dart';
 import '../../domain/login_request_model.dart';
 
-class RegistrationCompletedWidget extends StatefulWidget {
+class RegistrationCompletedWidget extends ConsumerStatefulWidget {
   final String title;
   final String message;
   final String? subtitle;
@@ -27,12 +29,12 @@ class RegistrationCompletedWidget extends StatefulWidget {
   });
 
   @override
-  State<RegistrationCompletedWidget> createState() =>
+  ConsumerState<RegistrationCompletedWidget> createState() =>
       _RegistrationCompletedWidgetState();
 }
 
 class _RegistrationCompletedWidgetState
-    extends State<RegistrationCompletedWidget> {
+    extends ConsumerState<RegistrationCompletedWidget> {
   bool _isLoading = false;
 
   Future<void> _onNextPressed() async {
@@ -54,6 +56,8 @@ class _RegistrationCompletedWidgetState
       await SecureStorage.saveToken(response.token);
       await SecureStorage.saveIdUser(response.idUser);
       await SecureStorage.saveRole(response.role);
+
+      ref.invalidate(profileFutureProvider);
 
       if (mounted) {
         Navigator.of(context).pushReplacement(
