@@ -165,7 +165,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         const SizedBox(height: 16),
                         Center(
                           child: TextButton(
-                            onPressed: () {},
+                            onPressed: _isLoading ? null : () {},
                             child: Text("¿Olvidaste tu contraseña?",
                                 style: TextStyle(color: theme.tertiary)),
                           ),
@@ -178,13 +178,16 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                               Text("¿Aún no tienes una cuenta?",
                                   style: TextStyle(color: theme.onTertiary)),
                               TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).push(animatedRouteTo(
-                                      context, AppRouter.userTypeRoute,
-                                      duration:
-                                          const Duration(milliseconds: 200),
-                                      curve: Curves.easeInOut));
-                                },
+                                onPressed: _isLoading
+                                    ? null
+                                    : () {
+                                        Navigator.of(context).push(
+                                            animatedRouteTo(context,
+                                                AppRouter.userTypeRoute,
+                                                duration: const Duration(
+                                                    milliseconds: 200),
+                                                curve: Curves.easeInOut));
+                                      },
                                 child: Text("Regístrate ahora",
                                     style: TextStyle(color: theme.tertiary)),
                               )

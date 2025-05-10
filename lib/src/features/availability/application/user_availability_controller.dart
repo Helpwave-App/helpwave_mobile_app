@@ -56,7 +56,6 @@ class UserAvailabilityController
     final availability = state.valueOrNull;
     if (availability == null) return;
 
-    // Verifica si eliminar este horario dejaría sin disponibilidad en toda la semana
     final totalRemainingSlots = availability.values
         .expand((daySlots) => daySlots)
         .where((s) => s.id != null)
@@ -64,7 +63,6 @@ class UserAvailabilityController
 
     if (totalRemainingSlots.length == 1 &&
         totalRemainingSlots[0].id == slot.id) {
-      // Si es el único horario, no permite eliminarlo
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
             content: Text('Debes tener al menos una disponibilidad')),
@@ -72,12 +70,10 @@ class UserAvailabilityController
       return;
     }
 
-    // Elimina el slot de la lista para ese día
     final updatedSlots = [...availability[day]!];
     updatedSlots.removeWhere(
         (s) => s.start == slot.start && s.end == slot.end && s.id == slot.id);
 
-    // Actualiza el estado con la nueva disponibilidad
     final updatedAvailability = {...availability, day: updatedSlots};
     state = AsyncValue.data(updatedAvailability);
 
@@ -87,7 +83,6 @@ class UserAvailabilityController
             .read(availabilityServiceProvider)
             .deleteAvailability(slot.id!);
         if (success) {
-          // Solo muestra el SnackBar si la eliminación fue exitosa
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('Horario eliminado exitosamente')),
           );

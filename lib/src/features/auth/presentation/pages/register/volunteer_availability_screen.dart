@@ -204,7 +204,7 @@ class _VolunteerAvailabilityScreenState
                                 slots: slots,
                                 onAdd: () => _handleOpenAddTimeDialog(day),
                                 onDeleteSlot: (slot) =>
-                                    _handleDeleteSlot(day, slot as TimeRange),
+                                    _handleDeleteSlot(day, slot),
                                 canEdit: !_isLoading,
                               );
                             }).toList(),

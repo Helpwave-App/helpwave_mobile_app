@@ -109,7 +109,6 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                     key: _formKey,
                     child: Column(
                       children: [
-                        // Otros campos de texto
                         TextFormField(
                           enabled: isEditing,
                           controller: controller.emailController,
