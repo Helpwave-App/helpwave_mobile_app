@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 class AddTimeModal extends StatefulWidget {
   final String day;
   final void Function(TimeOfDay start, TimeOfDay end, bool applyAll) onSave;
-  final void Function(String message) onError; // <-- nuevo callback
+  final void Function(String message) onError;
 
   const AddTimeModal({
-    Key? key,
+    super.key,
     required this.day,
     required this.onSave,
     required this.onError,
-  }) : super(key: key);
+  });
 
   @override
   _AddTimeModalState createState() => _AddTimeModalState();
@@ -28,9 +28,7 @@ class _AddTimeModalState extends State<AddTimeModal> {
     final endMinutes = endTime!.hour * 60 + endTime!.minute;
 
     if (startMinutes >= endMinutes) {
-      // 1️⃣ cerramos el modal
       Navigator.pop(context);
-      // 2️⃣ informamos el error
       widget.onError('La hora de fin debe ser posterior a la hora de inicio');
       return;
     }

@@ -7,13 +7,21 @@ class RegistrationCompletedVolunteerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const RegistrationCompletedWidget(
+    final args =
+        ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>?;
+
+    final username = args?['username'];
+    final password = args?['password'];
+
+    return RegistrationCompletedWidget(
       title: '¡Gracias por registrarte como voluntario!',
       message:
           'Ahora formas parte de HelpWave, donde podrás brindar apoyo a personas que lo necesitan de forma remota.',
       subtitle: 'Tu tiempo y ayuda pueden marcar una gran diferencia.',
       icon: Icons.volunteer_activism,
       userType: 'volunteer',
+      username: username,
+      password: password,
     );
   }
 }

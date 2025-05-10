@@ -1,38 +1,83 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../common/pages/loading_screen.dart';
 import '../../../../routing/app_router.dart';
-import '../../../../common/animations/animated_route.dart';
+import '../../../../utils/providers.dart';
+import '../../../../utils/secure_storage.dart';
+import '../../data/auth_service.dart';
+import '../../domain/login_request_model.dart';
 
-class RegistrationCompletedWidget extends StatelessWidget {
+class RegistrationCompletedWidget extends ConsumerStatefulWidget {
   final String title;
   final String message;
   final String? subtitle;
   final IconData icon;
   final String userType;
+  final String? username;
+  final String? password;
 
   const RegistrationCompletedWidget({
     super.key,
     required this.title,
     required this.message,
     required this.userType,
+    this.username,
+    this.password,
     this.subtitle,
     this.icon = Icons.volunteer_activism,
   });
 
-  void _onNextPressed(BuildContext context) {
-    final route = userType == "requester"
-        ? AppRouter.homeRequesterRoute
-        : AppRouter.homeVolunteerRoute;
+  @override
+  ConsumerState<RegistrationCompletedWidget> createState() =>
+      _RegistrationCompletedWidgetState();
+}
 
-    Navigator.of(context).push(
-      animatedRouteTo(
-        context,
-        route,
-        duration: const Duration(milliseconds: 1000),
-        type: RouteTransitionType.pureFade,
-        curve: Curves.easeInOutBack,
-      ),
-    );
+class _RegistrationCompletedWidgetState
+    extends ConsumerState<RegistrationCompletedWidget> {
+  bool _isLoading = false;
+
+  Future<void> _onNextPressed() async {
+    if (widget.username == null || widget.password == null) return;
+
+    final scaffoldMessenger = ScaffoldMessenger.of(context);
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      final request = LoginRequest(
+        username: widget.username!.trim(),
+        password: widget.password!.trim(),
+      );
+
+      final response = await AuthService().login(request);
+      await SecureStorage.saveToken(response.token);
+      await SecureStorage.saveIdUser(response.idUser);
+      await SecureStorage.saveRole(response.role);
+
+      ref.invalidate(profileFutureProvider);
+
+      if (mounted) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(builder: (_) => const LoadingScreen()),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        scaffoldMessenger.showSnackBar(
+          SnackBar(content: Text('Error al iniciar sesión: $e')),
+        );
+        Navigator.of(context).pushReplacementNamed(AppRouter.loginRoute);
+      }
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isLoading = false;
+        });
+      }
+    }
   }
 
   @override
@@ -47,13 +92,13 @@ class RegistrationCompletedWidget extends StatelessWidget {
             children: [
               const Spacer(),
               Icon(
-                icon,
+                widget.icon,
                 color: theme.colorScheme.secondary,
                 size: 90,
               ),
               const SizedBox(height: 32),
               Text(
-                title,
+                widget.title,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 28,
@@ -62,17 +107,17 @@ class RegistrationCompletedWidget extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                message,
+                widget.message,
                 style: theme.textTheme.bodyLarge?.copyWith(
                   fontSize: 18,
                   height: 1.5,
                 ),
                 textAlign: TextAlign.center,
               ),
-              if (subtitle != null) ...[
+              if (widget.subtitle != null) ...[
                 const SizedBox(height: 12),
                 Text(
-                  subtitle!,
+                  widget.subtitle!,
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -84,17 +129,26 @@ class RegistrationCompletedWidget extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
+                  onPressed: _isLoading ? null : _onNextPressed,
                   style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(24),
                     ),
                   ),
-                  onPressed: () => _onNextPressed(context),
-                  child: Text(
-                    'Ir al inicio',
-                    style: TextStyle(fontSize: 20),
-                  ),
+                  child: _isLoading
+                      ? const SizedBox(
+                          width: 24,
+                          height: 24,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 3,
+                            color: Colors.white,
+                          ),
+                        )
+                      : const Text(
+                          'Ir al inicio',
+                          style: TextStyle(fontSize: 20),
+                        ),
                 ),
               ),
             ],

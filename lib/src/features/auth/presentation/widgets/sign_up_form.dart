@@ -1,23 +1,25 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 
 import '../../../../common/animations/animated_route.dart';
-import '../../application/sign_up_form_controller.dart';
+import '../../../../utils/providers.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
   final String title;
   final List<FormFieldData> fields;
   final String nextRoute;
   final String buttonText;
+  final String userType;
 
-  const SignUpForm({
-    super.key,
-    required this.title,
-    required this.fields,
-    required this.nextRoute,
-    required this.buttonText,
-  });
+  const SignUpForm(
+      {super.key,
+      required this.title,
+      required this.fields,
+      required this.nextRoute,
+      required this.buttonText,
+      required this.userType});
 
   @override
   ConsumerState<SignUpForm> createState() => _SignUpFormState();
@@ -25,11 +27,16 @@ class SignUpForm extends ConsumerStatefulWidget {
 
 class _SignUpFormState extends ConsumerState<SignUpForm> {
   final List<TextEditingController> _controllers = [];
+  List<String?> _errorMessages = [];
+  late List<bool> _obscureTextStates;
+  bool _isLoading = false;
 
   @override
   void initState() {
     super.initState();
     _controllers.addAll(widget.fields.map((_) => TextEditingController()));
+    _errorMessages = List<String?>.filled(widget.fields.length, null);
+    _obscureTextStates = widget.fields.map((f) => f.obscureText).toList();
   }
 
   @override
@@ -40,23 +47,123 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     super.dispose();
   }
 
-  void _onNextPressed() {
+  Future<void> _onNextPressed() async {
+    setState(() => _isLoading = true);
     final signUpFormController =
         ref.read(signUpFormControllerProvider.notifier);
 
+    bool hasError = false;
     for (int i = 0; i < widget.fields.length; i++) {
-      signUpFormController.updateField(
-          widget.fields[i].label, _controllers[i].text);
+      final value = _controllers[i].text.trim();
+      final field = widget.fields[i].label;
+
+      if (value.isEmpty) {
+        _errorMessages[i] = 'Este campo es obligatorio';
+        hasError = true;
+        continue;
+      }
+
+      if (field == "Nombre" || field == "Apellido") {
+        final cleaned = value.trim();
+        if (!RegExp(r'^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$').hasMatch(cleaned)) {
+          _errorMessages[i] = 'Usa solo letras y espacios válidos';
+          hasError = true;
+          continue;
+        }
+      }
+
+      if (field == "Número de teléfono") {
+        final cleaned = value.trim();
+        if (!RegExp(r'^\d{9}$').hasMatch(cleaned)) {
+          _errorMessages[i] = 'Ingresa un número de 9 dígitos válido';
+          hasError = true;
+          continue;
+        }
+      }
+
+      if (field == "Nombre de usuario") {
+        final cleaned = value.trim();
+        if (!RegExp(r'^[a-zA-Z0-9_]{6,}$').hasMatch(cleaned)) {
+          _errorMessages[i] = 'Usa al menos 6 caracteres alfanuméricos';
+          hasError = true;
+          continue;
+        }
+      }
+
+      if (field == "Contraseña") {
+        if (value.length < 6) {
+          _errorMessages[i] = 'La contraseña debe tener al menos 6 caracteres';
+          hasError = true;
+          continue;
+        }
+      }
+
+      _errorMessages[i] = null;
+      signUpFormController.updateField(field, value);
     }
 
-    print('Datos en Riverpod: ${ref.read(signUpFormControllerProvider)}');
+    setState(() {});
+    if (hasError) {
+      setState(() => _isLoading = false);
+      return;
+    }
 
-    Navigator.of(context).push(animatedRouteTo(
-      context,
-      widget.nextRoute,
-      duration: const Duration(milliseconds: 300),
-      curve: Curves.easeInOut,
-    ));
+    try {
+      final result = await ref
+          .read(signUpFormControllerProvider.notifier)
+          .submit(widget.userType);
+
+      if (result == null || result.containsKey('error')) {
+        final idx =
+            widget.fields.indexWhere((f) => f.label == 'Nombre de usuario');
+        if (idx != -1) {
+          _errorMessages[idx] = result?['error'] ?? 'Error desconocido';
+          setState(() {});
+        }
+        return;
+      }
+
+      final idProfile = result['idProfile'];
+      if (kDebugMode) {
+        print('idProfile obtenido después del registro: $idProfile');
+      }
+      if (!mounted) return;
+
+      final usernameIndex =
+          widget.fields.indexWhere((f) => f.label == 'Nombre de usuario');
+      final passwordIndex =
+          widget.fields.indexWhere((f) => f.label == 'Contraseña');
+
+      if (usernameIndex == -1 || passwordIndex == -1) {
+        _showError('Error interno: faltan campos de usuario o contraseña.');
+        return;
+      }
+
+      Navigator.of(context).pushReplacement(animatedRouteTo(
+        context,
+        widget.nextRoute,
+        args: {
+          'idProfile': idProfile,
+          'username': _controllers[usernameIndex].text.trim(),
+          'password': _controllers[passwordIndex].text.trim(),
+        },
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeInOut,
+      ));
+    } catch (e) {
+      _showError('Ocurrió un error inesperado. Intenta de nuevo.');
+      if (kDebugMode) {
+        print('Error en submit(): $e');
+      }
+    } finally {
+      if (mounted) setState(() => _isLoading = false);
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text(message)),
+    );
   }
 
   @override
@@ -108,21 +215,51 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                     final field = widget.fields[index];
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 16),
-                      child: TextField(
-                        controller: _controllers[index],
-                        obscureText: field.obscureText,
-                        keyboardType: field.keyboardType,
-                        decoration: InputDecoration(
-                          labelText: field.label,
-                          border: const OutlineInputBorder(),
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          TextField(
+                            controller: _controllers[index],
+                            obscureText: _obscureTextStates[index],
+                            keyboardType: field.keyboardType,
+                            enabled: !_isLoading,
+                            decoration: InputDecoration(
+                              labelText: field.label,
+                              border: const OutlineInputBorder(),
+                              errorText: _errorMessages[index],
+                              suffixIcon: field.obscureText
+                                  ? IconButton(
+                                      icon: Icon(
+                                        _obscureTextStates[index]
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                      ),
+                                      onPressed: _isLoading
+                                          ? null
+                                          : () {
+                                              setState(() {
+                                                _obscureTextStates[index] =
+                                                    !_obscureTextStates[index];
+                                              });
+                                            },
+                                    )
+                                  : null,
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   }),
                   const SizedBox(height: 20),
                   ElevatedButton(
-                    onPressed: _onNextPressed,
-                    child: Text(widget.buttonText),
+                    onPressed: _isLoading ? null : _onNextPressed,
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                      backgroundColor: theme.tertiary,
+                    ),
+                    child: _isLoading
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : Text(widget.buttonText),
                   ),
                   const SizedBox(height: 16),
                   Center(
@@ -132,14 +269,22 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                         Text("¿Ya tienes una cuenta?",
                             style: TextStyle(color: theme.onTertiary)),
                         TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(animatedRouteTo(
-                                context, AppRouter.loginRoute,
-                                duration: const Duration(milliseconds: 200),
-                                curve: Curves.easeInOut));
-                          },
-                          child: Text("Inicia sesión",
-                              style: TextStyle(color: theme.tertiary)),
+                          onPressed: _isLoading
+                              ? null
+                              : () {
+                                  Navigator.of(context).push(animatedRouteTo(
+                                    context,
+                                    AppRouter.loginRoute,
+                                    duration: const Duration(milliseconds: 200),
+                                    curve: Curves.easeInOut,
+                                  ));
+                                },
+                          child: Text(
+                            "Inicia sesión",
+                            style: TextStyle(
+                              color: _isLoading ? Colors.grey : theme.tertiary,
+                            ),
+                          ),
                         )
                       ],
                     ),

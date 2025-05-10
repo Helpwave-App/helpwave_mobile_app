@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'src/constants/app_theme.dart';
+import 'src/utils/app_theme.dart';
 import 'src/routing/app_router.dart';
 
 void main() {
@@ -17,8 +18,17 @@ class HelpWaveApp extends StatelessWidget {
       title: 'HelpWave',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      initialRoute: AppRouter.welcomeRoute,
+      initialRoute: AppRouter.loadingRoute,
       onGenerateRoute: AppRouter.generateRoute,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('es'), // Español
+        Locale('en'), // Inglés
+      ],
     );
   }
 }

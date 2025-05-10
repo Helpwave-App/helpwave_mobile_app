@@ -8,10 +8,10 @@ class WelcomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final theme = Theme.of(context).colorScheme;
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.secondary,
+      backgroundColor: theme.secondary,
       body: Column(
         children: [
           const SizedBox(height: 100),
@@ -22,10 +22,10 @@ class WelcomeScreen extends StatelessWidget {
                   tag: 'app-logo',
                   child: CircleAvatar(
                     radius: 48,
-                    backgroundColor: Theme.of(context).colorScheme.surface,
+                    backgroundColor: theme.surface,
                     child: Icon(
                       Icons.volunteer_activism,
-                      color: Theme.of(context).colorScheme.tertiary,
+                      color: theme.tertiary,
                       size: 48,
                     ),
                   ),
@@ -37,7 +37,7 @@ class WelcomeScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.surface,
+                    color: theme.surface,
                   ),
                 ),
                 const SizedBox(height: 12),
@@ -62,7 +62,7 @@ class WelcomeScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.surface,
+              color: theme.surface,
               borderRadius:
                   const BorderRadius.vertical(top: Radius.circular(24)),
             ),

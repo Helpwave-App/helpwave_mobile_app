@@ -1,53 +1,115 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../widgets/add_time_modal.dart';
+import '../../../../../utils/week_days.dart';
+import '../../../../availability/application/user_availability_controller.dart';
+import '../../../../availability/data/availability_service.dart';
+import '../../../../availability/domain/availability_payload_model.dart';
+import '../../../../availability/domain/add_time_modal.dart';
 import '../../widgets/day_availability_tile.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
 
-class VolunteerAvailabilityScreen extends StatefulWidget {
-  const VolunteerAvailabilityScreen({super.key});
+class VolunteerAvailabilityScreen extends ConsumerStatefulWidget {
+  final int idProfile;
+  final String username;
+  final String password;
+
+  const VolunteerAvailabilityScreen({
+    super.key,
+    required this.idProfile,
+    required this.username,
+    required this.password,
+  });
 
   @override
-  State<VolunteerAvailabilityScreen> createState() =>
+  ConsumerState<VolunteerAvailabilityScreen> createState() =>
       _VolunteerAvailabilityScreenState();
 }
 
 class _VolunteerAvailabilityScreenState
-    extends State<VolunteerAvailabilityScreen> {
+    extends ConsumerState<VolunteerAvailabilityScreen> {
+  bool _isLoading = false;
+
   final Map<String, List<TimeRange>> availability = {
-    'Lunes': [],
-    'Martes': [],
-    'Miércoles': [],
-    'Jueves': [],
-    'Viernes': [],
-    'Sábado': [],
-    'Domingo': [],
+    for (final day in weekDays) day: [],
   };
 
-  void _handleNext() {
-    Navigator.of(context).push(
-      animatedRouteTo(
-        context,
-        AppRouter.registrationCompletedVolunteerRoute,
-        duration: const Duration(milliseconds: 1000),
-        type: RouteTransitionType.pureFade,
-        curve: Curves.easeInOutBack,
-      ),
+  int _dayNameToNumber(String name) {
+    final index = weekDays.indexOf(name);
+    if (index == -1) throw ArgumentError('Nombre de día inválido: $name');
+    return index + 1;
+  }
+
+  String _formatTime24H(TimeOfDay time) {
+    final hour = time.hour.toString().padLeft(2, '0');
+    final minute = time.minute.toString().padLeft(2, '0');
+    return '$hour:$minute';
+  }
+
+  Future<void> _handleNext() async {
+    setState(() => _isLoading = true);
+    final List<Map<String, String>> availList = [];
+
+    availability.forEach((dayName, slots) {
+      final dayIndex = _dayNameToNumber(dayName);
+      for (final slot in slots) {
+        availList.add({
+          'day': '$dayIndex',
+          'hourStart': _formatTime24H(slot.start),
+          'hourEnd': _formatTime24H(slot.end),
+        });
+      }
+    });
+
+    final payload = {
+      'idProfile': widget.idProfile,
+      'availabilities': availList,
+    };
+
+    final success = await AvailabilityService.saveAvailability(
+      AvailabilityPayload.fromMap(payload),
     );
+
+    if (!success) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Error al guardar disponibilidad')),
+        );
+        setState(() => _isLoading = false);
+      }
+      return;
+    }
+
+    if (!mounted) return;
+    setState(() => _isLoading = false);
+
+    Navigator.of(context).pushReplacement(animatedRouteTo(
+      context,
+      AppRouter.registrationCompletedVolunteerRoute,
+      type: RouteTransitionType.pureFade,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOutBack,
+      args: {
+        'username': widget.username,
+        'password': widget.password,
+      },
+    ));
   }
 
   bool get isScheduleComplete =>
       availability.values.any((times) => times.isNotEmpty);
 
   void _handleDeleteSlot(String day, TimeRange slot) {
+    if (_isLoading) return;
     setState(() {
       availability[day]?.remove(slot);
     });
   }
 
   void _handleOpenAddTimeDialog(String day) async {
-    final rootContext = context; // guardamos el context principal
+    if (_isLoading) return;
+    final rootContext = context;
     await showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
@@ -97,93 +159,80 @@ class _VolunteerAvailabilityScreenState
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
 
-    return Scaffold(
-      backgroundColor: theme.secondary,
-      body: Column(
-        children: [
-          const SizedBox(height: 80),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back, color: theme.surface),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                const SizedBox(width: 8),
-                Text(
+    return PopScope(
+        canPop: false,
+        child: Scaffold(
+          backgroundColor: theme.secondary,
+          body: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Text(
                   'Disponibilidad',
                   style: TextStyle(
                     color: theme.surface,
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                   ),
+                  textAlign: TextAlign.left,
                 ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                color: theme.surface,
-                borderRadius:
-                    const BorderRadius.vertical(top: Radius.circular(24)),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "¿En qué días y horarios puedes brindar ayuda?",
-                    style: TextStyle(fontSize: 16, color: theme.onTertiary),
+              const SizedBox(height: 16),
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(24),
+                  decoration: BoxDecoration(
+                    color: theme.surface,
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(24)),
                   ),
-                  const SizedBox(height: 16),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: availability.keys.map((day) {
-                          final slots = availability[day] ?? [];
-                          return DayAvailabilityTile(
-                            day: day,
-                            slots: slots,
-                            onAdd: () => _handleOpenAddTimeDialog(day),
-                            onDeleteSlot: (slot) =>
-                                _handleDeleteSlot(day, slot),
-                          );
-                        }).toList(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "¿En qué días y horarios puedes brindar ayuda?",
+                        style: TextStyle(fontSize: 16, color: theme.onTertiary),
                       ),
-                    ),
+                      const SizedBox(height: 16),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: availability.keys.map((day) {
+                              final slots = availability[day] ?? [];
+                              return DayAvailabilityTile(
+                                day: day,
+                                slots: slots,
+                                onAdd: () => _handleOpenAddTimeDialog(day),
+                                onDeleteSlot: (slot) =>
+                                    _handleDeleteSlot(day, slot),
+                                canEdit: !_isLoading,
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          onPressed: (isScheduleComplete && !_isLoading)
+                              ? _handleNext
+                              : null,
+                          child: _isLoading
+                              ? const SizedBox(
+                                  height: 20,
+                                  width: 20,
+                                  child:
+                                      CircularProgressIndicator(strokeWidth: 2),
+                                )
+                              : const Text('Finalizar registro'),
+                        ),
+                      ),
+                    ],
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      onPressed: isScheduleComplete ? _handleNext : null,
-                      child: const Text('Finalizar registro'),
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
-}
-
-class TimeRange {
-  final TimeOfDay start;
-  final TimeOfDay end;
-
-  TimeRange({required this.start, required this.end});
-
-  String formatStart(BuildContext context) {
-    return start.format(context);
-  }
-
-  String formatEnd(BuildContext context) {
-    return end.format(context);
+        ));
   }
 }
