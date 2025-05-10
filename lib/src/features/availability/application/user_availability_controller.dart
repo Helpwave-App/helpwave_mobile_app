@@ -51,14 +51,33 @@ class UserAvailabilityController
     state = AsyncData(updated);
   }
 
-  Future<void> removeTimeSlot(String day, TimeRange slot) async {
+  Future<void> removeTimeSlot(
+      BuildContext context, String day, TimeRange slot) async {
     final availability = state.valueOrNull;
     if (availability == null) return;
 
+    // Verifica si eliminar este horario dejaría sin disponibilidad en toda la semana
+    final totalRemainingSlots = availability.values
+        .expand((daySlots) => daySlots)
+        .where((s) => s.id != null)
+        .toList();
+
+    if (totalRemainingSlots.length == 1 &&
+        totalRemainingSlots[0].id == slot.id) {
+      // Si es el único horario, no permite eliminarlo
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+            content: Text('Debes tener al menos una disponibilidad')),
+      );
+      return;
+    }
+
+    // Elimina el slot de la lista para ese día
     final updatedSlots = [...availability[day]!];
     updatedSlots.removeWhere(
         (s) => s.start == slot.start && s.end == slot.end && s.id == slot.id);
 
+    // Actualiza el estado con la nueva disponibilidad
     final updatedAvailability = {...availability, day: updatedSlots};
     state = AsyncValue.data(updatedAvailability);
 
@@ -67,11 +86,19 @@ class UserAvailabilityController
         final success = await ref
             .read(availabilityServiceProvider)
             .deleteAvailability(slot.id!);
-        if (!success) {
+        if (success) {
+          // Solo muestra el SnackBar si la eliminación fue exitosa
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Horario eliminado exitosamente')),
+          );
+        } else {
           throw Exception('Error al eliminar disponibilidad del servidor');
         }
       } catch (e, st) {
         state = AsyncValue.error(e, st);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al eliminar: $e')),
+        );
       }
     }
   }

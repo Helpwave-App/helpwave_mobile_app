@@ -213,14 +213,8 @@ class _UserAvailabilityScreenState
 
                               if (confirm == true) {
                                 try {
-                                  await controller.removeTimeSlot(day, slot);
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text(
-                                              'Horario eliminado exitosamente')),
-                                    );
-                                  }
+                                  await controller.removeTimeSlot(
+                                      context, day, slot);
                                 } catch (e) {
                                   if (context.mounted) {
                                     ScaffoldMessenger.of(context).showSnackBar(
