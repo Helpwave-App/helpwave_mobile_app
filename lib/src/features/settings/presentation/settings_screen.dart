@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:helpwave_mobile_app/src/utils/providers.dart';
+import 'package:helpwave_mobile_app/src/utils/constants/providers.dart';
 import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 
 class SettingsScreen extends ConsumerWidget {

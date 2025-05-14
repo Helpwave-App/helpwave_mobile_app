@@ -1,11 +1,21 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:helpwave_mobile_app/src/utils/firebase/firebase_options.dart';
 
-import 'src/utils/app_theme.dart';
+import 'src/features/notifications/services/notification_service.dart';
+import 'src/utils/constants/app_theme.dart';
 import 'src/routing/app_router.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  await NotificationService.initialize();
+
   runApp(const ProviderScope(child: HelpWaveApp()));
 }
 

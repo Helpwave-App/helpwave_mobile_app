@@ -71,18 +71,28 @@ class WelcomeScreen extends StatelessWidget {
               children: [
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(animatedRouteTo(
-                        context, AppRouter.loginRoute,
-                        curve: Curves.easeInOutBack));
+                    Navigator.of(context).push(
+                      animatedRouteTo(
+                        context,
+                        AppRouter.permissionsRoute,
+                        args: {'next': AppRouter.loginRoute},
+                        curve: Curves.easeInOutBack,
+                      ),
+                    );
                   },
                   child: const Text("Iniciar sesión"),
                 ),
                 const SizedBox(height: 16),
                 OutlinedButton(
                   onPressed: () {
-                    Navigator.of(context).push(animatedRouteTo(
-                        context, AppRouter.userTypeRoute,
-                        curve: Curves.easeInOutBack));
+                    Navigator.of(context).push(
+                      animatedRouteTo(
+                        context,
+                        AppRouter.permissionsRoute,
+                        args: {'next': AppRouter.userTypeRoute},
+                        curve: Curves.easeInOutBack,
+                      ),
+                    );
                   },
                   child: const Text("Crear cuenta"),
                 ),

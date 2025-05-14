@@ -2,7 +2,7 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../../utils/agora_api.dart';
+import '../../../utils/constants/agora_api.dart';
 
 class VideoCallController {
   final String token;
@@ -26,16 +26,11 @@ class VideoCallController {
   RtcEngine get engine => _engine;
 
   Future<void> initialize() async {
-    await _requestPermissions();
     await _initAgoraEngine();
     _setupEventHandlers();
     await _startPreview();
     isCameraMuted.value = false;
     await _joinChannel();
-  }
-
-  Future<void> _requestPermissions() async {
-    await [Permission.microphone, Permission.camera].request();
   }
 
   Future<void> _initAgoraEngine() async {

@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../utils/providers.dart';
+import '../../../utils/constants/providers.dart';
 
 class SignUpFormController extends StateNotifier<Map<String, String>> {
   final Ref _ref;

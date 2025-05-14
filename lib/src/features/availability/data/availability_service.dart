@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import '../../../utils/api.dart';
+import '../../../utils/constants/api.dart';
 import '../domain/availability_model.dart';
 import '../domain/availability_payload_model.dart';
 

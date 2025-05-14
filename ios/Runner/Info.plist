@@ -45,5 +45,9 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>NSUserTrackingUsageDescription</key>
+	<string>Esta app utiliza notificaciones para mejorar tu experiencia.</string>
 </dict>
 </plist>

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../routing/app_router.dart';
-import '../../utils/secure_storage.dart';
+import '../../utils/constants/secure_storage.dart';
 
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});

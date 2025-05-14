@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 
 import '../../../../common/animations/animated_route.dart';
-import '../../../../utils/providers.dart';
+import '../../../../utils/constants/providers.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
   final String title;

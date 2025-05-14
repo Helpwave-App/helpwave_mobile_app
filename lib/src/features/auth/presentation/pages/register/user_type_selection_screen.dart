@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
+import '../../../../../utils/constants/api.dart';
 
 enum UserType { volunteer, requester }
 
@@ -15,7 +16,6 @@ class UserTypeSelectionScreen extends StatefulWidget {
 
 class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
   UserType? _selectedType;
-  static const String imagePath = 'lib/src/assets/images/';
 
   void _onNextPressed() {
     if (_selectedType == null) return;
@@ -77,8 +77,8 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
             const SizedBox(height: 8),
             ClipRRect(
               borderRadius: BorderRadius.circular(12),
-              child: Image.asset(
-                imagePath + assetName,
+              child: Image.network(
+                '$imageBaseUrl$assetName',
                 width: MediaQuery.of(context).size.width * 0.7,
                 height: 160,
                 fit: BoxFit.cover,
@@ -138,12 +138,12 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                           _buildOption(
                             UserType.requester,
                             'Asistido',
-                            'requester.png',
+                            'requester.png?alt=media&token=2066a274-4a12-4189-bf71-4146f2f59819',
                           ),
                           _buildOption(
                             UserType.volunteer,
                             'Voluntario',
-                            'volunteer.png',
+                            'volunteer.png?alt=media&token=902ce8c3-266b-466f-bef4-5d951e464a89',
                           ),
                         ],
                       ),

@@ -3,8 +3,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-import '../../../utils/api.dart';
-import '../../../utils/secure_storage.dart';
+import '../../../utils/constants/api.dart';
+import '../../../utils/constants/secure_storage.dart';
+import '../../notifications/services/device_token_service.dart';
 import '../domain/login_request_model.dart';
 import 'auth_response.dart';
 
@@ -93,11 +94,13 @@ class AuthService {
 
   Future<AuthResponse> login(LoginRequest request) async {
     final url = Uri.parse('$baseUrl/authenticate');
+
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: json.encode(request.toJson()),
     );
+
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
       return AuthResponse.fromJson(data);

@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 
-import '../../../utils/api.dart';
+import '../../../utils/constants/api.dart';
 import '../domain/skill_model.dart';
 
 class SkillService {

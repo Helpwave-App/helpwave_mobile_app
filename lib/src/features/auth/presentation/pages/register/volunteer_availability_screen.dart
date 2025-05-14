@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../../utils/week_days.dart';
+import '../../../../../utils/constants/week_days.dart';
 import '../../../../availability/application/user_availability_controller.dart';
 import '../../../../availability/data/availability_service.dart';
 import '../../../../availability/domain/availability_payload_model.dart';

@@ -1,8 +1,13 @@
 plugins {
     id "com.android.application"
+    // START: FlutterFire Configuration
+    id 'com.google.gms.google-services'
+    // END: FlutterFire Configuration
     id "kotlin-android"
     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
+    // START: FlutterFire Configuration
+    id "com.google.firebase.appdistribution"
 }
 
 android {
@@ -36,6 +41,13 @@ android {
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig = signingConfigs.debug
         }
+    }
+
+    firebaseAppDistribution {
+    releaseNotes = "Primera distribución de prueba desde Gradle"
+    testers = "tu.email@ejemplo.com"
+    // Opcional si quieres usar credenciales de servicio:
+    // serviceCredentialsFile = "/ruta/a/clave.json"
     }
 }
 

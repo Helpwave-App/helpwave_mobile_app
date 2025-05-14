@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../utils/providers.dart';
+import '../../../../utils/constants/providers.dart';
 import '../widgets/home_widget.dart';
 
 class HomeVolunteerScreen extends ConsumerWidget {

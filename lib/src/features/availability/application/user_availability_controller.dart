@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../utils/week_days.dart';
+import '../../../utils/constants/week_days.dart';
 import '../../availability/domain/availability_payload_model.dart';
 import '../../availability/data/availability_service.dart';
-import '../../../utils/providers.dart';
+import '../../../utils/constants/providers.dart';
 
 class UserAvailabilityController
     extends StateNotifier<AsyncValue<Map<String, List<TimeRange>>>> {

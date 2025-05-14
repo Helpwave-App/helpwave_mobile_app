@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helpwave_mobile_app/src/features/profile/presentation/user_availability_screen.dart';
 
 import '../common/pages/loading_screen.dart';
+import '../features/auth/presentation/pages/register/permissions_screen.dart';
 import '../features/auth/presentation/pages/welcome_screen.dart';
 import '../features/auth/presentation/pages/login/sign_in_screen.dart';
 import '../features/auth/presentation/pages/register/sign_up_requester_screen.dart';
@@ -23,6 +24,7 @@ import '../features/profile/presentation/user_skills_screen.dart';
 class AppRouter {
   static const String loadingRoute = '/';
   static const String welcomeRoute = '/welcome';
+  static const String permissionsRoute = '/permissions';
   static const String loginRoute = '/login';
   static const String userTypeRoute = '/user-type';
   static const String termsRoute = '/terms-and-conditions';
@@ -51,6 +53,9 @@ class AppRouter {
 
       case welcomeRoute:
         return const WelcomeScreen();
+
+      case permissionsRoute:
+        return const PermissionsScreen();
 
       case signUpRequesterRoute:
         return const SignUpRequesterScreen();
@@ -125,6 +130,9 @@ class AppRouter {
 
       case welcomeRoute:
         return MaterialPageRoute(builder: (_) => const WelcomeScreen());
+
+      case permissionsRoute:
+        return MaterialPageRoute(builder: (_) => const PermissionsScreen());
 
       case signUpRequesterRoute:
         return MaterialPageRoute(builder: (_) => const SignUpRequesterScreen());

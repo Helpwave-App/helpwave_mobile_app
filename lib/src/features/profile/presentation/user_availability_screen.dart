@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../utils/providers.dart';
-import '../../../utils/week_days.dart';
+import '../../../utils/constants/providers.dart';
+import '../../../utils/constants/week_days.dart';
 import '../../availability/application/user_availability_controller.dart';
 import '../../availability/domain/add_time_modal.dart';
 
