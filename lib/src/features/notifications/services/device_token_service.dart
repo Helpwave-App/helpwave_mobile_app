@@ -12,7 +12,8 @@ class DeviceTokenService {
       FirebaseMessaging messaging = FirebaseMessaging.instance;
 
       if (requestPermission) {
-        await messaging.requestPermission();
+        final settings = await messaging.requestPermission();
+        print('🔐 Permiso notificaciones: ${settings.authorizationStatus}');
       }
 
       String? token = await messaging.getToken();

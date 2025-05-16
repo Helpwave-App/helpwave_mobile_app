@@ -4,6 +4,7 @@ import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../common/animations/animated_route.dart';
+import '../../../../../utils/permissions_helper.dart';
 import '../../../../notifications/services/device_token_service.dart';
 
 class PermissionsScreen extends StatefulWidget {
@@ -70,11 +71,32 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
         ),
       );
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Debes aceptar todos los permisos para continuar.'),
-        ),
+      final handledNotification = await checkAndHandlePermanentDenial(
+        context: context,
+        permission: Permission.notification,
+        permissionName: 'notificaciones',
       );
+
+      final handledMicrophone = await checkAndHandlePermanentDenial(
+        context: context,
+        permission: Permission.microphone,
+        permissionName: 'micrófono',
+      );
+
+      final handledCamera = await checkAndHandlePermanentDenial(
+        context: context,
+        permission: Permission.camera,
+        permissionName: 'cámara',
+      );
+
+      if (!handledNotification && !handledMicrophone && !handledCamera) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Debes aceptar todos los permisos para continuar.'),
+          ),
+        );
+      }
+
       setState(() => _isRequesting = false);
     }
   }
@@ -127,7 +149,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                         'Para funcionar correctamente, HelpWave necesita acceso a:\n\n'
                         '- Notificaciones (para avisarte de solicitudes)\n'
                         '- Micrófono y Cámara (para videollamadas)\n',
-                        style: TextStyle(fontSize: 16),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
