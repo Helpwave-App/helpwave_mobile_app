@@ -25,10 +25,6 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
 
     nextRoute = args?['next'] ?? AppRouter.loginRoute;
 
-    // Verificar si el parámetro 'next' es correcto
-    print("Next route: $nextRoute");
-
-    // Verificar si los permisos ya fueron aceptados
     _checkPermissionsStatus();
   }
 
@@ -37,7 +33,6 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
     final permissionsAccepted = prefs.getBool('permissions_accepted') ?? false;
 
     if (permissionsAccepted) {
-      // Si los permisos ya fueron aceptados, redirige al siguiente paso
       Navigator.of(context).pushReplacement(
         animatedRouteTo(
           context,
@@ -60,7 +55,6 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
     final allGranted = statuses.values.every((status) => status.isGranted);
 
     if (allGranted) {
-      // Guardar el estado de permisos aceptados
       final prefs = await SharedPreferences.getInstance();
       prefs.setBool('permissions_accepted', true);
 

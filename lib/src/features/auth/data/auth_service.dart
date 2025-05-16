@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -103,10 +104,34 @@ class AuthService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      return AuthResponse.fromJson(data);
+      final authResponse = AuthResponse.fromJson(data);
+
+      await _storeSessionData(authResponse);
+
+      final token =
+          await DeviceTokenService.getDeviceToken(requestPermission: true);
+      if (token != null) {
+        await DeviceTokenService.registerDeviceToken(token: token);
+      }
+
+      setupFCMTokenRefresh();
+
+      return authResponse;
     } else {
       throw Exception('Credenciales inválidas');
     }
+  }
+
+  Future<void> _storeSessionData(AuthResponse authResponse) async {
+    await SecureStorage.saveToken(authResponse.token);
+    await SecureStorage.saveIdUser(authResponse.idUser);
+    await SecureStorage.saveRole(authResponse.role);
+  }
+
+  void setupFCMTokenRefresh() {
+    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+      await DeviceTokenService.registerDeviceToken(token: newToken);
+    });
   }
 
   Future<void> logout() async {

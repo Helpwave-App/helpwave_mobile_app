@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart'
     show Firebase, FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
-import 'firebase_options.dart';
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 
@@ -13,6 +12,9 @@ Future<void> initializeFirebase() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 }
+
+const String imageBaseUrl =
+    'https://firebasestorage.googleapis.com/v0/b/helpwave-bfcb0.firebasestorage.app/o/common%2F';
 
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {

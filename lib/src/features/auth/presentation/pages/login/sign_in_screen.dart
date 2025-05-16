@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
 import '../../../../../utils/constants/providers.dart';
-import '../../../../../utils/constants/secure_storage.dart';
 import '../../../../notifications/services/device_token_service.dart';
 import '../../../data/auth_service.dart';
 import '../../../domain/login_request_model.dart';
@@ -42,12 +41,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     );
 
     try {
-      final response = await AuthService().login(request);
-      await SecureStorage.saveToken(response.token);
-      await SecureStorage.saveIdUser(response.idUser);
-      await SecureStorage.saveRole(response.role);
+      await AuthService().login(request);
 
-      ref.invalidate(profileFutureProvider); // Refrescar el provider del perfil
+      ref.invalidate(profileFutureProvider); // Refrescar el perfil
 
       if (!mounted) return;
 
