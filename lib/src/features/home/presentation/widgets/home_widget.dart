@@ -2,21 +2,34 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../routing/app_router.dart';
+import '../../../../utils/constants/providers.dart';
+import '../../../profile/domain/skill_model.dart';
 
-class HomeWidget extends ConsumerWidget {
+class HomeWidget extends ConsumerStatefulWidget {
   final String greeting;
   final String subtitle;
   final String buttonText;
+  final bool isRequester;
+  final List<Skill>? skills;
 
   const HomeWidget({
     super.key,
     required this.greeting,
     required this.subtitle,
     required this.buttonText,
+    required this.isRequester,
+    this.skills,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<HomeWidget> createState() => _HomeWidgetState();
+}
+
+class _HomeWidgetState extends ConsumerState<HomeWidget> {
+  Skill? selectedSkill;
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Scaffold(
@@ -51,7 +64,7 @@ class HomeWidget extends ConsumerWidget {
             children: [
               const SizedBox(height: 32),
               Text(
-                greeting,
+                widget.greeting,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontSize: 26,
                   fontWeight: FontWeight.bold,
@@ -60,50 +73,78 @@ class HomeWidget extends ConsumerWidget {
               ),
               const SizedBox(height: 8),
               Text(
-                subtitle,
+                widget.subtitle,
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontSize: 22,
                   fontWeight: FontWeight.w500,
                 ),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 40),
-              Center(
-                child: SizedBox(
-                  width: 180,
-                  height: 180,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      shape: const CircleBorder(),
-                      padding: EdgeInsets.zero,
-                      backgroundColor: theme.colorScheme.tertiary,
-                      foregroundColor: theme.colorScheme.onSecondary,
-                      elevation: 6,
-                    ),
-                    onPressed: () {
-                      const String channelName = 'testchannel';
-                      const String token =
-                          '007eJxTYPCpSvpXxGHIvPq92vIz3Dvtb/68sjTINkHtTc79EE+tlT4KDObJ5qZmJinGSYkmJibmFslJBiapRoZJ5iZGBiYpBomWnB18GQ2BjAx3HRexMjJAIIjPzVCSWlySnJGYl5eaw8AAAPFyIQ0=';
-
-                      Navigator.of(context).pushNamed(
-                        AppRouter.videoCallRoute,
-                        arguments: {
-                          'token': token,
-                          'channelName': channelName,
-                        },
-                      );
-                    },
-                    child: Text(
-                      buttonText,
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
+              const SizedBox(height: 32),
+              if (widget.isRequester && widget.skills != null) ...[
+                const SizedBox(height: 16),
+                Center(
+                  child: SizedBox(
+                    width: 180,
+                    height: 180,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: const CircleBorder(),
+                        padding: EdgeInsets.zero,
+                        backgroundColor: theme.colorScheme.tertiary,
+                        foregroundColor: theme.colorScheme.onSecondary,
+                        elevation: 6,
+                      ),
+                      onPressed: () async {
+                        final service = ref.read(videocallServiceProvider);
+                        final skillId = selectedSkill?.id ?? 1;
+                        try {
+                          await service.createHelpRequest(idSkill: skillId);
+                          if (!mounted) return;
+                          Navigator.of(context).pushNamed(
+                            AppRouter.connectingRoute,
+                          );
+                        } catch (e) {
+                          if (!mounted) return;
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('Error: ${e.toString()}')),
+                          );
+                        }
+                      },
+                      child: Text(
+                        widget.buttonText,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
+                const SizedBox(height: 40),
+                DropdownButtonFormField<Skill>(
+                  value: selectedSkill,
+                  isExpanded: true,
+                  hint: const Text('Selecciona una habilidad'),
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                  ),
+                  items: widget.skills!
+                      .map(
+                        (skill) => DropdownMenuItem(
+                          value: skill,
+                          child: Text(skill.skillDesc),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (skill) {
+                    setState(() {
+                      selectedSkill = skill;
+                    });
+                  },
+                ),
+              ],
             ],
           ),
         ),

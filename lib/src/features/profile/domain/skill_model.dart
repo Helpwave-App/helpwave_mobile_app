@@ -13,4 +13,6 @@ class Skill {
       skillDesc: json['skillDesc'],
     );
   }
+
+  get id => null;
 }

@@ -5,16 +5,17 @@ import '../../features/notifications/services/device_token_service.dart';
 class FcmConfig {
   static Future<void> initializeFCM() async {
     final fcm = FirebaseMessaging.instance;
+    final deviceTokenService = DeviceTokenService();
 
     await fcm.requestPermission();
 
     final token = await DeviceTokenService.getDeviceToken();
     if (token != null) {
-      await DeviceTokenService.registerDeviceToken(token: token);
+      await deviceTokenService.registerDeviceToken(token: token);
     }
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
       print('🔄 Token FCM actualizado: $newToken');
-      await DeviceTokenService.registerDeviceToken(token: newToken);
+      await deviceTokenService.registerDeviceToken(token: newToken);
     });
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {

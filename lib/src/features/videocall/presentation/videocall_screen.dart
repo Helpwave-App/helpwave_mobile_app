@@ -5,12 +5,12 @@ import '../application/videocall_controller.dart';
 
 class VideoCallScreen extends StatefulWidget {
   final String token;
-  final String channelName;
+  final String channel;
 
   const VideoCallScreen({
     super.key,
     required this.token,
-    required this.channelName,
+    required this.channel,
   });
 
   @override
@@ -19,15 +19,19 @@ class VideoCallScreen extends StatefulWidget {
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
   late VideoCallController _controller;
+  bool _isInitialized = false;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoCallController(
-      token: widget.token,
-      channelName: widget.channelName,
-    );
-    _controller.initialize();
+    if (!_isInitialized) {
+      _controller = VideoCallController(
+        token: widget.token,
+        channelName: widget.channel,
+      );
+      _controller.initialize();
+      _isInitialized = true;
+    }
   }
 
   @override
@@ -175,11 +179,10 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                   controller: VideoViewController.remote(
                     rtcEngine: _controller.engine,
                     canvas: VideoCanvas(uid: uid),
-                    connection: RtcConnection(channelId: widget.channelName),
+                    connection: RtcConnection(channelId: widget.channel),
                   ),
                 );
               } else {
-                // Cámara del usuario remoto está apagada
                 return _buildPlaceholderView();
               }
             },

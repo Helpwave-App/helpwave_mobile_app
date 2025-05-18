@@ -41,6 +41,7 @@ class HomeVolunteerScreen extends ConsumerWidget {
                 greeting: '¡Hola, ${profile?.firstName} ${profile?.lastName}!',
                 subtitle: '¿Listo para brindar ayuda hoy?',
                 buttonText: 'Aceptar\nsolicitud',
+                isRequester: false,
               );
             },
             loading: () {

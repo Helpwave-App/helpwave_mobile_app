@@ -95,6 +95,8 @@ class AuthService {
 
   Future<AuthResponse> login(LoginRequest request) async {
     final url = Uri.parse('$baseUrl/authenticate');
+    final token =
+        await DeviceTokenService.getDeviceToken(requestPermission: true);
 
     final response = await http.post(
       url,
@@ -111,7 +113,8 @@ class AuthService {
       final token =
           await DeviceTokenService.getDeviceToken(requestPermission: true);
       if (token != null) {
-        await DeviceTokenService.registerDeviceToken(token: token);
+        final deviceTokenService = DeviceTokenService();
+        await deviceTokenService.registerDeviceToken(token: token);
       }
 
       setupFCMTokenRefresh();
@@ -122,15 +125,20 @@ class AuthService {
     }
   }
 
+  // Dentro de AuthService
   Future<void> _storeSessionData(AuthResponse authResponse) async {
     await SecureStorage.saveToken(authResponse.token);
     await SecureStorage.saveIdUser(authResponse.idUser);
     await SecureStorage.saveRole(authResponse.role);
+
+    final debugToken = await SecureStorage.getToken();
+    print('🧪 Token guardado y leído de SecureStorage: $debugToken');
   }
 
   void setupFCMTokenRefresh() {
     FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
-      await DeviceTokenService.registerDeviceToken(token: newToken);
+      final deviceTokenService = DeviceTokenService();
+      await deviceTokenService.registerDeviceToken(token: newToken);
     });
   }
 

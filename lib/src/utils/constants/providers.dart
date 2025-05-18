@@ -11,6 +11,7 @@ import '../../features/auth/domain/user_model.dart';
 import '../../features/availability/data/availability_service.dart';
 import '../../features/profile/data/profile_service.dart';
 import '../../features/profile/domain/profile_model.dart';
+import '../../features/videocall/data/videocall_service.dart';
 
 final secureStorageProvider = Provider((ref) => const FlutterSecureStorage());
 
@@ -75,4 +76,8 @@ final userInfoControllerProvider =
 final userRoleProvider = FutureProvider<String?>((ref) async {
   final authService = ref.read(authServiceProvider);
   return authService.getUserRole();
+});
+
+final videocallServiceProvider = Provider<VideocallService>((ref) {
+  return VideocallService();
 });

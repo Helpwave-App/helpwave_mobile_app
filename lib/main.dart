@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'src/features/notifications/services/fcm_listener.dart';
 import 'src/features/notifications/services/notification_service.dart';
 import 'src/routing/app_router.dart';
 import 'src/utils/constants/app_theme.dart';
 import 'src/utils/firebase/fcm_config.dart';
 import 'src/utils/firebase/firebase_options.dart';
+
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +26,8 @@ void main() async {
   // Configurar Firebase Cloud Messaging (FCM)
   await FcmConfig.initializeFCM();
 
+  setupFCMListener(navigatorKey);
+
   runApp(const ProviderScope(child: HelpWaveApp()));
 }
 
@@ -32,6 +37,7 @@ class HelpWaveApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       title: 'HelpWave',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
