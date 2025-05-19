@@ -6,19 +6,20 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import '../../../utils/constants/api.dart';
 
 class DeviceTokenService {
-  final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
+  static final FlutterSecureStorage _secureStorage =
+      const FlutterSecureStorage();
 
   static Future<String?> getDeviceToken(
       {bool requestPermission = false}) async {
     try {
-      FirebaseMessaging messaging = FirebaseMessaging.instance;
-
       if (requestPermission) {
-        final settings = await messaging.requestPermission();
+        final settings = await FirebaseMessaging.instance.requestPermission();
         print('🔐 Permiso notificaciones: ${settings.authorizationStatus}');
       }
 
-      String? token = await messaging.getToken();
+      String? token = await FirebaseMessaging.instance.getToken();
+      await _secureStorage.write(key: 'device_token', value: token);
+      print('📱 Token actual del dispositivo: $token');
       return token;
     } catch (e) {
       print('Error al obtener el token del dispositivo: $e');
@@ -55,5 +56,27 @@ class DeviceTokenService {
     print('→ POST $url');
     print('← Status: ${response.statusCode}');
     print('← Body: ${response.body}');
+  }
+
+  Future<void> unregisterDeviceToken() async {
+    final token = await getDeviceToken();
+    final authToken = await _secureStorage.read(key: 'jwt_token');
+
+    if (token == null || authToken == null) return;
+
+    final url = Uri.parse('$baseUrl/device/$token');
+    final response = await http.delete(
+      url,
+      headers: {
+        'Authorization': 'Bearer $authToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print('✅ Token eliminado del backend');
+      await FirebaseMessaging.instance.deleteToken();
+    } else {
+      print('❌ Error al eliminar token del backend: ${response.body}');
+    }
   }
 }

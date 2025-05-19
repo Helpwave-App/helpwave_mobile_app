@@ -9,15 +9,6 @@ class FcmConfig {
 
     await fcm.requestPermission();
 
-    final token = await DeviceTokenService.getDeviceToken();
-    if (token != null) {
-      await deviceTokenService.registerDeviceToken(token: token);
-    }
-    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
-      print('🔄 Token FCM actualizado: $newToken');
-      await deviceTokenService.registerDeviceToken(token: newToken);
-    });
-
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print("🔔 Notificación en foreground:");
       print("Título: ${message.notification?.title}");

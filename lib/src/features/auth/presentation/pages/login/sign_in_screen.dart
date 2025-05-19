@@ -37,13 +37,12 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     final request = LoginRequest(
       username: _usernameController.text.trim(),
       password: _passwordController.text.trim(),
-      deviceToken: await DeviceTokenService.getDeviceToken(),
     );
 
     try {
       await AuthService().login(request);
 
-      ref.invalidate(profileFutureProvider); // Refrescar el perfil
+      ref.invalidate(profileFutureProvider);
 
       if (!mounted) return;
 
