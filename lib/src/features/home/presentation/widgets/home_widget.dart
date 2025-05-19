@@ -100,9 +100,9 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                         ),
                         onPressed: () async {
                           final service = ref.read(videocallServiceProvider);
-                          final skillId = selectedSkill?.id ?? 1;
+                          final idSkill = selectedSkill?.idSkill ?? 1;
                           try {
-                            await service.createHelpRequest(idSkill: skillId);
+                            await service.createHelpRequest(idSkill: idSkill);
                             if (!mounted) return;
                             Navigator.of(context)
                                 .pushNamed(AppRouter.connectingRoute);
