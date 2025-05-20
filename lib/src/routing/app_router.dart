@@ -15,8 +15,8 @@ import '../features/auth/presentation/pages/register/registration_completed_requ
 import '../features/auth/presentation/pages/register/registration_completed_volunteer_screen.dart';
 import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
-import '../features/videocall/presentation/connecting_screen.dart';
-import '../features/videocall/presentation/videocall_screen.dart';
+import '../features/help_response/presentation/connecting_screen.dart';
+import '../features/help_response/presentation/videocall_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/profile/presentation/user_info_screen.dart';
@@ -96,7 +96,9 @@ class AppRouter {
         return const HomeRequesterScreen();
 
       case homeVolunteerRoute:
-        return const HomeVolunteerScreen();
+        return HomeVolunteerScreen(
+          onDialogRequested: () {},
+        );
 
       case connectingRoute:
         return const ConnectingScreen();
@@ -104,12 +106,12 @@ class AppRouter {
       case videoCallRoute:
         if (args == null ||
             !args.containsKey('token') ||
-            !args.containsKey('channelName')) {
+            !args.containsKey('channel')) {
           return const Scaffold(body: Center(child: Text('Faltan argumentos')));
         }
         return VideoCallScreen(
           token: args['token'],
-          channel: args['channelName'],
+          channel: args['channel'],
         );
       case settingsRoute:
         return const SettingsScreen();
@@ -186,7 +188,10 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const HomeRequesterScreen());
 
       case homeVolunteerRoute:
-        return MaterialPageRoute(builder: (_) => const HomeVolunteerScreen());
+        return MaterialPageRoute(
+            builder: (_) => HomeVolunteerScreen(
+                  onDialogRequested: () {},
+                ));
 
       case connectingRoute:
         return MaterialPageRoute(builder: (_) => const ConnectingScreen());
@@ -194,7 +199,7 @@ class AppRouter {
       case videoCallRoute:
         final args = settings.arguments as Map<String, dynamic>;
         final token = args['token'] as String;
-        final channelName = args['channelName'] as String;
+        final channelName = args['channel'] as String;
 
         return MaterialPageRoute(
           builder: (_) => VideoCallScreen(

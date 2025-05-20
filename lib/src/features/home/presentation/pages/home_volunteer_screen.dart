@@ -6,11 +6,19 @@ import '../../../../utils/constants/providers.dart';
 import '../widgets/home_widget.dart';
 
 class HomeVolunteerScreen extends ConsumerWidget {
-  const HomeVolunteerScreen({super.key});
+  final VoidCallback? onDialogRequested;
+
+  const HomeVolunteerScreen({super.key, this.onDialogRequested});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final authService = ref.read(authServiceProvider);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (onDialogRequested != null) {
+        onDialogRequested!();
+      }
+    });
 
     return FutureBuilder<bool>(
       future: authService.isTokenValid(),

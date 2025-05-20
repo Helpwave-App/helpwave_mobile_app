@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
 import '../../../../../utils/constants/providers.dart';
-import '../../../../notifications/services/device_token_service.dart';
 import '../../../data/auth_service.dart';
 import '../../../domain/login_request_model.dart';
 
