@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import '../../../routing/app_router.dart';
 
 class ConnectingScreen extends StatefulWidget {
   const ConnectingScreen({super.key});
@@ -38,6 +39,13 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
   void dispose() {
     _timer?.cancel();
     super.dispose();
+  }
+
+  void _cancelAndReturnToHome() {
+    Navigator.of(context).pushNamedAndRemoveUntil(
+      AppRouter.homeRequesterRoute,
+      (route) => false,
+    );
   }
 
   @override
@@ -93,7 +101,7 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: () => Navigator.pop(context),
+                  onPressed: _cancelAndReturnToHome,
                   child: const Text('Cancelar'),
                 ),
               ),

@@ -5,14 +5,12 @@ typedef OnReject = void Function();
 
 class RequestDialog extends StatelessWidget {
   final String skill;
-  final String time;
   final OnAccept onAccept;
   final OnReject onReject;
 
   const RequestDialog({
     super.key,
     required this.skill,
-    required this.time,
     required this.onAccept,
     required this.onReject,
   });
@@ -21,15 +19,7 @@ class RequestDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text("Nueva solicitud de ayuda"),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text("Habilidad solicitada: $skill"),
-          const SizedBox(height: 8),
-          Text("Hora: $time"),
-        ],
-      ),
+      content: Text("Habilidad solicitada: $skill"),
       actions: [
         TextButton(
           onPressed: () {

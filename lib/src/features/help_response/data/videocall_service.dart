@@ -14,6 +14,7 @@ class VideocallService {
   }) async {
     final idUser = await _secureStorage.read(key: 'id_user');
     final token = await _secureStorage.read(key: 'jwt_token');
+    final deviceToken = await _secureStorage.read(key: 'device_token');
 
     print('ID Profile: $idUser');
     print('Token: $token');
@@ -22,6 +23,12 @@ class VideocallService {
     }
 
     final idProfile = int.parse(idUser);
+
+    print('📤 Enviando solicitud con:');
+    print('idProfile: $idProfile');
+    print('idSkill: $idSkill');
+    print('stateRequest: true');
+    print('tokenDevice: $deviceToken');
 
     final url = Uri.parse('$baseUrl/requests');
     final response = await http.post(
@@ -34,6 +41,7 @@ class VideocallService {
         'idProfile': idProfile,
         'idSkill': idSkill,
         'stateRequest': true,
+        'tokenDevice': deviceToken,
       }),
     );
 

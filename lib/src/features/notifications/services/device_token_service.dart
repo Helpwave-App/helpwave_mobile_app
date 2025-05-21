@@ -27,33 +27,42 @@ class DeviceTokenService {
     }
   }
 
-  Future<void> registerDeviceToken({required String token}) async {
+  Future<void> registerDeviceToken({
+    required String newToken,
+    String? oldToken,
+  }) async {
     final idUser = await _secureStorage.read(key: 'id_user');
     final jwtToken = await _secureStorage.read(key: 'jwt_token');
 
     print('📦 Token JWT leído para registrar dispositivo: $jwtToken');
     print('👤 User ID: $idUser');
-    print('📱 Device token FCM: $token');
+    print('📱 Nuevo token FCM: $newToken');
+    if (oldToken != null) print('📱 Token anterior FCM: $oldToken');
 
     if (idUser == null || jwtToken == null) {
       print('❌ Falta información para registrar token de dispositivo');
       return;
     }
 
-    final url = Uri.parse('$baseUrl/devices');
+    final url = Uri.parse('$baseUrl/devices/upsert');
+
+    final body = {
+      'idUser': int.parse(idUser),
+      'newTokenDevice': newToken,
+      if (oldToken != null) 'oldTokenDevice': oldToken,
+    };
+
     final response = await http.post(
       url,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $jwtToken',
       },
-      body: jsonEncode({
-        'idUser': idUser,
-        'tokenDevice': token,
-      }),
+      body: jsonEncode(body),
     );
 
     print('→ POST $url');
+    print('→ Body: $body');
     print('← Status: ${response.statusCode}');
     print('← Body: ${response.body}');
   }
@@ -64,7 +73,7 @@ class DeviceTokenService {
 
     if (token == null || authToken == null) return;
 
-    final url = Uri.parse('$baseUrl/device/$token');
+    final url = Uri.parse('$baseUrl/devices/$token');
     final response = await http.delete(
       url,
       headers: {

@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'src/features/notifications/services/fcm_listener.dart';
+import 'src/features/notifications/services/firebase_messaging_help_request_handler.dart';
+import 'src/features/notifications/services/firebase_messaging_videocall_handler.dart';
 import 'src/features/notifications/services/notification_service.dart';
 import 'src/routing/app_router.dart';
 import 'src/utils/constants/app_theme.dart';
@@ -14,19 +15,15 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Inicializar Firebase
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  // Configurar notificaciones locales
   await NotificationService.initialize();
-
-  // Configurar Firebase Cloud Messaging (FCM)
   await FcmConfig.initializeFCM();
 
-  setupFCMListener(navigatorKey);
+  setupHelpRequestNotificationHandler(navigatorKey);
+  setupVideocallNotificationHandler(navigatorKey);
 
   runApp(const ProviderScope(child: HelpWaveApp()));
 }
@@ -49,8 +46,8 @@ class HelpWaveApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: const [
-        Locale('es'), // Español
-        Locale('en'), // Inglés
+        Locale('es'),
+        Locale('en'),
       ],
     );
   }

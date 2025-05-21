@@ -71,8 +71,8 @@ class _HomeRequesterScreenState extends ConsumerState<HomeRequesterScreen> {
             );
           },
           loading: () => const Center(child: CircularProgressIndicator()),
-          error: (err, stack) =>
-              const Center(child: Text('Error cargando perfil')),
+          error: (error, stack) =>
+              const Center(child: CircularProgressIndicator()),
         );
       },
     );
