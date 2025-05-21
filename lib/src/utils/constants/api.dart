@@ -2,5 +2,4 @@
 
 const String baseUrl = 'https://helpwave-backend.onrender.com';
 
-const String imageBaseUrl =
-    'https://firebasestorage.googleapis.com/v0/b/helpwave-bfcb0.firebasestorage.app/o/common%2F';
+//const String baseUrl = 'https://helpwave-backend-qxm3.onrender.com';

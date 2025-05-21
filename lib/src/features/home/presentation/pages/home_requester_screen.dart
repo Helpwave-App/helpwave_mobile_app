@@ -1,24 +1,34 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../utils/constants/providers.dart';
-import '../../../auth/data/auth_service.dart';
+import '../../../profile/data/skill_service.dart';
+import '../../../profile/domain/skill_model.dart';
 import '../widgets/home_widget.dart';
 
-class HomeRequesterScreen extends ConsumerWidget {
+class HomeRequesterScreen extends ConsumerStatefulWidget {
   const HomeRequesterScreen({super.key});
 
-  Future<bool> _isTokenValid(AuthService authService) {
-    return authService.isTokenValid();
+  @override
+  ConsumerState<HomeRequesterScreen> createState() =>
+      _HomeRequesterScreenState();
+}
+
+class _HomeRequesterScreenState extends ConsumerState<HomeRequesterScreen> {
+  late Future<List<Skill>> _skillsFuture;
+
+  @override
+  void initState() {
+    super.initState();
+    _skillsFuture = SkillService().fetchSkills();
   }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final authService = ref.read(authServiceProvider);
 
     return FutureBuilder<bool>(
-      future: _isTokenValid(authService),
+      future: authService.isTokenValid(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Scaffold(
@@ -32,37 +42,37 @@ class HomeRequesterScreen extends ConsumerWidget {
 
         if (!snapshot.data!) {
           return const Scaffold(
-            body:
-                Center(child: Text("Sesión expirada. Inicia sesión de nuevo.")),
+            body: Center(
+              child: Text("Sesión expirada. Inicia sesión de nuevo."),
+            ),
           );
         }
 
         final profileAsync = ref.watch(profileFutureProvider);
 
-        return Scaffold(
-          body: profileAsync.when(
-            data: (profile) {
-              return HomeWidget(
-                greeting: '¡Hola, ${profile?.firstName} ${profile?.lastName}!',
-                subtitle: '¿Listo para recibir ayuda hoy?',
-                buttonText: 'Solicitar\nasistencia',
-              );
-            },
-            loading: () {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-            error: (err, stack) {
-              if (kDebugMode) {
-                print('Error al cargar el perfil: $err');
-                print('Stack trace: $stack');
-              }
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
+        return profileAsync.when(
+          data: (profile) {
+            return FutureBuilder<List<Skill>>(
+              future: _skillsFuture,
+              builder: (context, skillSnapshot) {
+                if (!skillSnapshot.hasData) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                return HomeWidget(
+                  greeting:
+                      '¡Hola, ${profile?.firstName} ${profile?.lastName}!',
+                  subtitle: '¿Listo para recibir ayuda hoy?',
+                  buttonText: 'Solicitar\nasistencia',
+                  isRequester: true,
+                  skills: skillSnapshot.data!,
+                );
+              },
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) =>
+              const Center(child: CircularProgressIndicator()),
         );
       },
     );

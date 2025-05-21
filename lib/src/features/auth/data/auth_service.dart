@@ -1,4 +1,6 @@
 import 'dart:convert';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -10,15 +12,15 @@ import '../domain/login_request_model.dart';
 import 'auth_response.dart';
 
 class AuthService {
+  final _secureStorage = const FlutterSecureStorage();
+
   Future<String?> getUserRole() async {
-    return await SecureStorage.getRole();
+    return await _secureStorage.read(key: 'role');
   }
 
   Future<bool> isTokenValid() async {
-    final token = await SecureStorage.getToken();
-    if (token == null) {
-      return false;
-    }
+    final token = await _secureStorage.read(key: 'jwt_token');
+    if (token == null) return false;
     return !JwtDecoder.isExpired(token);
   }
 
@@ -52,9 +54,7 @@ class AuthService {
         final data = jsonDecode(response.body) as Map<String, dynamic>;
         return data['idProfile'] as int?;
       } catch (e) {
-        if (kDebugMode) {
-          print('❌ Error al parsear JSON del perfil: $e');
-        }
+        print('❌ Error al parsear JSON del perfil: $e');
         return null;
       }
     }
@@ -82,17 +82,15 @@ class AuthService {
       try {
         return jsonDecode(response.body) as Map<String, dynamic>;
       } catch (e) {
-        if (kDebugMode) {
-          print('Error al parsear JSON: $e');
-        }
+        print('❌ Error al parsear JSON: $e');
         return null;
       }
-    } else {
-      return null;
     }
+    return null;
   }
 
   Future<AuthResponse> login(LoginRequest request) async {
+    final deviceTokenService = DeviceTokenService();
     final url = Uri.parse('$baseUrl/authenticate');
 
     final response = await http.post(
@@ -103,15 +101,69 @@ class AuthService {
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      return AuthResponse.fromJson(data);
+      final authResponse = AuthResponse.fromJson(data);
+
+      await _storeSessionData(authResponse);
+
+      await FirebaseMessaging.instance.deleteToken();
+
+      final newToken =
+          await DeviceTokenService.getDeviceToken(requestPermission: true);
+
+      if (newToken != null) {
+        final oldToken = await _secureStorage.read(key: 'device_token');
+
+        if (newToken != oldToken) {
+          await deviceTokenService.registerDeviceToken(
+            newToken: newToken,
+            oldToken: oldToken,
+          );
+        }
+
+        await _secureStorage.write(key: 'device_token', value: newToken);
+      }
+
+      setupFCMTokenRefresh();
+
+      return authResponse;
     } else {
       throw Exception('Credenciales inválidas');
     }
   }
 
+  Future<void> _storeSessionData(AuthResponse authResponse) async {
+    await SecureStorage.saveToken(authResponse.token);
+    await SecureStorage.saveIdUser(authResponse.idUser);
+    await SecureStorage.saveRole(authResponse.role);
+
+    final debugToken = await SecureStorage.getToken();
+    print('🧪 Token guardado y leído de SecureStorage: $debugToken');
+  }
+
+  void setupFCMTokenRefresh() {
+    FirebaseMessaging.instance.onTokenRefresh.listen((newToken) async {
+      final oldToken = await _secureStorage.read(key: 'device_token');
+      final deviceTokenService = DeviceTokenService();
+
+      if (newToken != oldToken) {
+        await deviceTokenService.registerDeviceToken(
+          newToken: newToken,
+          oldToken: oldToken,
+        );
+        await _secureStorage.write(key: 'device_token', value: newToken);
+      }
+    });
+  }
+
   Future<void> logout() async {
-    await SecureStorage.deleteToken();
-    await SecureStorage.deleteRole();
-    await SecureStorage.deleteIdUser();
+    await DeviceTokenService().unregisterDeviceToken();
+    await FirebaseMessaging.instance.deleteToken();
+
+    await _secureStorage.delete(key: 'device_token');
+    await _secureStorage.delete(key: 'jwt_token');
+    await _secureStorage.delete(key: 'id_user');
+    await _secureStorage.delete(key: 'role');
+
+    print('🔐 Todos los datos eliminados de SecureStorage y FCM');
   }
 }

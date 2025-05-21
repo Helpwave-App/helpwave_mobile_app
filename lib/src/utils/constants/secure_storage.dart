@@ -41,4 +41,17 @@ class SecureStorage {
   static Future<void> deleteRole() async {
     await _storage.delete(key: 'role');
   }
+
+  // DEVICE
+  static Future<void> saveFCMToken(String deviceToken) async {
+    await _storage.write(key: 'device_token', value: deviceToken);
+  }
+
+  static Future<String?> getFCMToken() async {
+    return await _storage.read(key: 'device_token');
+  }
+
+  static Future<void> deleteFCMToken() async {
+    await _storage.delete(key: 'device_token');
+  }
 }

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 
+import '../../../routing/app_router.dart';
 import '../application/videocall_controller.dart';
 
 class VideoCallScreen extends StatefulWidget {
   final String token;
-  final String channelName;
+  final String channel;
 
   const VideoCallScreen({
     super.key,
     required this.token,
-    required this.channelName,
+    required this.channel,
   });
 
   @override
@@ -19,15 +20,39 @@ class VideoCallScreen extends StatefulWidget {
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
   late VideoCallController _controller;
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
+
     _controller = VideoCallController(
       token: widget.token,
-      channelName: widget.channelName,
+      channelName: widget.channel,
     );
-    _controller.initialize();
+
+    _initialize();
+  }
+
+  Future<void> _initialize() async {
+    debugPrint('🔐 Token: ${widget.token}');
+    debugPrint('📡 Channel: ${widget.channel}');
+    try {
+      await _controller.initialize();
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error al iniciar videollamada: $e')),
+        );
+        Navigator.of(context).pop();
+      }
+      return;
+    }
+    if (mounted) {
+      setState(() {
+        _isLoading = false;
+      });
+    }
   }
 
   @override
@@ -38,6 +63,16 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        body: Center(
+          child: CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.secondary,
+          ),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(title: const Text('Videollamada')),
       body: Stack(
@@ -46,8 +81,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
           Align(
             alignment: Alignment.topLeft,
             child: SizedBox(
-              width: 100,
-              height: 150,
+              width: 120,
+              height: 160,
               child: Center(child: _buildLocalVideo()),
             ),
           ),
@@ -58,50 +93,46 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  // Botón de cámara ON/OFF
                   ValueListenableBuilder<bool>(
-                    valueListenable: _controller.isCameraMuted,
-                    builder: (_, cameraOff, __) {
+                    valueListenable: _controller.isLocalVideoMuted,
+                    builder: (_, isMuted, __) {
                       return _buildControlButton(
-                        icon: cameraOff ? Icons.videocam_off : Icons.videocam,
-                        color: cameraOff ? Colors.blueGrey : Colors.blueGrey,
-                        onPressed: _controller.toggleCamera,
+                        icon: isMuted ? Icons.videocam_off : Icons.videocam,
+                        color: Colors.blueGrey,
+                        onPressed: () => _controller.toggleMuteVideo(),
                         heroTag: 'toggle-camera',
                       );
                     },
                   ),
                   const SizedBox(width: 16),
-
-                  // Mute and unmute microphone button
                   ValueListenableBuilder<bool>(
-                    valueListenable: _controller.isMuted,
-                    builder: (_, muted, __) {
+                    valueListenable: _controller.isLocalAudioMuted,
+                    builder: (_, isMuted, __) {
                       return _buildControlButton(
-                        icon: muted ? Icons.mic_off : Icons.mic,
-                        color: muted ? Colors.blueGrey : Colors.blueGrey,
-                        onPressed: _controller.toggleMute,
+                        icon: isMuted ? Icons.mic_off : Icons.mic,
+                        color: Colors.blueGrey,
+                        onPressed: () => _controller.toggleMuteAudio(),
                         heroTag: 'toggle-mic',
                       );
                     },
                   ),
                   const SizedBox(width: 16),
-
-                  // Change camera button
                   _buildControlButton(
                     icon: Icons.cameraswitch,
                     color: Colors.blueGrey,
-                    onPressed: _controller.switchCamera,
+                    onPressed: () => _controller.switchCamera(),
                     heroTag: 'switch-camera',
                   ),
                   const SizedBox(width: 16),
-
-                  // Hang up button
                   _buildControlButton(
                     icon: Icons.call_end,
                     color: Colors.red,
                     onPressed: () async {
                       await _controller.leave();
-                      if (context.mounted) Navigator.pop(context);
+                      if (mounted) {
+                        Navigator.of(context)
+                            .pushReplacementNamed(AppRouter.loadingRoute);
+                      }
                     },
                     heroTag: 'hangup',
                   ),
@@ -116,43 +147,31 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   Widget _buildLocalVideo() {
     return ValueListenableBuilder<bool>(
-      valueListenable: _controller.localUserJoined,
+      valueListenable: _controller.isLocalUserJoined,
       builder: (_, joined, __) {
-        if (!joined) return const CircularProgressIndicator();
-
+        if (!joined) {
+          return CircularProgressIndicator(
+            color: Theme.of(context).colorScheme.secondary,
+          );
+        }
         return ValueListenableBuilder<bool>(
-          valueListenable: _controller.isCameraMuted,
+          valueListenable: _controller.isLocalVideoMuted,
           builder: (_, muted, __) {
             if (!muted) {
               return AgoraVideoView(
                 controller: VideoViewController(
                   rtcEngine: _controller.engine,
-                  canvas: const VideoCanvas(uid: 0),
+                  canvas: const VideoCanvas(
+                    uid: 0,
+                  ),
                 ),
               );
             } else {
               return Container(
                 color: Colors.grey.shade800,
-                child: Center(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white24,
-                        ),
-                        padding: const EdgeInsets.all(24),
-                        child: const Icon(Icons.person,
-                            size: 48, color: Colors.white),
-                      ),
-                      const SizedBox(height: 12),
-                      const Text(
-                        "Test User",
-                        style: TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    ],
-                  ),
+                child: const Center(
+                  child:
+                      Icon(Icons.videocam_off, size: 48, color: Colors.white),
                 ),
               );
             }
@@ -164,49 +183,47 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   Widget _buildRemoteVideo() {
     return ValueListenableBuilder<int?>(
-      valueListenable: _controller.remoteUid,
+      valueListenable: _controller.remoteUserId,
       builder: (_, uid, __) {
-        if (uid != null) {
-          return ValueListenableBuilder<bool>(
-            valueListenable: _controller.isRemoteCameraOn,
-            builder: (_, isOn, __) {
-              if (isOn) {
-                return AgoraVideoView(
-                  controller: VideoViewController.remote(
-                    rtcEngine: _controller.engine,
-                    canvas: VideoCanvas(uid: uid),
-                    connection: RtcConnection(channelId: widget.channelName),
-                  ),
-                );
-              } else {
-                // Cámara del usuario remoto está apagada
-                return _buildPlaceholderView();
-              }
-            },
-          );
-        } else {
-          return const Text('Esperando a otro usuario...');
+        if (uid == null) {
+          return _buildPlaceholderView('Esperando a otro usuario...');
         }
+        return ValueListenableBuilder<bool>(
+          valueListenable: _controller.isRemoteVideoAvailable,
+          builder: (_, available, __) {
+            if (available) {
+              return AgoraVideoView(
+                controller: VideoViewController.remote(
+                  rtcEngine: _controller.engine,
+                  canvas: VideoCanvas(uid: uid),
+                  connection: RtcConnection(channelId: widget.channel),
+                ),
+              );
+            } else {
+              return _buildPlaceholderView('Cámara remota apagada');
+            }
+          },
+        );
       },
     );
   }
 
-  Widget _buildPlaceholderView() {
+  Widget _buildPlaceholderView(String message) {
     return Container(
       color: Colors.grey[900],
-      child: const Center(
+      child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            CircleAvatar(
+            const CircleAvatar(
               radius: 40,
               backgroundColor: Colors.grey,
               child: Icon(Icons.person, size: 40, color: Colors.white),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(
-              'Test User',
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              message,
+              style: const TextStyle(color: Colors.white, fontSize: 16),
             ),
           ],
         ),
