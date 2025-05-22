@@ -1,11 +1,11 @@
-// firebase_messaging_help_request_handler.dart
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
 import '../../help_response/data/videocall_service.dart';
 import '../../help_response/presentation/videocall_screen.dart';
 import '../../home/presentation/pages/home_volunteer_screen.dart';
-import '../../home/presentation/widgets/request_dialog.dart';
+import '../presentation/request_dialog.dart';
+import '../presentation/info_dialog.dart';
 
 void setupHelpRequestNotificationHandler(
     GlobalKey<NavigatorState> navigatorKey) {
@@ -27,11 +27,15 @@ void setupHelpRequestNotificationHandler(
                   builder: (_) => RequestDialog(
                     skill: skill,
                     onAccept: () async {
+                      final context = navigatorKey.currentContext;
+                      if (context == null) return;
+
                       final service = VideocallService();
                       try {
                         final response =
                             await service.acceptEmpairing(idEmpairing);
-                        Navigator.of(context).pop();
+
+                        if (!context.mounted) return;
 
                         navigatorKey.currentState?.pushReplacement(
                           MaterialPageRoute(
@@ -42,10 +46,16 @@ void setupHelpRequestNotificationHandler(
                           ),
                         );
                       } catch (e) {
-                        Navigator.of(context).pop();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Error: $e')),
-                        );
+                        if (context.mounted) {
+                          showDialog(
+                            context: context,
+                            builder: (_) => const InfoDialog(
+                              title: "¡Gracias por tu disposición!",
+                              message:
+                                  "Otro voluntario ya respondió a esta solicitud. Apreciamos mucho tu intención de ayudar 😊.",
+                            ),
+                          );
+                        }
                       }
                     },
                     onReject: () {
