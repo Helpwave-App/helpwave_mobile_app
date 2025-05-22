@@ -77,7 +77,6 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
               return const Center(child: Text('No se pudo cargar el perfil.'));
             }
 
-            // Llamamos a initControllers cuando el perfil se haya cargado
             if (!isEditing) {
               controller.initControllers(profile);
             }

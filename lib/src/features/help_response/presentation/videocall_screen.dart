@@ -1,5 +1,7 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../../routing/app_router.dart';
 import '../application/videocall_controller.dart';
@@ -22,9 +24,15 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   late VideoCallController _controller;
   bool _isLoading = true;
 
+  Timer? _timer;
+  Duration _callDuration = Duration.zero;
+
+  bool _isSwapped = false;
+
   @override
   void initState() {
     super.initState();
+    WakelockPlus.enable();
 
     _controller = VideoCallController(
       token: widget.token,
@@ -52,13 +60,34 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       setState(() {
         _isLoading = false;
       });
+      _startCallTimer();
     }
   }
 
   @override
   void dispose() {
+    _timer?.cancel();
     _controller.leave();
+    WakelockPlus.disable();
     super.dispose();
+  }
+
+  void _startCallTimer() {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (mounted) {
+        setState(() {
+          _callDuration += const Duration(seconds: 1);
+        });
+      }
+    });
+  }
+
+  String _formatDuration(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = duration.inHours;
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+    return hours > 0 ? "$hours:$minutes:$seconds" : "$minutes:$seconds";
   }
 
   @override
@@ -77,13 +106,40 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       appBar: AppBar(title: const Text('Videollamada')),
       body: Stack(
         children: [
-          Center(child: _buildRemoteVideo()),
+          Center(child: _isSwapped ? _buildLocalVideo() : _buildRemoteVideo()),
           Align(
             alignment: Alignment.topLeft,
-            child: SizedBox(
-              width: 120,
-              height: 160,
-              child: Center(child: _buildLocalVideo()),
+            child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  _isSwapped = !_isSwapped;
+                });
+              },
+              child: SizedBox(
+                width: 120,
+                height: 160,
+                child: Center(
+                    child:
+                        _isSwapped ? _buildRemoteVideo() : _buildLocalVideo()),
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topRight,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Text(
+                  _formatDuration(_callDuration),
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
             ),
           ),
           Align(

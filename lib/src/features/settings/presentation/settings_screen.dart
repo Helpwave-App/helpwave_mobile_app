@@ -37,14 +37,14 @@ class SettingsScreen extends ConsumerWidget {
               leading: const Icon(Icons.notifications),
               title: const Text('Notificaciones'),
               onTap: () {
-                // Navegar a notificaciones
+                // TODO: Navegar a notificaciones
               },
             ),
             ListTile(
               leading: const Icon(Icons.help_outline),
               title: const Text('Centro de ayuda'),
               onTap: () {
-                // Navegar al centro de ayuda
+                // TODO: Navegar al centro de ayuda
               },
             ),
             const Spacer(),

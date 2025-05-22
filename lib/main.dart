@@ -20,7 +20,7 @@ void main() async {
   );
 
   await NotificationService.initialize();
-  await FcmConfig.initializeFCM();
+  await FcmConfig.initializeFCM(requestPermission: false);
 
   setupHelpRequestNotificationHandler(navigatorKey);
   setupVideocallNotificationHandler(navigatorKey);

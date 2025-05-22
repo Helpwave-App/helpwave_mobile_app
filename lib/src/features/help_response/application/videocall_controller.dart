@@ -48,6 +48,16 @@ class VideoCallController {
       appId: AgoraConstants.appId,
       channelProfile: ChannelProfileType.channelProfileCommunication,
     ));
+
+    await _engine.setVideoEncoderConfiguration(
+      VideoEncoderConfiguration(
+        dimensions: const VideoDimensions(width: 640, height: 360),
+        frameRate: 15,
+        bitrate: 0,
+        orientationMode: OrientationMode.orientationModeAdaptive,
+        degradationPreference: DegradationPreference.maintainQuality,
+      ),
+    );
   }
 
   void _registerEventHandlers() {

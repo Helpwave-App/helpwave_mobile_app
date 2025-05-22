@@ -1,10 +1,12 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 
 class FcmConfig {
-  static Future<void> initializeFCM() async {
+  static Future<void> initializeFCM({bool requestPermission = false}) async {
     final fcm = FirebaseMessaging.instance;
 
-    await fcm.requestPermission();
+    if (requestPermission) {
+      await fcm.requestPermission();
+    }
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print("🔔 Notificación en foreground:");
