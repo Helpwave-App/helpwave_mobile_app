@@ -1,7 +1,7 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
+import 'package:wakelock_plus/wakelock_plus.dart';
 
 import '../../../routing/app_router.dart';
 import '../application/videocall_controller.dart';
@@ -32,6 +32,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   @override
   void initState() {
     super.initState();
+    WakelockPlus.enable();
 
     _controller = VideoCallController(
       token: widget.token,
@@ -67,6 +68,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   void dispose() {
     _timer?.cancel();
     _controller.leave();
+    WakelockPlus.disable();
     super.dispose();
   }
 
