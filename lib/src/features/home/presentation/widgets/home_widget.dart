@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../routing/app_router.dart';
 import '../../../../utils/constants/providers.dart';
+import '../../../../utils/permissions_helper.dart';
 import '../../../profile/domain/skill_model.dart';
 
 class HomeWidget extends ConsumerStatefulWidget {
@@ -27,6 +28,49 @@ class HomeWidget extends ConsumerStatefulWidget {
 
 class _HomeWidgetState extends ConsumerState<HomeWidget> {
   Skill? selectedSkill;
+
+  Future<void> handleHelpRequest(BuildContext context) async {
+    try {
+      final hasPermissions = await checkAndRequestEssentialPermissions(context);
+
+      if (!mounted) return;
+
+      if (!hasPermissions) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Por favor, concede todos los permisos necesarios para solicitar asistencia.',
+            ),
+          ),
+        );
+        return;
+      }
+
+      if (selectedSkill == null) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content:
+                Text('Por favor, selecciona una habilidad antes de continuar.'),
+          ),
+        );
+        return;
+      }
+
+      final service = ref.read(videocallServiceProvider);
+      final idSkill = selectedSkill!.idSkill;
+
+      await service.createHelpRequest(idSkill: idSkill);
+
+      if (!mounted) return;
+
+      Navigator.of(context).pushNamed(AppRouter.connectingRoute);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error: ${e.toString()}')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -98,21 +142,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                           foregroundColor: theme.colorScheme.onSecondary,
                           elevation: 6,
                         ),
-                        onPressed: () async {
-                          final service = ref.read(videocallServiceProvider);
-                          final idSkill = selectedSkill?.idSkill ?? 1;
-                          try {
-                            await service.createHelpRequest(idSkill: idSkill);
-                            if (!mounted) return;
-                            Navigator.of(context)
-                                .pushNamed(AppRouter.connectingRoute);
-                          } catch (e) {
-                            if (!mounted) return;
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('Error: ${e.toString()}')),
-                            );
-                          }
-                        },
+                        onPressed: () => handleHelpRequest(context),
                         child: Text(
                           widget.buttonText,
                           textAlign: TextAlign.center,

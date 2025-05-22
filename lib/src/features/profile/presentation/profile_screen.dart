@@ -36,7 +36,6 @@ class ProfileScreen extends ConsumerWidget {
                   leading: const Icon(Icons.info_outline),
                   title: const Text('Información de usuario'),
                   onTap: () {
-                    // Forzamos una recarga del perfil al entrar
                     ref.invalidate(profileFutureProvider);
                     Navigator.of(context).pushNamed(AppRouter.userInfoRoute);
                   },

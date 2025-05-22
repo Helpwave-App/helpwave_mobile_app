@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../utils/permissions_helper.dart';
 
 typedef OnAccept = Future<void> Function();
 typedef OnReject = void Function();
@@ -15,6 +16,29 @@ class RequestDialog extends StatelessWidget {
     required this.onReject,
   });
 
+  Future<void> _handleAccept(BuildContext context) async {
+    final hasPermissions = await checkAndRequestEssentialPermissions(context);
+
+    if (!hasPermissions) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+              'Por favor, concede los permisos necesarios para aceptar la solicitud.',
+            ),
+          ),
+        );
+      }
+      return;
+    }
+
+    if (context.mounted) {
+      Navigator.of(context).pop();
+    }
+
+    await onAccept();
+  }
+
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -29,10 +53,7 @@ class RequestDialog extends StatelessWidget {
           child: const Text("Rechazar"),
         ),
         ElevatedButton(
-          onPressed: () async {
-            Navigator.of(context).pop();
-            await onAccept();
-          },
+          onPressed: () => _handleAccept(context),
           child: const Text("Aceptar"),
         ),
       ],

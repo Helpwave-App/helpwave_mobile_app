@@ -4,6 +4,7 @@ import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../common/animations/animated_route.dart';
+import '../../../../../utils/firebase/fcm_config.dart';
 import '../../../../../utils/permissions_helper.dart';
 import '../../../../notifications/services/device_token_service.dart';
 
@@ -62,6 +63,8 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
       final token =
           await DeviceTokenService.getDeviceToken(requestPermission: true);
       print('🔥 Token del dispositivo: $token');
+
+      await FcmConfig.initializeFCM(requestPermission: false);
 
       Navigator.of(context).pushReplacement(
         animatedRouteTo(
