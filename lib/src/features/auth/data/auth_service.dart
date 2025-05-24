@@ -105,20 +105,16 @@ class AuthService {
 
       await _storeSessionData(authResponse);
 
-      await FirebaseMessaging.instance.deleteToken();
-
       final newToken =
           await DeviceTokenService.getDeviceToken(requestPermission: true);
 
       if (newToken != null) {
         final oldToken = await _secureStorage.read(key: 'device_token');
 
-        if (newToken != oldToken) {
-          await deviceTokenService.registerDeviceToken(
-            newToken: newToken,
-            oldToken: oldToken,
-          );
-        }
+        await deviceTokenService.registerDeviceToken(
+          newToken: newToken,
+          oldToken: oldToken,
+        );
 
         await _secureStorage.write(key: 'device_token', value: newToken);
       }

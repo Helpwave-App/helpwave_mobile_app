@@ -34,13 +34,8 @@ class DeviceTokenService {
     final idUser = await _secureStorage.read(key: 'id_user');
     final jwtToken = await _secureStorage.read(key: 'jwt_token');
 
-    print('📦 Token JWT leído para registrar dispositivo: $jwtToken');
-    print('👤 User ID: $idUser');
-    print('📱 Nuevo token FCM: $newToken');
-    if (oldToken != null) print('📱 Token anterior FCM: $oldToken');
-
     if (idUser == null || jwtToken == null) {
-      print('❌ Falta información para registrar token de dispositivo');
+      print('❌ No hay idUser o jwtToken para registrar el token');
       return;
     }
 
