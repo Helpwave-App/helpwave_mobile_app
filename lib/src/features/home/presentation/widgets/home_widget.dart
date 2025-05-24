@@ -28,8 +28,11 @@ class HomeWidget extends ConsumerStatefulWidget {
 
 class _HomeWidgetState extends ConsumerState<HomeWidget> {
   Skill? selectedSkill;
+  bool isLoading = false;
 
   Future<void> handleHelpRequest(BuildContext context) async {
+    setState(() => isLoading = true);
+
     try {
       final hasPermissions = await checkAndRequestEssentialPermissions(context);
 
@@ -65,10 +68,13 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
       Navigator.of(context).pushNamed(AppRouter.connectingRoute);
     } catch (e) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: ${e.toString()}')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: ${e.toString()}')),
+        );
+      }
+    } finally {
+      if (mounted) setState(() => isLoading = false);
     }
   }
 
@@ -142,15 +148,22 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                           foregroundColor: theme.colorScheme.onSecondary,
                           elevation: 6,
                         ),
-                        onPressed: () => handleHelpRequest(context),
-                        child: Text(
-                          widget.buttonText,
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
+                        onPressed:
+                            isLoading ? null : () => handleHelpRequest(context),
+                        child: isLoading
+                            ? const CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                  Colors.white,
+                                ),
+                              )
+                            : Text(
+                                widget.buttonText,
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                       ),
                     ),
                   ),
@@ -168,11 +181,13 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                               child: Text(skill.skillDesc),
                             ))
                         .toList(),
-                    onChanged: (skill) {
-                      setState(() {
-                        selectedSkill = skill;
-                      });
-                    },
+                    onChanged: isLoading
+                        ? null
+                        : (skill) {
+                            setState(() {
+                              selectedSkill = skill;
+                            });
+                          },
                   ),
                 ],
               ],

@@ -106,7 +106,7 @@ class AuthService {
       await _storeSessionData(authResponse);
 
       final newToken =
-          await DeviceTokenService.getDeviceToken(requestPermission: true);
+          await DeviceTokenService.getDeviceToken(requestPermission: false);
 
       if (newToken != null) {
         final oldToken = await _secureStorage.read(key: 'device_token');

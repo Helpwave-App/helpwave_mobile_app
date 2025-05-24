@@ -3,12 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../../../utils/constants/agora_api.dart';
+import '../../../utils/constants/call_session.dart';
+import '../data/videocall_service.dart';
 
 class VideoCallController {
   final String token;
   final String channelName;
 
   late final RtcEngine _engine;
+  final VideocallService _service = VideocallService();
 
   final ValueNotifier<bool> isLocalUserJoined = ValueNotifier(false);
   final ValueNotifier<int?> remoteUserId = ValueNotifier(null);
@@ -28,8 +31,9 @@ class VideoCallController {
     await _initEngine();
     _registerEventHandlers();
     await _engine.enableVideo();
-    await _joinChannel();
     await _engine.startPreview();
+    await _joinChannel();
+    CallSession.currentChannel = channelName;
   }
 
   Future<void> _requestPermissions() async {
@@ -99,13 +103,6 @@ class VideoCallController {
   }
 
   Future<void> _joinChannel() async {
-    final cameraStatus = await Permission.camera.request();
-    final micStatus = await Permission.microphone.request();
-
-    if (!cameraStatus.isGranted || !micStatus.isGranted) {
-      throw Exception('Permisos de cámara y micrófono denegados.');
-    }
-
     await _engine.joinChannel(
       token: token,
       channelId: channelName,
@@ -121,9 +118,20 @@ class VideoCallController {
   }
 
   Future<void> leave() async {
+    try {
+      if (CallSession.currentChannel != null) {
+        await _service.endVideocall(CallSession.currentChannel!);
+      }
+    } catch (e) {
+      debugPrint('❌ Error al notificar fin de videollamada: $e');
+    }
+
     await _engine.leaveChannel();
     await _engine.stopPreview();
+    await Future.delayed(Duration(seconds: 1));
     await _engine.release();
+
+    CallSession.currentChannel = null;
   }
 
   Future<void> toggleMuteAudio() async {

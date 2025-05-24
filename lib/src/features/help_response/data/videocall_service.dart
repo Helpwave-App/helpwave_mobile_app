@@ -78,4 +78,24 @@ class VideocallService {
       throw Exception('Error al aceptar emparejamiento: $e');
     }
   }
+
+  Future<void> endVideocall(String channel) async {
+    final token = await _secureStorage.read(key: 'jwt_token');
+    print('Token: $token');
+    if (token == null) {
+      throw Exception('Token no encontrado');
+    }
+
+    try {
+      final url = Uri.parse('$baseUrl/videocalls/end');
+      await http.post(url,
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+          body: jsonEncode({'channel': channel}));
+    } catch (e) {
+      debugPrint('Error al finalizar videollamada: $e');
+    }
+  }
 }
