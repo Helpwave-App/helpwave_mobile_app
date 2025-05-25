@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../utils/constants/week_days.dart';
-import '../../availability/domain/availability_payload_model.dart';
-import '../../availability/data/availability_service.dart';
+import '../data/availability_service.dart';
+import '../domain/availability_payload_model.dart';
 import '../../../utils/constants/providers.dart';
 
 class UserAvailabilityController

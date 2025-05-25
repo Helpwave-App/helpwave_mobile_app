@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../utils/constants/week_days.dart';
-import '../../../../availability/application/user_availability_controller.dart';
-import '../../../../availability/data/availability_service.dart';
-import '../../../../availability/domain/availability_payload_model.dart';
-import '../../../../availability/domain/add_time_modal.dart';
+import '../../../../profile/application/user_availability_controller.dart';
+import '../../../../profile/data/availability_service.dart';
+import '../../../../profile/domain/availability_payload_model.dart';
+import '../../../../profile/domain/add_time_modal.dart';
 import '../../widgets/day_availability_tile.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../availability/application/user_availability_controller.dart';
+import '../../../profile/application/user_availability_controller.dart';
 
 class DayAvailabilityTile extends StatelessWidget {
   final String day;
