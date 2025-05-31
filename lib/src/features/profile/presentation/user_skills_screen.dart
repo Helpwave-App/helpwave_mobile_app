@@ -47,6 +47,8 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ...skills.map((skill) {
+                    final isGeneralSkill = skill['idSkill'] == 1;
+
                     return Padding(
                       padding: const EdgeInsets.symmetric(vertical: 4),
                       child: SizedBox(
@@ -70,56 +72,63 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                                 ),
                               ),
                               if (isEditing)
-                                GestureDetector(
-                                  onTap: () async {
-                                    // Verificar que el usuario tenga más de una habilidad
-                                    if (skills.length > 1) {
-                                      final confirm = await showDialog<bool>(
-                                        context: context,
-                                        builder: (context) => AlertDialog(
-                                          title: const Text(
-                                              'Confirmar eliminación'),
-                                          content: const Text(
-                                              '¿Estás seguro de eliminar esta habilidad?'),
-                                          actions: [
-                                            TextButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context, false),
-                                              child: const Text('Cancelar'),
-                                            ),
-                                            TextButton(
-                                              onPressed: () =>
-                                                  Navigator.pop(context, true),
-                                              child: const Text('Eliminar'),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                      if (confirm == true) {
-                                        try {
-                                          await controller.removeSkill(
-                                              skill['idSkillProfile']);
-                                        } catch (e) {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                                content: Text(e.toString())),
-                                          );
-                                        }
-                                      }
-                                    } else {
-                                      // Mostrar mensaje si solo queda una habilidad
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                              'Debes mantener al menos una habilidad.'),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: const Icon(Icons.close, size: 20),
-                                ),
+                                isGeneralSkill
+                                    ? const Icon(Icons.lock, size: 20)
+                                    : GestureDetector(
+                                        onTap: () async {
+                                          if (skills.length > 1) {
+                                            final confirm =
+                                                await showDialog<bool>(
+                                              context: context,
+                                              builder: (context) => AlertDialog(
+                                                title: const Text(
+                                                    'Confirmar eliminación'),
+                                                content: const Text(
+                                                    '¿Estás seguro de eliminar esta habilidad?'),
+                                                actions: [
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            context, false),
+                                                    child:
+                                                        const Text('Cancelar'),
+                                                  ),
+                                                  TextButton(
+                                                    onPressed: () =>
+                                                        Navigator.pop(
+                                                            context, true),
+                                                    child:
+                                                        const Text('Eliminar'),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                            if (confirm == true) {
+                                              try {
+                                                await controller.removeSkill(
+                                                    skill['idSkillProfile']);
+                                              } catch (e) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                      content:
+                                                          Text(e.toString())),
+                                                );
+                                              }
+                                            }
+                                          } else {
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(
+                                              const SnackBar(
+                                                content: Text(
+                                                    'Debes mantener al menos una habilidad.'),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        child:
+                                            const Icon(Icons.close, size: 20),
+                                      ),
                             ],
                           ),
                         ),
@@ -132,10 +141,11 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                       value: selected,
                       items: availableSkills
                           .map(
-                              (skill) => DropdownMenuItem<Map<String, dynamic>>(
-                                    value: skill,
-                                    child: Text(skill['skillDesc']),
-                                  ))
+                            (skill) => DropdownMenuItem<Map<String, dynamic>>(
+                              value: skill,
+                              child: Text(skill['skillDesc']),
+                            ),
+                          )
                           .toList(),
                       onChanged: (value) => controller.selectSkill(value),
                       decoration: const InputDecoration(

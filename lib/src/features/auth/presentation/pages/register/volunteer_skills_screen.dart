@@ -36,9 +36,21 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
       print('VolunteerSkillsScreen recibió idProfile: ${widget.idProfile}');
     }
     _skillsFuture = ref.read(skillServiceProvider).fetchSkills();
+    _selectedSkillIds.add(1); // Agrega "Asistencia General" automáticamente
   }
 
   void _onOptionToggled(int skillId) {
+    if (skillId == 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'La habilidad "Asistencia General" es obligatoria para todos los voluntarios.',
+          ),
+        ),
+      );
+      return;
+    }
+
     setState(() {
       if (_selectedSkillIds.contains(skillId)) {
         _selectedSkillIds.remove(skillId);
@@ -147,7 +159,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                             color: theme.onTertiary,
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 4),
                         Expanded(
                           child: ListView.separated(
                             itemCount: skills.length,
@@ -155,49 +167,68 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                 const SizedBox(height: 8),
                             itemBuilder: (context, index) {
                               final skill = skills[index];
+                              final isGeneralAssistance = skill.idSkill == 1;
                               final isSelected =
                                   _selectedSkillIds.contains(skill.idSkill);
+                              final isDisabled = isGeneralAssistance;
 
                               return GestureDetector(
-                                onTap: _isLoading
+                                onTap: (_isLoading || isDisabled)
                                     ? null
                                     : () => _onOptionToggled(skill.idSkill),
-                                child: Container(
-                                  padding: const EdgeInsets.all(16),
-                                  decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? theme.tertiary.withOpacity(0.2)
-                                        : theme.surface.withOpacity(0.1),
-                                    border: Border.all(
+                                child: Opacity(
+                                  opacity: isDisabled ? 0.7 : 1.0,
+                                  child: Container(
+                                    padding: const EdgeInsets.all(16),
+                                    decoration: BoxDecoration(
                                       color: isSelected
-                                          ? theme.tertiary
-                                          : theme.primary.withOpacity(0.3),
-                                      width: 2,
-                                    ),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Icon(
-                                        isSelected
-                                            ? Icons.check_circle
-                                            : Icons.circle_outlined,
+                                          ? theme.tertiary.withOpacity(0.2)
+                                          : theme.surface.withOpacity(0.1),
+                                      border: Border.all(
                                         color: isSelected
                                             ? theme.tertiary
-                                            : theme.primary.withOpacity(0.6),
+                                            : theme.primary.withOpacity(0.3),
+                                        width: 2,
                                       ),
-                                      const SizedBox(width: 12),
-                                      Expanded(
-                                        child: Text(
-                                          skill.skillDesc,
-                                          style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w500,
-                                            color: theme.onTertiary,
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Icon(
+                                          isSelected
+                                              ? Icons.check_circle
+                                              : Icons.circle_outlined,
+                                          color: isSelected
+                                              ? theme.tertiary
+                                              : theme.primary.withOpacity(0.6),
+                                        ),
+                                        const SizedBox(width: 12),
+                                        Expanded(
+                                          child: Text(
+                                            skill.skillDesc,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w500,
+                                              color: theme.onTertiary,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        if (isGeneralAssistance)
+                                          Chip(
+                                            label: const Text('Obligatoria'),
+                                            backgroundColor:
+                                                theme.primary.withOpacity(0.2),
+                                            labelStyle: TextStyle(
+                                              color: theme.primary,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                            visualDensity:
+                                                VisualDensity.compact,
+                                          ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

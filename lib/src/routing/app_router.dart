@@ -106,12 +106,14 @@ class AppRouter {
       case videoCallRoute:
         if (args == null ||
             !args.containsKey('token') ||
-            !args.containsKey('channel')) {
+            !args.containsKey('channel') ||
+            !args.containsKey('fullname')) {
           return const Scaffold(body: Center(child: Text('Faltan argumentos')));
         }
         return VideoCallScreen(
           token: args['token'],
           channel: args['channel'],
+          fullname: args['fullname'],
         );
       case settingsRoute:
         return const SettingsScreen();
@@ -200,12 +202,11 @@ class AppRouter {
         final args = settings.arguments as Map<String, dynamic>;
         final token = args['token'] as String;
         final channelName = args['channel'] as String;
+        final fullname = args['fullname'] as String;
 
         return MaterialPageRoute(
           builder: (_) => VideoCallScreen(
-            token: token,
-            channel: channelName,
-          ),
+              token: token, channel: channelName, fullname: fullname),
         );
 
       case settingsRoute:

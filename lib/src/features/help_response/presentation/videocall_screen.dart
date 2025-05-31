@@ -10,11 +10,13 @@ import '../application/videocall_controller.dart';
 class VideoCallScreen extends StatefulWidget {
   final String token;
   final String channel;
+  final String fullname;
 
   const VideoCallScreen({
     super.key,
     required this.token,
     required this.channel,
+    required this.fullname,
   });
 
   @override
@@ -131,17 +133,43 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             alignment: Alignment.topRight,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(
-                  color: Colors.black54,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Text(
-                  _formatDuration(_callDuration),
-                  style: const TextStyle(color: Colors.white, fontSize: 16),
-                ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      widget.fullname,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    decoration: BoxDecoration(
+                      color: Colors.black54,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Text(
+                      _formatDuration(_callDuration),
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

@@ -26,10 +26,18 @@ void _handleVideocallNotification(
   switch (type) {
     case 'videocall_start':
       if (token != null && channel != null) {
+        final name = data['name'] ?? 'Desconocido';
+        final lastname = data['lastname'] ?? '';
+        final fullname = '$name $lastname'.trim();
+
         print('📞 Redirigiendo a VideoCallScreen');
         navigatorKey.currentState?.pushNamed(
           AppRouter.videoCallRoute,
-          arguments: {'token': token, 'channel': channel},
+          arguments: {
+            'token': token,
+            'channel': channel,
+            'fullname': fullname,
+          },
         );
       }
       break;

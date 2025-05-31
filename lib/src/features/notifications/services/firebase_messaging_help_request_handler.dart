@@ -15,6 +15,9 @@ void setupHelpRequestNotificationHandler(
     if (data['type'] == 'help_request') {
       final idEmpairing = int.tryParse(data['idEmpairing'] ?? '');
       final skill = data['skill'] ?? 'Desconocida';
+      final name = data['name'] ?? 'Desconocido';
+      final lastname = data['lastname'] ?? 'Desconocido';
+      final fullname = '$name $lastname';
 
       if (idEmpairing != null) {
         navigatorKey.currentState?.push(
@@ -26,6 +29,7 @@ void setupHelpRequestNotificationHandler(
                   context: context,
                   builder: (_) => RequestDialog(
                     skill: skill,
+                    fullname: fullname,
                     onAccept: () async {
                       final context = navigatorKey.currentContext;
                       if (context == null) return;
@@ -42,6 +46,7 @@ void setupHelpRequestNotificationHandler(
                             builder: (_) => VideoCallScreen(
                               channel: response.channel,
                               token: response.token,
+                              fullname: fullname,
                             ),
                           ),
                         );
