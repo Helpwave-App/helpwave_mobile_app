@@ -101,7 +101,9 @@ class AppRouter {
         );
 
       case connectingRoute:
-        return const ConnectingScreen();
+        return ConnectingScreen(
+          idRequest: args?['idRequest'] as int? ?? 0,
+        );
 
       case videoCallRoute:
         if (args == null ||
@@ -196,7 +198,12 @@ class AppRouter {
                 ));
 
       case connectingRoute:
-        return MaterialPageRoute(builder: (_) => const ConnectingScreen());
+        final args = settings.arguments as Map<String, dynamic>?;
+        final idRequest = args != null && args['idRequest'] != null
+            ? args['idRequest'] as int
+            : 0;
+        return MaterialPageRoute(
+            builder: (_) => ConnectingScreen(idRequest: idRequest));
 
       case videoCallRoute:
         final args = settings.arguments as Map<String, dynamic>;

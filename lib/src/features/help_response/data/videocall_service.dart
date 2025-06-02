@@ -9,27 +9,18 @@ import '../domain/videocall_response.dart';
 class VideocallService {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  Future<void> createHelpRequest({
+  Future<int> createHelpRequest({
     required int idSkill,
   }) async {
     final idUser = await _secureStorage.read(key: 'id_user');
     final token = await _secureStorage.read(key: 'jwt_token');
     final deviceToken = await _secureStorage.read(key: 'device_token');
 
-    print('ID Profile: $idUser');
-    print('Token: $token');
     if (token == null || idUser == null) {
       throw Exception('Token o idProfile no encontrados');
     }
 
     final idProfile = int.parse(idUser);
-
-    print('📤 Enviando solicitud con:');
-    print('idProfile: $idProfile');
-    print('idSkill: $idSkill');
-    print('stateRequest: true');
-    print('tokenDevice: $deviceToken');
-
     final url = Uri.parse('$baseUrl/requests');
     final response = await http.post(
       url,
@@ -45,14 +36,34 @@ class VideocallService {
       }),
     );
 
-    if (kDebugMode) {
-      print('→ POST $url');
-      print('← Status: ${response.statusCode}');
-      print('← Response: ${response.body}');
-    }
-
     if (response.statusCode != 200 && response.statusCode != 201) {
       throw Exception('Error al crear la solicitud: ${response.body}');
+    }
+
+    final data = jsonDecode(response.body);
+    return data['idRequest'];
+  }
+
+  Future<void> cancelRequest(idRequest) async {
+    final token = await FlutterSecureStorage().read(key: 'jwt_token');
+    final url = Uri.parse('$baseUrl/requests/cancel/$idRequest');
+
+    try {
+      final response = await http.put(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw Exception('Error al cancelar la solicitud');
+      }
+
+      debugPrint('Solicitud cancelada correctamente.');
+    } catch (e) {
+      debugPrint('Error al cancelar solicitud: $e');
     }
   }
 
