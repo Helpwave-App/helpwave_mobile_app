@@ -53,12 +53,8 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
       if (!mounted) return;
 
-      Navigator.of(context).pushNamed(
-        AppRouter.connectingRoute,
-        arguments: {
-          'idRequest': idRequest,
-        },
-      );
+      Navigator.of(context)
+          .pushNamed(AppRouter.connectingRoute, arguments: idRequest);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
