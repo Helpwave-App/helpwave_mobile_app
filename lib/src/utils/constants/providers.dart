@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../features/auth/application/sign_up_form_controller.dart';
 import '../../features/auth/data/auth_service.dart';
-import '../../features/feedback/application/review_controller.dart';
+import '../../features/reviews/application/review_controller.dart';
 import '../../features/profile/application/user_availability_controller.dart';
 import '../../features/profile/application/user_info_controller.dart';
 import '../../features/profile/application/user_skills_controller.dart';

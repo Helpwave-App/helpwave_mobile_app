@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:helpwave_mobile_app/src/features/feedback/presentation/review_screen.dart';
+import 'package:helpwave_mobile_app/src/features/reviews/presentation/review_screen.dart';
 import 'package:helpwave_mobile_app/src/features/profile/presentation/user_availability_screen.dart';
 
 import '../common/pages/loading_screen.dart';
@@ -14,7 +14,7 @@ import '../features/auth/presentation/pages/register/volunteer_skills_screen.dar
 import '../features/auth/presentation/pages/register/volunteer_availability_screen.dart';
 import '../features/auth/presentation/pages/register/registration_completed_requester_screen.dart';
 import '../features/auth/presentation/pages/register/registration_completed_volunteer_screen.dart';
-import '../features/feedback/presentation/end_videocall_screen.dart';
+import '../features/reviews/presentation/end_videocall_screen.dart';
 import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
 import '../features/help_response/presentation/connecting_screen.dart';
