@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpwave_mobile_app/src/features/feedback/presentation/review_screen.dart';
 import 'package:helpwave_mobile_app/src/features/profile/presentation/user_availability_screen.dart';
 
 import '../common/pages/loading_screen.dart';
@@ -13,6 +14,7 @@ import '../features/auth/presentation/pages/register/volunteer_skills_screen.dar
 import '../features/auth/presentation/pages/register/volunteer_availability_screen.dart';
 import '../features/auth/presentation/pages/register/registration_completed_requester_screen.dart';
 import '../features/auth/presentation/pages/register/registration_completed_volunteer_screen.dart';
+import '../features/feedback/presentation/end_videocall_screen.dart';
 import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
 import '../features/help_response/presentation/connecting_screen.dart';
@@ -41,6 +43,8 @@ class AppRouter {
   static const String homeVolunteerRoute = '/home-volunteer';
   static const String connectingRoute = '/connecting';
   static const String videoCallRoute = '/videocall';
+  static const String reviewRoute = '/review';
+  static const String endVideocallRoute = '/videocall-end';
   static const String settingsRoute = '/settings';
   static const String profileRoute = '/profile';
   static const String userInfoRoute = '/user-info';
@@ -101,28 +105,49 @@ class AppRouter {
         );
 
       case connectingRoute:
-        return const ConnectingScreen();
+        return ConnectingScreen(
+          idRequest: args?['idRequest'] as int? ?? 0,
+        );
 
       case videoCallRoute:
         if (args == null ||
             !args.containsKey('token') ||
             !args.containsKey('channel') ||
-            !args.containsKey('fullname')) {
+            !args.containsKey('fullname') ||
+            !args.containsKey('idVideocall')) {
           return const Scaffold(body: Center(child: Text('Faltan argumentos')));
         }
         return VideoCallScreen(
           token: args['token'],
           channel: args['channel'],
           fullname: args['fullname'],
+          idVideocall: args['idVideocall'] as int? ?? 0,
         );
+
+      case reviewRoute:
+        if (args == null || !args.containsKey('idVideocall')) {
+          return const Scaffold(body: Center(child: Text('Faltan argumentos')));
+        }
+        return ReviewScreen(idVideocall: args['idVideocall'] as int? ?? 0);
+
+      case endVideocallRoute:
+        if (args == null || !args.containsKey('idVideocall')) {
+          return const Scaffold(body: Center(child: Text('Faltan argumentos')));
+        }
+        return EndVideocallScreen(idVideocall: args['idVideocall'] as int);
+
       case settingsRoute:
         return const SettingsScreen();
+
       case profileRoute:
         return const ProfileScreen();
+
       case userInfoRoute:
         return const UserInfoScreen();
+
       case skillsRoute:
         return const UserSkillsScreen();
+
       case availabilityRoute:
         return UserAvailabilityScreen();
 
@@ -196,17 +221,36 @@ class AppRouter {
                 ));
 
       case connectingRoute:
-        return MaterialPageRoute(builder: (_) => const ConnectingScreen());
+        final idRequest = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => ConnectingScreen(idRequest: idRequest),
+        );
 
       case videoCallRoute:
         final args = settings.arguments as Map<String, dynamic>;
         final token = args['token'] as String;
         final channelName = args['channel'] as String;
         final fullname = args['fullname'] as String;
+        final idVideocall = args['idVideocall'] as int? ?? 0;
 
         return MaterialPageRoute(
           builder: (_) => VideoCallScreen(
-              token: token, channel: channelName, fullname: fullname),
+              token: token,
+              channel: channelName,
+              fullname: fullname,
+              idVideocall: idVideocall),
+        );
+
+      case reviewRoute:
+        final idVideocall = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => ReviewScreen(idVideocall: idVideocall),
+        );
+
+      case endVideocallRoute:
+        final idVideocall = settings.arguments as int;
+        return MaterialPageRoute(
+          builder: (_) => EndVideocallScreen(idVideocall: idVideocall),
         );
 
       case settingsRoute:

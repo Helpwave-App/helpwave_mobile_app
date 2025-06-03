@@ -6,6 +6,7 @@ import '../../help_response/presentation/videocall_screen.dart';
 import '../../home/presentation/pages/home_volunteer_screen.dart';
 import '../presentation/request_dialog.dart';
 import '../presentation/info_dialog.dart';
+import 'dialog_manager.dart';
 
 void setupHelpRequestNotificationHandler(
     GlobalKey<NavigatorState> navigatorKey) {
@@ -20,12 +21,16 @@ void setupHelpRequestNotificationHandler(
       final fullname = '$name $lastname';
 
       if (idEmpairing != null) {
+        if (DialogManager.isDialogShown) return;
+
         navigatorKey.currentState?.push(
           MaterialPageRoute(
             builder: (_) => HomeVolunteerScreen(
               onDialogRequested: () async {
                 final context = navigatorKey.currentContext!;
-                showDialog(
+                DialogManager.setDialogShown(true);
+
+                await showDialog(
                   context: context,
                   builder: (_) => RequestDialog(
                     skill: skill,
@@ -47,6 +52,7 @@ void setupHelpRequestNotificationHandler(
                               channel: response.channel,
                               token: response.token,
                               fullname: fullname,
+                              idVideocall: response.idVideocall,
                             ),
                           ),
                         );
@@ -64,10 +70,12 @@ void setupHelpRequestNotificationHandler(
                       }
                     },
                     onReject: () {
-                      // TODO: Implementar lógica para rechazo si es necesario
+                      // Lógica opcional
                     },
                   ),
                 );
+
+                DialogManager.setDialogShown(false);
               },
             ),
           ),

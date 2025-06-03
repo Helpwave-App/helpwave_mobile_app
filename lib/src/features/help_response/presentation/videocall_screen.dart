@@ -11,12 +11,14 @@ class VideoCallScreen extends StatefulWidget {
   final String token;
   final String channel;
   final String fullname;
+  final int? idVideocall;
 
   const VideoCallScreen({
     super.key,
     required this.token,
     required this.channel,
     required this.fullname,
+    required this.idVideocall,
   });
 
   @override
@@ -215,10 +217,38 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                     icon: Icons.call_end,
                     color: Colors.red,
                     onPressed: () async {
-                      await _controller.leave();
-                      if (mounted) {
-                        Navigator.of(context)
-                            .pushReplacementNamed(AppRouter.loadingRoute);
+                      final confirmed = await showDialog<bool>(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title:
+                              const Text('¿Deseas finalizar la videollamada?'),
+                          content: const Text(
+                              'Esta acción terminará la llamada y no podrás retomarla.'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text('Cancelar'),
+                            ),
+                            ElevatedButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.red,
+                              ),
+                              child: const Text('Finalizar'),
+                            ),
+                          ],
+                        ),
+                      );
+
+                      if (confirmed == true) {
+                        await _controller.leave();
+
+                        if (mounted) {
+                          Navigator.of(context).pushReplacementNamed(
+                            AppRouter.reviewRoute,
+                            arguments: widget.idVideocall,
+                          );
+                        }
                       }
                     },
                     heroTag: 'hangup',

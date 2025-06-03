@@ -35,26 +35,13 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
 
     try {
       final hasPermissions = await checkAndRequestEssentialPermissions(context);
-
-      if (!mounted) return;
-
-      if (!hasPermissions) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text(
-              'Por favor, concede todos los permisos necesarios para solicitar asistencia.',
-            ),
-          ),
-        );
-        return;
-      }
+      if (!mounted || !hasPermissions) return;
 
       if (selectedSkill == null) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content:
-                Text('Por favor, selecciona una habilidad antes de continuar.'),
-          ),
+              content: Text(
+                  'Por favor, selecciona una habilidad antes de continuar.')),
         );
         return;
       }
@@ -62,11 +49,12 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
       final service = ref.read(videocallServiceProvider);
       final idSkill = selectedSkill!.idSkill;
 
-      await service.createHelpRequest(idSkill: idSkill);
+      final idRequest = await service.createHelpRequest(idSkill: idSkill);
 
       if (!mounted) return;
 
-      Navigator.of(context).pushNamed(AppRouter.connectingRoute);
+      Navigator.of(context)
+          .pushNamed(AppRouter.connectingRoute, arguments: idRequest);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

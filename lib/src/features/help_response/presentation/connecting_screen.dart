@@ -1,9 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:helpwave_mobile_app/src/features/help_response/data/videocall_service.dart';
 import '../../../routing/app_router.dart';
 
 class ConnectingScreen extends StatefulWidget {
-  const ConnectingScreen({super.key});
+  final int idRequest;
+
+  const ConnectingScreen({super.key, required this.idRequest});
 
   @override
   State<ConnectingScreen> createState() => _ConnectingScreenState();
@@ -41,7 +44,20 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
     super.dispose();
   }
 
-  void _cancelAndReturnToHome() {
+  void _cancelAndReturnToHome() async {
+    final service = VideocallService();
+
+    try {
+      await service.cancelRequest(widget.idRequest);
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('No se pudo cancelar la solicitud')),
+      );
+    }
+
+    if (!mounted) return;
+
     Navigator.of(context).pushNamedAndRemoveUntil(
       AppRouter.homeRequesterRoute,
       (route) => false,
@@ -101,7 +117,7 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
-                  onPressed: _cancelAndReturnToHome,
+                  onPressed: _showCancelConfirmationDialog,
                   child: const Text('Cancelar'),
                 ),
               ),
@@ -109,6 +125,65 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
           ),
         ),
       ),
+    );
+  }
+
+  void _showCancelConfirmationDialog() {
+    final theme = Theme.of(context);
+
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          backgroundColor: theme.colorScheme.surface,
+          title: Text(
+            'Cancelar solicitud',
+            style: theme.textTheme.titleLarge?.copyWith(
+              fontWeight: FontWeight.bold,
+              color: theme.colorScheme.onSurface,
+            ),
+          ),
+          content: Text(
+            '¿Estás seguro de que deseas cancelar tu solicitud de ayuda?',
+            style: theme.textTheme.bodyLarge?.copyWith(
+              color: theme.colorScheme.onSurfaceVariant,
+            ),
+          ),
+          actionsPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          actionsAlignment: MainAxisAlignment.end,
+          actions: [
+            TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: theme.colorScheme.primary,
+                textStyle: theme.textTheme.labelLarge,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('No'),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: theme.colorScheme.error,
+                foregroundColor: theme.colorScheme.onError,
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                textStyle: theme.textTheme.labelLarge
+                    ?.copyWith(fontWeight: FontWeight.bold),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _cancelAndReturnToHome();
+              },
+              child: const Text('Sí, cancelar'),
+            ),
+          ],
+        );
+      },
     );
   }
 }

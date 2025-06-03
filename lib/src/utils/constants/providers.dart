@@ -3,6 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../../features/auth/application/sign_up_form_controller.dart';
 import '../../features/auth/data/auth_service.dart';
+import '../../features/feedback/application/review_controller.dart';
 import '../../features/profile/application/user_availability_controller.dart';
 import '../../features/profile/application/user_info_controller.dart';
 import '../../features/profile/application/user_skills_controller.dart';
@@ -80,4 +81,9 @@ final userRoleProvider = FutureProvider<String?>((ref) async {
 
 final videocallServiceProvider = Provider<VideocallService>((ref) {
   return VideocallService();
+});
+
+final reviewControllerProvider =
+    ChangeNotifierProvider.autoDispose<ReviewController>((ref) {
+  return ReviewController();
 });
