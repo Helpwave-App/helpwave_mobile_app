@@ -12,7 +12,7 @@ import '../../features/profile/data/skill_service.dart';
 import '../../features/auth/domain/user_model.dart';
 import '../../features/profile/data/profile_service.dart';
 import '../../features/profile/domain/profile_model.dart';
-import '../../features/help_response/data/videocall_service.dart';
+import '../../features/videocalls/data/videocall_service.dart';
 
 final secureStorageProvider = Provider((ref) => const FlutterSecureStorage());
 

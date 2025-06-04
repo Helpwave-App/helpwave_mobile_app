@@ -1,8 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-import '../../help_response/data/videocall_service.dart';
-import '../../help_response/presentation/videocall_screen.dart';
+import '../../videocalls/data/videocall_service.dart';
+import '../../videocalls/presentation/videocall_screen.dart';
 import '../../home/presentation/pages/home_volunteer_screen.dart';
 import '../presentation/request_dialog.dart';
 import '../presentation/info_dialog.dart';

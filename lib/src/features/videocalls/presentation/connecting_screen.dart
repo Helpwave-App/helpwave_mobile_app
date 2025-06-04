@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:helpwave_mobile_app/src/features/help_response/data/videocall_service.dart';
+import 'package:helpwave_mobile_app/src/features/videocalls/data/videocall_service.dart';
 import '../../../routing/app_router.dart';
 
 class ConnectingScreen extends StatefulWidget {

@@ -17,8 +17,8 @@ import '../features/auth/presentation/pages/register/registration_completed_volu
 import '../features/reviews/presentation/end_videocall_screen.dart';
 import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
-import '../features/help_response/presentation/connecting_screen.dart';
-import '../features/help_response/presentation/videocall_screen.dart';
+import '../features/videocalls/presentation/connecting_screen.dart';
+import '../features/videocalls/presentation/videocall_screen.dart';
 import '../features/settings/presentation/settings_screen.dart';
 import '../features/profile/presentation/profile_screen.dart';
 import '../features/profile/presentation/user_info_screen.dart';
@@ -44,6 +44,7 @@ class AppRouter {
   static const String connectingRoute = '/connecting';
   static const String videoCallRoute = '/videocall';
   static const String reviewRoute = '/review';
+  static const String reportRoute = '/report';
   static const String endVideocallRoute = '/videocall-end';
   static const String settingsRoute = '/settings';
   static const String profileRoute = '/profile';

@@ -3,12 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../routing/app_router.dart';
-import '../application/review_controller.dart';
-
-final reviewControllerProvider =
-    ChangeNotifierProvider.autoDispose<ReviewController>((ref) {
-  return ReviewController();
-});
+import '../../../utils/constants/providers.dart';
 
 class ReviewScreen extends ConsumerWidget {
   final int idVideocall;
@@ -149,7 +144,7 @@ class _ReviewForm extends ConsumerWidget {
               onPressed: controller.isSubmitting
                   ? null
                   : () {
-                      Navigator.pushNamed(context, '/report-incident');
+                      Navigator.pushNamed(context, AppRouter.reportRoute);
                     },
               icon: const Icon(Icons.flag_outlined, color: Color(0xFF8BC34A)),
               label: const Text('Reportar incidente'),
