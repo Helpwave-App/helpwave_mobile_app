@@ -5,8 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/foundation.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
-import '../../../utils/constants/api.dart';
-import '../../../utils/constants/secure_storage.dart';
+import '../../../common/utils/constants/api.dart';
+import '../../../common/utils/constants/secure_storage.dart';
 import '../../notifications/services/device_token_service.dart';
 import '../domain/login_request_model.dart';
 import 'auth_response.dart';

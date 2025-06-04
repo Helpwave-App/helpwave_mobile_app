@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../utils/constants/providers.dart';
+import '../../../common/utils/constants/providers.dart';
 
 class UserSkillsScreen extends ConsumerStatefulWidget {
   const UserSkillsScreen({super.key});

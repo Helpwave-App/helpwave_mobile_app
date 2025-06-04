@@ -3,12 +3,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 import '../../../common/utils/constants/api.dart';
-import '../domain/review_model.dart';
+import '../domain/level_progress.dart';
 
-class ReviewService {
+class LevelService {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
-  Future<void> submitReview(ReviewModel reviewModel) async {
+  Future<LevelProgressModel> getLevelProgress() async {
     final idUser = await _secureStorage.read(key: 'id_user');
     final token = await _secureStorage.read(key: 'jwt_token');
 
@@ -16,19 +16,19 @@ class ReviewService {
       throw Exception('Token o idProfile no encontrados');
     }
 
-    final url = Uri.parse('$baseUrl/comments');
+    final url = Uri.parse('$baseUrl/levels/progress/$idUser');
 
-    final response = await http.post(
+    final response = await http.get(
       url,
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
-      body: jsonEncode(reviewModel.toJson()),
     );
 
     if (response.statusCode != 200 && response.statusCode != 201) {
-      throw Exception('Error al registrar comentario: ${response.body}');
+      throw Exception('Error al obtener stats: ${response.body}');
     }
+    return LevelProgressModel.fromJson(jsonDecode(response.body));
   }
 }

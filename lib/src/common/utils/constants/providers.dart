@@ -1,18 +1,21 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import '../../features/auth/application/sign_up_form_controller.dart';
-import '../../features/auth/data/auth_service.dart';
-import '../../features/reviews/application/review_controller.dart';
-import '../../features/profile/application/user_availability_controller.dart';
-import '../../features/profile/application/user_info_controller.dart';
-import '../../features/profile/application/user_skills_controller.dart';
-import '../../features/profile/data/availability_service.dart';
-import '../../features/profile/data/skill_service.dart';
-import '../../features/auth/domain/user_model.dart';
-import '../../features/profile/data/profile_service.dart';
-import '../../features/profile/domain/profile_model.dart';
-import '../../features/videocalls/data/videocall_service.dart';
+import '../../../features/auth/application/sign_up_form_controller.dart';
+import '../../../features/auth/data/auth_service.dart';
+import '../../../features/auth/domain/user_model.dart';
+import '../../../features/profile/application/user_availability_controller.dart';
+import '../../../features/profile/application/user_info_controller.dart';
+import '../../../features/profile/application/user_skills_controller.dart';
+import '../../../features/profile/data/availability_service.dart';
+import '../../../features/profile/data/profile_service.dart';
+import '../../../features/profile/data/skill_service.dart';
+import '../../../features/profile/domain/profile_model.dart';
+import '../../../features/reviews/application/level_controller.dart';
+import '../../../features/reviews/data/level_service.dart';
+import '../../../features/videocalls/data/videocall_service.dart';
+import '../../../features/reviews/application/review_controller.dart';
+import '../../../features/reviews/domain/level_progress.dart';
 
 final secureStorageProvider = Provider((ref) => const FlutterSecureStorage());
 
@@ -87,3 +90,12 @@ final reviewControllerProvider =
     ChangeNotifierProvider.autoDispose<ReviewController>((ref) {
   return ReviewController();
 });
+
+final levelServiceProvider = Provider<LevelService>((ref) {
+  return LevelService();
+});
+
+final levelProgressControllerProvider =
+    AsyncNotifierProvider<LevelProgressController, LevelProgressModel>(
+  () => LevelProgressController(),
+);

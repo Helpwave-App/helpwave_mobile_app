@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../common/utils/constants/providers.dart';
 import '../../../routing/app_router.dart';
-import '../../../utils/constants/providers.dart';
 
 class ReviewScreen extends ConsumerWidget {
   final int idVideocall;
@@ -153,6 +153,12 @@ class _ReviewForm extends ConsumerWidget {
                 foregroundColor: const Color(0xFF8BC34A),
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              '¿Tuviste algún inconveniente? Puedes reportarlo aquí.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 14, color: Colors.grey),
             ),
           ],
         ),

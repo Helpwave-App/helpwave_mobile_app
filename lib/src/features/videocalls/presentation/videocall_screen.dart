@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
 
+import '../../../common/utils/constants/call_session.dart';
 import '../../../routing/app_router.dart';
-import '../../../utils/constants/call_session.dart';
 import '../application/videocall_controller.dart';
 
 class VideoCallScreen extends StatefulWidget {

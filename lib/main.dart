@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import 'src/common/utils/constants/app_theme.dart';
+import 'src/common/utils/firebase/fcm_config.dart';
+import 'src/common/utils/firebase/firebase_options.dart';
 import 'src/features/notifications/services/firebase_messaging_help_request_handler.dart';
 import 'src/features/notifications/services/firebase_messaging_videocall_handler.dart';
 import 'src/features/notifications/services/notification_service.dart';
 import 'src/routing/app_router.dart';
-import 'src/utils/constants/app_theme.dart';
-import 'src/utils/firebase/fcm_config.dart';
-import 'src/utils/firebase/firebase_options.dart';
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../common/pages/loading_screen.dart';
+import '../../../../common/utils/constants/providers.dart';
+import '../../../../common/utils/constants/secure_storage.dart';
 import '../../../../routing/app_router.dart';
-import '../../../../utils/constants/providers.dart';
-import '../../../../utils/constants/secure_storage.dart';
 import '../../data/auth_service.dart';
 import '../../domain/login_request_model.dart';
 

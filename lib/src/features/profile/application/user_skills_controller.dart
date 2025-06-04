@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../utils/constants/providers.dart';
+
+import '../../../common/utils/constants/providers.dart';
 
 class UserSkillsController extends StateNotifier<List<Map<String, dynamic>>> {
   final Ref ref;

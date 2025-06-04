@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-import '../../../utils/constants/api.dart';
+import '../../../common/utils/constants/api.dart';
 
 class DeviceTokenService {
   static final FlutterSecureStorage _secureStorage =
