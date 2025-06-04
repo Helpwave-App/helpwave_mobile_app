@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helpwave_mobile_app/src/features/reports/presentation/videocall_report_screen.dart';
 import 'package:helpwave_mobile_app/src/features/reviews/presentation/review_screen.dart';
 import 'package:helpwave_mobile_app/src/features/profile/presentation/user_availability_screen.dart';
 
@@ -137,6 +138,9 @@ class AppRouter {
         }
         return EndVideocallScreen(idVideocall: args['idVideocall'] as int);
 
+      case reportRoute:
+        return const VideocallReportScreen();
+
       case settingsRoute:
         return const SettingsScreen();
 
@@ -253,6 +257,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => EndVideocallScreen(idVideocall: idVideocall),
         );
+
+      case reportRoute:
+        return MaterialPageRoute(builder: (_) => const VideocallReportScreen());
 
       case settingsRoute:
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
