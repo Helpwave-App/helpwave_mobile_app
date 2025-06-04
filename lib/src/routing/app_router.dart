@@ -132,10 +132,15 @@ class AppRouter {
         return ReviewScreen(idVideocall: args['idVideocall'] as int? ?? 0);
 
       case endVideocallRoute:
-        if (args == null || !args.containsKey('idVideocall')) {
+        if (args == null ||
+            !args.containsKey('idVideocall') ||
+            !args.containsKey('idProfile')) {
           return const Scaffold(body: Center(child: Text('Faltan argumentos')));
         }
-        return EndVideocallScreen(idVideocall: args['idVideocall'] as int);
+        return EndVideocallScreen(
+          idVideocall: args['idVideocall'] as int,
+          idProfile: args['idProfile'] as int,
+        );
 
       case settingsRoute:
         return const SettingsScreen();
@@ -249,9 +254,12 @@ class AppRouter {
         );
 
       case endVideocallRoute:
-        final idVideocall = settings.arguments as int;
+        final args = settings.arguments as Map<String, dynamic>;
+        final idVideocall = args['idVideocall'] as int;
+        final idProfile = args['idProfile'] as int;
         return MaterialPageRoute(
-          builder: (_) => EndVideocallScreen(idVideocall: idVideocall),
+          builder: (_) => EndVideocallScreen(
+              idVideocall: idVideocall, idProfile: idProfile),
         );
 
       case settingsRoute:
