@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:helpwave_mobile_app/src/routing/app_router.dart';
+
 import '../../../common/utils/constants/providers.dart';
+import '../domain/level_progress.dart';
 
 class EndVideocallScreen extends ConsumerWidget {
   final int idVideocall;
-  final int idProfile;
 
-  const EndVideocallScreen({
-    super.key,
-    required this.idVideocall,
-    required this.idProfile,
-  });
+  const EndVideocallScreen({super.key, required this.idVideocall});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final levelProgressAsync = ref.watch(levelProgressProvider(idProfile));
+    final AsyncValue<LevelProgressModel> levelProgressAsync =
+        ref.watch(levelProgressControllerProvider);
 
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
@@ -28,16 +26,17 @@ class EndVideocallScreen extends ConsumerWidget {
         foregroundColor: Theme.of(context).colorScheme.onSecondary,
         elevation: 0,
       ),
-      body: levelProgressAsync.when(
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('Error: $error')),
-        data: (progressData) {
-          final double progress = progressData.scoreProfile / 10;
-          final int percentage = (progress * 100).round();
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 44),
+        child: levelProgressAsync.when(
+          data: (levelProgress) {
+            final total =
+                levelProgress.assistances + levelProgress.missingAssistances;
+            final double progress =
+                total == 0 ? 0.0 : levelProgress.assistances / total;
+            final int percentage = (progress * 100).round();
 
-          return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 38, vertical: 44),
-            child: Column(
+            return Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Expanded(
@@ -58,13 +57,11 @@ class EndVideocallScreen extends ConsumerWidget {
                       ),
                       const SizedBox(height: 12),
                       Text(
-                        'Ya has asistido a ${progressData.assistances} personas. '
-                        'Estás a ${progressData.missingAssistances} asistencias de alcanzar el nivel '
-                        '"${progressData.nextLevel}".',
+                        'Ya has asistido a ${levelProgress.assistances} personas. '
+                        'Estás a ${levelProgress.missingAssistances} asistencias de alcanzar el nivel "${levelProgress.nextLevel}".',
                         textAlign: TextAlign.center,
                         style: const TextStyle(fontSize: 16),
                       ),
-                      const SizedBox(height: 24),
                       Center(
                         child: Container(
                           width: 240,
@@ -74,10 +71,10 @@ class EndVideocallScreen extends ConsumerWidget {
                             alignment: Alignment.center,
                             children: [
                               SizedBox(
-                                width: 160,
-                                height: 160,
+                                width: 120,
+                                height: 120,
                                 child: CircularProgressIndicator(
-                                  value: progress.clamp(0.0, 1.0),
+                                  value: progress,
                                   strokeWidth: 16,
                                   color:
                                       Theme.of(context).colorScheme.secondary,
@@ -103,7 +100,8 @@ class EndVideocallScreen extends ConsumerWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.pushNamed(context, AppRouter.loadingRoute);
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, AppRouter.loadingRoute, (route) => false);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF8BC34A),
@@ -132,9 +130,16 @@ class EndVideocallScreen extends ConsumerWidget {
                   style: TextStyle(fontSize: 14, color: Colors.grey),
                 ),
               ],
+            );
+          },
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (error, stack) => Center(
+            child: Text(
+              'Error al cargar el progreso: $error',
+              style: const TextStyle(color: Colors.red),
             ),
-          );
-        },
+          ),
+        ),
       ),
     );
   }

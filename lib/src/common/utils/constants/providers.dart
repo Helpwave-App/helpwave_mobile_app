@@ -11,6 +11,7 @@ import '../../../features/profile/data/availability_service.dart';
 import '../../../features/profile/data/profile_service.dart';
 import '../../../features/profile/data/skill_service.dart';
 import '../../../features/profile/domain/profile_model.dart';
+import '../../../features/reviews/application/level_controller.dart';
 import '../../../features/reviews/data/level_service.dart';
 import '../../../features/videocalls/data/videocall_service.dart';
 import '../../../features/reviews/application/review_controller.dart';
@@ -94,8 +95,7 @@ final levelServiceProvider = Provider<LevelService>((ref) {
   return LevelService();
 });
 
-final levelProgressProvider =
-    FutureProvider.family<LevelProgressModel, int>((ref, idProfile) async {
-  final service = ref.watch(levelServiceProvider);
-  return service.getLevelProgress(idProfile);
-});
+final levelProgressControllerProvider =
+    AsyncNotifierProvider<LevelProgressController, LevelProgressModel>(
+  () => LevelProgressController(),
+);
