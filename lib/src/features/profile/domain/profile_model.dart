@@ -8,6 +8,7 @@ class Profile {
   final String photoUrl;
   final double scoreProfile;
   final int level;
+  final int assistances;
 
   Profile({
     required this.id,
@@ -18,7 +19,8 @@ class Profile {
     this.birthday,
     this.photoUrl = '',
     this.scoreProfile = 0.0,
-    this.level = 0,
+    this.level = 1,
+    this.assistances = 0,
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) {
@@ -33,7 +35,8 @@ class Profile {
           : null,
       photoUrl: json['photoUrl']?.toString() ?? '',
       scoreProfile: (json['scoreProfile'] as num?)?.toDouble() ?? 0.0,
-      level: (json['idLevel'] as int?) ?? 0,
+      level: (json['idLevel'] as int?) ?? 1,
+      assistances: json['assistances'] ?? 0,
     );
   }
 }
