@@ -76,7 +76,7 @@ class ProfileService {
             .first, // yyyy-MM-dd
       };
 
-      final response = await http.put(
+      final response = await http.patch(
         Uri.parse('$baseUrl/profiles/$idUser'),
         headers: {
           'Content-Type': 'application/json',

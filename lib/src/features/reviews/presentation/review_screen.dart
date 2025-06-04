@@ -154,6 +154,12 @@ class _ReviewForm extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
             ),
+            const SizedBox(height: 12),
+            const Text(
+              '¿Tuviste algún inconveniente? Puedes reportarlo aquí.',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 14, color: Colors.grey),
+            ),
           ],
         ),
       ],
