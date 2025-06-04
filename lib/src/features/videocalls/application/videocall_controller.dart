@@ -2,8 +2,8 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../../utils/constants/agora_api.dart';
-import '../../../utils/constants/call_session.dart';
+import '../../../common/utils/constants/agora_api.dart';
+import '../../../common/utils/constants/call_session.dart';
 import '../data/videocall_service.dart';
 
 class VideoCallController {

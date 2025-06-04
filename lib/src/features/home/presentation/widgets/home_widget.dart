@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../common/utils/constants/providers.dart';
+import '../../../../common/utils/permissions_helper.dart';
 import '../../../../routing/app_router.dart';
-import '../../../../utils/constants/providers.dart';
-import '../../../../utils/permissions_helper.dart';
 import '../../../profile/domain/skill_model.dart';
 
 class HomeWidget extends ConsumerStatefulWidget {

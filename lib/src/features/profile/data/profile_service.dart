@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../utils/constants/api.dart';
+import '../../../common/utils/constants/api.dart';
 import '../domain/profile_model.dart';
 
 class ProfileService {

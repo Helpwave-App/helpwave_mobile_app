@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../common/animations/animated_route.dart';
+import '../../../../../common/utils/constants/providers.dart';
 import '../../../../../routing/app_router.dart';
-import '../../../../../utils/constants/providers.dart';
 import '../../../data/auth_service.dart';
 import '../../../domain/login_request_model.dart';
 

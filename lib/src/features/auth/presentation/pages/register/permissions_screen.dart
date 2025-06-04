@@ -4,8 +4,8 @@ import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../common/animations/animated_route.dart';
-import '../../../../../utils/firebase/fcm_config.dart';
-import '../../../../../utils/permissions_helper.dart';
+import '../../../../../common/utils/firebase/fcm_config.dart';
+import '../../../../../common/utils/permissions_helper.dart';
 import '../../../../notifications/services/device_token_service.dart';
 
 class PermissionsScreen extends StatefulWidget {

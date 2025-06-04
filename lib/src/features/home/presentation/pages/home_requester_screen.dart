@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../utils/constants/providers.dart';
+import '../../../../common/utils/constants/providers.dart';
 import '../../../profile/data/skill_service.dart';
 import '../../../profile/domain/skill_model.dart';
 import '../widgets/home_widget.dart';
