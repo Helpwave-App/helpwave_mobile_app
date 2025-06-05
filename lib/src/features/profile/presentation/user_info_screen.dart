@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../common/utils/constants/providers.dart';
+import '../../../common/utils/firebase/firebase_options.dart';
 import '../presentation/profile_stat_card_widget.dart';
 
 class UserInfoScreen extends ConsumerStatefulWidget {
@@ -120,11 +121,56 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                             label: 'Puntaje',
                             iconColor: Colors.amber,
                           ),
-                          ProfileStatCard(
-                            icon: Icons.military_tech,
-                            value: profile.level.toString(),
-                            label: 'Nivel',
-                            iconColor: theme.colorScheme.secondary,
+                          Consumer(
+                            builder: (context, ref, _) {
+                              final asyncLevel =
+                                  ref.watch(levelFutureProvider(profile.level));
+                              return asyncLevel.when(
+                                data: (level) => ProfileStatCard(
+                                  iconWidget: SizedBox(
+                                    width: 32,
+                                    height: 32,
+                                    child: Image.network(
+                                      '$imageBaseUrl${level.photoUrl}',
+                                      fit: BoxFit.contain,
+                                      loadingBuilder:
+                                          (context, child, loadingProgress) {
+                                        if (loadingProgress == null) {
+                                          return child;
+                                        } else {
+                                          return const Center(
+                                            child: SizedBox(
+                                              width: 24,
+                                              height: 24,
+                                              child: CircularProgressIndicator(
+                                                  strokeWidth: 2),
+                                            ),
+                                          );
+                                        }
+                                      },
+                                      errorBuilder:
+                                          (context, error, stackTrace) {
+                                        return const Icon(Icons.error,
+                                            size: 32);
+                                      },
+                                    ),
+                                  ),
+                                  value: level.nameLevel,
+                                  label: 'Nivel',
+                                ),
+                                loading: () => const ProfileStatCard(
+                                  icon: Icons.hourglass_top,
+                                  value: '...',
+                                  label: 'Nivel',
+                                ),
+                                error: (e, _) => const ProfileStatCard(
+                                  icon: Icons.warning_amber_rounded,
+                                  iconColor: Colors.red,
+                                  value: 'Sin nivel',
+                                  label: 'Nivel',
+                                ),
+                              );
+                            },
                           ),
                           ProfileStatCard(
                             icon: Icons.volunteer_activism,

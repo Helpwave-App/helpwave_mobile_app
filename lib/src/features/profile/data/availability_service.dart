@@ -38,6 +38,7 @@ class AvailabilityService {
     final response = await http.get(
       Uri.parse('$baseUrl/availabilities/user/$idUser'),
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': 'Bearer $token',
       },
     );

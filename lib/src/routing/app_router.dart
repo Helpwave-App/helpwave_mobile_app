@@ -15,7 +15,7 @@ import '../features/auth/presentation/pages/register/volunteer_skills_screen.dar
 import '../features/auth/presentation/pages/register/volunteer_availability_screen.dart';
 import '../features/auth/presentation/pages/register/registration_completed_requester_screen.dart';
 import '../features/auth/presentation/pages/register/registration_completed_volunteer_screen.dart';
-import '../features/reviews/presentation/end_videocall_screen.dart';
+import '../features/gamification/presentation/end_videocall_screen.dart';
 import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
 import '../features/videocalls/presentation/connecting_screen.dart';
