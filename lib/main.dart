@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -17,6 +18,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
 
+  Locale determineStartLocale() {
+    final deviceLocale = PlatformDispatcher.instance.locale;
+    if (deviceLocale.languageCode.toLowerCase().startsWith('es')) {
+      return const Locale('es');
+    } else {
+      return const Locale('en');
+    }
+  }
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -32,6 +42,7 @@ void main() async {
       supportedLocales: const [Locale('en'), Locale('es')],
       path: 'lib/localization',
       fallbackLocale: const Locale('es'),
+      startLocale: determineStartLocale(),
       child: const ProviderScope(child: HelpWaveApp()),
     ),
   );
