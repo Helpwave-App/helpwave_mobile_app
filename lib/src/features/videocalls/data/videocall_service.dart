@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
+import '../../../common/exceptions/api_exception.dart';
 import '../../../common/utils/constants/api.dart';
 import '../domain/videocall_response.dart';
 
@@ -17,7 +18,7 @@ class VideocallService {
     final deviceToken = await _secureStorage.read(key: 'device_token');
 
     if (token == null || idUser == null) {
-      throw Exception('Token o idProfile no encontrados');
+      throw ApiException(401, 'Credenciales no disponibles');
     }
 
     final idProfile = int.parse(idUser);
@@ -37,7 +38,7 @@ class VideocallService {
     );
 
     if (response.statusCode != 200 && response.statusCode != 201) {
-      throw Exception('Error al crear la solicitud: ${response.body}');
+      throw ApiException(response.statusCode, response.body);
     }
 
     final data = jsonDecode(response.body);

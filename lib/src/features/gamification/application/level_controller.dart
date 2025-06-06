@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 import '../../../common/utils/constants/providers.dart';
 import '../data/level_service.dart';
 import '../domain/level_progress.dart';

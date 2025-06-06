@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 
 class ProfileStatCard extends StatelessWidget {
-  final IconData icon;
+  final IconData? icon;
+  final Widget? iconWidget;
   final String value;
   final String label;
-  final Color iconColor;
+  final Color? iconColor;
 
   const ProfileStatCard({
-    required this.icon,
+    super.key,
+    this.icon,
+    this.iconWidget,
     required this.value,
     required this.label,
-    required this.iconColor,
+    this.iconColor,
   });
 
   @override
@@ -19,13 +22,24 @@ class ProfileStatCard extends StatelessWidget {
 
     return Column(
       children: [
-        Icon(icon, color: iconColor, size: 28),
+        Container(
+          width: 48,
+          height: 48,
+          padding: const EdgeInsets.all(8),
+          child: iconWidget ??
+              Icon(icon, color: iconColor ?? theme.colorScheme.primary),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          value,
+          style:
+              theme.textTheme.bodyLarge!.copyWith(fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 4),
-        Text(value,
-            style: theme.textTheme.titleMedium
-                ?.copyWith(fontWeight: FontWeight.bold)),
-        const SizedBox(height: 2),
-        Text(label, style: theme.textTheme.bodySmall),
+        Text(
+          label,
+          style: theme.textTheme.bodySmall,
+        ),
       ],
     );
   }

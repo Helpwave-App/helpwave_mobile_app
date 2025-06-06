@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../../common/utils/constants/providers.dart';
-import '../../../../common/utils/permissions_helper.dart';
 import '../../../../routing/app_router.dart';
 import '../../../profile/domain/skill_model.dart';
+import '../../application/home_controller.dart';
 
-class HomeWidget extends ConsumerStatefulWidget {
+class HomeWidget extends ConsumerWidget {
   final String greeting;
   final String subtitle;
   final String buttonText;
@@ -23,52 +22,10 @@ class HomeWidget extends ConsumerStatefulWidget {
   });
 
   @override
-  ConsumerState<HomeWidget> createState() => _HomeWidgetState();
-}
-
-class _HomeWidgetState extends ConsumerState<HomeWidget> {
-  Skill? selectedSkill;
-  bool isLoading = false;
-
-  Future<void> handleHelpRequest(BuildContext context) async {
-    setState(() => isLoading = true);
-
-    try {
-      final hasPermissions = await checkAndRequestEssentialPermissions(context);
-      if (!mounted || !hasPermissions) return;
-
-      if (selectedSkill == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-              content: Text(
-                  'Por favor, selecciona una habilidad antes de continuar.')),
-        );
-        return;
-      }
-
-      final service = ref.read(videocallServiceProvider);
-      final idSkill = selectedSkill!.idSkill;
-
-      final idRequest = await service.createHelpRequest(idSkill: idSkill);
-
-      if (!mounted) return;
-
-      Navigator.of(context)
-          .pushNamed(AppRouter.connectingRoute, arguments: idRequest);
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${e.toString()}')),
-        );
-      }
-    } finally {
-      if (mounted) setState(() => isLoading = false);
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context);
+    final state = ref.watch(homeControllerProvider);
+    final controller = ref.read(homeControllerProvider.notifier);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
@@ -105,7 +62,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
               children: [
                 const SizedBox(height: 32),
                 Text(
-                  widget.greeting,
+                  greeting,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontSize: 26,
                     fontWeight: FontWeight.bold,
@@ -114,7 +71,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  widget.subtitle,
+                  subtitle,
                   style: theme.textTheme.headlineSmall?.copyWith(
                     fontSize: 22,
                     fontWeight: FontWeight.w500,
@@ -122,7 +79,7 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
-                if (widget.isRequester && widget.skills != null) ...[
+                if (isRequester && skills != null) ...[
                   const SizedBox(height: 16),
                   Center(
                     child: SizedBox(
@@ -136,16 +93,16 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                           foregroundColor: theme.colorScheme.onSecondary,
                           elevation: 6,
                         ),
-                        onPressed:
-                            isLoading ? null : () => handleHelpRequest(context),
-                        child: isLoading
+                        onPressed: state.isLoading
+                            ? null
+                            : () => controller.handleHelpRequest(context),
+                        child: state.isLoading
                             ? const CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                  Colors.white,
-                                ),
+                                valueColor:
+                                    AlwaysStoppedAnimation<Color>(Colors.white),
                               )
                             : Text(
-                                widget.buttonText,
+                                buttonText,
                                 textAlign: TextAlign.center,
                                 style: const TextStyle(
                                   fontSize: 20,
@@ -157,25 +114,21 @@ class _HomeWidgetState extends ConsumerState<HomeWidget> {
                   ),
                   const SizedBox(height: 40),
                   DropdownButtonFormField<Skill>(
-                    value: selectedSkill,
+                    value: state.selectedSkill,
                     isExpanded: true,
                     hint: const Text('Selecciona una habilidad'),
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                     ),
-                    items: widget.skills!
+                    items: skills!
                         .map((skill) => DropdownMenuItem(
                               value: skill,
                               child: Text(skill.skillDesc),
                             ))
                         .toList(),
-                    onChanged: isLoading
+                    onChanged: state.isLoading
                         ? null
-                        : (skill) {
-                            setState(() {
-                              selectedSkill = skill;
-                            });
-                          },
+                        : (skill) => controller.selectSkill(skill),
                   ),
                 ],
               ],
