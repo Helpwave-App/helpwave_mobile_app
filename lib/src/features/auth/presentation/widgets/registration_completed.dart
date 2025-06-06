@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../common/pages/loading_screen.dart';
 import '../../../../common/utils/constants/providers.dart';
@@ -67,7 +68,9 @@ class _RegistrationCompletedWidgetState
     } catch (e) {
       if (mounted) {
         scaffoldMessenger.showSnackBar(
-          SnackBar(content: Text('Error al iniciar sesión: $e')),
+          SnackBar(
+              content: Text('auth.registrationCompleted.loginError'
+                  .tr(args: [e.toString()]))),
         );
         Navigator.of(context).pushReplacementNamed(AppRouter.loginRoute);
       }
@@ -98,7 +101,7 @@ class _RegistrationCompletedWidgetState
               ),
               const SizedBox(height: 32),
               Text(
-                widget.title,
+                widget.title.tr(),
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 28,
@@ -107,7 +110,7 @@ class _RegistrationCompletedWidgetState
               ),
               const SizedBox(height: 20),
               Text(
-                widget.message,
+                widget.message.tr(),
                 style: theme.textTheme.bodyLarge?.copyWith(
                   fontSize: 18,
                   height: 1.5,
@@ -117,7 +120,7 @@ class _RegistrationCompletedWidgetState
               if (widget.subtitle != null) ...[
                 const SizedBox(height: 12),
                 Text(
-                  widget.subtitle!,
+                  widget.subtitle!.tr(),
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -145,9 +148,9 @@ class _RegistrationCompletedWidgetState
                             color: Colors.white,
                           ),
                         )
-                      : const Text(
-                          'Ir al inicio',
-                          style: TextStyle(fontSize: 20),
+                      : Text(
+                          'auth.registrationCompleted.goHome'.tr(),
+                          style: const TextStyle(fontSize: 20),
                         ),
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../common/utils/constants/providers.dart';
@@ -42,9 +43,9 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
   void _onOptionToggled(int skillId) {
     if (skillId == 1) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'La habilidad "Asistencia General" es obligatoria para todos los voluntarios.',
+            tr('volunteerSkills.generalAssistanceMandatory'),
           ),
         ),
       );
@@ -81,7 +82,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
     if (!success) {
       setState(() => _isLoading = false);
       messenger.showSnackBar(
-        const SnackBar(content: Text('Error al guardar habilidades')),
+        SnackBar(content: Text(tr('volunteerSkills.errorSavingSkills'))),
       );
       return;
     }
@@ -114,7 +115,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                '¿En qué áreas puedes brindar ayuda?',
+                tr('volunteerSkills.title'),
                 style: TextStyle(
                   color: theme.surface,
                   fontSize: 24,
@@ -143,7 +144,8 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                     if (snapshot.hasError) {
                       return Center(
                         child: Text(
-                            'Error al cargar habilidades: ${snapshot.error}'),
+                          '${tr('volunteerSkills.errorLoadingSkills')}: ${snapshot.error}',
+                        ),
                       );
                     }
 
@@ -153,7 +155,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Puedes marcar más de una opción',
+                          tr('volunteerSkills.selectMultipleOptions'),
                           style: TextStyle(
                             fontSize: 16,
                             color: theme.onTertiary,
@@ -217,7 +219,8 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                         ),
                                         if (isGeneralAssistance)
                                           Chip(
-                                            label: const Text('Obligatoria'),
+                                            label: Text(tr(
+                                                'volunteerSkills.mandatory')),
                                             backgroundColor:
                                                 theme.primary.withOpacity(0.2),
                                             labelStyle: TextStyle(
@@ -249,7 +252,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                         Colors.white),
                                   )
-                                : const Text('Siguiente'),
+                                : Text(tr('volunteerSkills.next')),
                           ),
                         ),
                       ],

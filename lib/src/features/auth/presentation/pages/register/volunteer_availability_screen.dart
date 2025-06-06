@@ -9,6 +9,7 @@ import '../../../../profile/domain/add_time_modal.dart';
 import '../../widgets/day_availability_tile.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 class VolunteerAvailabilityScreen extends ConsumerStatefulWidget {
   final int idProfile;
@@ -37,7 +38,7 @@ class _VolunteerAvailabilityScreenState
 
   int _dayNameToNumber(String name) {
     final index = weekDays.indexOf(name);
-    if (index == -1) throw ArgumentError('Nombre de día inválido: $name');
+    if (index == -1) throw ArgumentError('Invalid day name: $name');
     return index + 1;
   }
 
@@ -74,7 +75,9 @@ class _VolunteerAvailabilityScreenState
     if (!success) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Error al guardar disponibilidad')),
+          SnackBar(
+              content:
+                  Text(tr('volunteerAvailability.errorSavingAvailability'))),
         );
         setState(() => _isLoading = false);
       }
@@ -168,7 +171,7 @@ class _VolunteerAvailabilityScreenState
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Text(
-                  'Disponibilidad',
+                  tr('volunteerAvailability.title'),
                   style: TextStyle(
                     color: theme.surface,
                     fontSize: 24,
@@ -190,7 +193,7 @@ class _VolunteerAvailabilityScreenState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "¿En qué días y horarios puedes brindar ayuda?",
+                        tr('volunteerAvailability.subtitle'),
                         style: TextStyle(fontSize: 16, color: theme.onTertiary),
                       ),
                       const SizedBox(height: 16),
@@ -224,7 +227,8 @@ class _VolunteerAvailabilityScreenState
                                   child:
                                       CircularProgressIndicator(strokeWidth: 2),
                                 )
-                              : const Text('Finalizar registro'),
+                              : Text(tr(
+                                  'volunteerAvailability.finishRegistration')),
                         ),
                       ),
                     ],

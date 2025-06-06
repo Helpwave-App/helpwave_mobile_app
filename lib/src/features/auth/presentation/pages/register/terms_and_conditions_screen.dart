@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
@@ -85,7 +86,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Términos y condiciones',
+                    tr('termsAndConditions.title'),
                     style: TextStyle(
                       color: theme.surface,
                       fontSize: 24,
@@ -109,10 +110,8 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Text(
-                        'Al usar esta aplicación, aceptas participar de una comunidad basada en el respeto, la colaboración y la ayuda mutua.\n\n'
-                        'Te comprometes a brindar y recibir asistencia con buena voluntad, a respetar la privacidad de los demás usuarios y a utilizar esta plataforma exclusivamente para los fines permitidos.\n\n'
-                        'HelpWave no se responsabiliza por el contenido de las interacciones, pero se reserva el derecho de suspender cuentas en caso de mal uso.',
-                        style: TextStyle(fontSize: 16),
+                        tr('termsAndConditions.description'),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
@@ -124,7 +123,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          'He leído y acepto los términos y condiciones.',
+                          tr('termsAndConditions.acceptLabel'),
                         ),
                       ),
                     ],
@@ -132,7 +131,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _accepted ? _onNextPressed : null,
-                    child: const Text('Siguiente'),
+                    child: Text(tr('termsAndConditions.next')),
                   ),
                 ],
               ),

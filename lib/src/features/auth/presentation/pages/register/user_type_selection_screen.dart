@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../common/utils/firebase/firebase_options.dart';
@@ -36,7 +37,7 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
     ));
   }
 
-  Widget _buildOption(UserType type, String label, String assetName) {
+  Widget _buildOption(UserType type, String labelKey, String assetName) {
     final isSelected = _selectedType == type;
     final theme = Theme.of(context).colorScheme;
 
@@ -65,7 +66,7 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  label,
+                  labelKey.tr(),
                   style: TextStyle(
                     fontSize: 18,
                     color: theme.primary,
@@ -109,7 +110,7 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'Tipo de usuario',
+                  'auth.userType.title'.tr(),
                   style: TextStyle(
                     color: theme.surface,
                     fontSize: 24,
@@ -137,12 +138,12 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                         children: [
                           _buildOption(
                             UserType.requester,
-                            'Asistido',
+                            'auth.userType.requester',
                             'requester.png?alt=media&token=2066a274-4a12-4189-bf71-4146f2f59819',
                           ),
                           _buildOption(
                             UserType.volunteer,
-                            'Voluntario',
+                            'auth.userType.volunteer',
                             'volunteer.png?alt=media&token=902ce8c3-266b-466f-bef4-5d951e464a89',
                           ),
                         ],
@@ -154,7 +155,7 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: _selectedType != null ? _onNextPressed : null,
-                      child: const Text('Siguiente'),
+                      child: Text('auth.userType.next'.tr()),
                     ),
                   ),
                 ],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../common/utils/constants/providers.dart';
@@ -48,8 +49,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       Navigator.of(context).pushReplacementNamed(AppRouter.loadingRoute);
     } catch (e) {
       final errorMessage = e.toString().contains('401')
-          ? 'Credenciales inválidas'
-          : 'Usuario o contraseña incorrectos';
+          ? 'auth.signIn.invalidCredentials'.tr()
+          : 'auth.signIn.incorrectCredentials'.tr();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorMessage)),
       );
@@ -106,19 +107,19 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text("Iniciar Sesión",
-                              style: TextStyle(
+                          Text('auth.signIn.title'.tr(),
+                              style: const TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold)),
                           const SizedBox(height: 20),
                           TextFormField(
                             controller: _usernameController,
                             enabled: !_isLoading,
-                            decoration: const InputDecoration(
-                                labelText: 'Usuario',
-                                border: OutlineInputBorder()),
+                            decoration: InputDecoration(
+                                labelText: 'auth.signIn.username'.tr(),
+                                border: const OutlineInputBorder()),
                             validator: (value) =>
                                 value == null || value.trim().isEmpty
-                                    ? 'El usuario es obligatorio'
+                                    ? 'auth.signIn.usernameRequired'.tr()
                                     : null,
                           ),
                           const SizedBox(height: 16),
@@ -127,7 +128,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                             enabled: !_isLoading,
                             obscureText: _obscurePassword,
                             decoration: InputDecoration(
-                              labelText: 'Contraseña',
+                              labelText: 'auth.signIn.password'.tr(),
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -146,7 +147,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                             ),
                             validator: (value) =>
                                 value == null || value.length < 6
-                                    ? 'Mínimo 6 caracteres'
+                                    ? 'auth.signIn.passwordMinLength'.tr()
                                     : null,
                           ),
                           const SizedBox(height: 20),
@@ -159,13 +160,13 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                             child: _isLoading
                                 ? const CircularProgressIndicator(
                                     color: Colors.white)
-                                : const Text("Iniciar Sesión"),
+                                : Text('auth.signIn.signInButton'.tr()),
                           ),
                           const SizedBox(height: 16),
                           Center(
                             child: TextButton(
                               onPressed: _isLoading ? null : () {},
-                              child: Text("¿Olvidaste tu contraseña?",
+                              child: Text('auth.signIn.forgotPassword'.tr(),
                                   style: TextStyle(
                                     color: _isLoading
                                         ? Colors.grey
@@ -178,7 +179,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("¿Aún no tienes una cuenta?",
+                                Text('auth.signIn.noAccount'.tr(),
                                     style: TextStyle(color: theme.onTertiary)),
                                 TextButton(
                                   onPressed: _isLoading
@@ -191,7 +192,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                                                       milliseconds: 200),
                                                   curve: Curves.easeInOut));
                                         },
-                                  child: Text("Regístrate ahora",
+                                  child: Text('auth.signIn.registerNow'.tr(),
                                       style: TextStyle(
                                         color: _isLoading
                                             ? Colors.grey

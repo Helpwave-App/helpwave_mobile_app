@@ -4,7 +4,7 @@ import 'package:helpwave_mobile_app/src/features/reviews/presentation/review_scr
 import 'package:helpwave_mobile_app/src/features/profile/presentation/user_availability_screen.dart';
 
 import '../common/pages/loading_screen.dart';
-import '../features/auth/presentation/pages/register/permissions_screen.dart';
+import '../features/auth/presentation/pages/permissions_screen.dart';
 import '../features/auth/presentation/pages/welcome_screen.dart';
 import '../features/auth/presentation/pages/login/sign_in_screen.dart';
 import '../features/auth/presentation/pages/register/sign_up_requester_screen.dart';

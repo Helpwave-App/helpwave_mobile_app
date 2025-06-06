@@ -10,19 +10,34 @@ class SignUpVolunteerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      body: const SignUpForm(
-        title: "Registro como Voluntario",
-        fields: [
-          FormFieldData(label: 'Nombre'),
-          FormFieldData(label: 'Apellido'),
+      body: SignUpForm(
+        titleKey: 'auth.signUpVolunteer.title',
+        fields: const [
           FormFieldData(
-              label: 'Correo electrónico',
-              keyboardType: TextInputType.emailAddress),
-          FormFieldData(label: 'Nombre de usuario'),
-          FormFieldData(label: 'Contraseña', obscureText: true),
+            label: 'Nombre',
+            translationKey: 'auth.signUpVolunteer.fields.name',
+          ),
+          FormFieldData(
+            label: 'Apellido',
+            translationKey: 'auth.signUpVolunteer.fields.lastname',
+          ),
+          FormFieldData(
+            label: 'Correo electrónico',
+            translationKey: 'auth.signUpVolunteer.fields.email',
+            keyboardType: TextInputType.emailAddress,
+          ),
+          FormFieldData(
+            label: 'Nombre de usuario',
+            translationKey: 'auth.signUpVolunteer.fields.username',
+          ),
+          FormFieldData(
+            label: 'Contraseña',
+            translationKey: 'auth.signUpVolunteer.fields.password',
+            obscureText: true,
+          ),
         ],
         nextRoute: AppRouter.volunteerSkillsRoute,
-        buttonText: 'Siguiente',
+        buttonTextKey: 'auth.signUpVolunteer.buttonText',
         userType: "volunteer",
       ),
     );
