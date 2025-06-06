@@ -4,6 +4,7 @@ import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../common/animations/animated_route.dart';
 import '../../../../common/utils/firebase/fcm_config.dart';
 import '../../../../common/utils/permissions_helper.dart';
@@ -78,25 +79,25 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
       final handledNotification = await checkAndHandlePermanentDenial(
         context: context,
         permission: Permission.notification,
-        permissionName: tr('auth.permissions.notification'),
+        permissionName: LocaleKeys.auth_permissions_notification.tr(),
       );
 
       final handledMicrophone = await checkAndHandlePermanentDenial(
         context: context,
         permission: Permission.microphone,
-        permissionName: tr('auth.permissions.microphone'),
+        permissionName: LocaleKeys.auth_permissions_microphone.tr(),
       );
 
       final handledCamera = await checkAndHandlePermanentDenial(
         context: context,
         permission: Permission.camera,
-        permissionName: tr('auth.permissions.camera'),
+        permissionName: LocaleKeys.auth_permissions_camera.tr(),
       );
 
       if (!handledNotification && !handledMicrophone && !handledCamera) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text(tr('auth.permissions.snackbar')),
+            content: Text(LocaleKeys.auth_permissions_snackbar.tr()),
           ),
         );
       }
@@ -125,7 +126,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  tr('auth.permissions.title'),
+                  LocaleKeys.auth_permissions_title.tr(),
                   style: TextStyle(
                     color: theme.surface,
                     fontSize: 24,
@@ -150,7 +151,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Text(
-                        tr('auth.permissions.description'),
+                        LocaleKeys.auth_permissions_description.tr(),
                         style: const TextStyle(fontSize: 16),
                       ),
                     ),
@@ -170,7 +171,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                             height: 24,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : Text(tr('auth.permissions.accept')),
+                        : Text(LocaleKeys.auth_permissions_accept.tr()),
                   ),
                 ],
               ),

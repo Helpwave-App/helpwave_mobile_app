@@ -1,6 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
 import 'user_type_selection_screen.dart';
@@ -76,25 +77,26 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
         children: [
           const SizedBox(height: 80),
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back, color: theme.surface),
-                    onPressed: () => Navigator.pop(context),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back, color: theme.surface),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  LocaleKeys.auth_termsAndConditions_title.tr(),
+                  style: TextStyle(
+                    color: theme.surface,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    tr('termsAndConditions.title'),
-                    style: TextStyle(
-                      color: theme.surface,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 16),
           Expanded(
             child: Container(
@@ -110,7 +112,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Text(
-                        tr('termsAndConditions.description'),
+                        LocaleKeys.auth_termsAndConditions_description.tr(),
                         style: const TextStyle(fontSize: 16),
                       ),
                     ),
@@ -123,7 +125,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          tr('termsAndConditions.acceptLabel'),
+                          LocaleKeys.auth_termsAndConditions_acceptLabel.tr(),
                         ),
                       ),
                     ],
@@ -131,7 +133,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _accepted ? _onNextPressed : null,
-                    child: Text(tr('termsAndConditions.next')),
+                    child: Text(LocaleKeys.auth_termsAndConditions_next.tr()),
                   ),
                 ],
               ),

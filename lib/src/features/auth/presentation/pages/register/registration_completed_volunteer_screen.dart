@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../widgets/registration_completed.dart';
 
 class RegistrationCompletedVolunteerScreen extends StatelessWidget {
@@ -15,9 +15,9 @@ class RegistrationCompletedVolunteerScreen extends StatelessWidget {
     final password = args?['password'];
 
     return RegistrationCompletedWidget(
-      title: tr('auth.registrationCompletedVolunteer.title'),
-      message: tr('auth.registrationCompletedVolunteer.message'),
-      subtitle: tr('auth.registrationCompletedVolunteer.subtitle'),
+      title: LocaleKeys.auth_registrationCompletedVolunteer_title,
+      message: LocaleKeys.auth_registrationCompletedVolunteer_message,
+      subtitle: LocaleKeys.auth_registrationCompletedVolunteer_subtitle,
       icon: Icons.volunteer_activism,
       userType: 'volunteer',
       username: username,

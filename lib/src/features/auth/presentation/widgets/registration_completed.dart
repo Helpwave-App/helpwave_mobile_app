@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../common/pages/loading_screen.dart';
 import '../../../../common/utils/constants/providers.dart';
 import '../../../../common/utils/constants/secure_storage.dart';
@@ -23,9 +24,9 @@ class RegistrationCompletedWidget extends ConsumerStatefulWidget {
     required this.title,
     required this.message,
     required this.userType,
+    this.subtitle,
     this.username,
     this.password,
-    this.subtitle,
     this.icon = Icons.volunteer_activism,
   });
 
@@ -54,26 +55,28 @@ class _RegistrationCompletedWidgetState
       );
 
       final response = await AuthService().login(request);
+
       await SecureStorage.saveToken(response.token);
       await SecureStorage.saveIdUser(response.idUser);
       await SecureStorage.saveRole(response.role);
 
       ref.invalidate(profileFutureProvider);
 
-      if (mounted) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const LoadingScreen()),
-        );
-      }
+      if (!mounted) return;
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (_) => const LoadingScreen()),
+      );
     } catch (e) {
-      if (mounted) {
-        scaffoldMessenger.showSnackBar(
-          SnackBar(
-              content: Text('auth.registrationCompleted.loginError'
-                  .tr(args: [e.toString()]))),
-        );
-        Navigator.of(context).pushReplacementNamed(AppRouter.loginRoute);
-      }
+      if (!mounted) return;
+      scaffoldMessenger.showSnackBar(
+        SnackBar(
+          content: Text(
+            LocaleKeys.auth_registrationCompleted_loginError
+                .tr(args: [e.toString()]),
+          ),
+        ),
+      );
+      Navigator.of(context).pushReplacementNamed(AppRouter.loginRoute);
     } finally {
       if (mounted) {
         setState(() {
@@ -86,22 +89,26 @@ class _RegistrationCompletedWidgetState
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               const Spacer(),
               Icon(
                 widget.icon,
                 color: theme.colorScheme.secondary,
                 size: 90,
+                semanticLabel:
+                    LocaleKeys.auth_registrationCompleted_iconLabel.tr(),
               ),
               const SizedBox(height: 32),
               Text(
-                widget.title.tr(),
+                widget.title.tr(), // Se espera que venga como clave
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                   fontSize: 28,
@@ -110,7 +117,7 @@ class _RegistrationCompletedWidgetState
               ),
               const SizedBox(height: 20),
               Text(
-                widget.message.tr(),
+                widget.message.tr(), // Se espera que venga como clave
                 style: theme.textTheme.bodyLarge?.copyWith(
                   fontSize: 18,
                   height: 1.5,
@@ -120,7 +127,7 @@ class _RegistrationCompletedWidgetState
               if (widget.subtitle != null) ...[
                 const SizedBox(height: 12),
                 Text(
-                  widget.subtitle!.tr(),
+                  widget.subtitle!.tr(), // También clave
                   style: theme.textTheme.bodyLarge?.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.w500,
@@ -149,7 +156,7 @@ class _RegistrationCompletedWidgetState
                           ),
                         )
                       : Text(
-                          'auth.registrationCompleted.goHome'.tr(),
+                          LocaleKeys.auth_registrationCompleted_goHome.tr(),
                           style: const TextStyle(fontSize: 20),
                         ),
                 ),

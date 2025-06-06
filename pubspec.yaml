@@ -74,8 +74,15 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - lib/localization/
+    - lib/localization/en.json
+    - lib/localization/es.json
 
+easy_localization:
+  generate: true
+  source_dir: lib/localization
+  output_dir: lib/localization
+  format: keys
+  output_file: locale_keys.g.dart
   # assets:
   #  - lib/src/assets/images/
 

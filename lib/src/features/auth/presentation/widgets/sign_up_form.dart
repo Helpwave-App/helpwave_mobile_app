@@ -2,10 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 
+import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../common/animations/animated_route.dart';
 import '../../../../common/utils/constants/providers.dart';
+import '../../../../routing/app_router.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
   final String titleKey;
@@ -60,47 +61,48 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       final fieldLabel = tr(widget.fields[i].translationKey);
 
       if (value.isEmpty) {
-        _errorMessages[i] = tr('auth.signUpForm.errors.requiredField');
+        _errorMessages[i] = tr(LocaleKeys.auth_signUpForm_errors_required);
         hasError = true;
         continue;
       }
 
       if (widget.fields[i].translationKey ==
-              'auth.signUpForm.fields.firstName' ||
+              LocaleKeys.auth_signUpForm_fields_firstName ||
           widget.fields[i].translationKey ==
-              'auth.signUpForm.fields.lastName') {
+              LocaleKeys.auth_signUpForm_fields_lastName) {
         final cleaned = value.trim();
         if (!RegExp(r'^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$').hasMatch(cleaned)) {
-          _errorMessages[i] = tr('auth.signUpForm.errors.invalidName');
+          _errorMessages[i] = tr(LocaleKeys.auth_signUpForm_errors_onlyLetters);
           hasError = true;
           continue;
         }
       }
 
       if (widget.fields[i].translationKey ==
-          'auth.signUpForm.fields.phoneNumber') {
+          LocaleKeys.auth_signUpForm_fields_phoneNumber) {
         final cleaned = value.trim();
         if (!RegExp(r'^\d{9}$').hasMatch(cleaned)) {
-          _errorMessages[i] = tr('auth.signUpForm.errors.invalidPhone');
+          _errorMessages[i] = tr(LocaleKeys.auth_signUpForm_errors_phoneNumber);
           hasError = true;
           continue;
         }
       }
 
       if (widget.fields[i].translationKey ==
-          'auth.signUpForm.fields.username') {
+          LocaleKeys.auth_signUpForm_fields_username) {
         final cleaned = value.trim();
         if (!RegExp(r'^[a-zA-Z0-9_]{6,}$').hasMatch(cleaned)) {
-          _errorMessages[i] = tr('auth.signUpForm.errors.invalidUsername');
+          _errorMessages[i] = tr(LocaleKeys.auth_signUpForm_errors_username);
           hasError = true;
           continue;
         }
       }
 
       if (widget.fields[i].translationKey ==
-          'auth.signUpForm.fields.password') {
+          LocaleKeys.auth_signUpForm_fields_password) {
         if (value.length < 6) {
-          _errorMessages[i] = tr('auth.signUpForm.errors.passwordLength');
+          _errorMessages[i] =
+              tr(LocaleKeys.auth_signUpForm_errors_passwordMinLength);
           hasError = true;
           continue;
         }
@@ -122,11 +124,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           .submit(widget.userType);
 
       if (result == null || result.containsKey('error')) {
-        final idx = widget.fields.indexWhere(
-            (f) => f.translationKey == 'auth.signUpForm.fields.username');
+        final idx = widget.fields.indexWhere((f) =>
+            f.translationKey == LocaleKeys.auth_signUpForm_fields_username);
         if (idx != -1) {
-          _errorMessages[idx] =
-              result?['error'] ?? tr('auth.signUpForm.errors.unknown');
+          _errorMessages[idx] = result?['error'] ??
+              tr(LocaleKeys.auth_signUpForm_errors_unknownError);
           setState(() {});
         }
         return;
@@ -138,13 +140,13 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       }
       if (!mounted) return;
 
-      final usernameIndex = widget.fields.indexWhere(
-          (f) => f.translationKey == 'auth.signUpForm.fields.username');
-      final passwordIndex = widget.fields.indexWhere(
-          (f) => f.translationKey == 'auth.signUpForm.fields.password');
+      final usernameIndex = widget.fields.indexWhere((f) =>
+          f.translationKey == LocaleKeys.auth_signUpForm_fields_username);
+      final passwordIndex = widget.fields.indexWhere((f) =>
+          f.translationKey == LocaleKeys.auth_signUpForm_fields_password);
 
       if (usernameIndex == -1 || passwordIndex == -1) {
-        _showError(tr('auth.signUpForm.errors.internalError'));
+        _showError(tr(LocaleKeys.auth_signUpForm_errors_internalError));
         return;
       }
 
@@ -160,7 +162,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
         curve: Curves.easeInOut,
       ));
     } catch (e) {
-      _showError(tr('auth.signUpForm.errors.unexpected'));
+      _showError(tr(LocaleKeys.auth_signUpForm_errors_unexpectedError));
       if (kDebugMode) {
         print('Error en submit(): $e');
       }
@@ -277,7 +279,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(tr('auth.signUpForm.haveAccount'),
+                        Text(tr(LocaleKeys.auth_signUpForm_haveAccount),
                             style: TextStyle(color: theme.onTertiary)),
                         TextButton(
                           onPressed: _isLoading
@@ -291,7 +293,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                                   ));
                                 },
                           child: Text(
-                            tr('auth.signUpForm.login'),
+                            tr(LocaleKeys.auth_signUpForm_signIn),
                             style: TextStyle(
                               color: _isLoading ? Colors.grey : theme.tertiary,
                             ),
@@ -311,13 +313,13 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
 }
 
 class FormFieldData {
-  final String label;
+  final String labelKey;
   final String translationKey;
   final bool obscureText;
   final TextInputType keyboardType;
 
   const FormFieldData({
-    required this.label,
+    required this.labelKey,
     required this.translationKey,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,

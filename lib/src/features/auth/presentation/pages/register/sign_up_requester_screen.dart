@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../routing/app_router.dart';
 import '../../widgets/sign_up_form.dart';
 
@@ -11,33 +12,33 @@ class SignUpRequesterScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SignUpForm(
-        titleKey: 'auth.signUpRequester.title',
+        titleKey: LocaleKeys.auth_signUpRequester_title,
         fields: const [
           FormFieldData(
-            label: 'Nombre',
-            translationKey: 'auth.signUpRequester.fields.name',
+            labelKey: LocaleKeys.auth_signUpRequester_fields_name,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_name,
           ),
           FormFieldData(
-            label: 'Apellido',
-            translationKey: 'auth.signUpRequester.fields.lastname',
+            labelKey: LocaleKeys.auth_signUpRequester_fields_lastname,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_lastname,
           ),
           FormFieldData(
-            label: 'Número de teléfono',
-            translationKey: 'auth.signUpRequester.fields.phoneNumber',
+            labelKey: LocaleKeys.auth_signUpRequester_fields_phoneNumber,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_phoneNumber,
             keyboardType: TextInputType.phone,
           ),
           FormFieldData(
-            label: 'Nombre de usuario',
-            translationKey: 'auth.signUpRequester.fields.username',
+            labelKey: LocaleKeys.auth_signUpRequester_fields_username,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_username,
           ),
           FormFieldData(
-            label: 'Contraseña',
-            translationKey: 'auth.signUpRequester.fields.password',
+            labelKey: LocaleKeys.auth_signUpRequester_fields_password,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_password,
             obscureText: true,
           ),
         ],
         nextRoute: AppRouter.registrationCompletedRequesterRoute,
-        buttonTextKey: 'auth.signUpRequester.buttonText',
+        buttonTextKey: LocaleKeys.auth_signUpRequester_buttonText,
         userType: "requester",
       ),
     );

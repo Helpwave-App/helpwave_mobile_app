@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../common/utils/constants/providers.dart';
 import '../../../../../routing/app_router.dart';
@@ -45,7 +46,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            tr('volunteerSkills.generalAssistanceMandatory'),
+            LocaleKeys.auth_volunteerSkills_generalAssistanceMandatory.tr(),
           ),
         ),
       );
@@ -82,7 +83,9 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
     if (!success) {
       setState(() => _isLoading = false);
       messenger.showSnackBar(
-        SnackBar(content: Text(tr('volunteerSkills.errorSavingSkills'))),
+        SnackBar(
+            content:
+                Text(LocaleKeys.auth_volunteerSkills_errorSavingSkills.tr())),
       );
       return;
     }
@@ -115,7 +118,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                tr('volunteerSkills.title'),
+                LocaleKeys.auth_volunteerSkills_title.tr(),
                 style: TextStyle(
                   color: theme.surface,
                   fontSize: 24,
@@ -144,7 +147,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                     if (snapshot.hasError) {
                       return Center(
                         child: Text(
-                          '${tr('volunteerSkills.errorLoadingSkills')}: ${snapshot.error}',
+                          '${LocaleKeys.auth_volunteerSkills_errorLoadingSkills.tr()}: ${snapshot.error}',
                         ),
                       );
                     }
@@ -155,7 +158,8 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          tr('volunteerSkills.selectMultipleOptions'),
+                          LocaleKeys.auth_volunteerSkills_selectMultipleOptions
+                              .tr(),
                           style: TextStyle(
                             fontSize: 16,
                             color: theme.onTertiary,
@@ -219,8 +223,9 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                         ),
                                         if (isGeneralAssistance)
                                           Chip(
-                                            label: Text(tr(
-                                                'volunteerSkills.mandatory')),
+                                            label: Text(LocaleKeys
+                                                .auth_volunteerSkills_mandatory
+                                                .tr()),
                                             backgroundColor:
                                                 theme.primary.withOpacity(0.2),
                                             labelStyle: TextStyle(
@@ -252,7 +257,8 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                         Colors.white),
                                   )
-                                : Text(tr('volunteerSkills.next')),
+                                : Text(
+                                    LocaleKeys.auth_volunteerSkills_next.tr()),
                           ),
                         ),
                       ],

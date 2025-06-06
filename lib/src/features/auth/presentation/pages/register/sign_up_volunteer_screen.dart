@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../routing/app_router.dart';
 import '../../widgets/sign_up_form.dart';
 
@@ -11,33 +12,33 @@ class SignUpVolunteerScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
       body: SignUpForm(
-        titleKey: 'auth.signUpVolunteer.title',
+        titleKey: LocaleKeys.auth_signUpVolunteer_title,
         fields: const [
           FormFieldData(
-            label: 'Nombre',
-            translationKey: 'auth.signUpVolunteer.fields.name',
+            labelKey: LocaleKeys.auth_signUpVolunteer_fields_name,
+            translationKey: LocaleKeys.auth_signUpVolunteer_fields_name,
           ),
           FormFieldData(
-            label: 'Apellido',
-            translationKey: 'auth.signUpVolunteer.fields.lastname',
+            labelKey: LocaleKeys.auth_signUpVolunteer_fields_lastname,
+            translationKey: LocaleKeys.auth_signUpVolunteer_fields_lastname,
           ),
           FormFieldData(
-            label: 'Correo electrónico',
-            translationKey: 'auth.signUpVolunteer.fields.email',
+            labelKey: LocaleKeys.auth_signUpVolunteer_fields_email,
+            translationKey: LocaleKeys.auth_signUpVolunteer_fields_email,
             keyboardType: TextInputType.emailAddress,
           ),
           FormFieldData(
-            label: 'Nombre de usuario',
-            translationKey: 'auth.signUpVolunteer.fields.username',
+            labelKey: LocaleKeys.auth_signUpVolunteer_fields_username,
+            translationKey: LocaleKeys.auth_signUpVolunteer_fields_username,
           ),
           FormFieldData(
-            label: 'Contraseña',
-            translationKey: 'auth.signUpVolunteer.fields.password',
+            labelKey: LocaleKeys.auth_signUpVolunteer_fields_password,
+            translationKey: LocaleKeys.auth_signUpVolunteer_fields_password,
             obscureText: true,
           ),
         ],
         nextRoute: AppRouter.volunteerSkillsRoute,
-        buttonTextKey: 'auth.signUpVolunteer.buttonText',
+        buttonTextKey: LocaleKeys.auth_signUpVolunteer_buttonText,
         userType: "volunteer",
       ),
     );

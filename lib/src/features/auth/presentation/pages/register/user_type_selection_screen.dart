@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../common/utils/firebase/firebase_options.dart';
 import '../../../../../routing/app_router.dart';
@@ -110,7 +111,7 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                 ),
                 const SizedBox(width: 8),
                 Text(
-                  'auth.userType.title'.tr(),
+                  LocaleKeys.auth_userType_title.tr(),
                   style: TextStyle(
                     color: theme.surface,
                     fontSize: 24,
@@ -138,12 +139,12 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                         children: [
                           _buildOption(
                             UserType.requester,
-                            'auth.userType.requester',
+                            LocaleKeys.auth_userType_requester,
                             'requester.png?alt=media&token=2066a274-4a12-4189-bf71-4146f2f59819',
                           ),
                           _buildOption(
                             UserType.volunteer,
-                            'auth.userType.volunteer',
+                            LocaleKeys.auth_userType_volunteer,
                             'volunteer.png?alt=media&token=902ce8c3-266b-466f-bef4-5d951e464a89',
                           ),
                         ],
@@ -155,7 +156,7 @@ class _UserTypeSelectionScreenState extends State<UserTypeSelectionScreen> {
                     width: double.infinity,
                     child: ElevatedButton(
                       onPressed: _selectedType != null ? _onNextPressed : null,
-                      child: Text('auth.userType.next'.tr()),
+                      child: Text(LocaleKeys.auth_userType_next.tr()),
                     ),
                   ),
                 ],

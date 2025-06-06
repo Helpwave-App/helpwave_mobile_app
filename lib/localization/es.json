@@ -1,0 +1,120 @@
+{
+  "auth":{
+    "signIn": {
+      "title": "Iniciar Sesión",
+      "username": "Usuario",
+      "usernameRequired": "El usuario es obligatorio",
+      "password": "Contraseña",
+      "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+      "signInButton": "Iniciar Sesión",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "noAccount": "¿No tienes una cuenta?",
+      "registerNow": "Regístrate ahora",
+      "invalidCredentials": "Nombre de usuario o contraseña inválidos",
+      "incorrectCredentials": "Nombre de usuario o contraseña incorrectos"
+    },
+    "welcome": {
+      "title": "Bienvenido a HelpWave",
+      "subtitle": "Una comunidad donde ayudar y recibir ayuda es parte de lo mismo: cuidarnos entre todos.",
+      "signIn": "Iniciar sesión",
+      "createAccount": "Crear cuenta"
+    },
+    "permissions": {
+      "title": "Permisos requeridos",
+      "description": "Para funcionar correctamente, HelpWave necesita acceso a:\n\n- Notificaciones (para avisarte de solicitudes)\n- Micrófono y Cámara (para videollamadas)",
+      "accept": "Aceptar y continuar",
+      "snackbar": "Debes aceptar todos los permisos para continuar.",
+      "notification": "notificaciones",
+      "microphone": "micrófono",
+      "camera": "cámara"
+    },
+    "userType": {
+      "title": "Tipo de usuario",
+      "requester": "Asistido",
+      "volunteer": "Voluntario",
+      "next": "Siguiente"
+    },
+    "termsAndConditions": {
+      "title": "Términos y condiciones",
+      "description": "Al usar esta aplicación, aceptas participar de una comunidad basada en el respeto, la colaboración y la ayuda mutua.\n\nTe comprometes a brindar y recibir asistencia con buena voluntad, a respetar la privacidad de los demás usuarios y a utilizar esta plataforma exclusivamente para los fines permitidos.\n\nHelpWave no se responsabiliza por el contenido de las interacciones, pero se reserva el derecho de suspender cuentas en caso de mal uso.",
+      "acceptLabel": "He leído y acepto los términos y condiciones.",
+      "next": "Siguiente"
+    },
+    "signUpForm": {
+      "fields": {
+        "name": "Nombre",
+        "lastName": "Apellido",
+        "phoneNumber": "Número de teléfono",
+        "username": "Nombre de usuario",
+        "password": "Contraseña"
+      },
+      "errors": {
+        "required": "Este campo es obligatorio",
+        "onlyLetters": "Usa solo letras y espacios válidos",
+        "phoneNumber": "Ingresa un número de 9 dígitos válido",
+        "username": "Usa al menos 6 caracteres alfanuméricos",
+        "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+        "unknownError": "Error desconocido",
+        "internalError": "Error interno: faltan campos de usuario o contraseña.",
+        "unexpectedError": "Ocurrió un error inesperado. Intenta de nuevo."
+      },
+      "haveAccount": "¿Ya tienes una cuenta?",
+      "signIn": "Inicia sesión"
+    },
+    "signUpRequester": {
+      "title": "Registro para recibir ayuda",
+      "fields": {
+        "name": "Nombre",
+        "lastname": "Apellido",
+        "phoneNumber": "Número de teléfono",
+        "username": "Nombre de usuario",
+        "password": "Contraseña"
+      },
+      "buttonText": "Finalizar registro"
+    },
+    "signUpVolunteer": {
+      "title": "Registro como Voluntario",
+      "fields": {
+        "name": "Nombre",
+        "lastname": "Apellido",
+        "email": "Correo electrónico",
+        "username": "Nombre de usuario",
+        "password": "Contraseña"
+      },
+      "buttonText": "Siguiente"
+    },
+    "volunteerSkills": {
+      "generalAssistanceMandatory": "La habilidad \"Asistencia General\" es obligatoria para todos los voluntarios.",
+      "errorSavingSkills": "Error al guardar habilidades",
+      "helpAreasQuestion": "¿En qué áreas puedes brindar ayuda?",
+      "multipleOptionsAllowed": "Puedes marcar más de una opción",
+      "errorLoadingSkills": "Error al cargar habilidades: {}",
+      "mandatory": "Obligatoria",
+      "next": "Siguiente"
+    },
+    "volunteerAvailability": {
+      "title": "Disponibilidad",
+      "subtitle": "¿En qué días y horarios puedes brindar ayuda?",
+      "errorSavingAvailability": "Error al guardar disponibilidad",
+      "finishRegistration": "Finalizar registro"
+    },
+    "registrationCompleted": {
+      "title": "¡Registro completo!",
+      "message": "Tu cuenta ha sido creada exitosamente. A partir de ahora, puedes comenzar a usar la aplicación.",
+      "subtitle": "Gracias por unirte a HelpWave.",
+      "goHome": "Ir al inicio",
+      "loginError": "Error al iniciar sesión: {}",
+      "iconLabel": "Ícono de registro exitoso"
+    },
+    "registrationCompletedRequester": {
+      "title": "¡Te has registrado con éxito!",
+      "message": "Bienvenido a HelpWave. Aquí encontrarás voluntarios listos para ayudarte con lo que necesites, cuando lo necesites.",
+      "subtitle": "Gracias por confiar en nuestra comunidad solidaria."
+    },
+    "registrationCompletedVolunteer": {
+      "title": "¡Gracias por registrarte como voluntario!",
+      "message": "Ahora formas parte de HelpWave, donde podrás brindar apoyo a personas que lo necesitan de forma remota.",
+      "subtitle": "Tu tiempo y ayuda pueden marcar una gran diferencia."
+    }
+  }
+}
