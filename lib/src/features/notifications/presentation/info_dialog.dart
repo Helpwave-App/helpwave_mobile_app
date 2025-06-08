@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../../../localization/codegen_loader.g.dart';
 
 class InfoDialog extends StatelessWidget {
   final String title;
   final String message;
-  final String buttonText;
+  final String? buttonText;
   final VoidCallback? onButtonPressed;
 
   const InfoDialog({
     super.key,
     required this.title,
     required this.message,
-    this.buttonText = 'Aceptar',
+    this.buttonText,
     this.onButtonPressed,
   });
 
@@ -37,7 +40,7 @@ class InfoDialog extends StatelessWidget {
             }
           },
           child: Text(
-            buttonText,
+            buttonText ?? LocaleKeys.notification_infoDialog_accept.tr(),
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
         ),

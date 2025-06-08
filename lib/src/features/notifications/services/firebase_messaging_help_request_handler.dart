@@ -1,6 +1,8 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../videocalls/data/videocall_service.dart';
 import '../../videocalls/presentation/videocall_screen.dart';
 import '../../home/presentation/pages/home_volunteer_screen.dart';
@@ -15,9 +17,12 @@ void setupHelpRequestNotificationHandler(
 
     if (data['type'] == 'help_request') {
       final idEmpairing = int.tryParse(data['idEmpairing'] ?? '');
-      final skill = data['skill'] ?? 'Desconocida';
-      final name = data['name'] ?? 'Desconocido';
-      final lastname = data['lastname'] ?? 'Desconocido';
+      final skill =
+          data['skill'] ?? tr(LocaleKeys.notification_handler_unknownSkill);
+      final name =
+          data['name'] ?? tr(LocaleKeys.notification_handler_unknownName);
+      final lastname = data['lastname'] ??
+          tr(LocaleKeys.notification_handler_unknownLastName);
       final fullname = '$name $lastname';
 
       if (idEmpairing != null) {
@@ -60,10 +65,11 @@ void setupHelpRequestNotificationHandler(
                         if (context.mounted) {
                           showDialog(
                             context: context,
-                            builder: (_) => const InfoDialog(
-                              title: "¡Gracias por tu disposición!",
-                              message:
-                                  "Otro voluntario ya respondió a esta solicitud. Apreciamos mucho tu intención de ayudar 😊.",
+                            builder: (_) => InfoDialog(
+                              title: tr(LocaleKeys
+                                  .notification_handler_alreadyAnsweredTitle),
+                              message: tr(LocaleKeys
+                                  .notification_handler_alreadyAnsweredMessage),
                             ),
                           );
                         }

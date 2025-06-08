@@ -149,5 +149,24 @@
       "buttonText": "Aceptar\nsolicitud",
       "sessionExpired": "Sesión expirada. Inicia sesión de nuevo."
     }
+  },
+  "notification":{
+    "infoDialog": {
+      "accept": "Aceptar"
+    },
+    "requestDialog": {
+      "title": "Nueva solicitud de ayuda",
+      "requester": "Nombre del solicitante",
+      "skill": "Habilidad solicitada",
+      "accept": "Aceptar",
+      "reject": "Rechazar"
+    },
+    "handler": {
+      "unknownSkill": "Desconocida",
+      "unknownName": "Desconocido",
+      "unknownLastName": "Desconocido",
+      "alreadyAnsweredTitle": "¡Gracias por tu disposición!",
+      "alreadyAnsweredMessage": "Otro voluntario ya respondió a esta solicitud. Apreciamos mucho tu intención de ayudar 😊."
+    }
   }
 }

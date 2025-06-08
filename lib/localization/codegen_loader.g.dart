@@ -129,5 +129,20 @@ abstract class  LocaleKeys {
   static const home_volunteer_sessionExpired = 'home.volunteer.sessionExpired';
   static const home_volunteer = 'home.volunteer';
   static const home = 'home';
+  static const notification_infoDialog_accept = 'notification.infoDialog.accept';
+  static const notification_infoDialog = 'notification.infoDialog';
+  static const notification_requestDialog_title = 'notification.requestDialog.title';
+  static const notification_requestDialog_requester = 'notification.requestDialog.requester';
+  static const notification_requestDialog_skill = 'notification.requestDialog.skill';
+  static const notification_requestDialog_accept = 'notification.requestDialog.accept';
+  static const notification_requestDialog_reject = 'notification.requestDialog.reject';
+  static const notification_requestDialog = 'notification.requestDialog';
+  static const notification_handler_unknownSkill = 'notification.handler.unknownSkill';
+  static const notification_handler_unknownName = 'notification.handler.unknownName';
+  static const notification_handler_unknownLastName = 'notification.handler.unknownLastName';
+  static const notification_handler_alreadyAnsweredTitle = 'notification.handler.alreadyAnsweredTitle';
+  static const notification_handler_alreadyAnsweredMessage = 'notification.handler.alreadyAnsweredMessage';
+  static const notification_handler = 'notification.handler';
+  static const notification = 'notification';
 
 }

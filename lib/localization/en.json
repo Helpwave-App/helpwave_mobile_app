@@ -150,5 +150,24 @@
       "buttonText": "Accept\nrequest",
       "sessionExpired": "Session expired. Please log in again."
     }
+  },
+  "notification":{
+    "infoDialog": {
+      "accept": "Accept"
+    },
+    "requestDialog": {
+      "title": "New help request",
+      "requester": "Requester name",
+      "skill": "Requested skill",
+      "accept": "Accept",
+      "reject": "Reject"
+    },
+    "handler": {
+      "unknownSkill": "Unknown",
+      "unknownName": "Unknown",
+      "unknownLastName": "Unknown",
+      "alreadyAnsweredTitle": "Thank you for your willingness!",
+      "alreadyAnsweredMessage": "Another volunteer has already responded to this request. We really appreciate your intention to help 😊."
+    }
   }
 }
