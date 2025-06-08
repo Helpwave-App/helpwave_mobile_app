@@ -186,5 +186,39 @@
       "alreadyAnsweredTitle": "Thank you for your willingness!",
       "alreadyAnsweredMessage": "Another volunteer has already responded to this request. We really appreciate your intention to help 😊."
     }
+  },
+  "profile":{
+    "user_info_screen":{
+  "app_bar": {
+    "title": "User Information"
+  },
+  "error": {
+    "loading": "Error",
+    "no_profile": "Could not load profile."
+  },
+  "stats": {
+    "score": "Score",
+    "level": "Level",
+    "assistances": "Assistances"
+  },
+  "form": {
+    "email": "Email",
+    "phone": "Phone",
+    "birthday": "Date of Birth (dd/mm/yyyy)",
+    "birthday_picker": "Select your birth date"
+  },
+  "validation": {
+    "email_required": "Email is required",
+    "email_invalid": "Invalid email",
+    "phone_required": "Phone is required",
+    "birthday_required": "Date of birth is required",
+    "birthday_invalid": "Invalid date format"
+  }
+},
+    "controller": {
+      "error_invalidDate": "Invalid birth date.",
+      "success_profileUpdated": "Profile updated successfully.",
+      "error_saving": "Error saving changes."
+    }
   }
 }

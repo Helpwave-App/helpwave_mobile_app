@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../domain/profile_model.dart';
 
@@ -50,7 +52,8 @@ class UserInfoController extends StateNotifier<bool> {
     final parsedBirthday = parseDate(birthdayController.text);
     if (parsedBirthday == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Fecha de nacimiento inválida.')),
+        SnackBar(
+            content: Text(tr(LocaleKeys.profile_controller_error_invalidDate))),
       );
       return;
     }
@@ -67,14 +70,16 @@ class UserInfoController extends StateNotifier<bool> {
 
     if (result) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Perfil editado exitosamente.')),
+        SnackBar(
+            content:
+                Text(tr(LocaleKeys.profile_controller_success_profileUpdated))),
       );
 
       ref.invalidate(profileFutureProvider);
       onSuccess?.call();
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Error al guardar los cambios.')),
+        SnackBar(content: Text(tr(LocaleKeys.profile_controller_error_saving))),
       );
     }
   }

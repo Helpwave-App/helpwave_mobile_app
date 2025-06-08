@@ -185,5 +185,39 @@
       "alreadyAnsweredTitle": "¡Gracias por tu disposición!",
       "alreadyAnsweredMessage": "Otro voluntario ya respondió a esta solicitud. Apreciamos mucho tu intención de ayudar 😊."
     }
+  },
+  "profile":{
+    "user_info_screen":{
+  "app_bar": {
+    "title": "Información de usuario"
+  },
+  "error": {
+    "loading": "Error",
+    "no_profile": "No se pudo cargar el perfil."
+  },
+  "stats": {
+    "score": "Puntaje",
+    "level": "Nivel",
+    "assistances": "Asistencias"
+  },
+  "form": {
+    "email": "Correo electrónico",
+    "phone": "Teléfono",
+    "birthday": "Fecha de nacimiento (dd/mm/yyyy)",
+    "birthday_picker": "Selecciona tu fecha de nacimiento"
+  },
+  "validation": {
+    "email_required": "El correo es requerido",
+    "email_invalid": "Correo inválido",
+    "phone_required": "El teléfono es requerido",
+    "birthday_required": "La fecha es requerida",
+    "birthday_invalid": "Formato de fecha inválido"
+  }
+},
+    "controller": {
+      "error_invalidDate": "Fecha de nacimiento inválida.",
+      "success_profileUpdated": "Perfil editado exitosamente.",
+      "error_saving": "Error al guardar los cambios."
+    }
   }
 }
