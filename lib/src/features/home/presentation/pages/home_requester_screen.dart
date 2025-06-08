@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../common/utils/constants/providers.dart';
 import '../../../profile/data/skill_service.dart';
 import '../../../profile/domain/skill_model.dart';
@@ -41,9 +43,9 @@ class _HomeRequesterScreenState extends ConsumerState<HomeRequesterScreen> {
         }
 
         if (!snapshot.data!) {
-          return const Scaffold(
+          return Scaffold(
             body: Center(
-              child: Text("Sesión expirada. Inicia sesión de nuevo."),
+              child: Text(LocaleKeys.home_requester_sessionExpired.tr()),
             ),
           );
         }
@@ -60,10 +62,12 @@ class _HomeRequesterScreenState extends ConsumerState<HomeRequesterScreen> {
                 }
 
                 return HomeWidget(
-                  greeting:
-                      '¡Hola, ${profile?.firstName} ${profile?.lastName}!',
-                  subtitle: '¿Listo para recibir ayuda hoy?',
-                  buttonText: 'Solicitar\nasistencia',
+                  greeting: LocaleKeys.home_requester_greeting.tr(namedArgs: {
+                    'firstName': profile?.firstName ?? '',
+                    'lastName': profile?.lastName ?? '',
+                  }),
+                  subtitle: LocaleKeys.home_requester_subtitle.tr(),
+                  buttonText: LocaleKeys.home_requester_buttonText.tr(),
                   isRequester: true,
                   skills: skillSnapshot.data!,
                 );

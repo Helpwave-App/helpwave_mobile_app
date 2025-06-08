@@ -131,5 +131,23 @@
       "current": "Nivel actual",
       "next": "Siguiente nivel"
     }
+  },
+  "home":{
+    "widget": {
+      "settingsTooltip": "Configuración",
+      "selectSkillHint": "Selecciona una habilidad"
+    },
+    "requester": {
+      "greeting": "¡Hola, {firstName} {lastName}!",
+      "subtitle": "¿Listo para recibir ayuda hoy?",
+      "buttonText": "Solicitar\nasistencia",
+      "sessionExpired": "Sesión expirada. Inicia sesión de nuevo."
+    },
+    "volunteer": {
+      "greeting": "¡Hola, {firstName} {lastName}!",
+      "subtitle": "¿Listo para brindar ayuda hoy?",
+      "buttonText": "Aceptar\nsolicitud",
+      "sessionExpired": "Sesión expirada. Inicia sesión de nuevo."
+    }
   }
 }

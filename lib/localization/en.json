@@ -132,5 +132,23 @@
       "current": "Current level",
       "next": "Next level"
     }
+  },
+  "home":{
+    "widget": {
+      "settingsTooltip": "Settings",
+      "selectSkillHint": "Select a skill"
+    },
+    "requester": {
+      "greeting": "Hi, {firstName} {lastName}!",
+      "subtitle": "Ready to request help today?",
+      "buttonText": "Request\nassistance",
+      "sessionExpired": "Session expired. Please log in again."
+    },
+    "volunteer": {
+      "greeting": "Hi, {firstName} {lastName}!",
+      "subtitle": "Ready to provide help today?",
+      "buttonText": "Accept\nrequest",
+      "sessionExpired": "Session expired. Please log in again."
+    }
   }
 }

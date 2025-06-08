@@ -115,5 +115,19 @@ abstract class  LocaleKeys {
   static const gamification_insigniaProgressWidget_next = 'gamification.insigniaProgressWidget.next';
   static const gamification_insigniaProgressWidget = 'gamification.insigniaProgressWidget';
   static const gamification = 'gamification';
+  static const home_widget_settingsTooltip = 'home.widget.settingsTooltip';
+  static const home_widget_selectSkillHint = 'home.widget.selectSkillHint';
+  static const home_widget = 'home.widget';
+  static const home_requester_greeting = 'home.requester.greeting';
+  static const home_requester_subtitle = 'home.requester.subtitle';
+  static const home_requester_buttonText = 'home.requester.buttonText';
+  static const home_requester_sessionExpired = 'home.requester.sessionExpired';
+  static const home_requester = 'home.requester';
+  static const home_volunteer_greeting = 'home.volunteer.greeting';
+  static const home_volunteer_subtitle = 'home.volunteer.subtitle';
+  static const home_volunteer_buttonText = 'home.volunteer.buttonText';
+  static const home_volunteer_sessionExpired = 'home.volunteer.sessionExpired';
+  static const home_volunteer = 'home.volunteer';
+  static const home = 'home';
 
 }
