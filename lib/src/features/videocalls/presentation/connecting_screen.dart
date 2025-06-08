@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:helpwave_mobile_app/src/features/videocalls/data/videocall_service.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../routing/app_router.dart';
+import '../data/videocall_service.dart';
 
 class ConnectingScreen extends StatefulWidget {
   final int idRequest;
@@ -14,11 +17,11 @@ class ConnectingScreen extends StatefulWidget {
 
 class _ConnectingScreenState extends State<ConnectingScreen> {
   final List<String> tips = [
-    'Recuerda tener buena iluminación para que te vean mejor.',
-    'Mantén tu cámara enfocando el objeto o situación con la que necesitas ayuda.',
-    'Habla con claridad y despacio, especialmente si tu conexión es lenta.',
-    'Si no entiendes algo, puedes pedir que te lo repitan sin problema.',
-    'Ten a la mano lo que necesitas para aprovechar mejor la videollamada.',
+    LocaleKeys.videocalls_connectingScreen_tips_tip1.tr(),
+    LocaleKeys.videocalls_connectingScreen_tips_tip2.tr(),
+    LocaleKeys.videocalls_connectingScreen_tips_tip3.tr(),
+    LocaleKeys.videocalls_connectingScreen_tips_tip4.tr(),
+    LocaleKeys.videocalls_connectingScreen_tips_tip5.tr(),
   ];
 
   int currentTipIndex = 0;
@@ -52,7 +55,9 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('No se pudo cancelar la solicitud')),
+        SnackBar(
+            content:
+                Text(LocaleKeys.videocalls_connectingScreen_cancelFailed.tr())),
       );
     }
 
@@ -73,11 +78,11 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         toolbarHeight: 80,
-        title: const Align(
+        title: Align(
           alignment: Alignment.centerLeft,
           child: Text(
-            'Conectando...',
-            style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+            LocaleKeys.videocalls_connectingScreen_appBarTitle.tr(),
+            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
           ),
         ),
         elevation: 0,
@@ -91,7 +96,8 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                'Estableciendo conexión...',
+                LocaleKeys.videocalls_connectingScreen_establishingConnection
+                    .tr(),
                 style: theme.textTheme.headlineSmall?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -99,7 +105,7 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
               ),
               const SizedBox(height: 16),
               Text(
-                'Estamos buscando la mejor asistencia para ti.',
+                LocaleKeys.videocalls_connectingScreen_searchingAssistance.tr(),
                 style: theme.textTheme.titleMedium,
                 textAlign: TextAlign.center,
               ),
@@ -118,7 +124,8 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _showCancelConfirmationDialog,
-                  child: const Text('Cancelar'),
+                  child:
+                      Text(LocaleKeys.videocalls_connectingScreen_cancel.tr()),
                 ),
               ),
             ],
@@ -140,14 +147,14 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           backgroundColor: theme.colorScheme.surface,
           title: Text(
-            'Cancelar solicitud',
+            LocaleKeys.videocalls_connectingScreen_cancelRequestTitle.tr(),
             style: theme.textTheme.titleLarge?.copyWith(
               fontWeight: FontWeight.bold,
               color: theme.colorScheme.onSurface,
             ),
           ),
           content: Text(
-            '¿Estás seguro de que deseas cancelar tu solicitud de ayuda?',
+            LocaleKeys.videocalls_connectingScreen_cancelRequestQuestion.tr(),
             style: theme.textTheme.bodyLarge?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
@@ -162,7 +169,7 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
                 textStyle: theme.textTheme.labelLarge,
               ),
               onPressed: () => Navigator.of(context).pop(),
-              child: const Text('No'),
+              child: Text(LocaleKeys.videocalls_connectingScreen_no.tr()),
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -179,7 +186,8 @@ class _ConnectingScreenState extends State<ConnectingScreen> {
                 Navigator.of(context).pop();
                 _cancelAndReturnToHome();
               },
-              child: const Text('Sí, cancelar'),
+              child:
+                  Text(LocaleKeys.videocalls_connectingScreen_yesCancel.tr()),
             ),
           ],
         );

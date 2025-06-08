@@ -1,11 +1,13 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../common/utils/constants/providers.dart';
 import '../../../../../routing/app_router.dart';
-import '../../../../profile/domain/skill_model.dart';
+import '../../../../skills/domain/skill_model.dart';
 
 class VolunteerSkillsScreen extends ConsumerStatefulWidget {
   final int idProfile;
@@ -42,9 +44,9 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
   void _onOptionToggled(int skillId) {
     if (skillId == 1) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
+        SnackBar(
           content: Text(
-            'La habilidad "Asistencia General" es obligatoria para todos los voluntarios.',
+            LocaleKeys.auth_volunteerSkills_generalAssistanceMandatory.tr(),
           ),
         ),
       );
@@ -81,7 +83,9 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
     if (!success) {
       setState(() => _isLoading = false);
       messenger.showSnackBar(
-        const SnackBar(content: Text('Error al guardar habilidades')),
+        SnackBar(
+            content:
+                Text(LocaleKeys.auth_volunteerSkills_errorSavingSkills.tr())),
       );
       return;
     }
@@ -114,7 +118,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Text(
-                '¿En qué áreas puedes brindar ayuda?',
+                LocaleKeys.auth_volunteerSkills_title.tr(),
                 style: TextStyle(
                   color: theme.surface,
                   fontSize: 24,
@@ -143,7 +147,8 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                     if (snapshot.hasError) {
                       return Center(
                         child: Text(
-                            'Error al cargar habilidades: ${snapshot.error}'),
+                          '${LocaleKeys.auth_volunteerSkills_errorLoadingSkills.tr()}: ${snapshot.error}',
+                        ),
                       );
                     }
 
@@ -153,7 +158,8 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Puedes marcar más de una opción',
+                          LocaleKeys.auth_volunteerSkills_selectMultipleOptions
+                              .tr(),
                           style: TextStyle(
                             fontSize: 16,
                             color: theme.onTertiary,
@@ -217,7 +223,9 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                         ),
                                         if (isGeneralAssistance)
                                           Chip(
-                                            label: const Text('Obligatoria'),
+                                            label: Text(LocaleKeys
+                                                .auth_volunteerSkills_mandatory
+                                                .tr()),
                                             backgroundColor:
                                                 theme.primary.withOpacity(0.2),
                                             labelStyle: TextStyle(
@@ -249,7 +257,8 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                     valueColor: AlwaysStoppedAnimation<Color>(
                                         Colors.white),
                                   )
-                                : const Text('Siguiente'),
+                                : Text(
+                                    LocaleKeys.auth_volunteerSkills_next.tr()),
                           ),
                         ),
                       ],

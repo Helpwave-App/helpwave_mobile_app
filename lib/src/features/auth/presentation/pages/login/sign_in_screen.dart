@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../common/utils/constants/providers.dart';
 import '../../../../../routing/app_router.dart';
@@ -48,8 +50,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       Navigator.of(context).pushReplacementNamed(AppRouter.loadingRoute);
     } catch (e) {
       final errorMessage = e.toString().contains('401')
-          ? 'Credenciales inválidas'
-          : 'Usuario o contraseña incorrectos';
+          ? LocaleKeys.auth_signIn_invalidCredentials.tr()
+          : LocaleKeys.auth_signIn_incorrectCredentials.tr();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(errorMessage)),
       );
@@ -82,11 +84,14 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            Text('HelpWave',
-                style: TextStyle(
-                    color: theme.surface,
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold)),
+            Text(
+              'HelpWave',
+              style: TextStyle(
+                color: theme.surface,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 30),
             Expanded(
               child: Align(
@@ -97,8 +102,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
                       color: theme.surface,
-                      borderRadius:
-                          const BorderRadius.vertical(top: Radius.circular(24)),
+                      borderRadius: const BorderRadius.vertical(
+                        top: Radius.circular(24),
+                      ),
                     ),
                     child: Form(
                       key: _formKey,
@@ -106,20 +112,25 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          const Text("Iniciar Sesión",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          Text(
+                            LocaleKeys.auth_signIn_title.tr(),
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                           const SizedBox(height: 20),
                           TextFormField(
                             controller: _usernameController,
                             enabled: !_isLoading,
-                            decoration: const InputDecoration(
-                                labelText: 'Usuario',
-                                border: OutlineInputBorder()),
-                            validator: (value) =>
-                                value == null || value.trim().isEmpty
-                                    ? 'El usuario es obligatorio'
-                                    : null,
+                            decoration: InputDecoration(
+                              labelText: LocaleKeys.auth_signIn_username.tr(),
+                              border: const OutlineInputBorder(),
+                            ),
+                            validator: (value) => value == null ||
+                                    value.trim().isEmpty
+                                ? LocaleKeys.auth_signIn_usernameRequired.tr()
+                                : null,
                           ),
                           const SizedBox(height: 16),
                           TextFormField(
@@ -127,7 +138,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                             enabled: !_isLoading,
                             obscureText: _obscurePassword,
                             decoration: InputDecoration(
-                              labelText: 'Contraseña',
+                              labelText: LocaleKeys.auth_signIn_password.tr(),
                               border: const OutlineInputBorder(),
                               suffixIcon: IconButton(
                                 icon: Icon(
@@ -144,10 +155,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                                       },
                               ),
                             ),
-                            validator: (value) =>
-                                value == null || value.length < 6
-                                    ? 'Mínimo 6 caracteres'
-                                    : null,
+                            validator: (value) => value == null ||
+                                    value.length < 6
+                                ? LocaleKeys.auth_signIn_passwordMinLength.tr()
+                                : null,
                           ),
                           const SizedBox(height: 20),
                           ElevatedButton(
@@ -159,18 +170,20 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                             child: _isLoading
                                 ? const CircularProgressIndicator(
                                     color: Colors.white)
-                                : const Text("Iniciar Sesión"),
+                                : Text(
+                                    LocaleKeys.auth_signIn_signInButton.tr()),
                           ),
                           const SizedBox(height: 16),
                           Center(
                             child: TextButton(
                               onPressed: _isLoading ? null : () {},
-                              child: Text("¿Olvidaste tu contraseña?",
-                                  style: TextStyle(
-                                    color: _isLoading
-                                        ? Colors.grey
-                                        : theme.tertiary,
-                                  )),
+                              child: Text(
+                                LocaleKeys.auth_signIn_forgotPassword.tr(),
+                                style: TextStyle(
+                                  color:
+                                      _isLoading ? Colors.grey : theme.tertiary,
+                                ),
+                              ),
                             ),
                           ),
                           const SizedBox(height: 12),
@@ -178,29 +191,36 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text("¿Aún no tienes una cuenta?",
-                                    style: TextStyle(color: theme.onTertiary)),
+                                Text(
+                                  LocaleKeys.auth_signIn_noAccount.tr(),
+                                  style: TextStyle(color: theme.onTertiary),
+                                ),
                                 TextButton(
                                   onPressed: _isLoading
                                       ? null
                                       : () {
                                           Navigator.of(context).push(
-                                              animatedRouteTo(context,
-                                                  AppRouter.userTypeRoute,
-                                                  duration: const Duration(
-                                                      milliseconds: 200),
-                                                  curve: Curves.easeInOut));
+                                            animatedRouteTo(
+                                              context,
+                                              AppRouter.userTypeRoute,
+                                              duration: const Duration(
+                                                  milliseconds: 200),
+                                              curve: Curves.easeInOut,
+                                            ),
+                                          );
                                         },
-                                  child: Text("Regístrate ahora",
-                                      style: TextStyle(
-                                        color: _isLoading
-                                            ? Colors.grey
-                                            : theme.tertiary,
-                                      )),
-                                )
+                                  child: Text(
+                                    LocaleKeys.auth_signIn_registerNow.tr(),
+                                    style: TextStyle(
+                                      color: _isLoading
+                                          ? Colors.grey
+                                          : theme.tertiary,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),

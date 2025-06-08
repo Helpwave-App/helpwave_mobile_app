@@ -2,7 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:wakelock_plus/wakelock_plus.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/call_session.dart';
 import '../../../routing/app_router.dart';
 import '../application/videocall_controller.dart';
@@ -56,7 +58,10 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al iniciar videollamada: $e')),
+          SnackBar(
+              content: Text(LocaleKeys
+                  .videocalls_videocall_screen_error_init_call
+                  .tr(args: [e.toString()]))),
         );
         Navigator.of(context).pop();
       }
@@ -110,7 +115,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Videollamada')),
+      appBar: AppBar(
+          title: Text(LocaleKeys.videocalls_videocall_screen_title.tr())),
       body: Stack(
         children: [
           Center(child: _isSwapped ? _buildLocalVideo() : _buildRemoteVideo()),
@@ -220,21 +226,27 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                       final confirmed = await showDialog<bool>(
                         context: context,
                         builder: (context) => AlertDialog(
-                          title:
-                              const Text('¿Deseas finalizar la videollamada?'),
-                          content: const Text(
-                              'Esta acción terminará la llamada y no podrás retomarla.'),
+                          title: Text(LocaleKeys
+                              .videocalls_videocall_screen_confirm_end_call_title
+                              .tr()),
+                          content: Text(LocaleKeys
+                              .videocalls_videocall_screen_confirm_end_call_content
+                              .tr()),
                           actions: [
                             TextButton(
                               onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text('Cancelar'),
+                              child: Text(LocaleKeys
+                                  .videocalls_videocall_screen_cancel
+                                  .tr()),
                             ),
                             ElevatedButton(
                               onPressed: () => Navigator.of(context).pop(true),
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: Colors.red,
                               ),
-                              child: const Text('Finalizar'),
+                              child: Text(LocaleKeys
+                                  .videocalls_videocall_screen_end_call
+                                  .tr()),
                             ),
                           ],
                         ),
@@ -303,7 +315,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
       valueListenable: _controller.remoteUserId,
       builder: (_, uid, __) {
         if (uid == null) {
-          return _buildPlaceholderView('Esperando a otro usuario...');
+          return _buildPlaceholderView(
+              LocaleKeys.videocalls_videocall_screen_waiting_other_user.tr());
         }
         return ValueListenableBuilder<bool>(
           valueListenable: _controller.isRemoteVideoAvailable,
@@ -317,7 +330,9 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                 ),
               );
             } else {
-              return _buildPlaceholderView('Cámara remota apagada');
+              return _buildPlaceholderView(LocaleKeys
+                  .videocalls_videocall_screen_remote_camera_off
+                  .tr());
             }
           },
         );

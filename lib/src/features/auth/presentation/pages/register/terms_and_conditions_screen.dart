@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../routing/app_router.dart';
 import 'user_type_selection_screen.dart';
@@ -75,25 +77,26 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
         children: [
           const SizedBox(height: 80),
           Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(
-                    icon: Icon(Icons.arrow_back, color: theme.surface),
-                    onPressed: () => Navigator.pop(context),
+            padding: const EdgeInsets.symmetric(horizontal: 24),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                IconButton(
+                  icon: Icon(Icons.arrow_back, color: theme.surface),
+                  onPressed: () => Navigator.pop(context),
+                ),
+                const SizedBox(width: 8),
+                Text(
+                  LocaleKeys.auth_termsAndConditions_title.tr(),
+                  style: TextStyle(
+                    color: theme.surface,
+                    fontSize: 24,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    'Términos y condiciones',
-                    style: TextStyle(
-                      color: theme.surface,
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
           const SizedBox(height: 16),
           Expanded(
             child: Container(
@@ -109,10 +112,8 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Text(
-                        'Al usar esta aplicación, aceptas participar de una comunidad basada en el respeto, la colaboración y la ayuda mutua.\n\n'
-                        'Te comprometes a brindar y recibir asistencia con buena voluntad, a respetar la privacidad de los demás usuarios y a utilizar esta plataforma exclusivamente para los fines permitidos.\n\n'
-                        'HelpWave no se responsabiliza por el contenido de las interacciones, pero se reserva el derecho de suspender cuentas en caso de mal uso.',
-                        style: TextStyle(fontSize: 16),
+                        LocaleKeys.auth_termsAndConditions_description.tr(),
+                        style: const TextStyle(fontSize: 16),
                       ),
                     ),
                   ),
@@ -124,7 +125,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                       ),
                       Expanded(
                         child: Text(
-                          'He leído y acepto los términos y condiciones.',
+                          LocaleKeys.auth_termsAndConditions_acceptLabel.tr(),
                         ),
                       ),
                     ],
@@ -132,7 +133,7 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
                   const SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: _accepted ? _onNextPressed : null,
-                    child: const Text('Siguiente'),
+                    child: Text(LocaleKeys.auth_termsAndConditions_next.tr()),
                   ),
                 ],
               ),

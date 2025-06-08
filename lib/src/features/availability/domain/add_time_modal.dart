@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../../../localization/codegen_loader.g.dart';
 
 class AddTimeModal extends StatefulWidget {
   final String day;
@@ -29,7 +32,9 @@ class _AddTimeModalState extends State<AddTimeModal> {
 
     if (startMinutes >= endMinutes) {
       Navigator.pop(context);
-      widget.onError('La hora de fin debe ser posterior a la hora de inicio');
+      widget.onError(
+        tr(LocaleKeys.availability_addTimeModal_error_invalidTimeRange),
+      );
       return;
     }
 
@@ -49,9 +54,10 @@ class _AddTimeModalState extends State<AddTimeModal> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('Agregar horario para ${widget.day}',
-              style:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Text(
+            '${tr(LocaleKeys.availability_addTimeModal_title)} ${widget.day}',
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 16),
           Row(
             children: [
@@ -64,7 +70,10 @@ class _AddTimeModalState extends State<AddTimeModal> {
                     );
                     if (picked != null) setState(() => startTime = picked);
                   },
-                  child: Text(startTime?.format(context) ?? "Hora de inicio"),
+                  child: Text(
+                    startTime?.format(context) ??
+                        tr(LocaleKeys.availability_addTimeModal_startTime),
+                  ),
                 ),
               ),
               const SizedBox(width: 12),
@@ -77,7 +86,10 @@ class _AddTimeModalState extends State<AddTimeModal> {
                     );
                     if (picked != null) setState(() => endTime = picked);
                   },
-                  child: Text(endTime?.format(context) ?? "Hora de fin"),
+                  child: Text(
+                    endTime?.format(context) ??
+                        tr(LocaleKeys.availability_addTimeModal_endTime),
+                  ),
                 ),
               ),
             ],
@@ -89,7 +101,7 @@ class _AddTimeModalState extends State<AddTimeModal> {
                 value: applyToAllDays,
                 onChanged: (v) => setState(() => applyToAllDays = v ?? false),
               ),
-              const Text("Aplicar a todos los días"),
+              Text(tr(LocaleKeys.availability_addTimeModal_applyToAll)),
             ],
           ),
           Row(
@@ -97,14 +109,14 @@ class _AddTimeModalState extends State<AddTimeModal> {
               Expanded(
                 child: TextButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancelar'),
+                  child: Text(tr(LocaleKeys.availability_addTimeModal_cancel)),
                 ),
               ),
               const SizedBox(width: 12),
               Expanded(
                 child: ElevatedButton(
                   onPressed: _handleSave,
-                  child: const Text('Guardar'),
+                  child: Text(tr(LocaleKeys.availability_addTimeModal_save)),
                 ),
               ),
             ],

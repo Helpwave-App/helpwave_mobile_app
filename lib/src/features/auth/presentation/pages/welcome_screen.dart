@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../common/animations/animated_route.dart';
 import '../../../../routing/app_router.dart';
 
@@ -32,7 +34,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Text(
-                  'Bienvenido a HelpWave',
+                  LocaleKeys.auth_welcome_title.tr(), // Uso de LocaleKeys
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 26,
@@ -44,13 +46,10 @@ class WelcomeScreen extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
                   child: Text(
-                    'Una comunidad donde ayudar y recibir ayuda es parte de lo mismo: cuidarnos entre todos.',
+                    LocaleKeys.auth_welcome_subtitle.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .surface
-                          .withOpacity(0.9),
+                      color: theme.surface.withOpacity(0.9),
                       fontSize: 16,
                     ),
                   ),
@@ -80,7 +79,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: const Text("Iniciar sesión"),
+                  child: Text(LocaleKeys.auth_welcome_signIn.tr()),
                 ),
                 const SizedBox(height: 16),
                 OutlinedButton(
@@ -94,7 +93,7 @@ class WelcomeScreen extends StatelessWidget {
                       ),
                     );
                   },
-                  child: const Text("Crear cuenta"),
+                  child: Text(LocaleKeys.auth_welcome_createAccount.tr()),
                 ),
               ],
             ),

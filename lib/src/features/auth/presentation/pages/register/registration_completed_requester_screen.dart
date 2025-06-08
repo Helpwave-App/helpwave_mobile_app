@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../widgets/registration_completed.dart';
 
 class RegistrationCompletedRequesterScreen extends StatelessWidget {
@@ -14,10 +15,9 @@ class RegistrationCompletedRequesterScreen extends StatelessWidget {
     final password = args?['password'];
 
     return RegistrationCompletedWidget(
-      title: '¡Te has registrado con éxito!',
-      message:
-          'Bienvenido a HelpWave. Aquí encontrarás voluntarios listos para ayudarte con lo que necesites, cuando lo necesites.',
-      subtitle: 'Gracias por confiar en nuestra comunidad solidaria.',
+      title: LocaleKeys.auth_registrationCompletedRequester_title,
+      message: LocaleKeys.auth_registrationCompletedRequester_message,
+      subtitle: LocaleKeys.auth_registrationCompletedRequester_subtitle,
       icon: Icons.volunteer_activism,
       userType: 'requester',
       username: username,

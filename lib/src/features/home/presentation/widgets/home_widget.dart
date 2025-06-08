@@ -1,8 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../routing/app_router.dart';
-import '../../../profile/domain/skill_model.dart';
+import '../../../skills/domain/skill_model.dart';
 import '../../application/home_controller.dart';
 
 class HomeWidget extends ConsumerWidget {
@@ -42,7 +44,7 @@ class HomeWidget extends ConsumerWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.settings),
-            tooltip: 'Configuración',
+            tooltip: LocaleKeys.home_widget_settingsTooltip.tr(),
             onPressed: () {
               Navigator.of(context).pushNamed(AppRouter.settingsRoute);
             },
@@ -116,7 +118,7 @@ class HomeWidget extends ConsumerWidget {
                   DropdownButtonFormField<Skill>(
                     value: state.selectedSkill,
                     isExpanded: true,
-                    hint: const Text('Selecciona una habilidad'),
+                    hint: Text(LocaleKeys.home_widget_selectSkillHint.tr()),
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                     ),

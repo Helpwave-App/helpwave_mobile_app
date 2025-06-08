@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../../common/animations/animated_route.dart';
-import '../../../../../common/utils/firebase/fcm_config.dart';
-import '../../../../../common/utils/permissions_helper.dart';
-import '../../../../notifications/services/device_token_service.dart';
+import '../../../../../localization/codegen_loader.g.dart';
+import '../../../../common/animations/animated_route.dart';
+import '../../../../common/utils/firebase/fcm_config.dart';
+import '../../../../common/utils/permissions_helper.dart';
+import '../../../notifications/services/device_token_service.dart';
 
 class PermissionsScreen extends StatefulWidget {
   const PermissionsScreen({super.key});
@@ -77,25 +79,25 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
       final handledNotification = await checkAndHandlePermanentDenial(
         context: context,
         permission: Permission.notification,
-        permissionName: 'notificaciones',
+        permissionName: LocaleKeys.auth_permissions_notification.tr(),
       );
 
       final handledMicrophone = await checkAndHandlePermanentDenial(
         context: context,
         permission: Permission.microphone,
-        permissionName: 'micrófono',
+        permissionName: LocaleKeys.auth_permissions_microphone.tr(),
       );
 
       final handledCamera = await checkAndHandlePermanentDenial(
         context: context,
         permission: Permission.camera,
-        permissionName: 'cámara',
+        permissionName: LocaleKeys.auth_permissions_camera.tr(),
       );
 
       if (!handledNotification && !handledMicrophone && !handledCamera) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Debes aceptar todos los permisos para continuar.'),
+          SnackBar(
+            content: Text(LocaleKeys.auth_permissions_snackbar.tr()),
           ),
         );
       }
@@ -124,7 +126,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Permisos requeridos',
+                  LocaleKeys.auth_permissions_title.tr(),
                   style: TextStyle(
                     color: theme.surface,
                     fontSize: 24,
@@ -149,9 +151,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                   Expanded(
                     child: SingleChildScrollView(
                       child: Text(
-                        'Para funcionar correctamente, HelpWave necesita acceso a:\n\n'
-                        '- Notificaciones (para avisarte de solicitudes)\n'
-                        '- Micrófono y Cámara (para videollamadas)\n',
+                        LocaleKeys.auth_permissions_description.tr(),
                         style: const TextStyle(fontSize: 16),
                       ),
                     ),
@@ -171,7 +171,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
                             height: 24,
                             child: CircularProgressIndicator(strokeWidth: 2),
                           )
-                        : const Text('Aceptar y continuar'),
+                        : Text(LocaleKeys.auth_permissions_accept.tr()),
                   ),
                 ],
               ),

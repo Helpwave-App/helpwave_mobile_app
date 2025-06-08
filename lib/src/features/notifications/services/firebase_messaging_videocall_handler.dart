@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/call_session.dart';
 import '../../../common/utils/constants/secure_storage.dart';
 import '../../../routing/app_router.dart';
@@ -30,8 +32,10 @@ void _handleVideocallNotification(
   switch (type) {
     case 'videocall_start':
       if (token != null && channel != null) {
-        final name = data['name'] ?? 'Desconocido';
-        final lastname = data['lastname'] ?? '';
+        final name =
+            data['name'] ?? tr(LocaleKeys.notification_handler_unknownName);
+        final lastname = data['lastname'] ??
+            tr(LocaleKeys.notification_handler_unknownLastName);
         final fullname = '$name $lastname'.trim();
 
         print('📞 Redirigiendo a VideoCallScreen');

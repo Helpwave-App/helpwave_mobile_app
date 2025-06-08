@@ -5,7 +5,7 @@ import '../../../common/exceptions/api_exception.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../common/utils/permissions_helper.dart';
 import '../../../routing/app_router.dart';
-import '../../profile/domain/skill_model.dart';
+import '../../skills/domain/skill_model.dart';
 
 class HomeState {
   final Skill? selectedSkill;

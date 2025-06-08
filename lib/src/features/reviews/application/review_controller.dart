@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../../../localization/codegen_loader.g.dart';
 import '../data/review_service.dart';
 import '../domain/review_model.dart';
 
@@ -24,7 +27,7 @@ class ReviewController extends ChangeNotifier {
 
   Future<String?> submitReview(int idVideocall) async {
     if (commentController.text.trim().isEmpty) {
-      return 'El comentario no puede estar vacío.';
+      return LocaleKeys.reviews_review_controller_validation_empty_comment.tr();
     }
 
     isSubmitting = true;
@@ -40,7 +43,6 @@ class ReviewController extends ChangeNotifier {
 
       await reviewService.submitReview(review);
 
-      // Limpiar valores después de enviar
       volunteerRating = 1;
       callRating = 1;
       commentController.clear();
@@ -52,7 +54,7 @@ class ReviewController extends ChangeNotifier {
     } catch (e) {
       isSubmitting = false;
       notifyListeners();
-      return 'Error al enviar la reseña: $e';
+      return '${LocaleKeys.reviews_review_controller_error_submission.tr()}: $e';
     }
   }
 }

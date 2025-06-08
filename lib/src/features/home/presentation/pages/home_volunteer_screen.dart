@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../common/utils/constants/providers.dart';
 import '../widgets/home_widget.dart';
 
@@ -34,9 +36,10 @@ class HomeVolunteerScreen extends ConsumerWidget {
         }
 
         if (!snapshot.data!) {
-          return const Scaffold(
-            body:
-                Center(child: Text("Sesión expirada. Inicia sesión de nuevo.")),
+          return Scaffold(
+            body: Center(
+              child: Text(LocaleKeys.home_volunteer_sessionExpired.tr()),
+            ),
           );
         }
 
@@ -46,9 +49,12 @@ class HomeVolunteerScreen extends ConsumerWidget {
           body: profileAsync.when(
             data: (profile) {
               return HomeWidget(
-                greeting: '¡Hola, ${profile?.firstName} ${profile?.lastName}!',
-                subtitle: '¿Listo para brindar ayuda hoy?',
-                buttonText: 'Aceptar\nsolicitud',
+                greeting: LocaleKeys.home_volunteer_greeting.tr(namedArgs: {
+                  'firstName': profile?.firstName ?? '',
+                  'lastName': profile?.lastName ?? '',
+                }),
+                subtitle: LocaleKeys.home_volunteer_subtitle.tr(),
+                buttonText: LocaleKeys.home_volunteer_buttonText.tr(),
                 isRequester: false,
               );
             },

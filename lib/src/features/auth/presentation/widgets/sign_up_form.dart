@@ -1,25 +1,28 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:helpwave_mobile_app/src/routing/app_router.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../common/animations/animated_route.dart';
 import '../../../../common/utils/constants/providers.dart';
+import '../../../../routing/app_router.dart';
 
 class SignUpForm extends ConsumerStatefulWidget {
-  final String title;
+  final String titleKey;
   final List<FormFieldData> fields;
   final String nextRoute;
-  final String buttonText;
+  final String buttonTextKey;
   final String userType;
 
-  const SignUpForm(
-      {super.key,
-      required this.title,
-      required this.fields,
-      required this.nextRoute,
-      required this.buttonText,
-      required this.userType});
+  const SignUpForm({
+    super.key,
+    required this.titleKey,
+    required this.fields,
+    required this.nextRoute,
+    required this.buttonTextKey,
+    required this.userType,
+  });
 
   @override
   ConsumerState<SignUpForm> createState() => _SignUpFormState();
@@ -55,51 +58,58 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
     bool hasError = false;
     for (int i = 0; i < widget.fields.length; i++) {
       final value = _controllers[i].text.trim();
-      final field = widget.fields[i].label;
+      final fieldLabel = tr(widget.fields[i].translationKey);
 
       if (value.isEmpty) {
-        _errorMessages[i] = 'Este campo es obligatorio';
+        _errorMessages[i] = tr(LocaleKeys.auth_signUpForm_errors_required);
         hasError = true;
         continue;
       }
 
-      if (field == "Nombre" || field == "Apellido") {
+      if (widget.fields[i].translationKey ==
+              LocaleKeys.auth_signUpForm_fields_firstName ||
+          widget.fields[i].translationKey ==
+              LocaleKeys.auth_signUpForm_fields_lastName) {
         final cleaned = value.trim();
         if (!RegExp(r'^[A-Za-zÁÉÍÓÚáéíóúÑñ ]+$').hasMatch(cleaned)) {
-          _errorMessages[i] = 'Usa solo letras y espacios válidos';
+          _errorMessages[i] = tr(LocaleKeys.auth_signUpForm_errors_onlyLetters);
           hasError = true;
           continue;
         }
       }
 
-      if (field == "Número de teléfono") {
+      if (widget.fields[i].translationKey ==
+          LocaleKeys.auth_signUpForm_fields_phoneNumber) {
         final cleaned = value.trim();
         if (!RegExp(r'^\d{9}$').hasMatch(cleaned)) {
-          _errorMessages[i] = 'Ingresa un número de 9 dígitos válido';
+          _errorMessages[i] = tr(LocaleKeys.auth_signUpForm_errors_phoneNumber);
           hasError = true;
           continue;
         }
       }
 
-      if (field == "Nombre de usuario") {
+      if (widget.fields[i].translationKey ==
+          LocaleKeys.auth_signUpForm_fields_username) {
         final cleaned = value.trim();
         if (!RegExp(r'^[a-zA-Z0-9_]{6,}$').hasMatch(cleaned)) {
-          _errorMessages[i] = 'Usa al menos 6 caracteres alfanuméricos';
+          _errorMessages[i] = tr(LocaleKeys.auth_signUpForm_errors_username);
           hasError = true;
           continue;
         }
       }
 
-      if (field == "Contraseña") {
+      if (widget.fields[i].translationKey ==
+          LocaleKeys.auth_signUpForm_fields_password) {
         if (value.length < 6) {
-          _errorMessages[i] = 'La contraseña debe tener al menos 6 caracteres';
+          _errorMessages[i] =
+              tr(LocaleKeys.auth_signUpForm_errors_passwordMinLength);
           hasError = true;
           continue;
         }
       }
 
       _errorMessages[i] = null;
-      signUpFormController.updateField(field, value);
+      signUpFormController.updateField(fieldLabel, value);
     }
 
     setState(() {});
@@ -114,10 +124,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           .submit(widget.userType);
 
       if (result == null || result.containsKey('error')) {
-        final idx =
-            widget.fields.indexWhere((f) => f.label == 'Nombre de usuario');
+        final idx = widget.fields.indexWhere((f) =>
+            f.translationKey == LocaleKeys.auth_signUpForm_fields_username);
         if (idx != -1) {
-          _errorMessages[idx] = result?['error'] ?? 'Error desconocido';
+          _errorMessages[idx] = result?['error'] ??
+              tr(LocaleKeys.auth_signUpForm_errors_unknownError);
           setState(() {});
         }
         return;
@@ -129,13 +140,13 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       }
       if (!mounted) return;
 
-      final usernameIndex =
-          widget.fields.indexWhere((f) => f.label == 'Nombre de usuario');
-      final passwordIndex =
-          widget.fields.indexWhere((f) => f.label == 'Contraseña');
+      final usernameIndex = widget.fields.indexWhere((f) =>
+          f.translationKey == LocaleKeys.auth_signUpForm_fields_username);
+      final passwordIndex = widget.fields.indexWhere((f) =>
+          f.translationKey == LocaleKeys.auth_signUpForm_fields_password);
 
       if (usernameIndex == -1 || passwordIndex == -1) {
-        _showError('Error interno: faltan campos de usuario o contraseña.');
+        _showError(tr(LocaleKeys.auth_signUpForm_errors_internalError));
         return;
       }
 
@@ -151,7 +162,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
         curve: Curves.easeInOut,
       ));
     } catch (e) {
-      _showError('Ocurrió un error inesperado. Intenta de nuevo.');
+      _showError(tr(LocaleKeys.auth_signUpForm_errors_unexpectedError));
       if (kDebugMode) {
         print('Error en submit(): $e');
       }
@@ -207,9 +218,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.title,
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold)),
+                  Text(
+                    tr(widget.titleKey),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 20),
                   ...List.generate(widget.fields.length, (index) {
                     final field = widget.fields[index];
@@ -224,7 +237,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                             keyboardType: field.keyboardType,
                             enabled: !_isLoading,
                             decoration: InputDecoration(
-                              labelText: field.label,
+                              labelText: tr(field.translationKey),
                               border: const OutlineInputBorder(),
                               errorText: _errorMessages[index],
                               suffixIcon: field.obscureText
@@ -259,14 +272,14 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                     ),
                     child: _isLoading
                         ? const CircularProgressIndicator(color: Colors.white)
-                        : Text(widget.buttonText),
+                        : Text(tr(widget.buttonTextKey)),
                   ),
                   const SizedBox(height: 16),
                   Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("¿Ya tienes una cuenta?",
+                        Text(tr(LocaleKeys.auth_signUpForm_haveAccount),
                             style: TextStyle(color: theme.onTertiary)),
                         TextButton(
                           onPressed: _isLoading
@@ -280,7 +293,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                                   ));
                                 },
                           child: Text(
-                            "Inicia sesión",
+                            tr(LocaleKeys.auth_signUpForm_signIn),
                             style: TextStyle(
                               color: _isLoading ? Colors.grey : theme.tertiary,
                             ),
@@ -300,12 +313,14 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
 }
 
 class FormFieldData {
-  final String label;
+  final String labelKey;
+  final String translationKey;
   final bool obscureText;
   final TextInputType keyboardType;
 
   const FormFieldData({
-    required this.label,
+    required this.labelKey,
+    required this.translationKey,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
   });

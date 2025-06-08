@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../widgets/registration_completed.dart';
 
 class RegistrationCompletedVolunteerScreen extends StatelessWidget {
@@ -14,10 +15,9 @@ class RegistrationCompletedVolunteerScreen extends StatelessWidget {
     final password = args?['password'];
 
     return RegistrationCompletedWidget(
-      title: '¡Gracias por registrarte como voluntario!',
-      message:
-          'Ahora formas parte de HelpWave, donde podrás brindar apoyo a personas que lo necesitan de forma remota.',
-      subtitle: 'Tu tiempo y ayuda pueden marcar una gran diferencia.',
+      title: LocaleKeys.auth_registrationCompletedVolunteer_title,
+      message: LocaleKeys.auth_registrationCompletedVolunteer_message,
+      subtitle: LocaleKeys.auth_registrationCompletedVolunteer_subtitle,
       icon: Icons.volunteer_activism,
       userType: 'volunteer',
       username: username,

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../common/utils/firebase/firebase_options.dart';
 import '../presentation/profile_stat_card_widget.dart';
@@ -26,9 +28,9 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        title: const Text(
-          'Información de usuario',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        title: Text(
+          LocaleKeys.profile_user_info_screen_app_bar_title.tr(),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.secondary,
         foregroundColor: theme.colorScheme.onSecondary,
@@ -74,15 +76,20 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
       ),
       body: profileAsyncValue.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(
+          child: Text(
+              '${LocaleKeys.profile_user_info_screen_error_loading.tr()}: $e'),
+        ),
         data: (profile) {
           if (profile == null) {
-            return const Center(child: Text('No se pudo cargar el perfil.'));
+            return Center(
+              child: Text(
+                  LocaleKeys.profile_user_info_screen_error_no_profile.tr()),
+            );
           }
 
           if (!isEditing) {
-            controller.initControllers(
-                profile); // Idealmente mover a initState si se desea solo una vez
+            controller.initControllers(profile);
           }
 
           return SingleChildScrollView(
@@ -118,7 +125,9 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                           ProfileStatCard(
                             icon: Icons.star,
                             value: profile.scoreProfile.toStringAsFixed(1),
-                            label: 'Puntaje',
+                            label: LocaleKeys
+                                .profile_user_info_screen_stats_score
+                                .tr(),
                             iconColor: Colors.amber,
                           ),
                           Consumer(
@@ -156,18 +165,24 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                                     ),
                                   ),
                                   value: level.nameLevel,
-                                  label: 'Nivel',
+                                  label: LocaleKeys
+                                      .profile_user_info_screen_stats_level
+                                      .tr(),
                                 ),
-                                loading: () => const ProfileStatCard(
+                                loading: () => ProfileStatCard(
                                   icon: Icons.hourglass_top,
                                   value: '...',
-                                  label: 'Nivel',
+                                  label: LocaleKeys
+                                      .profile_user_info_screen_stats_level
+                                      .tr(),
                                 ),
-                                error: (e, _) => const ProfileStatCard(
+                                error: (e, _) => ProfileStatCard(
                                   icon: Icons.warning_amber_rounded,
                                   iconColor: Colors.red,
                                   value: 'Sin nivel',
-                                  label: 'Nivel',
+                                  label: LocaleKeys
+                                      .profile_user_info_screen_stats_level
+                                      .tr(),
                                 ),
                               );
                             },
@@ -175,7 +190,9 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                           ProfileStatCard(
                             icon: Icons.volunteer_activism,
                             value: profile.assistances.toString(),
-                            label: 'Asistencias',
+                            label: LocaleKeys
+                                .profile_user_info_screen_stats_assistances
+                                .tr(),
                             iconColor: theme.colorScheme.tertiary,
                           ),
                         ],
@@ -185,16 +202,22 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                         enabled: isEditing,
                         controller: controller.emailController,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
-                          labelText: 'Correo electrónico',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: LocaleKeys
+                              .profile_user_info_screen_form_email
+                              .tr(),
+                          border: const OutlineInputBorder(),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'El correo es requerido';
+                            return LocaleKeys
+                                .profile_user_info_screen_validation_email_required
+                                .tr();
                           }
                           if (!value.contains('@')) {
-                            return 'Correo inválido';
+                            return LocaleKeys
+                                .profile_user_info_screen_validation_email_invalid
+                                .tr();
                           }
                           return null;
                         },
@@ -204,13 +227,17 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                         enabled: isEditing,
                         controller: controller.phoneController,
                         keyboardType: TextInputType.phone,
-                        decoration: const InputDecoration(
-                          labelText: 'Teléfono',
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          labelText: LocaleKeys
+                              .profile_user_info_screen_form_phone
+                              .tr(),
+                          border: const OutlineInputBorder(),
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'El teléfono es requerido';
+                            return LocaleKeys
+                                .profile_user_info_screen_validation_phone_required
+                                .tr();
                           }
                           return null;
                         },
@@ -228,7 +255,9 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                                   initialDate: initialDate,
                                   firstDate: DateTime(1900),
                                   lastDate: DateTime.now(),
-                                  helpText: 'Selecciona tu fecha de nacimiento',
+                                  helpText: LocaleKeys
+                                      .profile_user_info_screen_form_birthday_picker
+                                      .tr(),
                                   locale: const Locale('es', ''),
                                 );
 
@@ -249,16 +278,22 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                             enabled: isEditing,
                             controller: controller.birthdayController,
                             readOnly: true,
-                            decoration: const InputDecoration(
-                              labelText: 'Fecha de nacimiento (dd/mm/yyyy)',
-                              border: OutlineInputBorder(),
+                            decoration: InputDecoration(
+                              labelText: LocaleKeys
+                                  .profile_user_info_screen_form_birthday
+                                  .tr(),
+                              border: const OutlineInputBorder(),
                             ),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'La fecha es requerida';
+                                return LocaleKeys
+                                    .profile_user_info_screen_validation_birthday_required
+                                    .tr();
                               }
                               if (controller.parseDate(value) == null) {
-                                return 'Formato de fecha inválido';
+                                return LocaleKeys
+                                    .profile_user_info_screen_validation_birthday_invalid
+                                    .tr();
                               }
                               return null;
                             },

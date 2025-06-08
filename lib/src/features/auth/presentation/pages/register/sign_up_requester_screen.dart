@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../routing/app_router.dart';
 import '../../widgets/sign_up_form.dart';
 
@@ -10,18 +11,34 @@ class SignUpRequesterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      body: const SignUpForm(
-        title: "Registro para recibir ayuda",
-        fields: [
-          FormFieldData(label: 'Nombre'),
-          FormFieldData(label: 'Apellido'),
+      body: SignUpForm(
+        titleKey: LocaleKeys.auth_signUpRequester_title,
+        fields: const [
           FormFieldData(
-              label: 'Número de teléfono', keyboardType: TextInputType.phone),
-          FormFieldData(label: 'Nombre de usuario'),
-          FormFieldData(label: 'Contraseña', obscureText: true),
+            labelKey: LocaleKeys.auth_signUpRequester_fields_name,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_name,
+          ),
+          FormFieldData(
+            labelKey: LocaleKeys.auth_signUpRequester_fields_lastname,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_lastname,
+          ),
+          FormFieldData(
+            labelKey: LocaleKeys.auth_signUpRequester_fields_phoneNumber,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_phoneNumber,
+            keyboardType: TextInputType.phone,
+          ),
+          FormFieldData(
+            labelKey: LocaleKeys.auth_signUpRequester_fields_username,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_username,
+          ),
+          FormFieldData(
+            labelKey: LocaleKeys.auth_signUpRequester_fields_password,
+            translationKey: LocaleKeys.auth_signUpRequester_fields_password,
+            obscureText: true,
+          ),
         ],
         nextRoute: AppRouter.registrationCompletedRequesterRoute,
-        buttonText: 'Finalizar registro',
+        buttonTextKey: LocaleKeys.auth_signUpRequester_buttonText,
         userType: "requester",
       ),
     );

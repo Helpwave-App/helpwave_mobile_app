@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../common/utils/constants/week_days.dart';
 import '../data/availability_service.dart';
@@ -64,8 +66,10 @@ class UserAvailabilityController
     if (totalRemainingSlots.length == 1 &&
         totalRemainingSlots[0].id == slot.id) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-            content: Text('Debes tener al menos una disponibilidad')),
+        SnackBar(
+          content: Text(
+              tr(LocaleKeys.availability_controller_error_minOneAvailability)),
+        ),
       );
       return;
     }
@@ -84,15 +88,21 @@ class UserAvailabilityController
             .deleteAvailability(slot.id!);
         if (success) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Horario eliminado exitosamente')),
+            SnackBar(
+              content:
+                  Text(tr(LocaleKeys.availability_controller_success_deleted)),
+            ),
           );
         } else {
-          throw Exception('Error al eliminar disponibilidad del servidor');
+          throw Exception(
+              tr(LocaleKeys.availability_controller_error_deleteServer));
         }
       } catch (e, st) {
         state = AsyncValue.error(e, st);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error al eliminar: $e')),
+          SnackBar(
+              content: Text(
+                  '${tr(LocaleKeys.availability_controller_error_delete)}: $e')),
         );
       }
     }

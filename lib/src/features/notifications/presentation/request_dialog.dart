@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
+
+import '../../../../localization/codegen_loader.g.dart';
 
 typedef OnAccept = Future<void> Function();
 typedef OnReject = void Function();
@@ -20,14 +23,18 @@ class RequestDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text("Nueva solicitud de ayuda"),
+      title: Text(LocaleKeys.notification_requestDialog_title.tr()),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Nombre del solicitante: $fullname"),
+          Text(
+            '${LocaleKeys.notification_requestDialog_requester.tr()}: $fullname',
+          ),
           const SizedBox(height: 8),
-          Text("Habilidad solicitada: $skill"),
+          Text(
+            '${LocaleKeys.notification_requestDialog_skill.tr()}: $skill',
+          ),
         ],
       ),
       actions: [
@@ -36,14 +43,14 @@ class RequestDialog extends StatelessWidget {
             Navigator.of(context).pop();
             onReject();
           },
-          child: const Text("Rechazar"),
+          child: Text(LocaleKeys.notification_requestDialog_reject.tr()),
         ),
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pop();
             onAccept();
           },
-          child: const Text("Aceptar"),
+          child: Text(LocaleKeys.notification_requestDialog_accept.tr()),
         ),
       ],
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 
 class UserSkillsScreen extends ConsumerStatefulWidget {
@@ -23,7 +25,7 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Habilidades'),
+        title: Text(LocaleKeys.skills_userSkills_title.tr()),
         actions: [
           IconButton(
             icon: Icon(isEditing ? Icons.check : Icons.edit),
@@ -81,24 +83,28 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                                                 await showDialog<bool>(
                                               context: context,
                                               builder: (context) => AlertDialog(
-                                                title: const Text(
-                                                    'Confirmar eliminación'),
-                                                content: const Text(
-                                                    '¿Estás seguro de eliminar esta habilidad?'),
+                                                title: Text(LocaleKeys
+                                                    .skills_userSkills_dialog_confirmDeletionTitle
+                                                    .tr()),
+                                                content: Text(LocaleKeys
+                                                    .skills_userSkills_dialog_confirmDeletionMessage
+                                                    .tr()),
                                                 actions: [
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.pop(
                                                             context, false),
-                                                    child:
-                                                        const Text('Cancelar'),
+                                                    child: Text(LocaleKeys
+                                                        .skills_userSkills_dialog_cancel
+                                                        .tr()),
                                                   ),
                                                   TextButton(
                                                     onPressed: () =>
                                                         Navigator.pop(
                                                             context, true),
-                                                    child:
-                                                        const Text('Eliminar'),
+                                                    child: Text(LocaleKeys
+                                                        .skills_userSkills_dialog_confirm
+                                                        .tr()),
                                                   ),
                                                 ],
                                               ),
@@ -119,9 +125,10 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                                           } else {
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
-                                              const SnackBar(
-                                                content: Text(
-                                                    'Debes mantener al menos una habilidad.'),
+                                              SnackBar(
+                                                content: Text(LocaleKeys
+                                                    .skills_userSkills_snackbar_keepAtLeastOneSkill
+                                                    .tr()),
                                               ),
                                             );
                                           }
@@ -148,9 +155,10 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                           )
                           .toList(),
                       onChanged: (value) => controller.selectSkill(value),
-                      decoration: const InputDecoration(
-                        labelText: 'Selecciona una habilidad',
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        labelText:
+                            LocaleKeys.skills_userSkills_label_selectSkill.tr(),
+                        border: const OutlineInputBorder(),
                       ),
                     ),
                     const SizedBox(height: 16),
@@ -167,7 +175,8 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: theme.primary,
                       ),
-                      child: const Text('Agregar habilidad'),
+                      child: Text(
+                          LocaleKeys.skills_userSkills_button_addSkill.tr()),
                     ),
                   ],
                 ],

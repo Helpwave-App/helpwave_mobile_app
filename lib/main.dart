@@ -1,7 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'src/common/utils/constants/app_theme.dart';
 import 'src/common/utils/firebase/fcm_config.dart';
@@ -15,6 +16,17 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  Locale determineStartLocale() {
+    final deviceLocale = PlatformDispatcher.instance.locale;
+    if (deviceLocale.languageCode.toLowerCase().startsWith('es')) {
+      return const Locale('es');
+    } else {
+      return const Locale('en');
+    }
+  }
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -25,7 +37,15 @@ void main() async {
   setupHelpRequestNotificationHandler(navigatorKey);
   setupVideocallNotificationHandler(navigatorKey);
 
-  runApp(const ProviderScope(child: HelpWaveApp()));
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale('en'), Locale('es')],
+      path: 'lib/localization',
+      fallbackLocale: const Locale('es'),
+      startLocale: determineStartLocale(),
+      child: const ProviderScope(child: HelpWaveApp()),
+    ),
+  );
 }
 
 class HelpWaveApp extends StatelessWidget {
@@ -40,15 +60,9 @@ class HelpWaveApp extends StatelessWidget {
       darkTheme: AppTheme.darkTheme,
       initialRoute: AppRouter.loadingRoute,
       onGenerateRoute: AppRouter.generateRoute,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('es'),
-        Locale('en'),
-      ],
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
     );
   }
 }
