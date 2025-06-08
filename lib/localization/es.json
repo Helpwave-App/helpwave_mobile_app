@@ -267,23 +267,53 @@
         }
     },
     "skills": {
-    "userSkills": {
-      "title": "Habilidades",
-      "dialog": {
-        "confirmDeletionTitle": "Confirmar eliminación",
-        "confirmDeletionMessage": "¿Estás seguro de eliminar esta habilidad?",
-        "cancel": "Cancelar",
-        "confirm": "Eliminar"
-      },
-      "snackbar": {
-        "keepAtLeastOneSkill": "Debes mantener al menos una habilidad."
-      },
-      "label": {
-        "selectSkill": "Selecciona una habilidad"
-      },
-      "button": {
-        "addSkill": "Agregar habilidad"
-      }
+        "userSkills": {
+            "title": "Habilidades",
+            "dialog": {
+                "confirmDeletionTitle": "Confirmar eliminación",
+                "confirmDeletionMessage": "¿Estás seguro de eliminar esta habilidad?",
+                "cancel": "Cancelar",
+                "confirm": "Eliminar"
+            },
+            "snackbar": {
+                "keepAtLeastOneSkill": "Debes mantener al menos una habilidad."
+            },
+            "label": {
+                "selectSkill": "Selecciona una habilidad"
+            },
+            "button": {
+                "addSkill": "Agregar habilidad"
+            }
+        }
+    },
+    "videocalls": {
+        "connectingScreen": {
+            "appBarTitle": "Conectando...",
+            "establishingConnection": "Estableciendo conexión...",
+            "searchingAssistance": "Estamos buscando la mejor asistencia para ti.",
+            "cancel": "Cancelar",
+            "cancelRequestTitle": "Cancelar solicitud",
+            "cancelRequestQuestion": "¿Estás seguro de que deseas cancelar tu solicitud de ayuda?",
+            "no": "No",
+            "yesCancel": "Sí, cancelar",
+            "cancelFailed": "No se pudo cancelar la solicitud",
+            "tips": {
+                "tip1": "Recuerda tener buena iluminación para que te vean mejor.",
+                "tip2": "Mantén tu cámara enfocando el objeto o situación con la que necesitas ayuda.",
+                "tip3": "Habla con claridad y despacio, especialmente si tu conexión es lenta.",
+                "tip4": "Si no entiendes algo, puedes pedir que te lo repitan sin problema.",
+                "tip5": "Ten a la mano lo que necesitas para aprovechar mejor la videollamada."
+            }
+        },
+        "videocall_screen": {
+            "title": "Videollamada",
+            "error_init_call": "Error al iniciar videollamada: {}",
+            "confirm_end_call_title": "¿Deseas finalizar la videollamada?",
+            "confirm_end_call_content": "Esta acción terminará la llamada y no podrás retomarla.",
+            "waiting_other_user": "Esperando a otro usuario...",
+            "remote_camera_off": "Cámara remota apagada",
+            "cancel": "Cancelar",
+            "end_call": "Finalizar"
+        }
     }
-  }
 }

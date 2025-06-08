@@ -234,5 +234,31 @@ abstract class  LocaleKeys {
   static const skills_userSkills_button = 'skills.userSkills.button';
   static const skills_userSkills = 'skills.userSkills';
   static const skills = 'skills';
+  static const videocalls_connectingScreen_appBarTitle = 'videocalls.connectingScreen.appBarTitle';
+  static const videocalls_connectingScreen_establishingConnection = 'videocalls.connectingScreen.establishingConnection';
+  static const videocalls_connectingScreen_searchingAssistance = 'videocalls.connectingScreen.searchingAssistance';
+  static const videocalls_connectingScreen_cancel = 'videocalls.connectingScreen.cancel';
+  static const videocalls_connectingScreen_cancelRequestTitle = 'videocalls.connectingScreen.cancelRequestTitle';
+  static const videocalls_connectingScreen_cancelRequestQuestion = 'videocalls.connectingScreen.cancelRequestQuestion';
+  static const videocalls_connectingScreen_no = 'videocalls.connectingScreen.no';
+  static const videocalls_connectingScreen_yesCancel = 'videocalls.connectingScreen.yesCancel';
+  static const videocalls_connectingScreen_cancelFailed = 'videocalls.connectingScreen.cancelFailed';
+  static const videocalls_connectingScreen_tips_tip1 = 'videocalls.connectingScreen.tips.tip1';
+  static const videocalls_connectingScreen_tips_tip2 = 'videocalls.connectingScreen.tips.tip2';
+  static const videocalls_connectingScreen_tips_tip3 = 'videocalls.connectingScreen.tips.tip3';
+  static const videocalls_connectingScreen_tips_tip4 = 'videocalls.connectingScreen.tips.tip4';
+  static const videocalls_connectingScreen_tips_tip5 = 'videocalls.connectingScreen.tips.tip5';
+  static const videocalls_connectingScreen_tips = 'videocalls.connectingScreen.tips';
+  static const videocalls_connectingScreen = 'videocalls.connectingScreen';
+  static const videocalls_videocall_screen_title = 'videocalls.videocall_screen.title';
+  static const videocalls_videocall_screen_error_init_call = 'videocalls.videocall_screen.error_init_call';
+  static const videocalls_videocall_screen_confirm_end_call_title = 'videocalls.videocall_screen.confirm_end_call_title';
+  static const videocalls_videocall_screen_confirm_end_call_content = 'videocalls.videocall_screen.confirm_end_call_content';
+  static const videocalls_videocall_screen_waiting_other_user = 'videocalls.videocall_screen.waiting_other_user';
+  static const videocalls_videocall_screen_remote_camera_off = 'videocalls.videocall_screen.remote_camera_off';
+  static const videocalls_videocall_screen_cancel = 'videocalls.videocall_screen.cancel';
+  static const videocalls_videocall_screen_end_call = 'videocalls.videocall_screen.end_call';
+  static const videocalls_videocall_screen = 'videocalls.videocall_screen';
+  static const videocalls = 'videocalls';
 
 }

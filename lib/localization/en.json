@@ -267,23 +267,53 @@
         }
     },
     "skills": {
-    "userSkills": {
-      "title": "Skills",
-      "dialog": {
-        "confirmDeletionTitle": "Confirm deletion",
-        "confirmDeletionMessage": "Are you sure you want to delete this skill?",
-        "cancel": "Cancel",
-        "confirm": "Delete"
-      },
-      "snackbar": {
-        "keepAtLeastOneSkill": "You must keep at least one skill."
-      },
-      "label": {
-        "selectSkill": "Select a skill"
-      },
-      "button": {
-        "addSkill": "Add skill"
-      }
+        "userSkills": {
+            "title": "Skills",
+            "dialog": {
+                "confirmDeletionTitle": "Confirm deletion",
+                "confirmDeletionMessage": "Are you sure you want to delete this skill?",
+                "cancel": "Cancel",
+                "confirm": "Delete"
+            },
+            "snackbar": {
+                "keepAtLeastOneSkill": "You must keep at least one skill."
+            },
+            "label": {
+                "selectSkill": "Select a skill"
+            },
+            "button": {
+                "addSkill": "Add skill"
+            }
+        }
+    },
+    "videocalls": {
+        "connectingScreen": {
+            "appBarTitle": "Connecting...",
+            "establishingConnection": "Establishing connection...",
+            "searchingAssistance": "We are looking for the best assistance for you.",
+            "cancel": "Cancel",
+            "cancelRequestTitle": "Cancel request",
+            "cancelRequestQuestion": "Are you sure you want to cancel your help request?",
+            "no": "No",
+            "yesCancel": "Yes, cancel",
+            "cancelFailed": "Could not cancel the request",
+            "tips": {
+                "tip1": "Remember to have good lighting so they can see you better.",
+                "tip2": "Keep your camera focused on the object or situation you need help with.",
+                "tip3": "Speak clearly and slowly, especially if your connection is slow.",
+                "tip4": "If you don't understand something, you can ask to have it repeated without problem.",
+                "tip5": "Have at hand what you need to make the most of the video call."
+            }
+        },
+        "videocall_screen": {
+            "title": "Video Call",
+            "error_init_call": "Error starting video call: {}",
+            "confirm_end_call_title": "Do you want to end the video call?",
+            "confirm_end_call_content": "This action will end the call and you won't be able to resume it.",
+            "waiting_other_user": "Waiting for another user...",
+            "remote_camera_off": "Remote camera is off",
+            "cancel": "Cancel",
+            "end_call": "End Call"
+        }
     }
-  }
 }
