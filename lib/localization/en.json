@@ -220,7 +220,7 @@
             "error_saving": "Error saving changes."
         }
     },
-    "feedback": {
+    "reviews": {
         "review_controller": {
             "validation_empty_comment": "Comment cannot be empty.",
             "error_submission": "Error submitting review"

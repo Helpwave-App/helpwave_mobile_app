@@ -220,7 +220,7 @@
             "error_saving": "Error al guardar los cambios."
         }
     },
-    "feedback": {
+    "reviews": {
         "review_controller": {
             "validation_empty_comment": "El comentario no puede estar vacío.",
             "error_submission": "Error al enviar la reseña"

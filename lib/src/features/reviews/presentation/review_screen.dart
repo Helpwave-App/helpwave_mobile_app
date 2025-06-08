@@ -18,7 +18,7 @@ class ReviewScreen extends ConsumerWidget {
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
         title: Text(
-          LocaleKeys.feedback_review_screen_appbar_title.tr(),
+          LocaleKeys.reviews_review_screen_appbar_title.tr(),
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).colorScheme.secondary,
@@ -47,21 +47,21 @@ class _ReviewForm extends ConsumerWidget {
       children: [
         Center(
           child: Text(
-            LocaleKeys.feedback_review_screen_form_title.tr(),
+            LocaleKeys.reviews_review_screen_form_title.tr(),
             style: const TextStyle(fontSize: 24),
           ),
         ),
         const SizedBox(height: 8),
         Center(
           child: Text(
-            LocaleKeys.feedback_review_screen_form_subtitle.tr(),
+            LocaleKeys.reviews_review_screen_form_subtitle.tr(),
             textAlign: TextAlign.center,
             style: const TextStyle(fontSize: 18),
           ),
         ),
         const SizedBox(height: 42),
         Text(
-          LocaleKeys.feedback_review_screen_form_volunteer_rating.tr(),
+          LocaleKeys.reviews_review_screen_form_volunteer_rating.tr(),
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 12),
@@ -80,7 +80,7 @@ class _ReviewForm extends ConsumerWidget {
         ),
         const SizedBox(height: 32),
         Text(
-          LocaleKeys.feedback_review_screen_form_call_rating.tr(),
+          LocaleKeys.reviews_review_screen_form_call_rating.tr(),
           style: const TextStyle(fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 12),
@@ -103,8 +103,7 @@ class _ReviewForm extends ConsumerWidget {
           maxLength: 500,
           enabled: !controller.isSubmitting,
           decoration: InputDecoration(
-            labelText:
-                LocaleKeys.feedback_review_screen_form_comment_label.tr(),
+            labelText: LocaleKeys.reviews_review_screen_form_comment_label.tr(),
             border: const OutlineInputBorder(),
             alignLabelWithHint: true,
           ),
@@ -125,7 +124,7 @@ class _ReviewForm extends ConsumerWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(LocaleKeys
-                                .feedback_review_screen_snackbar_success
+                                .reviews_review_screen_snackbar_success
                                 .tr()),
                           ),
                         );
@@ -143,8 +142,8 @@ class _ReviewForm extends ConsumerWidget {
               ),
               child: controller.isSubmitting
                   ? const CircularProgressIndicator(color: Colors.white)
-                  : Text(LocaleKeys.feedback_review_screen_form_submit_button
-                      .tr()),
+                  : Text(
+                      LocaleKeys.reviews_review_screen_form_submit_button.tr()),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
@@ -155,7 +154,7 @@ class _ReviewForm extends ConsumerWidget {
                     },
               icon: const Icon(Icons.flag_outlined, color: Color(0xFF8BC34A)),
               label: Text(
-                  LocaleKeys.feedback_review_screen_form_report_button.tr()),
+                  LocaleKeys.reviews_review_screen_form_report_button.tr()),
               style: OutlinedButton.styleFrom(
                 side: const BorderSide(color: Color(0xFF8BC34A)),
                 foregroundColor: const Color(0xFF8BC34A),
@@ -164,7 +163,7 @@ class _ReviewForm extends ConsumerWidget {
             ),
             const SizedBox(height: 12),
             Text(
-              LocaleKeys.feedback_review_screen_form_report_hint.tr(),
+              LocaleKeys.reviews_review_screen_form_report_hint.tr(),
               textAlign: TextAlign.center,
               style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),

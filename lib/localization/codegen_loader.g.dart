@@ -184,20 +184,20 @@ abstract class  LocaleKeys {
   static const profile_controller_error_saving = 'profile.controller.error_saving';
   static const profile_controller = 'profile.controller';
   static const profile = 'profile';
-  static const feedback_review_controller_validation_empty_comment = 'feedback.review_controller.validation_empty_comment';
-  static const feedback_review_controller_error_submission = 'feedback.review_controller.error_submission';
-  static const feedback_review_controller = 'feedback.review_controller';
-  static const feedback_review_screen_appbar_title = 'feedback.review_screen.appbar_title';
-  static const feedback_review_screen_form_title = 'feedback.review_screen.form_title';
-  static const feedback_review_screen_form_subtitle = 'feedback.review_screen.form_subtitle';
-  static const feedback_review_screen_form_volunteer_rating = 'feedback.review_screen.form_volunteer_rating';
-  static const feedback_review_screen_form_call_rating = 'feedback.review_screen.form_call_rating';
-  static const feedback_review_screen_form_comment_label = 'feedback.review_screen.form_comment_label';
-  static const feedback_review_screen_form_submit_button = 'feedback.review_screen.form_submit_button';
-  static const feedback_review_screen_form_report_button = 'feedback.review_screen.form_report_button';
-  static const feedback_review_screen_form_report_hint = 'feedback.review_screen.form_report_hint';
-  static const feedback_review_screen_snackbar_success = 'feedback.review_screen.snackbar_success';
-  static const feedback_review_screen = 'feedback.review_screen';
-  static const feedback = 'feedback';
+  static const reviews_review_controller_validation_empty_comment = 'reviews.review_controller.validation_empty_comment';
+  static const reviews_review_controller_error_submission = 'reviews.review_controller.error_submission';
+  static const reviews_review_controller = 'reviews.review_controller';
+  static const reviews_review_screen_appbar_title = 'reviews.review_screen.appbar_title';
+  static const reviews_review_screen_form_title = 'reviews.review_screen.form_title';
+  static const reviews_review_screen_form_subtitle = 'reviews.review_screen.form_subtitle';
+  static const reviews_review_screen_form_volunteer_rating = 'reviews.review_screen.form_volunteer_rating';
+  static const reviews_review_screen_form_call_rating = 'reviews.review_screen.form_call_rating';
+  static const reviews_review_screen_form_comment_label = 'reviews.review_screen.form_comment_label';
+  static const reviews_review_screen_form_submit_button = 'reviews.review_screen.form_submit_button';
+  static const reviews_review_screen_form_report_button = 'reviews.review_screen.form_report_button';
+  static const reviews_review_screen_form_report_hint = 'reviews.review_screen.form_report_hint';
+  static const reviews_review_screen_snackbar_success = 'reviews.review_screen.snackbar_success';
+  static const reviews_review_screen = 'reviews.review_screen';
+  static const reviews = 'reviews';
 
 }

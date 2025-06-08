@@ -27,8 +27,7 @@ class ReviewController extends ChangeNotifier {
 
   Future<String?> submitReview(int idVideocall) async {
     if (commentController.text.trim().isEmpty) {
-      return LocaleKeys.feedback_review_controller_validation_empty_comment
-          .tr();
+      return LocaleKeys.reviews_review_controller_validation_empty_comment.tr();
     }
 
     isSubmitting = true;
@@ -55,7 +54,7 @@ class ReviewController extends ChangeNotifier {
     } catch (e) {
       isSubmitting = false;
       notifyListeners();
-      return '${LocaleKeys.feedback_review_controller_error_submission.tr()}: $e';
+      return '${LocaleKeys.reviews_review_controller_error_submission.tr()}: $e';
     }
   }
 }
