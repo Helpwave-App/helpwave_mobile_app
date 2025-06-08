@@ -117,6 +117,23 @@
       "subtitle": "Tu tiempo y ayuda pueden marcar una gran diferencia."
     }
   },
+  "availability":{
+    "addTimeModal": {
+      "title": "Agregar horario para",
+      "startTime": "Hora de inicio",
+      "endTime": "Hora de fin",
+      "applyToAll": "Aplicar a todos los días",
+      "cancel": "Cancelar",
+      "save": "Guardar",
+      "error_invalidTimeRange": "La hora de fin debe ser posterior a la hora de inicio"
+    },
+    "controller": {
+      "error_minOneAvailability": "Debes tener al menos una disponibilidad",
+      "success_deleted": "Horario eliminado exitosamente",
+      "error_deleteServer": "Error al eliminar disponibilidad del servidor",
+      "error_delete": "Error al eliminar"
+    }
+  },
   "gamification":{
     "endVideocall": {
       "title": "Videollamada Finalizada",

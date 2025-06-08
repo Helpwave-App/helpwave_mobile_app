@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../routing/app_router.dart';
-import '../../../profile/domain/skill_model.dart';
+import '../../../skills/domain/skill_model.dart';
 import '../../application/home_controller.dart';
 
 class HomeWidget extends ConsumerWidget {

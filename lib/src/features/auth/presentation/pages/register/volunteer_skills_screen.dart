@@ -7,7 +7,7 @@ import '../../../../../../localization/codegen_loader.g.dart';
 import '../../../../../common/animations/animated_route.dart';
 import '../../../../../common/utils/constants/providers.dart';
 import '../../../../../routing/app_router.dart';
-import '../../../../profile/domain/skill_model.dart';
+import '../../../../skills/domain/skill_model.dart';
 
 class VolunteerSkillsScreen extends ConsumerStatefulWidget {
   final int idProfile;

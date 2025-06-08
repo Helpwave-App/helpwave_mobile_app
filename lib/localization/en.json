@@ -118,6 +118,23 @@
       "subtitle": "Your time and help can make a big difference."
     }
   },
+  "availability":{
+    "addTimeModal": {
+      "title": "Add schedule for",
+      "startTime": "Start time",
+      "endTime": "End time",
+      "applyToAll": "Apply to all days",
+      "cancel": "Cancel",
+      "save": "Save",
+      "error_invalidTimeRange": "End time must be after start time"
+    },
+    "controller": {
+      "error_minOneAvailability": "You must have at least one availability",
+      "success_deleted": "Schedule deleted successfully",
+      "error_deleteServer": "Error deleting availability from server",
+      "error_delete": "Error deleting"
+    }
+  },
   "gamification":{
       "endVideocall": {
       "title": "Call Ended",

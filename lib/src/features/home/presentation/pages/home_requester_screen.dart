@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../../localization/codegen_loader.g.dart';
 import '../../../../common/utils/constants/providers.dart';
-import '../../../profile/data/skill_service.dart';
-import '../../../profile/domain/skill_model.dart';
+import '../../../skills/data/skill_service.dart';
+import '../../../skills/domain/skill_model.dart';
 import '../widgets/home_widget.dart';
 
 class HomeRequesterScreen extends ConsumerStatefulWidget {

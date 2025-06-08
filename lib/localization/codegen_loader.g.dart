@@ -144,5 +144,19 @@ abstract class  LocaleKeys {
   static const notification_handler_alreadyAnsweredMessage = 'notification.handler.alreadyAnsweredMessage';
   static const notification_handler = 'notification.handler';
   static const notification = 'notification';
+  static const availability_addTimeModal_title = 'availability.addTimeModal.title';
+  static const availability_addTimeModal_startTime = 'availability.addTimeModal.startTime';
+  static const availability_addTimeModal_endTime = 'availability.addTimeModal.endTime';
+  static const availability_addTimeModal_applyToAll = 'availability.addTimeModal.applyToAll';
+  static const availability_addTimeModal_cancel = 'availability.addTimeModal.cancel';
+  static const availability_addTimeModal_save = 'availability.addTimeModal.save';
+  static const availability_addTimeModal_error_invalidTimeRange = 'availability.addTimeModal.error_invalidTimeRange';
+  static const availability_addTimeModal = 'availability.addTimeModal';
+  static const availability_controller_error_minOneAvailability = 'availability.controller.error_minOneAvailability';
+  static const availability_controller_success_deleted = 'availability.controller.success_deleted';
+  static const availability_controller_error_deleteServer = 'availability.controller.error_deleteServer';
+  static const availability_controller_error_delete = 'availability.controller.error_delete';
+  static const availability_controller = 'availability.controller';
+  static const availability = 'availability';
 
 }
