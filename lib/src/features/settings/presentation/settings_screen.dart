@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../routing/app_router.dart';
 
@@ -14,9 +16,9 @@ class SettingsScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        title: const Text(
-          'Configuración',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        title: Text(
+          LocaleKeys.settings_settings_title.tr(),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.secondary,
         foregroundColor: theme.colorScheme.onSecondary,
@@ -29,21 +31,23 @@ class SettingsScreen extends ConsumerWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.person),
-              title: const Text('Ver perfil'),
+              title:
+                  Text(LocaleKeys.settings_settings_options_viewProfile.tr()),
               onTap: () {
                 Navigator.of(context).pushNamed(AppRouter.profileRoute);
               },
             ),
             ListTile(
               leading: const Icon(Icons.notifications),
-              title: const Text('Notificaciones'),
+              title:
+                  Text(LocaleKeys.settings_settings_options_notifications.tr()),
               onTap: () {
                 // TODO: Navegar a notificaciones
               },
             ),
             ListTile(
               leading: const Icon(Icons.help_outline),
-              title: const Text('Centro de ayuda'),
+              title: Text(LocaleKeys.settings_settings_options_helpCenter.tr()),
               onTap: () {
                 // TODO: Navegar al centro de ayuda
               },
@@ -51,23 +55,28 @@ class SettingsScreen extends ConsumerWidget {
             const Spacer(),
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
-              title: const Text('Cerrar sesión',
-                  style: TextStyle(color: Colors.red)),
+              title: Text(
+                LocaleKeys.settings_settings_options_logout.tr(),
+                style: const TextStyle(color: Colors.red),
+              ),
               onTap: () async {
                 final confirm = await showDialog<bool>(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Confirmar cierre de sesión'),
-                    content: const Text(
-                        '¿Estás seguro de que deseas cerrar sesión?'),
+                    title: Text(
+                        LocaleKeys.settings_settings_dialog_logoutTitle.tr()),
+                    content: Text(
+                        LocaleKeys.settings_settings_dialog_logoutMessage.tr()),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
-                        child: const Text('Cancelar'),
+                        child: Text(
+                            LocaleKeys.settings_settings_dialog_cancel.tr()),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pop(context, true),
-                        child: const Text('Cerrar sesión'),
+                        child: Text(
+                            LocaleKeys.settings_settings_dialog_confirm.tr()),
                       ),
                     ],
                   ),
@@ -96,22 +105,15 @@ class SettingsScreen extends ConsumerWidget {
 }
 
 void clearUserSession(WidgetRef ref) {
-  // Invalidar los proveedores relacionados con el perfil
   ref.invalidate(profileFutureProvider);
   ref.invalidate(profileProvider);
   ref.invalidate(tempVolunteerProfileProvider);
 
-  // Invalidar proveedores de habilidades y disponibilidad
   ref.invalidate(skillsFutureProvider);
   ref.invalidate(userSkillsProvider);
   ref.invalidate(availabilityFutureProvider);
 
-  // Invalidar el rol de usuario
   ref.invalidate(userRoleProvider);
-
-  // Invalidar el formulario de registro (si es relevante)
   ref.invalidate(signUpFormControllerProvider);
-
-  // Invalidar controladores de habilidades y disponibilidad
   ref.invalidate(userSkillsControllerProvider);
 }

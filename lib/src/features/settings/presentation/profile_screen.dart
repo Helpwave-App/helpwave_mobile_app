@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../routing/app_router.dart';
 
@@ -15,9 +17,9 @@ class ProfileScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
-        title: const Text(
-          'Mi perfil',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        title: Text(
+          LocaleKeys.settings_profile_title.tr(),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.secondary,
         foregroundColor: theme.colorScheme.onSecondary,
@@ -34,7 +36,8 @@ class ProfileScreen extends ConsumerWidget {
               children: [
                 ListTile(
                   leading: const Icon(Icons.info_outline),
-                  title: const Text('Información de usuario'),
+                  title:
+                      Text(LocaleKeys.settings_profile_options_userInfo.tr()),
                   onTap: () {
                     ref.invalidate(profileFutureProvider);
                     Navigator.of(context).pushNamed(AppRouter.userInfoRoute);
@@ -43,7 +46,8 @@ class ProfileScreen extends ConsumerWidget {
                 if (isVolunteer)
                   ListTile(
                     leading: const Icon(Icons.star_outline),
-                    title: const Text('Habilidades'),
+                    title:
+                        Text(LocaleKeys.settings_profile_options_skills.tr()),
                     onTap: () {
                       Navigator.of(context).pushNamed(AppRouter.skillsRoute);
                     },
@@ -51,7 +55,8 @@ class ProfileScreen extends ConsumerWidget {
                 if (isVolunteer)
                   ListTile(
                     leading: const Icon(Icons.schedule),
-                    title: const Text('Disponibilidad'),
+                    title: Text(
+                        LocaleKeys.settings_profile_options_availability.tr()),
                     onTap: () {
                       Navigator.of(context)
                           .pushNamed(AppRouter.availabilityRoute);
@@ -62,7 +67,8 @@ class ProfileScreen extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (error, _) => Center(child: Text('Error al cargar el rol')),
+        error: (error, _) => Center(
+            child: Text(LocaleKeys.settings_profile_error_roleLoad.tr())),
       ),
     );
   }

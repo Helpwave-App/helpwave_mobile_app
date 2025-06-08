@@ -237,5 +237,33 @@
             "form_report_hint": "Had any issues? You can report them here.",
             "snackbar_success": "Review submitted successfully"
         }
+    },
+    "settings": {
+        "profile": {
+            "title": "My Profile",
+            "options": {
+                "userInfo": "User Information",
+                "skills": "Skills",
+                "availability": "Availability"
+            },
+            "error": {
+                "roleLoad": "Failed to load role"
+            }
+        },
+        "settings": {
+            "title": "Settings",
+            "options": {
+                "viewProfile": "View Profile",
+                "notifications": "Notifications",
+                "helpCenter": "Help Center",
+                "logout": "Log out"
+            },
+            "dialog": {
+                "logoutTitle": "Confirm logout",
+                "logoutMessage": "Are you sure you want to log out?",
+                "cancel": "Cancel",
+                "confirm": "Log out"
+            }
+        }
     }
 }

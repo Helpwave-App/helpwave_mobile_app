@@ -199,5 +199,26 @@ abstract class  LocaleKeys {
   static const reviews_review_screen_snackbar_success = 'reviews.review_screen.snackbar_success';
   static const reviews_review_screen = 'reviews.review_screen';
   static const reviews = 'reviews';
+  static const settings_profile_title = 'settings.profile.title';
+  static const settings_profile_options_userInfo = 'settings.profile.options.userInfo';
+  static const settings_profile_options_skills = 'settings.profile.options.skills';
+  static const settings_profile_options_availability = 'settings.profile.options.availability';
+  static const settings_profile_options = 'settings.profile.options';
+  static const settings_profile_error_roleLoad = 'settings.profile.error.roleLoad';
+  static const settings_profile_error = 'settings.profile.error';
+  static const settings_profile = 'settings.profile';
+  static const settings_settings_title = 'settings.settings.title';
+  static const settings_settings_options_viewProfile = 'settings.settings.options.viewProfile';
+  static const settings_settings_options_notifications = 'settings.settings.options.notifications';
+  static const settings_settings_options_helpCenter = 'settings.settings.options.helpCenter';
+  static const settings_settings_options_logout = 'settings.settings.options.logout';
+  static const settings_settings_options = 'settings.settings.options';
+  static const settings_settings_dialog_logoutTitle = 'settings.settings.dialog.logoutTitle';
+  static const settings_settings_dialog_logoutMessage = 'settings.settings.dialog.logoutMessage';
+  static const settings_settings_dialog_cancel = 'settings.settings.dialog.cancel';
+  static const settings_settings_dialog_confirm = 'settings.settings.dialog.confirm';
+  static const settings_settings_dialog = 'settings.settings.dialog';
+  static const settings_settings = 'settings.settings';
+  static const settings = 'settings';
 
 }

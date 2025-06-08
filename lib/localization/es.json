@@ -237,5 +237,33 @@
             "form_report_hint": "¿Tuviste algún inconveniente? Puedes reportarlo aquí.",
             "snackbar_success": "Reseña enviada con éxito"
         }
+    },
+    "settings": {
+        "profile": {
+            "title": "Mi perfil",
+            "options": {
+                "userInfo": "Información de usuario",
+                "skills": "Habilidades",
+                "availability": "Disponibilidad"
+            },
+            "error": {
+                "roleLoad": "Error al cargar el rol"
+            }
+        },
+        "settings": {
+            "title": "Configuración",
+            "options": {
+                "viewProfile": "Ver perfil",
+                "notifications": "Notificaciones",
+                "helpCenter": "Centro de ayuda",
+                "logout": "Cerrar sesión"
+            },
+            "dialog": {
+                "logoutTitle": "Confirmar cierre de sesión",
+                "logoutMessage": "¿Estás seguro de que deseas cerrar sesión?",
+                "cancel": "Cancelar",
+                "confirm": "Cerrar sesión"
+            }
+        }
     }
 }
