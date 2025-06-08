@@ -1,224 +1,241 @@
 {
-  "auth":{
-    "signIn": {
-      "title": "Sign In",
-      "username": "Username",
-      "usernameRequired": "Username is required",
-      "password": "Password",
-      "passwordMinLength": "Password must be at least 6 characters",
-      "signInButton": "Sign In",
-      "forgotPassword": "Forgot your password?",
-      "noAccount": "Don't have an account?",
-      "registerNow": "Register now",
-      "invalidCredentials": "Invalid username or password",
-      "incorrectCredentials": "Incorrect username or password"
-
+    "auth": {
+        "signIn": {
+            "title": "Sign In",
+            "username": "Username",
+            "usernameRequired": "Username is required",
+            "password": "Password",
+            "passwordMinLength": "Password must be at least 6 characters",
+            "signInButton": "Sign In",
+            "forgotPassword": "Forgot your password?",
+            "noAccount": "Don't have an account?",
+            "registerNow": "Register now",
+            "invalidCredentials": "Invalid username or password",
+            "incorrectCredentials": "Incorrect username or password"
+        },
+        "welcome": {
+            "title": "Welcome to HelpWave",
+            "subtitle": "A community where helping and receiving help is part of the same thing: taking care of each other.",
+            "signIn": "Sign In",
+            "createAccount": "Create Account"
+        },
+        "permissions": {
+            "title": "Required Permissions",
+            "description": "To work properly, HelpWave needs access to:\n\n- Notifications (to alert you of requests)\n- Microphone and Camera (for video calls)",
+            "accept": "Accept and continue",
+            "snackbar": "You must accept all permissions to continue.",
+            "notification": "notifications",
+            "microphone": "microphone",
+            "camera": "camera"
+        },
+        "userType": {
+            "title": "User Type",
+            "requester": "Requester",
+            "volunteer": "Volunteer",
+            "next": "Next"
+        },
+        "termsAndConditions": {
+            "title": "Terms and Conditions",
+            "description": "By using this application, you agree to participate in a community based on respect, collaboration, and mutual assistance.\n\nYou commit to providing and receiving help in good faith, respecting the privacy of other users, and using this platform solely for permitted purposes.\n\nHelpWave is not responsible for the content of interactions but reserves the right to suspend accounts in case of misuse.",
+            "acceptLabel": "I have read and accept the terms and conditions.",
+            "next": "Next"
+        },
+        "signUpForm": {
+            "fields": {
+                "firstName": "First Name",
+                "lastName": "Last Name",
+                "phoneNumber": "Phone Number",
+                "username": "Username",
+                "password": "Password"
+            },
+            "errors": {
+                "required": "This field is required",
+                "onlyLetters": "Use only valid letters and spaces",
+                "phoneNumber": "Enter a valid 9-digit phone number",
+                "username": "Use at least 6 alphanumeric characters",
+                "passwordMinLength": "Password must be at least 6 characters",
+                "unknownError": "Unknown error",
+                "internalError": "Internal error: missing username or password fields.",
+                "unexpectedError": "An unexpected error occurred. Please try again."
+            },
+            "haveAccount": "Already have an account?",
+            "signIn": "Sign in"
+        },
+        "signUpRequester": {
+            "title": "Registration to receive help",
+            "fields": {
+                "name": "First Name",
+                "lastname": "Last Name",
+                "phoneNumber": "Phone Number",
+                "username": "Username",
+                "password": "Password"
+            },
+            "buttonText": "Complete registration"
+        },
+        "signUpVolunteer": {
+            "title": "Volunteer Registration",
+            "fields": {
+                "name": "First Name",
+                "lastname": "Last Name",
+                "email": "Email Address",
+                "username": "Username",
+                "password": "Password"
+            },
+            "buttonText": "Next"
+        },
+        "volunteerSkills": {
+            "title": "In which areas can you provide help?",
+            "selectMultipleOptions": "You can select more than one option",
+            "generalAssistanceMandatory": "The skill \"General Assistance\" is mandatory for all volunteers.",
+            "errorSavingSkills": "Error saving skills",
+            "errorLoadingSkills": "Error loading skills",
+            "mandatory": "Mandatory",
+            "next": "Next"
+        },
+        "volunteerAvailability": {
+            "title": "Availability",
+            "subtitle": "On which days and at what times can you provide assistance?",
+            "errorSavingAvailability": "Error saving availability",
+            "finishRegistration": "Complete registration"
+        },
+        "registrationCompleted": {
+            "title": "Registration completed!",
+            "message": "Your account has been successfully created. You can now start using the app.",
+            "subtitle": "Thank you for joining HelpWave.",
+            "goHome": "Go to home",
+            "loginError": "Login failed: {}",
+            "iconLabel": "Registration success icon"
+        },
+        "registrationCompletedRequester": {
+            "title": "You have successfully registered!",
+            "message": "Welcome to HelpWave. Here you will find volunteers ready to assist you with whatever you need, whenever you need it.",
+            "subtitle": "Thank you for trusting our supportive community."
+        },
+        "registrationCompletedVolunteer": {
+            "title": "Thank you for registering as a volunteer!",
+            "message": "You are now part of HelpWave, where you can provide remote support to people who need it.",
+            "subtitle": "Your time and help can make a big difference."
+        }
     },
-    "welcome": {
-      "title": "Welcome to HelpWave",
-      "subtitle": "A community where helping and receiving help is part of the same thing: taking care of each other.",
-      "signIn": "Sign In",
-      "createAccount": "Create Account"
+    "availability": {
+        "addTimeModal": {
+            "title": "Add schedule for",
+            "startTime": "Start time",
+            "endTime": "End time",
+            "applyToAll": "Apply to all days",
+            "cancel": "Cancel",
+            "save": "Save",
+            "error_invalidTimeRange": "End time must be after start time"
+        },
+        "controller": {
+            "error_minOneAvailability": "You must have at least one availability",
+            "success_deleted": "Schedule deleted successfully",
+            "error_deleteServer": "Error deleting availability from server",
+            "error_delete": "Error deleting"
+        }
     },
-    "permissions": {
-      "title": "Required Permissions",
-      "description": "To work properly, HelpWave needs access to:\n\n- Notifications (to alert you of requests)\n- Microphone and Camera (for video calls)",
-      "accept": "Accept and continue",
-      "snackbar": "You must accept all permissions to continue.",
-      "notification": "notifications",
-      "microphone": "microphone",
-      "camera": "camera"
+    "gamification": {
+        "endVideocall": {
+            "title": "Call Ended",
+            "congrats": "Thanks for your help!",
+            "progressInfo": "You have helped {{assistances}} people. You're {{missing}} assists away from reaching level ",
+            "goHome": "Go to home",
+            "report": "Report incident",
+            "reportHint": "Did you have any issues? You can report them here.",
+            "error": "Error loading progress: {{error}}"
+        },
+        "insigniaProgressWidget": {
+            "current": "Current level",
+            "next": "Next level"
+        }
     },
-    "userType": {
-      "title": "User Type",
-      "requester": "Requester",
-      "volunteer": "Volunteer",
-      "next": "Next"
+    "home": {
+        "widget": {
+            "settingsTooltip": "Settings",
+            "selectSkillHint": "Select a skill"
+        },
+        "requester": {
+            "greeting": "Hi, {firstName} {lastName}!",
+            "subtitle": "Ready to request help today?",
+            "buttonText": "Request\nassistance",
+            "sessionExpired": "Session expired. Please log in again."
+        },
+        "volunteer": {
+            "greeting": "Hi, {firstName} {lastName}!",
+            "subtitle": "Ready to provide help today?",
+            "buttonText": "Accept\nrequest",
+            "sessionExpired": "Session expired. Please log in again."
+        }
     },
-    "termsAndConditions": {
-      "title": "Terms and Conditions",
-      "description": "By using this application, you agree to participate in a community based on respect, collaboration, and mutual assistance.\n\nYou commit to providing and receiving help in good faith, respecting the privacy of other users, and using this platform solely for permitted purposes.\n\nHelpWave is not responsible for the content of interactions but reserves the right to suspend accounts in case of misuse.",
-      "acceptLabel": "I have read and accept the terms and conditions.",
-      "next": "Next"
+    "notification": {
+        "infoDialog": {
+            "accept": "Accept"
+        },
+        "requestDialog": {
+            "title": "New help request",
+            "requester": "Requester name",
+            "skill": "Requested skill",
+            "accept": "Accept",
+            "reject": "Reject"
+        },
+        "handler": {
+            "unknownSkill": "Unknown",
+            "unknownName": "Unknown",
+            "unknownLastName": "Unknown",
+            "alreadyAnsweredTitle": "Thank you for your willingness!",
+            "alreadyAnsweredMessage": "Another volunteer has already responded to this request. We really appreciate your intention to help 😊."
+        }
     },
-    "signUpForm": {
-      "fields": {
-        "firstName": "First Name",
-        "lastName": "Last Name",
-        "phoneNumber": "Phone Number",
-        "username": "Username",
-        "password": "Password"
-      },
-      "errors": {
-        "required": "This field is required",
-        "onlyLetters": "Use only valid letters and spaces",
-        "phoneNumber": "Enter a valid 9-digit phone number",
-        "username": "Use at least 6 alphanumeric characters",
-        "passwordMinLength": "Password must be at least 6 characters",
-        "unknownError": "Unknown error",
-        "internalError": "Internal error: missing username or password fields.",
-        "unexpectedError": "An unexpected error occurred. Please try again."
-      },
-      "haveAccount": "Already have an account?",
-      "signIn": "Sign in"
+    "profile": {
+        "user_info_screen": {
+            "app_bar": {
+                "title": "User Information"
+            },
+            "error": {
+                "loading": "Error",
+                "no_profile": "Could not load profile."
+            },
+            "stats": {
+                "score": "Score",
+                "level": "Level",
+                "assistances": "Assistances"
+            },
+            "form": {
+                "email": "Email",
+                "phone": "Phone",
+                "birthday": "Date of Birth (dd/mm/yyyy)",
+                "birthday_picker": "Select your birth date"
+            },
+            "validation": {
+                "email_required": "Email is required",
+                "email_invalid": "Invalid email",
+                "phone_required": "Phone is required",
+                "birthday_required": "Date of birth is required",
+                "birthday_invalid": "Invalid date format"
+            }
+        },
+        "controller": {
+            "error_invalidDate": "Invalid birth date.",
+            "success_profileUpdated": "Profile updated successfully.",
+            "error_saving": "Error saving changes."
+        }
     },
-    "signUpRequester": {
-      "title": "Registration to receive help",
-      "fields": {
-        "name": "First Name",
-        "lastname": "Last Name",
-        "phoneNumber": "Phone Number",
-        "username": "Username",
-        "password": "Password"
-      },
-      "buttonText": "Complete registration"
-    },
-    "signUpVolunteer": {
-      "title": "Volunteer Registration",
-      "fields": {
-        "name": "First Name",
-        "lastname": "Last Name",
-        "email": "Email Address",
-        "username": "Username",
-        "password": "Password"
-      },
-      "buttonText": "Next"
-    },
-    "volunteerSkills": {
-      "title": "In which areas can you provide help?",
-      "selectMultipleOptions": "You can select more than one option",
-      "generalAssistanceMandatory": "The skill \"General Assistance\" is mandatory for all volunteers.",
-      "errorSavingSkills": "Error saving skills",
-      "errorLoadingSkills": "Error loading skills",
-      "mandatory": "Mandatory",
-      "next": "Next"
-    },
-    "volunteerAvailability": {
-      "title": "Availability",
-      "subtitle": "On which days and at what times can you provide assistance?",
-      "errorSavingAvailability": "Error saving availability",
-      "finishRegistration": "Complete registration"
-    },
-    "registrationCompleted": {
-      "title": "Registration completed!",
-      "message": "Your account has been successfully created. You can now start using the app.",
-      "subtitle": "Thank you for joining HelpWave.",
-      "goHome": "Go to home",
-      "loginError": "Login failed: {}",
-      "iconLabel": "Registration success icon"
-    },
-    "registrationCompletedRequester": {
-      "title": "You have successfully registered!",
-      "message": "Welcome to HelpWave. Here you will find volunteers ready to assist you with whatever you need, whenever you need it.",
-      "subtitle": "Thank you for trusting our supportive community."
-    },
-    "registrationCompletedVolunteer": {
-      "title": "Thank you for registering as a volunteer!",
-      "message": "You are now part of HelpWave, where you can provide remote support to people who need it.",
-      "subtitle": "Your time and help can make a big difference."
+    "feedback": {
+        "review_controller": {
+            "validation_empty_comment": "Comment cannot be empty.",
+            "error_submission": "Error submitting review"
+        },
+        "review_screen": {
+            "appbar_title": "Video Call Review",
+            "form_title": "Help us improve",
+            "form_subtitle": "Evaluate the following aspects",
+            "form_volunteer_rating": "Rate the volunteer's support*",
+            "form_call_rating": "Rate the video call*",
+            "form_comment_label": "Comment (optional)",
+            "form_submit_button": "Submit review",
+            "form_report_button": "Report incident",
+            "form_report_hint": "Had any issues? You can report them here.",
+            "snackbar_success": "Review submitted successfully"
+        }
     }
-  },
-  "availability":{
-    "addTimeModal": {
-      "title": "Add schedule for",
-      "startTime": "Start time",
-      "endTime": "End time",
-      "applyToAll": "Apply to all days",
-      "cancel": "Cancel",
-      "save": "Save",
-      "error_invalidTimeRange": "End time must be after start time"
-    },
-    "controller": {
-      "error_minOneAvailability": "You must have at least one availability",
-      "success_deleted": "Schedule deleted successfully",
-      "error_deleteServer": "Error deleting availability from server",
-      "error_delete": "Error deleting"
-    }
-  },
-  "gamification":{
-      "endVideocall": {
-      "title": "Call Ended",
-      "congrats": "Thanks for your help!",
-      "progressInfo": "You have helped {{assistances}} people. You're {{missing}} assists away from reaching level ",
-      "goHome": "Go to home",
-      "report": "Report incident",
-      "reportHint": "Did you have any issues? You can report them here.",
-      "error": "Error loading progress: {{error}}"
-    },
-    "insigniaProgressWidget": {
-      "current": "Current level",
-      "next": "Next level"
-    }
-  },
-  "home":{
-    "widget": {
-      "settingsTooltip": "Settings",
-      "selectSkillHint": "Select a skill"
-    },
-    "requester": {
-      "greeting": "Hi, {firstName} {lastName}!",
-      "subtitle": "Ready to request help today?",
-      "buttonText": "Request\nassistance",
-      "sessionExpired": "Session expired. Please log in again."
-    },
-    "volunteer": {
-      "greeting": "Hi, {firstName} {lastName}!",
-      "subtitle": "Ready to provide help today?",
-      "buttonText": "Accept\nrequest",
-      "sessionExpired": "Session expired. Please log in again."
-    }
-  },
-  "notification":{
-    "infoDialog": {
-      "accept": "Accept"
-    },
-    "requestDialog": {
-      "title": "New help request",
-      "requester": "Requester name",
-      "skill": "Requested skill",
-      "accept": "Accept",
-      "reject": "Reject"
-    },
-    "handler": {
-      "unknownSkill": "Unknown",
-      "unknownName": "Unknown",
-      "unknownLastName": "Unknown",
-      "alreadyAnsweredTitle": "Thank you for your willingness!",
-      "alreadyAnsweredMessage": "Another volunteer has already responded to this request. We really appreciate your intention to help 😊."
-    }
-  },
-  "profile":{
-    "user_info_screen":{
-  "app_bar": {
-    "title": "User Information"
-  },
-  "error": {
-    "loading": "Error",
-    "no_profile": "Could not load profile."
-  },
-  "stats": {
-    "score": "Score",
-    "level": "Level",
-    "assistances": "Assistances"
-  },
-  "form": {
-    "email": "Email",
-    "phone": "Phone",
-    "birthday": "Date of Birth (dd/mm/yyyy)",
-    "birthday_picker": "Select your birth date"
-  },
-  "validation": {
-    "email_required": "Email is required",
-    "email_invalid": "Invalid email",
-    "phone_required": "Phone is required",
-    "birthday_required": "Date of birth is required",
-    "birthday_invalid": "Invalid date format"
-  }
-},
-    "controller": {
-      "error_invalidDate": "Invalid birth date.",
-      "success_profileUpdated": "Profile updated successfully.",
-      "error_saving": "Error saving changes."
-    }
-  }
 }

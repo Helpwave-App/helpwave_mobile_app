@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:easy_localization/easy_localization.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../routing/app_router.dart';
 
@@ -15,9 +17,9 @@ class ReviewScreen extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
       appBar: AppBar(
-        title: const Text(
-          'Reseña de Videollamada',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        title: Text(
+          LocaleKeys.feedback_review_screen_appbar_title.tr(),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: Theme.of(context).colorScheme.secondary,
         foregroundColor: Theme.of(context).colorScheme.onSecondary,
@@ -43,24 +45,24 @@ class _ReviewForm extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        const Center(
+        Center(
           child: Text(
-            'Ayúdanos a mejorar',
-            style: TextStyle(fontSize: 24),
+            LocaleKeys.feedback_review_screen_form_title.tr(),
+            style: const TextStyle(fontSize: 24),
           ),
         ),
         const SizedBox(height: 8),
-        const Center(
+        Center(
           child: Text(
-            'Evalúa los siguientes aspectos',
+            LocaleKeys.feedback_review_screen_form_subtitle.tr(),
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 18),
+            style: const TextStyle(fontSize: 18),
           ),
         ),
         const SizedBox(height: 42),
-        const Text(
-          'Puntúa la atención del voluntario*',
-          style: TextStyle(fontWeight: FontWeight.w500),
+        Text(
+          LocaleKeys.feedback_review_screen_form_volunteer_rating.tr(),
+          style: const TextStyle(fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 12),
         AbsorbPointer(
@@ -77,9 +79,9 @@ class _ReviewForm extends ConsumerWidget {
           ),
         ),
         const SizedBox(height: 32),
-        const Text(
-          'Puntúa la videollamada*',
-          style: TextStyle(fontWeight: FontWeight.w500),
+        Text(
+          LocaleKeys.feedback_review_screen_form_call_rating.tr(),
+          style: const TextStyle(fontWeight: FontWeight.w500),
         ),
         const SizedBox(height: 12),
         AbsorbPointer(
@@ -100,9 +102,10 @@ class _ReviewForm extends ConsumerWidget {
           maxLines: 4,
           maxLength: 500,
           enabled: !controller.isSubmitting,
-          decoration: const InputDecoration(
-            labelText: 'Comentario (máximo 500 caracteres)',
-            border: OutlineInputBorder(),
+          decoration: InputDecoration(
+            labelText:
+                LocaleKeys.feedback_review_screen_form_comment_label.tr(),
+            border: const OutlineInputBorder(),
             alignLabelWithHint: true,
           ),
         ),
@@ -120,8 +123,11 @@ class _ReviewForm extends ConsumerWidget {
 
                       if (error == null) {
                         ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                              content: Text('Reseña enviada con éxito')),
+                          SnackBar(
+                            content: Text(LocaleKeys
+                                .feedback_review_screen_snackbar_success
+                                .tr()),
+                          ),
                         );
                         Navigator.pushReplacementNamed(
                             context, AppRouter.loadingRoute);
@@ -137,7 +143,8 @@ class _ReviewForm extends ConsumerWidget {
               ),
               child: controller.isSubmitting
                   ? const CircularProgressIndicator(color: Colors.white)
-                  : const Text('Enviar reseña'),
+                  : Text(LocaleKeys.feedback_review_screen_form_submit_button
+                      .tr()),
             ),
             const SizedBox(height: 12),
             OutlinedButton.icon(
@@ -147,7 +154,8 @@ class _ReviewForm extends ConsumerWidget {
                       Navigator.pushNamed(context, AppRouter.reportRoute);
                     },
               icon: const Icon(Icons.flag_outlined, color: Color(0xFF8BC34A)),
-              label: const Text('Reportar incidente'),
+              label: Text(
+                  LocaleKeys.feedback_review_screen_form_report_button.tr()),
               style: OutlinedButton.styleFrom(
                 side: const BorderSide(color: Color(0xFF8BC34A)),
                 foregroundColor: const Color(0xFF8BC34A),
@@ -155,10 +163,10 @@ class _ReviewForm extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 12),
-            const Text(
-              '¿Tuviste algún inconveniente? Puedes reportarlo aquí.',
+            Text(
+              LocaleKeys.feedback_review_screen_form_report_hint.tr(),
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.grey),
+              style: const TextStyle(fontSize: 14, color: Colors.grey),
             ),
           ],
         ),
