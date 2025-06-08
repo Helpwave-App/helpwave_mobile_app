@@ -220,5 +220,19 @@ abstract class  LocaleKeys {
   static const settings_settings_dialog = 'settings.settings.dialog';
   static const settings_settings = 'settings.settings';
   static const settings = 'settings';
+  static const skills_userSkills_title = 'skills.userSkills.title';
+  static const skills_userSkills_dialog_confirmDeletionTitle = 'skills.userSkills.dialog.confirmDeletionTitle';
+  static const skills_userSkills_dialog_confirmDeletionMessage = 'skills.userSkills.dialog.confirmDeletionMessage';
+  static const skills_userSkills_dialog_cancel = 'skills.userSkills.dialog.cancel';
+  static const skills_userSkills_dialog_confirm = 'skills.userSkills.dialog.confirm';
+  static const skills_userSkills_dialog = 'skills.userSkills.dialog';
+  static const skills_userSkills_snackbar_keepAtLeastOneSkill = 'skills.userSkills.snackbar.keepAtLeastOneSkill';
+  static const skills_userSkills_snackbar = 'skills.userSkills.snackbar';
+  static const skills_userSkills_label_selectSkill = 'skills.userSkills.label.selectSkill';
+  static const skills_userSkills_label = 'skills.userSkills.label';
+  static const skills_userSkills_button_addSkill = 'skills.userSkills.button.addSkill';
+  static const skills_userSkills_button = 'skills.userSkills.button';
+  static const skills_userSkills = 'skills.userSkills';
+  static const skills = 'skills';
 
 }

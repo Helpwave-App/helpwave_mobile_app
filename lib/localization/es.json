@@ -265,5 +265,25 @@
                 "confirm": "Cerrar sesión"
             }
         }
+    },
+    "skills": {
+    "userSkills": {
+      "title": "Habilidades",
+      "dialog": {
+        "confirmDeletionTitle": "Confirmar eliminación",
+        "confirmDeletionMessage": "¿Estás seguro de eliminar esta habilidad?",
+        "cancel": "Cancelar",
+        "confirm": "Eliminar"
+      },
+      "snackbar": {
+        "keepAtLeastOneSkill": "Debes mantener al menos una habilidad."
+      },
+      "label": {
+        "selectSkill": "Selecciona una habilidad"
+      },
+      "button": {
+        "addSkill": "Agregar habilidad"
+      }
     }
+  }
 }
