@@ -117,5 +117,20 @@
       "message": "You are now part of HelpWave, where you can provide remote support to people who need it.",
       "subtitle": "Your time and help can make a big difference."
     }
+  },
+  "gamification":{
+      "endVideocall": {
+      "title": "Call Ended",
+      "congrats": "Thanks for your help!",
+      "progressInfo": "You have helped {{assistances}} people. You're {{missing}} assists away from reaching level ",
+      "goHome": "Go to home",
+      "report": "Report incident",
+      "reportHint": "Did you have any issues? You can report them here.",
+      "error": "Error loading progress: {{error}}"
+    },
+    "insigniaProgressWidget": {
+      "current": "Current level",
+      "next": "Next level"
+    }
   }
 }

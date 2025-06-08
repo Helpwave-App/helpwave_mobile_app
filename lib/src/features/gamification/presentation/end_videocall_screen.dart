@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../routing/app_router.dart';
 import '../domain/level_progress.dart';
@@ -14,16 +16,15 @@ class EndVideocallScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final theme = Theme.of(context).colorScheme;
-
     final AsyncValue<LevelProgressModel> levelProgressAsync =
         ref.watch(levelProgressControllerProvider);
 
     return Scaffold(
       backgroundColor: theme.surface,
       appBar: AppBar(
-        title: const Text(
-          'Videollamada Finalizada',
-          style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+        title: Text(
+          LocaleKeys.gamification_endVideocall_title.tr(),
+          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.secondary,
         foregroundColor: theme.onSecondary,
@@ -55,10 +56,11 @@ class EndVideocallScreen extends ConsumerWidget {
                                 Icon(Icons.emoji_events,
                                     size: 64, color: theme.tertiary),
                                 const SizedBox(height: 12),
-                                const Text(
-                                  '¡Gracias por tu ayuda!',
+                                Text(
+                                  LocaleKeys.gamification_endVideocall_congrats
+                                      .tr(),
                                   textAlign: TextAlign.center,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold),
                                 ),
@@ -69,13 +71,19 @@ class EndVideocallScreen extends ConsumerWidget {
                                     text: TextSpan(
                                       style: TextStyle(
                                           fontSize: 16,
-                                          color: theme
-                                              .onTertiary), // Usa el color del tema
+                                          color: theme.onTertiary),
                                       children: [
                                         TextSpan(
-                                          text:
-                                              'Ya has asistido a ${levelProgress.assistances} personas. '
-                                              'Estás a ${levelProgress.missingAssistances} asistencias de alcanzar el nivel ',
+                                          text: LocaleKeys
+                                              .gamification_endVideocall_progressInfo
+                                              .tr(namedArgs: {
+                                            'assistances': levelProgress
+                                                .assistances
+                                                .toString(),
+                                            'missing': levelProgress
+                                                .missingAssistances
+                                                .toString(),
+                                          }),
                                         ),
                                         TextSpan(
                                           text: '"${levelProgress.nextLevel}".',
@@ -119,7 +127,9 @@ class EndVideocallScreen extends ConsumerWidget {
                               backgroundColor: theme.tertiary,
                               padding: const EdgeInsets.symmetric(vertical: 14),
                             ),
-                            child: const Text('Ir a inicio'),
+                            child: Text(LocaleKeys
+                                .gamification_endVideocall_goHome
+                                .tr()),
                           ),
                           const SizedBox(height: 12),
                           OutlinedButton.icon(
@@ -129,7 +139,9 @@ class EndVideocallScreen extends ConsumerWidget {
                             },
                             icon: Icon(Icons.flag_outlined,
                                 color: theme.tertiary),
-                            label: const Text('Reportar incidente'),
+                            label: Text(LocaleKeys
+                                .gamification_endVideocall_report
+                                .tr()),
                             style: OutlinedButton.styleFrom(
                               side: BorderSide(color: theme.tertiary),
                               foregroundColor: theme.tertiary,
@@ -137,10 +149,12 @@ class EndVideocallScreen extends ConsumerWidget {
                             ),
                           ),
                           const SizedBox(height: 12),
-                          const Text(
-                            '¿Tuviste algún inconveniente? Puedes reportarlo aquí.',
+                          Text(
+                            LocaleKeys.gamification_endVideocall_reportHint
+                                .tr(),
                             textAlign: TextAlign.center,
-                            style: TextStyle(fontSize: 14, color: Colors.grey),
+                            style: const TextStyle(
+                                fontSize: 14, color: Colors.grey),
                           ),
                         ],
                       ),
@@ -154,7 +168,9 @@ class EndVideocallScreen extends ConsumerWidget {
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, stack) => Center(
           child: Text(
-            'Error al cargar el progreso: $error',
+            LocaleKeys.gamification_endVideocall_error.tr(namedArgs: {
+              'error': error.toString(),
+            }),
             style: const TextStyle(color: Colors.red),
           ),
         ),

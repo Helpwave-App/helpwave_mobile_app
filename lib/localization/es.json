@@ -116,5 +116,20 @@
       "message": "Ahora formas parte de HelpWave, donde podrás brindar apoyo a personas que lo necesitan de forma remota.",
       "subtitle": "Tu tiempo y ayuda pueden marcar una gran diferencia."
     }
+  },
+  "gamification":{
+    "endVideocall": {
+      "title": "Videollamada Finalizada",
+      "congrats": "¡Gracias por tu ayuda!",
+      "progressInfo": "Ya has asistido a {{assistances}} personas. Estás a {{missing}} asistencias de alcanzar el nivel ",
+      "goHome": "Ir a inicio",
+      "report": "Reportar incidente",
+      "reportHint": "¿Tuviste algún inconveniente? Puedes reportarlo aquí.",
+      "error": "Error al cargar el progreso: {{error}}"
+    },
+    "insigniaProgressWidget": {
+      "current": "Nivel actual",
+      "next": "Siguiente nivel"
+    }
   }
 }

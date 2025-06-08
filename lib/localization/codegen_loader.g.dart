@@ -103,5 +103,17 @@ abstract class  LocaleKeys {
   static const auth_registrationCompletedVolunteer_subtitle = 'auth.registrationCompletedVolunteer.subtitle';
   static const auth_registrationCompletedVolunteer = 'auth.registrationCompletedVolunteer';
   static const auth = 'auth';
+  static const gamification_endVideocall_title = 'gamification.endVideocall.title';
+  static const gamification_endVideocall_congrats = 'gamification.endVideocall.congrats';
+  static const gamification_endVideocall_progressInfo = 'gamification.endVideocall.progressInfo';
+  static const gamification_endVideocall_goHome = 'gamification.endVideocall.goHome';
+  static const gamification_endVideocall_report = 'gamification.endVideocall.report';
+  static const gamification_endVideocall_reportHint = 'gamification.endVideocall.reportHint';
+  static const gamification_endVideocall_error = 'gamification.endVideocall.error';
+  static const gamification_endVideocall = 'gamification.endVideocall';
+  static const gamification_insigniaProgressWidget_current = 'gamification.insigniaProgressWidget.current';
+  static const gamification_insigniaProgressWidget_next = 'gamification.insigniaProgressWidget.next';
+  static const gamification_insigniaProgressWidget = 'gamification.insigniaProgressWidget';
+  static const gamification = 'gamification';
 
 }
