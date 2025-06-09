@@ -14,20 +14,24 @@ class ReviewScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.surface,
-      appBar: AppBar(
-        title: Text(
-          LocaleKeys.reviews_review_screen_appbar_title.tr(),
-          style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        backgroundColor: Theme.of(context).colorScheme.surface,
+        appBar: AppBar(
+          automaticallyImplyLeading: false,
+          title: Text(
+            LocaleKeys.reviews_review_screen_appbar_title.tr(),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          foregroundColor: Theme.of(context).colorScheme.onSecondary,
+          elevation: 0,
         ),
-        backgroundColor: Theme.of(context).colorScheme.secondary,
-        foregroundColor: Theme.of(context).colorScheme.onSecondary,
-        elevation: 0,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 44),
-        child: _ReviewForm(idVideocall: idVideocall),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 44),
+          child: _ReviewForm(idVideocall: idVideocall),
+        ),
       ),
     );
   }
@@ -40,6 +44,7 @@ class _ReviewForm extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final theme = Theme.of(context).colorScheme;
     final controller = ref.watch(reviewControllerProvider);
 
     return Column(
@@ -141,7 +146,7 @@ class _ReviewForm extends ConsumerWidget {
                 padding: const EdgeInsets.symmetric(vertical: 14),
               ),
               child: controller.isSubmitting
-                  ? const CircularProgressIndicator(color: Colors.white)
+                  ? CircularProgressIndicator(color: theme.onPrimary)
                   : Text(
                       LocaleKeys.reviews_review_screen_form_submit_button.tr()),
             ),
@@ -150,9 +155,13 @@ class _ReviewForm extends ConsumerWidget {
               onPressed: controller.isSubmitting
                   ? null
                   : () {
-                      Navigator.pushNamed(context, AppRouter.reportRoute);
+                      Navigator.pushNamed(
+                        context,
+                        AppRouter.reportRoute,
+                        arguments: idVideocall,
+                      );
                     },
-              icon: const Icon(Icons.flag_outlined, color: Color(0xFF8BC34A)),
+              icon: Icon(Icons.flag_outlined, color: theme.tertiary),
               label: Text(
                   LocaleKeys.reviews_review_screen_form_report_button.tr()),
               style: OutlinedButton.styleFrom(
