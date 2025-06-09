@@ -3,14 +3,11 @@ import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../localization/codegen_loader.g.dart';
 
-typedef OnAccept = Future<void> Function();
-typedef OnReject = void Function();
-
 class RequestDialog extends StatelessWidget {
   final String skill;
   final String fullname;
-  final OnAccept onAccept;
-  final OnReject onReject;
+  final VoidCallback onAccept;
+  final VoidCallback onReject;
 
   const RequestDialog({
     super.key,
@@ -40,14 +37,14 @@ class RequestDialog extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop('reject');
             onReject();
           },
           child: Text(LocaleKeys.notification_requestDialog_reject.tr()),
         ),
         ElevatedButton(
           onPressed: () {
-            Navigator.of(context).pop();
+            Navigator.of(context).pop('accept');
             onAccept();
           },
           child: Text(LocaleKeys.notification_requestDialog_accept.tr()),
