@@ -1,7 +1,5 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/firebase/firebase_options.dart';
 import '../domain/level_progress.dart';
 
@@ -40,7 +38,7 @@ class InsigniaProgressWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${LocaleKeys.gamification_insigniaProgressWidget_current.tr()}: ${levelProgress.currentLevel}',
+                      levelProgress.currentLevel,
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],
@@ -92,7 +90,7 @@ class InsigniaProgressWidget extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${LocaleKeys.gamification_insigniaProgressWidget_next.tr()}: ${levelProgress.nextLevel}',
+                      levelProgress.nextLevel,
                       style: const TextStyle(fontSize: 12),
                     ),
                   ],

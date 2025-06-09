@@ -4,6 +4,7 @@ import 'package:easy_localization/easy_localization.dart';
 
 import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
+import '../../../common/utils/constants/secure_storage.dart';
 import '../../../common/utils/firebase/firebase_options.dart';
 import '../presentation/profile_stat_card_widget.dart';
 
@@ -17,6 +18,22 @@ class UserInfoScreen extends ConsumerStatefulWidget {
 class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
   bool isEditing = false;
   final _formKey = GlobalKey<FormState>();
+  String? userRole;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserRole();
+  }
+
+  Future<void> _loadUserRole() async {
+    final role = await SecureStorage.getRole();
+    if (mounted) {
+      setState(() {
+        userRole = role;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -115,89 +132,92 @@ class _UserInfoScreenState extends ConsumerState<UserInfoScreen> {
                       .copyWith(fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 28),
+
+                /// Mostrar stats solo si el usuario es voluntario
+                if (userRole == 'volunteer') ...[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ProfileStatCard(
+                        icon: Icons.star,
+                        value: profile.scoreProfile.toStringAsFixed(1),
+                        label: LocaleKeys.profile_user_info_screen_stats_score
+                            .tr(),
+                        iconColor: Colors.amber,
+                      ),
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final asyncLevel =
+                              ref.watch(levelFutureProvider(profile.level));
+                          return asyncLevel.when(
+                            data: (level) => ProfileStatCard(
+                              iconWidget: SizedBox(
+                                width: 32,
+                                height: 32,
+                                child: Image.network(
+                                  '$imageBaseUrl${level.photoUrl}',
+                                  fit: BoxFit.contain,
+                                  loadingBuilder:
+                                      (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return const Center(
+                                        child: SizedBox(
+                                          width: 24,
+                                          height: 24,
+                                          child: CircularProgressIndicator(
+                                              strokeWidth: 2),
+                                        ),
+                                      );
+                                    }
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Icon(Icons.error, size: 32);
+                                  },
+                                ),
+                              ),
+                              value: level.nameLevel,
+                              label: LocaleKeys
+                                  .profile_user_info_screen_stats_level
+                                  .tr(),
+                            ),
+                            loading: () => ProfileStatCard(
+                              icon: Icons.hourglass_top,
+                              value: '...',
+                              label: LocaleKeys
+                                  .profile_user_info_screen_stats_level
+                                  .tr(),
+                            ),
+                            error: (e, _) => ProfileStatCard(
+                              icon: Icons.warning_amber_rounded,
+                              iconColor: Colors.red,
+                              value: 'Sin nivel',
+                              label: LocaleKeys
+                                  .profile_user_info_screen_stats_level
+                                  .tr(),
+                            ),
+                          );
+                        },
+                      ),
+                      ProfileStatCard(
+                        icon: Icons.volunteer_activism,
+                        value: profile.assistances.toString(),
+                        label: LocaleKeys
+                            .profile_user_info_screen_stats_assistances
+                            .tr(),
+                        iconColor: theme.colorScheme.tertiary,
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 42),
+                ],
+
+                // Formulario
                 Form(
                   key: _formKey,
                   child: Column(
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          ProfileStatCard(
-                            icon: Icons.star,
-                            value: profile.scoreProfile.toStringAsFixed(1),
-                            label: LocaleKeys
-                                .profile_user_info_screen_stats_score
-                                .tr(),
-                            iconColor: Colors.amber,
-                          ),
-                          Consumer(
-                            builder: (context, ref, _) {
-                              final asyncLevel =
-                                  ref.watch(levelFutureProvider(profile.level));
-                              return asyncLevel.when(
-                                data: (level) => ProfileStatCard(
-                                  iconWidget: SizedBox(
-                                    width: 32,
-                                    height: 32,
-                                    child: Image.network(
-                                      '$imageBaseUrl${level.photoUrl}',
-                                      fit: BoxFit.contain,
-                                      loadingBuilder:
-                                          (context, child, loadingProgress) {
-                                        if (loadingProgress == null) {
-                                          return child;
-                                        } else {
-                                          return const Center(
-                                            child: SizedBox(
-                                              width: 24,
-                                              height: 24,
-                                              child: CircularProgressIndicator(
-                                                  strokeWidth: 2),
-                                            ),
-                                          );
-                                        }
-                                      },
-                                      errorBuilder:
-                                          (context, error, stackTrace) {
-                                        return const Icon(Icons.error,
-                                            size: 32);
-                                      },
-                                    ),
-                                  ),
-                                  value: level.nameLevel,
-                                  label: LocaleKeys
-                                      .profile_user_info_screen_stats_level
-                                      .tr(),
-                                ),
-                                loading: () => ProfileStatCard(
-                                  icon: Icons.hourglass_top,
-                                  value: '...',
-                                  label: LocaleKeys
-                                      .profile_user_info_screen_stats_level
-                                      .tr(),
-                                ),
-                                error: (e, _) => ProfileStatCard(
-                                  icon: Icons.warning_amber_rounded,
-                                  iconColor: Colors.red,
-                                  value: 'Sin nivel',
-                                  label: LocaleKeys
-                                      .profile_user_info_screen_stats_level
-                                      .tr(),
-                                ),
-                              );
-                            },
-                          ),
-                          ProfileStatCard(
-                            icon: Icons.volunteer_activism,
-                            value: profile.assistances.toString(),
-                            label: LocaleKeys
-                                .profile_user_info_screen_stats_assistances
-                                .tr(),
-                            iconColor: theme.colorScheme.tertiary,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 42),
                       TextFormField(
                         enabled: isEditing,
                         controller: controller.emailController,

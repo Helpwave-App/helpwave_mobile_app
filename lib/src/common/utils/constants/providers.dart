@@ -7,6 +7,10 @@ import '../../../features/auth/domain/user_model.dart';
 import '../../../features/gamification/application/level_cache_controller.dart';
 import '../../../features/availability/application/user_availability_controller.dart';
 import '../../../features/profile/application/user_info_controller.dart';
+import '../../../features/reports/data/report_service.dart';
+import '../../../features/reports/data/type_report_service.dart';
+import '../../../features/reports/domain/report_model.dart';
+import '../../../features/reports/domain/type_report_model.dart';
 import '../../../features/skills/application/user_skills_controller.dart';
 import '../../../features/availability/data/availability_service.dart';
 import '../../../features/profile/data/profile_service.dart';
@@ -112,3 +116,17 @@ final levelCacheControllerProvider =
     StateNotifierProvider<LevelCacheController, Map<int, Level>>(
   (ref) => LevelCacheController(ref.read(levelServiceProvider)),
 );
+
+final typeReportServiceProvider = Provider((ref) => TypeReportService());
+final reportServiceProvider = Provider((ref) => ReportService());
+
+final typeReportsProvider = FutureProvider<List<TypeReportModel>>((ref) async {
+  final service = ref.read(typeReportServiceProvider);
+  return await service.fetchTypeReports();
+});
+
+final reportSubmissionProvider =
+    FutureProvider.family.autoDispose<void, ReportModel>((ref, report) async {
+  final service = ref.read(reportServiceProvider);
+  return await service.createReport(report);
+});

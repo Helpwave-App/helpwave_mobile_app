@@ -220,6 +220,23 @@
             "error_saving": "Error al guardar los cambios."
         }
     },
+    "reports": {
+        "report_screen": {
+            "title": "Reporte de incidente",
+            "description": "Lamentamos mucho que hayas tenido una mala experiencia. Por favor, coméntanos lo sucedido para poder brindar una solución.",
+            "comment_hint": "Comentario (opcional)",
+            "submit_button": "Enviar reporte",
+            "snackbar": {
+                "select_reason": "Selecciona un motivo de reporte",
+                "profile_not_found": "Error: perfil no encontrado",
+                "success": "Reporte enviado con éxito",
+                "error": "Error"
+            },
+            "error": {
+                "loading": "Error al cargar los motivos"
+            }
+        }
+    },
     "reviews": {
         "review_controller": {
             "validation_empty_comment": "El comentario no puede estar vacío.",

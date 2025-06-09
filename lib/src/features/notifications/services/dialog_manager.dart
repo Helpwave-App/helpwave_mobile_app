@@ -5,5 +5,10 @@ class DialogManager {
 
   static void setDialogShown(bool value) {
     _isDialogShown = value;
+    print('DialogManager: Dialog shown state changed to: $value');
+  }
+
+  static void reset() {
+    _isDialogShown = false;
   }
 }

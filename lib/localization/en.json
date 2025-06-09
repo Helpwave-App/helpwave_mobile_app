@@ -220,6 +220,23 @@
             "error_saving": "Error saving changes."
         }
     },
+    "reports": {
+        "report_screen": {
+            "title": "Incident report",
+            "description": "We are very sorry you had a bad experience. Please tell us what happened so we can provide a solution.",
+            "comment_hint": "Comment (optional)",
+            "submit_button": "Submit report",
+            "snackbar": {
+                "select_reason": "Please select a report reason",
+                "profile_not_found": "Error: profile not found",
+                "success": "Report submitted successfully",
+                "error": "Error"
+            },
+            "error": {
+                "loading": "Error loading report reasons"
+            }
+        }
+    },
     "reviews": {
         "review_controller": {
             "validation_empty_comment": "Comment cannot be empty.",

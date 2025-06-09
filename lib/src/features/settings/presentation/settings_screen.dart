@@ -83,14 +83,29 @@ class SettingsScreen extends ConsumerWidget {
                 );
 
                 if (confirm == true) {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (_) => Scaffold(
+                      backgroundColor: Colors.transparent,
+                      body: Center(
+                        child: CircularProgressIndicator(
+                          color: Theme.of(context).colorScheme.secondary,
+                        ),
+                      ),
+                    ),
+                  );
+
                   final authService = ref.read(authServiceProvider);
                   await authService.logout();
 
                   clearUserSession(ref);
 
+                  if (context.mounted) Navigator.pop(context);
+
                   if (context.mounted) {
                     Navigator.of(context).pushNamedAndRemoveUntil(
-                      AppRouter.loginRoute,
+                      AppRouter.loadingRoute,
                       (route) => false,
                     );
                   }
