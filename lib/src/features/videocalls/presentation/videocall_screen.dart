@@ -104,6 +104,8 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     if (_isLoading) {
       return Scaffold(
         body: Center(
@@ -116,7 +118,18 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
     return Scaffold(
       appBar: AppBar(
-          title: Text(LocaleKeys.videocalls_videocall_screen_title.tr())),
+        automaticallyImplyLeading: false,
+        title: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            LocaleKeys.videocalls_videocall_screen_title.tr(),
+            style: const TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: theme.colorScheme.secondary,
+        foregroundColor: theme.colorScheme.onSecondary,
+      ),
       body: Stack(
         children: [
           Center(child: _isSwapped ? _buildLocalVideo() : _buildRemoteVideo()),
