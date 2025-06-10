@@ -45,6 +45,7 @@
                 "name": "Nombre",
                 "lastName": "Apellido",
                 "phoneNumber": "Número de teléfono",
+                "email": "Correo electrónico",
                 "username": "Nombre de usuario",
                 "password": "Contraseña",
                 "language": "Idioma"
@@ -53,6 +54,7 @@
                 "required": "Este campo es obligatorio",
                 "onlyLetters": "Usa solo letras y espacios válidos",
                 "phoneNumber": "Ingresa un número de 9 dígitos válido",
+                "email": "Ingresa un correo electrónico válido",
                 "username": "Usa al menos 6 caracteres alfanuméricos",
                 "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
                 "unknownError": "Error desconocido",

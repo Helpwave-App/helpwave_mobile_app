@@ -37,31 +37,58 @@ class LanguageProfileService {
 
   Future<void> addLanguageToProfile({
     required int idLanguage,
+    int? idProfile,
   }) async {
-    final idUser = await _secureStorage.read(key: 'id_user');
-    final token = await _secureStorage.read(key: 'jwt_token');
+    int? profileId;
 
-    if (token == null || idUser == null) {
-      throw Exception('Token o idProfile no encontrados');
+    if (idProfile != null) {
+      profileId = idProfile;
+      print('🔍 Usando idProfile del parámetro: $profileId');
+    } else {
+      final idUserStr = await _secureStorage.read(key: 'id_user');
+      if (idUserStr != null) {
+        profileId = int.tryParse(idUserStr);
+        print('🔍 Obtenido idProfile del storage: $profileId');
+      }
+    }
+
+    if (profileId == null) {
+      throw Exception('idProfile no encontrado');
     }
 
     final url = Uri.parse('$baseUrl/languageProfiles');
+
+    print('🔍 Enviando solicitud POST a: $url');
+    print('🔍 Payload: {"idProfile": $profileId, "idLanguage": $idLanguage}');
 
     final response = await http.post(
       url,
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer $token',
       },
       body: jsonEncode({
-        "idProfile": idUser,
+        "idProfile": profileId,
         "idLanguage": idLanguage,
       }),
     );
 
-    if (response.statusCode != 201) {
+    print('🔍 Response Status: ${response.statusCode}');
+    print('🔍 Response Body: ${response.body}');
+    print('🔍 Response Headers: ${response.headers}');
+
+    if (response.statusCode != 200) {
+      String errorDetail = '';
+      try {
+        final errorData = jsonDecode(response.body);
+        errorDetail = ' - Detalle: $errorData';
+      } catch (e) {
+        errorDetail = ' - Response: ${response.body}';
+      }
+
       throw Exception(
-          'Error al registrar idioma en el perfil (${response.statusCode})');
+          'Error al registrar idioma en el perfil (${response.statusCode})$errorDetail');
     }
+
+    print('✅ Idioma agregado exitosamente al perfil $profileId');
   }
 }

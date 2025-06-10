@@ -45,6 +45,7 @@
                 "firstName": "First Name",
                 "lastName": "Last Name",
                 "phoneNumber": "Phone Number",
+                "email": "Email Address",
                 "username": "Username",
                 "password": "Password",
                 "language": "Language"
@@ -53,6 +54,7 @@
                 "required": "This field is required",
                 "onlyLetters": "Use only valid letters and spaces",
                 "phoneNumber": "Enter a valid 9-digit phone number",
+                "email": "Enter a valid email address",
                 "username": "Use at least 6 alphanumeric characters",
                 "passwordMinLength": "Password must be at least 6 characters",
                 "unknownError": "Unknown error",

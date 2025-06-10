@@ -26,7 +26,7 @@ class ReportService {
       body: json.encode(report.toJson()),
     );
 
-    if (response.statusCode != 201) {
+    if (response.statusCode != 200) {
       throw Exception(
         'Error al registrar el reporte: ${response.statusCode} - ${response.body}',
       );

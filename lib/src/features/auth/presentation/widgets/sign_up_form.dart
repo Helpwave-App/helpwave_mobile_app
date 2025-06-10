@@ -124,7 +124,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       hasError = true;
     }
 
-    setState(() {}); // Refrescar errores en UI
+    setState(() {});
     if (hasError) {
       setState(() => _isLoading = false);
       return;
@@ -147,14 +147,23 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       final idProfile = result['idProfile'];
       if (!mounted) return;
 
+      print('✅ Usuario registrado exitosamente con idProfile: $idProfile');
+
       final languageProfileService = ref.read(languageProfileServiceProvider);
       await languageProfileService.addLanguageToProfile(
-          idLanguage: _selectedLanguageId!);
+        idLanguage: _selectedLanguageId!,
+        idProfile:
+            idProfile is int ? idProfile : int.parse(idProfile.toString()),
+      );
+
+      print('✅ Idioma agregado exitosamente al perfil');
 
       final usernameIndex = widget.fields.indexWhere((f) =>
-          f.translationKey == LocaleKeys.auth_signUpForm_fields_username);
+          tr(f.translationKey) ==
+          tr(LocaleKeys.auth_signUpForm_fields_username));
       final passwordIndex = widget.fields.indexWhere((f) =>
-          f.translationKey == LocaleKeys.auth_signUpForm_fields_password);
+          tr(f.translationKey) ==
+          tr(LocaleKeys.auth_signUpForm_fields_password));
 
       if (usernameIndex == -1 || passwordIndex == -1) {
         _showError(tr(LocaleKeys.auth_signUpForm_errors_internalError));
@@ -173,9 +182,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
         curve: Curves.easeInOut,
       ));
     } catch (e) {
+      print('❌ Error detallado durante el registro: $e');
       _showError(tr(LocaleKeys.auth_signUpForm_errors_unexpectedError));
       if (kDebugMode) {
-        print('Error en submit(): $e');
+        print('Stack trace: ${e.toString()}');
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);
