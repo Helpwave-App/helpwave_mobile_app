@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helpwave_mobile_app/src/features/reports/presentation/report_screen.dart';
 import 'package:helpwave_mobile_app/src/features/reviews/presentation/review_screen.dart';
 import 'package:helpwave_mobile_app/src/features/availability/presentation/user_availability_screen.dart';
-import 'package:helpwave_mobile_app/src/features/settings/presentation/help_center_screen.dart';
+import 'package:helpwave_mobile_app/src/features/settings/presentation/pages/help_center_screen.dart';
 
 import '../common/pages/loading_screen.dart';
 import '../features/auth/presentation/pages/permissions_screen.dart';
@@ -19,11 +19,11 @@ import '../features/auth/presentation/pages/register/registration_completed_volu
 import '../features/gamification/presentation/end_videocall_screen.dart';
 import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
-import '../features/settings/presentation/settings_screen.dart';
+import '../features/settings/presentation/pages/settings_screen.dart';
 import '../features/videocalls/presentation/connecting_screen.dart';
 import '../features/videocalls/presentation/videocall_screen.dart';
 import '../features/settings/presentation/settings_options_screen.dart';
-import '../features/settings/presentation/profile_screen.dart';
+import '../features/settings/presentation/pages/profile_screen.dart';
 import '../features/profile/presentation/user_info_screen.dart';
 import '../features/skills/presentation/user_skills_screen.dart';
 
