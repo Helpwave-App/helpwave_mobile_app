@@ -242,6 +242,7 @@ abstract class  LocaleKeys {
   static const settings_settings_screen_select_theme = 'settings.settings.screen.select_theme';
   static const settings_settings_screen_about = 'settings.settings.screen.about';
   static const settings_settings_screen_about_description = 'settings.settings.screen.about_description';
+  static const settings_settings_screen_language = 'settings.settings.screen.language';
   static const settings_settings_screen = 'settings.settings.screen';
   static const settings_settings_help_center_title = 'settings.settings.help_center.title';
   static const settings_settings_help_center_help_faq_n1 = 'settings.settings.help_center.help_faq.n1';

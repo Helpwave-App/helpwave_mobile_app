@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -39,6 +40,19 @@ final tempVolunteerProfileProvider =
     StateProvider<Map<String, dynamic>?>((ref) => null);
 
 final profileProvider = StateProvider<User?>((_) => null);
+
+final themeModeProvider =
+    StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
+  return ThemeModeNotifier();
+});
+
+class ThemeModeNotifier extends StateNotifier<ThemeMode> {
+  ThemeModeNotifier() : super(ThemeMode.system);
+
+  void setThemeMode(ThemeMode mode) {
+    state = mode;
+  }
+}
 
 final languageProfileServiceProvider = Provider<LanguageProfileService>((ref) {
   return LanguageProfileService();

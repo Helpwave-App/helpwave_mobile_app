@@ -292,7 +292,8 @@
                 "app_theme": "Tema de la aplicación",
                 "select_theme": "Seleccionar tema",
                 "about": "General",
-                "about_description": "Acerca de HelpWave"
+                "about_description": "Acerca de HelpWave",
+                "language": "Idioma"
             },
             "help_center": {
                 "title": "Centro de ayuda",

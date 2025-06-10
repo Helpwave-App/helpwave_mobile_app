@@ -1,10 +1,68 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:app_settings/app_settings.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../localization/codegen_loader.g.dart';
+import '../../../common/utils/constants/providers.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
+
+  String _getThemeModeLabel(ThemeMode mode) {
+    switch (mode) {
+      case ThemeMode.light:
+        return 'Claro';
+      case ThemeMode.dark:
+        return 'Oscuro';
+      case ThemeMode.system:
+        return 'Predeterminado por el sistema';
+    }
+  }
+
+  void _showThemeSelectorDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Consumer(
+          builder: (context, ref, _) {
+            final currentTheme = ref.watch(themeModeProvider);
+            final theme = Theme.of(context);
+
+            return AlertDialog(
+              backgroundColor: theme.colorScheme.surface,
+              title: Text(
+                'Seleccionar tema',
+                style: TextStyle(color: theme.colorScheme.onSurface),
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: ThemeMode.values.map((mode) {
+                  return RadioListTile<ThemeMode>(
+                    title: Text(
+                      _getThemeModeLabel(mode),
+                      style: TextStyle(color: theme.colorScheme.onSurface),
+                    ),
+                    value: mode,
+                    groupValue: currentTheme,
+                    activeColor: theme.colorScheme.primary,
+                    onChanged: (value) {
+                      if (value != null) {
+                        ref
+                            .read(themeModeProvider.notifier)
+                            .setThemeMode(value);
+                        Navigator.of(context).pop();
+                      }
+                    },
+                  );
+                }).toList(),
+              ),
+            );
+          },
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +95,7 @@ class SettingsScreen extends StatelessWidget {
                   .tr()),
               contentPadding: EdgeInsets.zero,
               onTap: () {
-                // TODO: Abrir configuración del sistema
+                AppSettings.openAppSettings();
               },
             ),
             const _CenteredDivider(),
@@ -51,9 +109,7 @@ class SettingsScreen extends StatelessWidget {
               title:
                   Text(LocaleKeys.settings_settings_screen_select_theme.tr()),
               contentPadding: EdgeInsets.zero,
-              onTap: () {
-                // TODO: Abrir selector de tema
-              },
+              onTap: () => _showThemeSelectorDialog(context),
             ),
             const _CenteredDivider(),
             const SizedBox(height: 24),
@@ -68,6 +124,13 @@ class SettingsScreen extends StatelessWidget {
               contentPadding: EdgeInsets.zero,
               onTap: () {
                 // TODO: Navegar a pantalla "Acerca de HelpWave"
+              },
+            ),
+            ListTile(
+              title: Text(LocaleKeys.settings_settings_screen_language.tr()),
+              contentPadding: EdgeInsets.zero,
+              onTap: () {
+                // TODO: Navegar a pantalla "Idioma"
               },
             ),
           ],

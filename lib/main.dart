@@ -6,6 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 
 import 'src/common/utils/constants/app_theme.dart';
+import 'src/common/utils/constants/providers.dart';
 import 'src/common/utils/firebase/fcm_config.dart';
 import 'src/common/utils/firebase/firebase_options.dart';
 import 'src/features/notifications/services/device_token_service.dart';
@@ -77,16 +78,19 @@ void main() async {
   );
 }
 
-class HelpWaveApp extends StatelessWidget {
+class HelpWaveApp extends ConsumerWidget {
   const HelpWaveApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+
     return MaterialApp(
       navigatorKey: navigatorKey,
       title: 'HelpWave',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
+      themeMode: themeMode,
       initialRoute: AppRouter.loadingRoute,
       onGenerateRoute: AppRouter.generateRoute,
       localizationsDelegates: context.localizationDelegates,
