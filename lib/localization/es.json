@@ -290,9 +290,29 @@
                 "notifications": "Notificaciones",
                 "open_system_settings": "Abrir configuración del sistema",
                 "app_theme": "Tema de la aplicación",
-                "select_theme": "Seleccionar tema",
-                "about": "General",
-                "about_description": "Acerca de HelpWave",
+                "theme": {
+                    "section_title": "Tema de la aplicación",
+                    "select_theme": {
+                        "button": "Seleccionar tema",
+                        "dialog": {
+                            "title": "Selecciona un tema",
+                            "light": "Claro",
+                            "dark": "Oscuro",
+                            "system_default": "Predeterminado del sistema"
+                        }
+                    }
+
+                },
+                "general":{
+                    "section_title": "General",
+                    "about": {
+                        "button": "Acerca de HelpWave",
+                        "dialog":{
+                            "title": "Síguenos en redes sociales",
+                            "close": "Cerrar"
+                        }
+                    }
+                },
                 "language": "Idioma"
             },
             "help_center": {

@@ -290,9 +290,28 @@
                 "notifications": "Notifications",
                 "open_system_settings": "Open system settings",
                 "app_theme": "App Theme",
-                "select_theme": "Select theme",
-                "about": "General",
-                "about_description": "About HelpWave",
+                "theme": {
+                    "section_title": "App Theme",
+                    "select_theme": {
+                        "button": "Select Theme",
+                        "dialog": {
+                            "title": "Select App Theme",
+                            "light": "Light",
+                            "dark": "Dark",
+                            "system_default": "System Default"
+                        }
+                    }
+                },
+                "general":{
+                    "section_title": "General",
+                    "about": {
+                        "button": "About HelpWave",
+                        "dialog":{
+                            "title": "Follow us on social media",
+                            "close": "Close"
+                        }
+                    }
+                },
                 "language": "Language"
             },
             "help_center": {
