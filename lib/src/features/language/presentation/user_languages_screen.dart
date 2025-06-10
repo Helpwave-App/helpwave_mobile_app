@@ -27,7 +27,13 @@ class UserLanguagesScreen extends ConsumerWidget {
       body: userLanguagesAsync.when(
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(
-          child: Text('Error al cargar idiomas: $error'),
+          child: Text(
+            LocaleKeys
+                .settings_settings_screen_general_select_language_screen_error
+                .tr(
+              args: [error.toString()],
+            ),
+          ),
         ),
         data: (_) => Padding(
           padding: const EdgeInsets.all(16.0),
@@ -35,7 +41,7 @@ class UserLanguagesScreen extends ConsumerWidget {
             children: [
               Text(
                 LocaleKeys
-                    .settings_settings_screen_general_select_language_dialog_languages_list
+                    .settings_settings_screen_general_select_language_screen_languages_list
                     .tr(),
                 style: theme.textTheme.titleMedium,
               ),
@@ -53,15 +59,22 @@ class UserLanguagesScreen extends ConsumerWidget {
                                     .read(userLanguagesProvider.notifier)
                                     .removeLanguage(languageName);
                                 ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content:
-                                        Text('Idioma eliminado correctamente.'),
+                                  SnackBar(
+                                    content: Text(
+                                      LocaleKeys
+                                          .settings_settings_screen_general_select_language_screen_snackbar_deleted
+                                          .tr(),
+                                    ),
                                   ),
                                 );
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
-                                    content: Text('Error: ${e.toString()}'),
+                                    content: Text(
+                                      LocaleKeys
+                                          .settings_settings_screen_general_select_language_screen_snackbar_error
+                                          .tr(args: [e.toString()]),
+                                    ),
                                     backgroundColor: Colors.red,
                                   ),
                                 );
@@ -78,15 +91,19 @@ class UserLanguagesScreen extends ConsumerWidget {
                   final result = await showAddLanguageDialog(context, ref);
                   if (result == true) {
                     ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Idioma agregado correctamente.'),
+                      SnackBar(
+                        content: Text(
+                          LocaleKeys
+                              .settings_settings_screen_general_select_language_screen_snackbar_added
+                              .tr(),
+                        ),
                       ),
                     );
                   }
                 },
                 icon: const Icon(Icons.add),
                 label: Text(LocaleKeys
-                    .settings_settings_screen_general_select_language_dialog_add_language
+                    .settings_settings_screen_general_select_language_screen_add_language
                     .tr()),
               ),
             ],

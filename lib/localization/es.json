@@ -316,16 +316,21 @@
                     "section_title": "Idioma",
                     "select_language": {
                         "button": "Seleccionar idioma",
-                        "dialog": {
-                            "title": "Selecciona un idioma",
+                        "screen": {
                             "languages_list": "Lista de idiomas",
                             "add_language": "Agregar idioma",
-                            "loading_languages": "Cargando idiomas...",
-                            "error_loading_languages": "Error al cargar los idiomas disponibles.",
-                            "language_not_found": "Idioma no encontrado",
-                            "languages": {
-                                "english": "Inglés",
-                                "spanish": "Español"
+                            "error":"Error al cargar el progreso: {{error}}",
+                            "snackbar":{
+                                "deleted": "Idioma eliminado exitosamente.",
+                                "error": "Se produjo un error: {}",
+                                "added": "Idioma añadido exitosamente."
+                            },
+                            "dialog":{
+                                "title": "Selecciona Idioma",
+                                "no_languages": "Ya has agregado todos los idiomas disponibles",
+                                "label": "Idioma",
+                                "cancel": "Cancelar",
+                                "accept": "Aceptar"
                             }
                         }
                     }

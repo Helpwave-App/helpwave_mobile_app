@@ -312,16 +312,21 @@
                     },
                     "select_language": {
                         "button": "Select Language",
-                        "dialog": {
-                            "title": "Select App Language",
+                        "screen": {
                             "languages_list": "Available Languages",
                             "add_language": "Add Language",
-                            "loading_languages": "Loading languages...",
-                            "error_loading_languages": "Error loading languages",
-                            "language_not_found": "Language not found",
-                            "languages": {
-                                "english": "English",
-                                "spanish": "Spanish"
+                            "error":"Error loading progress: {{error}}",
+                            "snackbar":{
+                                "deleted": "Language successfully removed.",
+                                "error": "An error occurred: {}",
+                                "added": "Language successfully added."
+                            },
+                            "dialog":{
+                                "title": "Select Language",
+                                "no_languages": "You have now added all available languages.",
+                                "label": "Language",
+                                "cancel": "Cancel",
+                                "accept": "Accept"
                             }
                         }
                     }

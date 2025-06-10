@@ -1,11 +1,13 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../domain/language_model.dart';
 
 Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
-  LanguageModel? selectedLanguage; // Estado persistente
+  LanguageModel? selectedLanguage;
 
   return showDialog<bool>(
     context: context,
@@ -13,7 +15,9 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
       return StatefulBuilder(
         builder: (context, setState) {
           return AlertDialog(
-            title: const Text('Seleccionar idioma'),
+            title: Text(LocaleKeys
+                .settings_settings_screen_general_select_language_screen_dialog_title
+                .tr()),
             content: Consumer(
               builder: (context, ref, _) {
                 final asyncLanguages = ref.watch(languagesProvider);
@@ -27,8 +31,10 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                         .toList();
 
                     if (remaining.isEmpty) {
-                      return const Text(
-                        'Ya has agregado todos los idiomas disponibles.',
+                      return Text(
+                        LocaleKeys
+                            .settings_settings_screen_general_select_language_screen_dialog_no_languages
+                            .tr(),
                         style: TextStyle(fontStyle: FontStyle.italic),
                       );
                     }
@@ -45,8 +51,10 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                           selectedLanguage = value;
                         });
                       },
-                      decoration: const InputDecoration(
-                        labelText: 'Idioma',
+                      decoration: InputDecoration(
+                        labelText: LocaleKeys
+                            .settings_settings_screen_general_select_language_screen_dialog_label
+                            .tr(),
                       ),
                       value: selectedLanguage,
                     );
@@ -60,7 +68,11 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
             actions: [
               TextButton(
                 onPressed: () => Navigator.of(context).pop(false),
-                child: const Text('Cancelar'),
+                child: Text(
+                  LocaleKeys
+                      .settings_settings_screen_general_select_language_screen_dialog_cancel
+                      .tr(),
+                ),
               ),
               ElevatedButton(
                 onPressed: selectedLanguage != null
@@ -71,7 +83,11 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                         Navigator.of(context).pop(true);
                       }
                     : null,
-                child: const Text('Agregar'),
+                child: Text(
+                  LocaleKeys
+                      .settings_settings_screen_general_select_language_screen_dialog_accept
+                      .tr(),
+                ),
               ),
             ],
           );
