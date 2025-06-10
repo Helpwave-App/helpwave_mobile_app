@@ -272,10 +272,10 @@
             }
         },
         "settings": {
-            "title": "Settings",
+            "title": "Configuration",
             "options": {
                 "viewProfile": "View Profile",
-                "notifications": "Notifications",
+                "settings": "Settings",
                 "helpCenter": "Help Center",
                 "logout": "Log out"
             },
@@ -284,6 +284,34 @@
                 "logoutMessage": "Are you sure you want to log out?",
                 "cancel": "Cancel",
                 "confirm": "Log out"
+            },
+            "screen": {
+                "title": "Settings",
+                "notifications": "Notifications",
+                "open_system_settings": "Open system settings",
+                "app_theme": "App Theme",
+                "select_theme": "Select theme",
+                "about": "General",
+                "about_description": "About HelpWave"
+            },
+            "help_center": {
+                "title": "Help Center",
+                "help_faq": {
+                    "n1": "How can I request help on HelpWave?",
+                    "n2": "What kind of assistance can I receive through the app?",
+                    "n3": "Who can offer help as volunteers?",
+                    "n4": "How is my privacy protected during a video call?",
+                    "n5": "What should I do if I don’t receive a response after requesting help?",
+                    "n6": "How do I rate the support received after a session?"
+                },
+                "help_faq_answer": {
+                    "n1": "To request help, go to the main screen and select a category based on your need. A volunteer will be notified and can assist you through a video call.",
+                    "n2": "You can receive support for digital, technical, and everyday tasks such as configuring devices, understanding documents, or organizing your agenda.",
+                    "n3": "Anyone with the right skills and willingness to help can volunteer. HelpWave verifies each volunteer’s profile to ensure quality and trust.",
+                    "n4": "We use end-to-end encryption to protect your calls. Additionally, no video or audio is recorded, and personal data is kept confidential.",
+                    "n5": "If you don’t receive a response, you can retry the request or wait a few minutes. Volunteers may be unavailable momentarily.",
+                    "n6": "At the end of the session, you’ll be asked to rate your experience. This helps improve the service and recognize the volunteers’ work."
+                }
             }
         }
     },

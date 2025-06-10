@@ -275,7 +275,7 @@
             "title": "Configuración",
             "options": {
                 "viewProfile": "Ver perfil",
-                "notifications": "Notificaciones",
+                "settings": "Ajustes",
                 "helpCenter": "Centro de ayuda",
                 "logout": "Cerrar sesión"
             },
@@ -284,6 +284,34 @@
                 "logoutMessage": "¿Estás seguro de que deseas cerrar sesión?",
                 "cancel": "Cancelar",
                 "confirm": "Cerrar sesión"
+            },
+            "screen": {
+                "title": "Ajustes",
+                "notifications": "Notificaciones",
+                "open_system_settings": "Abrir configuración del sistema",
+                "app_theme": "Tema de la aplicación",
+                "select_theme": "Seleccionar tema",
+                "about": "General",
+                "about_description": "Acerca de HelpWave"
+            },
+            "help_center": {
+                "title": "Centro de ayuda",
+                "help_faq": {
+                    "n1": "¿Cómo puedo solicitar ayuda en HelpWave?",
+                    "n2": "¿Qué tipo de asistencia puedo recibir a través de la app?",
+                    "n3": "¿Quiénes pueden ofrecer ayuda como voluntarios?",
+                    "n4": "¿Cómo se protege mi privacidad durante una videollamada?",
+                    "n5": "¿Qué debo hacer si no recibo respuesta tras solicitar ayuda?",
+                    "n6": "¿Cómo califico la atención recibida después de una sesión?"
+                },
+                "help_faq_answer": {
+                    "n1": "Para solicitar ayuda, ve a la pantalla principal y selecciona una categoría según tu necesidad. Un voluntario será notificado y podrá asistirte mediante una videollamada.",
+                    "n2": "Puedes recibir apoyo en tareas digitales, técnicas y cotidianas, como configurar dispositivos, entender documentos u organizar tu agenda.",
+                    "n3": "Cualquier persona con las habilidades adecuadas y disposición para ayudar puede ser voluntaria. HelpWave verifica el perfil de cada voluntario para garantizar calidad y confianza.",
+                    "n4": "Utilizamos cifrado de extremo a extremo para proteger tus llamadas. Además, no se graban videos ni audios, y los datos personales se mantienen confidenciales.",
+                    "n5": "Si no recibes respuesta, puedes volver a intentar la solicitud o esperar unos minutos. Es posible que los voluntarios no estén disponibles temporalmente.",
+                    "n6": "Al finalizar la sesión, se te pedirá que califiques tu experiencia. Esto ayuda a mejorar el servicio y reconocer el trabajo de los voluntarios."
+                }
             }
         }
     },

@@ -1,23 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
 
 import '../../../../localization/codegen_loader.g.dart';
-import '../../../common/utils/constants/providers.dart';
-import '../../../routing/app_router.dart';
 
-class SettingsScreen extends ConsumerWidget {
+class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return Scaffold(
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         title: Text(
-          LocaleKeys.settings_settings_title.tr(),
+          LocaleKeys.settings_settings_screen_title.tr(),
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.secondary,
@@ -25,91 +22,52 @@ class SettingsScreen extends ConsumerWidget {
         elevation: 0,
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+        padding: const EdgeInsets.symmetric(horizontal: 36, vertical: 48),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            _SettingsSectionHeader(
+              icon: Icons.notifications,
+              title: LocaleKeys.settings_settings_screen_notifications.tr(),
+              theme: theme,
+            ),
             ListTile(
-              leading: const Icon(Icons.person),
+              title: Text(LocaleKeys
+                  .settings_settings_screen_open_system_settings
+                  .tr()),
+              contentPadding: EdgeInsets.zero,
+              onTap: () {
+                // TODO: Abrir configuración del sistema
+              },
+            ),
+            const _CenteredDivider(),
+            const SizedBox(height: 24),
+            _SettingsSectionHeader(
+              icon: Icons.contrast,
+              title: LocaleKeys.settings_settings_screen_app_theme.tr(),
+              theme: theme,
+            ),
+            ListTile(
               title:
-                  Text(LocaleKeys.settings_settings_options_viewProfile.tr()),
+                  Text(LocaleKeys.settings_settings_screen_select_theme.tr()),
+              contentPadding: EdgeInsets.zero,
               onTap: () {
-                Navigator.of(context).pushNamed(AppRouter.profileRoute);
+                // TODO: Abrir selector de tema
               },
             ),
-            ListTile(
-              leading: const Icon(Icons.notifications),
-              title:
-                  Text(LocaleKeys.settings_settings_options_notifications.tr()),
-              onTap: () {
-                // TODO: Navegar a notificaciones
-              },
+            const _CenteredDivider(),
+            const SizedBox(height: 24),
+            _SettingsSectionHeader(
+              icon: Icons.info_outline,
+              title: LocaleKeys.settings_settings_screen_about.tr(),
+              theme: theme,
             ),
             ListTile(
-              leading: const Icon(Icons.help_outline),
-              title: Text(LocaleKeys.settings_settings_options_helpCenter.tr()),
-              onTap: () {
-                // TODO: Navegar al centro de ayuda
-              },
-            ),
-            const Spacer(),
-            ListTile(
-              leading: const Icon(Icons.logout, color: Colors.red),
               title: Text(
-                LocaleKeys.settings_settings_options_logout.tr(),
-                style: const TextStyle(color: Colors.red),
-              ),
-              onTap: () async {
-                final confirm = await showDialog<bool>(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Text(
-                        LocaleKeys.settings_settings_dialog_logoutTitle.tr()),
-                    content: Text(
-                        LocaleKeys.settings_settings_dialog_logoutMessage.tr()),
-                    actions: [
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, false),
-                        child: Text(
-                            LocaleKeys.settings_settings_dialog_cancel.tr()),
-                      ),
-                      TextButton(
-                        onPressed: () => Navigator.pop(context, true),
-                        child: Text(
-                            LocaleKeys.settings_settings_dialog_confirm.tr()),
-                      ),
-                    ],
-                  ),
-                );
-
-                if (confirm == true) {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (_) => Scaffold(
-                      backgroundColor: Colors.transparent,
-                      body: Center(
-                        child: CircularProgressIndicator(
-                          color: Theme.of(context).colorScheme.secondary,
-                        ),
-                      ),
-                    ),
-                  );
-
-                  final authService = ref.read(authServiceProvider);
-                  await authService.logout();
-
-                  clearUserSession(ref);
-
-                  if (context.mounted) Navigator.pop(context);
-
-                  if (context.mounted) {
-                    Navigator.of(context).pushNamedAndRemoveUntil(
-                      AppRouter.loadingRoute,
-                      (route) => false,
-                    );
-                  }
-                }
+                  LocaleKeys.settings_settings_screen_about_description.tr()),
+              contentPadding: EdgeInsets.zero,
+              onTap: () {
+                // TODO: Navegar a pantalla "Acerca de HelpWave"
               },
             ),
           ],
@@ -119,16 +77,45 @@ class SettingsScreen extends ConsumerWidget {
   }
 }
 
-void clearUserSession(WidgetRef ref) {
-  ref.invalidate(profileFutureProvider);
-  ref.invalidate(profileProvider);
-  ref.invalidate(tempVolunteerProfileProvider);
+class _SettingsSectionHeader extends StatelessWidget {
+  final IconData icon;
+  final String title;
+  final ThemeData theme;
 
-  ref.invalidate(skillsFutureProvider);
-  ref.invalidate(userSkillsProvider);
-  ref.invalidate(availabilityFutureProvider);
+  const _SettingsSectionHeader({
+    required this.icon,
+    required this.title,
+    required this.theme,
+  });
 
-  ref.invalidate(userRoleProvider);
-  ref.invalidate(signUpFormControllerProvider);
-  ref.invalidate(userSkillsControllerProvider);
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: theme.colorScheme.primary),
+        const SizedBox(width: 8),
+        Text(
+          title,
+          style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+              color: theme.colorScheme.primary),
+        ),
+      ],
+    );
+  }
+}
+
+class _CenteredDivider extends StatelessWidget {
+  const _CenteredDivider();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.9,
+        child: const Divider(thickness: 1),
+      ),
+    );
+  }
 }
