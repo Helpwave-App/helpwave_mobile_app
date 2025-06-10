@@ -289,7 +289,6 @@
                 "title": "Settings",
                 "notifications": "Notifications",
                 "open_system_settings": "Open system settings",
-                "app_theme": "App Theme",
                 "theme": {
                     "section_title": "App Theme",
                     "select_theme": {
@@ -302,17 +301,31 @@
                         }
                     }
                 },
-                "general":{
+                "general": {
                     "section_title": "General",
                     "about": {
                         "button": "About HelpWave",
-                        "dialog":{
+                        "dialog": {
                             "title": "Follow us on social media",
                             "close": "Close"
                         }
+                    },
+                    "select_language": {
+                        "button": "Select Language",
+                        "dialog": {
+                            "title": "Select App Language",
+                            "languages_list": "Available Languages",
+                            "add_language": "Add Language",
+                            "loading_languages": "Loading languages...",
+                            "error_loading_languages": "Error loading languages",
+                            "language_not_found": "Language not found",
+                            "languages": {
+                                "english": "English",
+                                "spanish": "Spanish"
+                            }
+                        }
                     }
-                },
-                "language": "Language"
+                }
             },
             "help_center": {
                 "title": "Help Center",

@@ -91,4 +91,31 @@ class LanguageProfileService {
 
     print('✅ Idioma agregado exitosamente al perfil $profileId');
   }
+
+  Future<void> removeLanguageFromProfile(int idLanguageProfile) async {
+    final token = await _secureStorage.read(key: 'jwt_token');
+
+    if (token == null) {
+      throw Exception('Token no encontrado');
+    }
+
+    final url = Uri.parse('$baseUrl/languageProfiles/$idLanguageProfile');
+
+    final response = await http.delete(
+      url,
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        'Error al eliminar el idioma del perfil (status ${response.statusCode}): ${response.body}',
+      );
+    }
+
+    print(
+        '✅ Idioma con id $idLanguageProfile eliminado correctamente del perfil');
+  }
 }

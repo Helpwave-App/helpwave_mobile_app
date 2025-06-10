@@ -19,6 +19,7 @@ import '../features/auth/presentation/pages/register/registration_completed_volu
 import '../features/gamification/presentation/end_videocall_screen.dart';
 import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
+import '../features/language/presentation/user_languages_screen.dart';
 import '../features/settings/presentation/pages/settings_screen.dart';
 import '../features/videocalls/presentation/connecting_screen.dart';
 import '../features/videocalls/presentation/videocall_screen.dart';
@@ -51,6 +52,7 @@ class AppRouter {
   static const String endVideocallRoute = '/videocall-end';
   static const String settingsOptionsRoute = '/settings-options';
   static const String settingsRoute = '/settings';
+  static const String languageRoute = '/language-user';
   static const String helpCenterRoute = '/help-center';
   static const String profileRoute = '/profile';
   static const String userInfoRoute = '/user-info';
@@ -153,6 +155,9 @@ class AppRouter {
 
       case settingsRoute:
         return const SettingsScreen();
+
+      case languageRoute:
+        return const UserLanguagesScreen();
 
       case helpCenterRoute:
         return const HelpCenterScreen();
@@ -281,6 +286,9 @@ class AppRouter {
 
       case settingsRoute:
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
+
+      case languageRoute:
+        return MaterialPageRoute(builder: (_) => const UserLanguagesScreen());
 
       case helpCenterRoute:
         return MaterialPageRoute(builder: (_) => const HelpCenterScreen());

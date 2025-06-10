@@ -289,7 +289,6 @@
                 "title": "Ajustes",
                 "notifications": "Notificaciones",
                 "open_system_settings": "Abrir configuración del sistema",
-                "app_theme": "Tema de la aplicación",
                 "theme": {
                     "section_title": "Tema de la aplicación",
                     "select_theme": {
@@ -313,7 +312,24 @@
                         }
                     }
                 },
-                "language": "Idioma"
+                "language": {
+                    "section_title": "Idioma",
+                    "select_language": {
+                        "button": "Seleccionar idioma",
+                        "dialog": {
+                            "title": "Selecciona un idioma",
+                            "languages_list": "Lista de idiomas",
+                            "add_language": "Agregar idioma",
+                            "loading_languages": "Cargando idiomas...",
+                            "error_loading_languages": "Error al cargar los idiomas disponibles.",
+                            "language_not_found": "Idioma no encontrado",
+                            "languages": {
+                                "english": "Inglés",
+                                "spanish": "Español"
+                            }
+                        }
+                    }
+                }
             },
             "help_center": {
                 "title": "Centro de ayuda",

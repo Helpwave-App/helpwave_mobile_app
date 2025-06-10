@@ -1,6 +1,7 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 
 import '../../../../../localization/codegen_loader.g.dart';
 import '../dialogs/about_dialog.dart' as custom_about_dialog;
@@ -46,12 +47,14 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 24),
             _SettingsSectionHeader(
               icon: Icons.contrast,
-              title: LocaleKeys.settings_settings_screen_app_theme.tr(),
+              title:
+                  LocaleKeys.settings_settings_screen_theme_section_title.tr(),
               theme: theme,
             ),
             ListTile(
-              title: Text(
-                  LocaleKeys.settings_settings_screen_theme_section_title.tr()),
+              title: Text(LocaleKeys
+                  .settings_settings_screen_theme_select_theme_button
+                  .tr()),
               contentPadding: EdgeInsets.zero,
               onTap: () => showThemeSelectorDialog(context),
             ),
@@ -71,10 +74,12 @@ class SettingsScreen extends StatelessWidget {
               onTap: () => custom_about_dialog.showAboutDialog(context),
             ),
             ListTile(
-              title: Text(LocaleKeys.settings_settings_screen_language.tr()),
+              title: Text(LocaleKeys
+                  .settings_settings_screen_general_select_language_button
+                  .tr()),
               contentPadding: EdgeInsets.zero,
               onTap: () {
-                // TODO: Navegar a pantalla "Idioma"
+                Navigator.of(context).pushNamed(AppRouter.languageRoute);
               },
             ),
           ],
