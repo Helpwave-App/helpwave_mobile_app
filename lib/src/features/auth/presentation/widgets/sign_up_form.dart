@@ -33,6 +33,10 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   List<String?> _errorMessages = [];
   late List<bool> _obscureTextStates;
   bool _isLoading = false;
+  int? _selectedLanguageId;
+
+  bool _languageTouched = false;
+  bool _languageSubmitAttempted = false;
 
   @override
   void initState() {
@@ -51,7 +55,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   }
 
   Future<void> _onNextPressed() async {
-    setState(() => _isLoading = true);
+    setState(() {
+      _isLoading = true;
+      _languageSubmitAttempted = true;
+    });
+
     final signUpFormController =
         ref.read(signUpFormControllerProvider.notifier);
 
@@ -112,16 +120,18 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       signUpFormController.updateField(fieldLabel, value);
     }
 
-    setState(() {});
+    if (_selectedLanguageId == null) {
+      hasError = true;
+    }
+
+    setState(() {}); // Refrescar errores en UI
     if (hasError) {
       setState(() => _isLoading = false);
       return;
     }
 
     try {
-      final result = await ref
-          .read(signUpFormControllerProvider.notifier)
-          .submit(widget.userType);
+      final result = await signUpFormController.submit(widget.userType);
 
       if (result == null || result.containsKey('error')) {
         final idx = widget.fields.indexWhere((f) =>
@@ -135,10 +145,11 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
       }
 
       final idProfile = result['idProfile'];
-      if (kDebugMode) {
-        print('idProfile obtenido después del registro: $idProfile');
-      }
       if (!mounted) return;
+
+      final languageProfileService = ref.read(languageProfileServiceProvider);
+      await languageProfileService.addLanguageToProfile(
+          idLanguage: _selectedLanguageId!);
 
       final usernameIndex = widget.fields.indexWhere((f) =>
           f.translationKey == LocaleKeys.auth_signUpForm_fields_username);
@@ -180,134 +191,176 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context).colorScheme;
+    final languagesAsync = ref.watch(languagesProvider);
 
-    return Column(
-      children: [
-        const SizedBox(height: 60),
-        Hero(
-          tag: 'app-logo',
-          child: CircleAvatar(
-            radius: 40,
-            backgroundColor: theme.surface,
-            child: Icon(
-              Icons.account_balance_wallet,
-              color: theme.tertiary,
-              size: 40,
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-        Text(
-          'HelpWave',
-          style: TextStyle(
-            color: theme.surface,
-            fontSize: 24,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(height: 20),
-        Expanded(
-          child: Container(
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: theme.surface,
-              borderRadius:
-                  const BorderRadius.vertical(top: Radius.circular(24)),
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tr(widget.titleKey),
-                    style: const TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold),
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(bottom: 16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 60),
+              Hero(
+                tag: 'app-logo',
+                child: CircleAvatar(
+                  radius: 40,
+                  backgroundColor: theme.surface,
+                  child: Icon(
+                    Icons.account_balance_wallet,
+                    color: theme.tertiary,
+                    size: 40,
                   ),
-                  const SizedBox(height: 20),
-                  ...List.generate(widget.fields.length, (index) {
-                    final field = widget.fields[index];
-                    return Padding(
-                      padding: const EdgeInsets.only(bottom: 16),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          TextField(
-                            controller: _controllers[index],
-                            obscureText: _obscureTextStates[index],
-                            keyboardType: field.keyboardType,
-                            enabled: !_isLoading,
-                            decoration: InputDecoration(
-                              labelText: tr(field.translationKey),
-                              border: const OutlineInputBorder(),
-                              errorText: _errorMessages[index],
-                              suffixIcon: field.obscureText
-                                  ? IconButton(
-                                      icon: Icon(
-                                        _obscureTextStates[index]
-                                            ? Icons.visibility_off
-                                            : Icons.visibility,
-                                      ),
-                                      onPressed: _isLoading
-                                          ? null
-                                          : () {
-                                              setState(() {
-                                                _obscureTextStates[index] =
-                                                    !_obscureTextStates[index];
-                                              });
-                                            },
-                                    )
-                                  : null,
-                            ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Text(
+                'HelpWave',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: theme.surface,
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: theme.surface,
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(24)),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      tr(widget.titleKey),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 20),
+                    ...List.generate(widget.fields.length, (index) {
+                      final field = widget.fields[index];
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 16),
+                        child: TextField(
+                          controller: _controllers[index],
+                          obscureText: _obscureTextStates[index],
+                          keyboardType: field.keyboardType,
+                          enabled: !_isLoading,
+                          decoration: InputDecoration(
+                            labelText: tr(field.translationKey),
+                            border: const OutlineInputBorder(),
+                            errorText: _errorMessages[index],
+                            suffixIcon: field.obscureText
+                                ? IconButton(
+                                    icon: Icon(
+                                      _obscureTextStates[index]
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                    ),
+                                    onPressed: _isLoading
+                                        ? null
+                                        : () {
+                                            setState(() {
+                                              _obscureTextStates[index] =
+                                                  !_obscureTextStates[index];
+                                            });
+                                          },
+                                  )
+                                : null,
                           ),
+                        ),
+                      );
+                    }),
+                    languagesAsync.when(
+                      data: (languages) {
+                        return DropdownButtonFormField<int>(
+                          value: _selectedLanguageId,
+                          decoration: InputDecoration(
+                            labelText:
+                                tr(LocaleKeys.auth_signUpForm_fields_language),
+                            border: const OutlineInputBorder(),
+                            errorText: (_languageSubmitAttempted ||
+                                        _languageTouched) &&
+                                    _selectedLanguageId == null
+                                ? tr('Por favor selecciona un idioma')
+                                : null,
+                          ),
+                          items: languages
+                              .map(
+                                (lang) => DropdownMenuItem<int>(
+                                  value: lang.idLanguage,
+                                  child: Text(lang.nameLanguage),
+                                ),
+                              )
+                              .toList(),
+                          onChanged: _isLoading
+                              ? null
+                              : (int? val) {
+                                  setState(() {
+                                    _selectedLanguageId = val;
+                                    _languageTouched = true;
+                                  });
+                                },
+                        );
+                      },
+                      loading: () =>
+                          const Center(child: CircularProgressIndicator()),
+                      error: (_, __) => Text(
+                        tr(LocaleKeys.auth_signUpForm_errors_loading_languages),
+                        style: const TextStyle(color: Colors.red),
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: _isLoading ? null : _onNextPressed,
+                      style: ElevatedButton.styleFrom(
+                        minimumSize: const Size.fromHeight(50),
+                        backgroundColor: theme.tertiary,
+                      ),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : Text(tr(widget.buttonTextKey)),
+                    ),
+                    const SizedBox(height: 16),
+                    Center(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(tr(LocaleKeys.auth_signUpForm_haveAccount),
+                              style: TextStyle(color: theme.onTertiary)),
+                          TextButton(
+                            onPressed: _isLoading
+                                ? null
+                                : () {
+                                    Navigator.of(context).push(animatedRouteTo(
+                                      context,
+                                      AppRouter.loginRoute,
+                                      duration:
+                                          const Duration(milliseconds: 200),
+                                      curve: Curves.easeInOut,
+                                    ));
+                                  },
+                            child: Text(
+                              tr(LocaleKeys.auth_signUpForm_signIn),
+                              style: TextStyle(
+                                color:
+                                    _isLoading ? Colors.grey : theme.tertiary,
+                              ),
+                            ),
+                          )
                         ],
                       ),
-                    );
-                  }),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: _isLoading ? null : _onNextPressed,
-                    style: ElevatedButton.styleFrom(
-                      minimumSize: const Size.fromHeight(50),
-                      backgroundColor: theme.tertiary,
                     ),
-                    child: _isLoading
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : Text(tr(widget.buttonTextKey)),
-                  ),
-                  const SizedBox(height: 16),
-                  Center(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(tr(LocaleKeys.auth_signUpForm_haveAccount),
-                            style: TextStyle(color: theme.onTertiary)),
-                        TextButton(
-                          onPressed: _isLoading
-                              ? null
-                              : () {
-                                  Navigator.of(context).push(animatedRouteTo(
-                                    context,
-                                    AppRouter.loginRoute,
-                                    duration: const Duration(milliseconds: 200),
-                                    curve: Curves.easeInOut,
-                                  ));
-                                },
-                          child: Text(
-                            tr(LocaleKeys.auth_signUpForm_signIn),
-                            style: TextStyle(
-                              color: _isLoading ? Colors.grey : theme.tertiary,
-                            ),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
+            ],
           ),
         ),
-      ],
+      ),
     );
   }
 }

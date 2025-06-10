@@ -43,6 +43,7 @@ abstract class  LocaleKeys {
   static const auth_signUpForm_fields_phoneNumber = 'auth.signUpForm.fields.phoneNumber';
   static const auth_signUpForm_fields_username = 'auth.signUpForm.fields.username';
   static const auth_signUpForm_fields_password = 'auth.signUpForm.fields.password';
+  static const auth_signUpForm_fields_language = 'auth.signUpForm.fields.language';
   static const auth_signUpForm_fields = 'auth.signUpForm.fields';
   static const auth_signUpForm_errors_required = 'auth.signUpForm.errors.required';
   static const auth_signUpForm_errors_onlyLetters = 'auth.signUpForm.errors.onlyLetters';
@@ -52,6 +53,7 @@ abstract class  LocaleKeys {
   static const auth_signUpForm_errors_unknownError = 'auth.signUpForm.errors.unknownError';
   static const auth_signUpForm_errors_internalError = 'auth.signUpForm.errors.internalError';
   static const auth_signUpForm_errors_unexpectedError = 'auth.signUpForm.errors.unexpectedError';
+  static const auth_signUpForm_errors_loading_languages = 'auth.signUpForm.errors.loading_languages';
   static const auth_signUpForm_errors = 'auth.signUpForm.errors';
   static const auth_signUpForm_haveAccount = 'auth.signUpForm.haveAccount';
   static const auth_signUpForm_signIn = 'auth.signUpForm.signIn';
