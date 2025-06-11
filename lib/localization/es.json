@@ -45,18 +45,22 @@
                 "name": "Nombre",
                 "lastName": "Apellido",
                 "phoneNumber": "Número de teléfono",
+                "email": "Correo electrónico",
                 "username": "Nombre de usuario",
-                "password": "Contraseña"
+                "password": "Contraseña",
+                "language": "Idioma"
             },
             "errors": {
                 "required": "Este campo es obligatorio",
                 "onlyLetters": "Usa solo letras y espacios válidos",
                 "phoneNumber": "Ingresa un número de 9 dígitos válido",
+                "email": "Ingresa un correo electrónico válido",
                 "username": "Usa al menos 6 caracteres alfanuméricos",
                 "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
                 "unknownError": "Error desconocido",
                 "internalError": "Error interno: faltan campos de usuario o contraseña.",
-                "unexpectedError": "Ocurrió un error inesperado. Intenta de nuevo."
+                "unexpectedError": "Ocurrió un error inesperado. Intenta de nuevo.",
+                "loading_languages": "Error al cargar los idiomas disponibles."
             },
             "haveAccount": "¿Ya tienes una cuenta?",
             "signIn": "Inicia sesión"
@@ -271,7 +275,7 @@
             "title": "Configuración",
             "options": {
                 "viewProfile": "Ver perfil",
-                "notifications": "Notificaciones",
+                "settings": "Ajustes",
                 "helpCenter": "Centro de ayuda",
                 "logout": "Cerrar sesión"
             },
@@ -280,6 +284,76 @@
                 "logoutMessage": "¿Estás seguro de que deseas cerrar sesión?",
                 "cancel": "Cancelar",
                 "confirm": "Cerrar sesión"
+            },
+            "screen": {
+                "title": "Ajustes",
+                "notifications": "Notificaciones",
+                "open_system_settings": "Abrir configuración del sistema",
+                "theme": {
+                    "section_title": "Tema de la aplicación",
+                    "select_theme": {
+                        "button": "Seleccionar tema",
+                        "dialog": {
+                            "title": "Selecciona un tema",
+                            "light": "Claro",
+                            "dark": "Oscuro",
+                            "system_default": "Predeterminado del sistema"
+                        }
+                    }
+
+                },
+                "general":{
+                    "section_title": "General",
+                    "about": {
+                        "button": "Acerca de HelpWave",
+                        "dialog":{
+                            "title": "Síguenos en redes sociales",
+                            "close": "Cerrar"
+                        }
+                    }
+                },
+                "language": {
+                    "section_title": "Idioma",
+                    "select_language": {
+                        "button": "Seleccionar idioma",
+                        "screen": {
+                            "languages_list": "Lista de idiomas",
+                            "add_language": "Agregar idioma",
+                            "error":"Error al cargar el progreso: {{error}}",
+                            "snackbar":{
+                                "deleted": "Idioma eliminado exitosamente.",
+                                "error": "Se produjo un error: {}",
+                                "added": "Idioma añadido exitosamente."
+                            },
+                            "dialog":{
+                                "title": "Selecciona Idioma",
+                                "no_languages": "Ya has agregado todos los idiomas disponibles",
+                                "label": "Idioma",
+                                "cancel": "Cancelar",
+                                "accept": "Aceptar"
+                            }
+                        }
+                    }
+                }
+            },
+            "help_center": {
+                "title": "Centro de ayuda",
+                "help_faq": {
+                    "n1": "¿Cómo puedo solicitar ayuda en HelpWave?",
+                    "n2": "¿Qué tipo de asistencia puedo recibir a través de la app?",
+                    "n3": "¿Quiénes pueden ofrecer ayuda como voluntarios?",
+                    "n4": "¿Cómo se protege mi privacidad durante una videollamada?",
+                    "n5": "¿Qué debo hacer si no recibo respuesta tras solicitar ayuda?",
+                    "n6": "¿Cómo califico la atención recibida después de una sesión?"
+                },
+                "help_faq_answer": {
+                    "n1": "Para solicitar ayuda, ve a la pantalla principal y selecciona una categoría según tu necesidad. Un voluntario será notificado y podrá asistirte mediante una videollamada.",
+                    "n2": "Puedes recibir apoyo en tareas digitales, técnicas y cotidianas, como configurar dispositivos, entender documentos u organizar tu agenda.",
+                    "n3": "Cualquier persona con las habilidades adecuadas y disposición para ayudar puede ser voluntaria. HelpWave verifica el perfil de cada voluntario para garantizar calidad y confianza.",
+                    "n4": "Utilizamos cifrado de extremo a extremo para proteger tus llamadas. Además, no se graban videos ni audios, y los datos personales se mantienen confidenciales.",
+                    "n5": "Si no recibes respuesta, puedes volver a intentar la solicitud o esperar unos minutos. Es posible que los voluntarios no estén disponibles temporalmente.",
+                    "n6": "Al finalizar la sesión, se te pedirá que califiques tu experiencia. Esto ayuda a mejorar el servicio y reconocer el trabajo de los voluntarios."
+                }
             }
         }
     },

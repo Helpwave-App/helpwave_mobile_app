@@ -9,11 +9,10 @@ class ReviewService {
   final FlutterSecureStorage _secureStorage = const FlutterSecureStorage();
 
   Future<void> submitReview(ReviewModel reviewModel) async {
-    final idUser = await _secureStorage.read(key: 'id_user');
     final token = await _secureStorage.read(key: 'jwt_token');
 
-    if (token == null || idUser == null) {
-      throw Exception('Token o idProfile no encontrados');
+    if (token == null) {
+      throw Exception('Token no encontrado');
     }
 
     final url = Uri.parse('$baseUrl/comments');

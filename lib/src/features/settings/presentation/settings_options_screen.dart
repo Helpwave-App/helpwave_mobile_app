@@ -6,8 +6,8 @@ import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../routing/app_router.dart';
 
-class SettingsScreen extends ConsumerWidget {
-  const SettingsScreen({super.key});
+class SettingsOptionsScreen extends ConsumerWidget {
+  const SettingsOptionsScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -38,18 +38,17 @@ class SettingsScreen extends ConsumerWidget {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.notifications),
-              title:
-                  Text(LocaleKeys.settings_settings_options_notifications.tr()),
+              leading: const Icon(Icons.settings),
+              title: Text(LocaleKeys.settings_settings_options_settings.tr()),
               onTap: () {
-                // TODO: Navegar a notificaciones
+                Navigator.of(context).pushNamed(AppRouter.settingsRoute);
               },
             ),
             ListTile(
               leading: const Icon(Icons.help_outline),
               title: Text(LocaleKeys.settings_settings_options_helpCenter.tr()),
               onTap: () {
-                // TODO: Navegar al centro de ayuda
+                Navigator.of(context).pushNamed(AppRouter.helpCenterRoute);
               },
             ),
             const Spacer(),

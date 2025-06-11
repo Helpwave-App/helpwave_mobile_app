@@ -11,7 +11,7 @@ class TypeReportService {
     final token = await _secureStorage.read(key: 'jwt_token');
 
     if (token == null) {
-      throw Exception('Token o idProfile no encontrados');
+      throw Exception('Tokenno encontrado');
     }
 
     final url = Uri.parse('$baseUrl/typeReports');

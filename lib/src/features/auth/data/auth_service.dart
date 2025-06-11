@@ -152,10 +152,10 @@ class AuthService {
   }
 
   Future<void> logout() async {
-    await DeviceTokenService().unregisterDeviceToken();
+    final deviceTokenService = DeviceTokenService();
+    await deviceTokenService.unregisterDeviceToken();
     await FirebaseMessaging.instance.deleteToken();
 
-    await _secureStorage.delete(key: 'device_token');
     await _secureStorage.delete(key: 'jwt_token');
     await _secureStorage.delete(key: 'id_user');
     await _secureStorage.delete(key: 'role');

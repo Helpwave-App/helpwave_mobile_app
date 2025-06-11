@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -6,6 +7,10 @@ import '../../../features/auth/data/auth_service.dart';
 import '../../../features/auth/domain/user_model.dart';
 import '../../../features/gamification/application/level_cache_controller.dart';
 import '../../../features/availability/application/user_availability_controller.dart';
+import '../../../features/language/application/user_languages_controller.dart';
+import '../../../features/language/data/language_profile_service.dart';
+import '../../../features/language/data/language_service.dart';
+import '../../../features/language/domain/language_model.dart';
 import '../../../features/profile/application/user_info_controller.dart';
 import '../../../features/reports/data/report_service.dart';
 import '../../../features/reports/data/type_report_service.dart';
@@ -36,6 +41,40 @@ final tempVolunteerProfileProvider =
     StateProvider<Map<String, dynamic>?>((ref) => null);
 
 final profileProvider = StateProvider<User?>((_) => null);
+
+final themeModeProvider =
+    StateNotifierProvider<ThemeModeNotifier, ThemeMode>((ref) {
+  return ThemeModeNotifier();
+});
+
+class ThemeModeNotifier extends StateNotifier<ThemeMode> {
+  ThemeModeNotifier() : super(ThemeMode.system);
+
+  void setThemeMode(ThemeMode mode) {
+    state = mode;
+  }
+}
+
+final languageProfileServiceProvider = Provider<LanguageProfileService>((ref) {
+  return LanguageProfileService();
+});
+
+final languageServiceProvider =
+    Provider<LanguageService>((ref) => LanguageService());
+
+final languagesProvider = FutureProvider<List<LanguageModel>>((ref) async {
+  final service = ref.watch(languageServiceProvider);
+  return await service.fetchLanguages();
+});
+
+final userLanguagesLoaderProvider = FutureProvider<void>((ref) async {
+  await ref.read(userLanguagesProvider.notifier).loadUserLanguages();
+});
+
+final userLanguagesProvider =
+    StateNotifierProvider<UserLanguagesController, List<String>>(
+  (ref) => UserLanguagesController(ref),
+);
 
 final skillServiceProvider = Provider<SkillService>((ref) {
   return SkillService();

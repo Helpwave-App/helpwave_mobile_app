@@ -43,10 +43,10 @@ class HomeWidget extends ConsumerWidget {
         ),
         actions: [
           IconButton(
-            icon: const Icon(Icons.settings),
+            icon: const Icon(Icons.menu),
             tooltip: LocaleKeys.home_widget_settingsTooltip.tr(),
             onPressed: () {
-              Navigator.of(context).pushNamed(AppRouter.settingsRoute);
+              Navigator.of(context).pushNamed(AppRouter.settingsOptionsRoute);
             },
           )
         ],

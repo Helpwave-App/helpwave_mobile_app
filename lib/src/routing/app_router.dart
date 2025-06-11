@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helpwave_mobile_app/src/features/reports/presentation/report_screen.dart';
 import 'package:helpwave_mobile_app/src/features/reviews/presentation/review_screen.dart';
 import 'package:helpwave_mobile_app/src/features/availability/presentation/user_availability_screen.dart';
+import 'package:helpwave_mobile_app/src/features/settings/presentation/pages/help_center_screen.dart';
 
 import '../common/pages/loading_screen.dart';
 import '../features/auth/presentation/pages/permissions_screen.dart';
@@ -18,10 +19,12 @@ import '../features/auth/presentation/pages/register/registration_completed_volu
 import '../features/gamification/presentation/end_videocall_screen.dart';
 import '../features/home/presentation/pages/home_requester_screen.dart';
 import '../features/home/presentation/pages/home_volunteer_screen.dart';
+import '../features/language/presentation/user_languages_screen.dart';
+import '../features/settings/presentation/pages/settings_screen.dart';
 import '../features/videocalls/presentation/connecting_screen.dart';
 import '../features/videocalls/presentation/videocall_screen.dart';
-import '../features/settings/presentation/settings_screen.dart';
-import '../features/settings/presentation/profile_screen.dart';
+import '../features/settings/presentation/settings_options_screen.dart';
+import '../features/settings/presentation/pages/profile_screen.dart';
 import '../features/profile/presentation/user_info_screen.dart';
 import '../features/skills/presentation/user_skills_screen.dart';
 
@@ -47,7 +50,10 @@ class AppRouter {
   static const String reviewRoute = '/review';
   static const String reportRoute = '/report';
   static const String endVideocallRoute = '/videocall-end';
+  static const String settingsOptionsRoute = '/settings-options';
   static const String settingsRoute = '/settings';
+  static const String languageRoute = '/language-user';
+  static const String helpCenterRoute = '/help-center';
   static const String profileRoute = '/profile';
   static const String userInfoRoute = '/user-info';
   static const String skillsRoute = '/skills';
@@ -144,8 +150,17 @@ class AppRouter {
         }
         return ReportScreen(idVideocall: args['idVideocall'] as int);
 
+      case settingsOptionsRoute:
+        return const SettingsOptionsScreen();
+
       case settingsRoute:
         return const SettingsScreen();
+
+      case languageRoute:
+        return const UserLanguagesScreen();
+
+      case helpCenterRoute:
+        return const HelpCenterScreen();
 
       case profileRoute:
         return const ProfileScreen();
@@ -266,8 +281,17 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => ReportScreen(idVideocall: idVideocall));
 
+      case settingsOptionsRoute:
+        return MaterialPageRoute(builder: (_) => const SettingsOptionsScreen());
+
       case settingsRoute:
         return MaterialPageRoute(builder: (_) => const SettingsScreen());
+
+      case languageRoute:
+        return MaterialPageRoute(builder: (_) => const UserLanguagesScreen());
+
+      case helpCenterRoute:
+        return MaterialPageRoute(builder: (_) => const HelpCenterScreen());
 
       case profileRoute:
         return MaterialPageRoute(builder: (_) => const ProfileScreen());

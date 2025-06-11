@@ -14,5 +14,13 @@ class Skill {
     );
   }
 
-  get id => null;
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Skill &&
+          runtimeType == other.runtimeType &&
+          idSkill == other.idSkill;
+
+  @override
+  int get hashCode => idSkill.hashCode;
 }

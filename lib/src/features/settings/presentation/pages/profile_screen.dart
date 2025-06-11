@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../localization/codegen_loader.g.dart';
-import '../../../common/utils/constants/providers.dart';
-import '../../../routing/app_router.dart';
+import '../../../../../localization/codegen_loader.g.dart';
+import '../../../../common/utils/constants/providers.dart';
+import '../../../../routing/app_router.dart';
 
 class ProfileScreen extends ConsumerWidget {
   const ProfileScreen({super.key});
