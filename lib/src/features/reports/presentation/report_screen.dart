@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:helpwave_mobile_app/src/routing/app_router.dart';
 
 import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
@@ -35,21 +36,8 @@ class _VideocallReportScreenState extends ConsumerState<ReportScreen> {
       return;
     }
 
-    final profile = ref.read(profileProvider);
-
-    if (profile == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-            content: Text(LocaleKeys
-                .reports_report_screen_snackbar_profile_not_found
-                .tr())),
-      );
-      return;
-    }
-
     final report = ReportModel(
       idVideocall: widget.idVideocall,
-      idProfile: profile.id,
       idTypeReport: _selectedReasonId!,
       descriptionReport: _commentController.text.trim(),
     );
@@ -63,7 +51,7 @@ class _VideocallReportScreenState extends ConsumerState<ReportScreen> {
                 Text(LocaleKeys.reports_report_screen_snackbar_success.tr())),
       );
 
-      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, AppRouter.loadingRoute);
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(

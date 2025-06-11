@@ -74,7 +74,7 @@ class _ReviewForm extends ConsumerWidget {
           absorbing: controller.isSubmitting,
           child: RatingBar.builder(
             initialRating: controller.volunteerRating,
-            minRating: 1,
+            minRating: 0,
             allowHalfRating: false,
             itemCount: 5,
             itemBuilder: (context, _) =>
@@ -93,7 +93,7 @@ class _ReviewForm extends ConsumerWidget {
           absorbing: controller.isSubmitting,
           child: RatingBar.builder(
             initialRating: controller.callRating,
-            minRating: 1,
+            minRating: 0,
             allowHalfRating: false,
             itemCount: 5,
             itemBuilder: (context, _) =>

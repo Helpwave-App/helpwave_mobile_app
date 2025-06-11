@@ -8,8 +8,8 @@ import '../domain/review_model.dart';
 class ReviewController extends ChangeNotifier {
   final ReviewService reviewService = ReviewService();
 
-  double volunteerRating = 1;
-  double callRating = 1;
+  double volunteerRating = 0;
+  double callRating = 0;
 
   final TextEditingController commentController = TextEditingController();
 
@@ -26,10 +26,9 @@ class ReviewController extends ChangeNotifier {
   }
 
   Future<String?> submitReview(int idVideocall) async {
-    if (commentController.text.trim().isEmpty) {
-      return LocaleKeys.reviews_review_controller_validation_empty_comment.tr();
+    if (volunteerRating == 0 || callRating == 0) {
+      return 'Debe indicar una calificación';
     }
-
     isSubmitting = true;
     notifyListeners();
 
@@ -43,8 +42,8 @@ class ReviewController extends ChangeNotifier {
 
       await reviewService.submitReview(review);
 
-      volunteerRating = 1;
-      callRating = 1;
+      volunteerRating = 0;
+      callRating = 0;
       commentController.clear();
 
       isSubmitting = false;
