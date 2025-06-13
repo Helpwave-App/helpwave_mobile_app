@@ -76,6 +76,10 @@ jobs:
       - name: 🏗️ Compilar APK release
         run: flutter build apk --release
 
+      - name: 🔧 Instalar Firebase CLI
+        run: |
+          curl -sL https://firebase.tools | bash
+
       - name: 🛠️ Dar permisos de ejecución al script de despliegue
         run: chmod +x ./scripts/deploy.sh
 
