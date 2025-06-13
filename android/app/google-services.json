@@ -7,9 +7,9 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:576719437400:android:443846195d47e99d2d542d",
+        "mobilesdk_app_id": "1:576719437400:android:ce6faf4a8b78c0f02d542d",
         "android_client_info": {
-          "package_name": "com.example.helpwave_mobile_app"
+          "package_name": "org.helpwave.app"
         }
       },
       "oauth_client": [

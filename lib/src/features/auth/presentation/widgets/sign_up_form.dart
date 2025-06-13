@@ -211,26 +211,17 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 60),
-              Hero(
-                tag: 'app-logo',
-                child: CircleAvatar(
-                  radius: 40,
-                  backgroundColor: theme.surface,
-                  child: Icon(
-                    Icons.account_balance_wallet,
-                    color: theme.tertiary,
-                    size: 40,
-                  ),
+              ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxHeight: 180,
                 ),
-              ),
-              const SizedBox(height: 20),
-              Text(
-                'HelpWave',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: theme.surface,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
+                child: Hero(
+                  tag: 'app-logo',
+                  child: Image.asset(
+                    'lib/src/assets/images/logo-white.png',
+                    width: MediaQuery.of(context).size.width * 0.45,
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ),
               const SizedBox(height: 20),

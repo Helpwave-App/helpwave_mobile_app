@@ -26,7 +26,7 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.helpwave_mobile_app"
+        applicationId = "org.helpwave.app"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = flutter.minSdkVersion
@@ -44,10 +44,8 @@ android {
     }
 
     firebaseAppDistribution {
-    releaseNotes = "Primera distribución de prueba desde Gradle"
-    testers = "tu.email@ejemplo.com"
-    // Opcional si quieres usar credenciales de servicio:
-    // serviceCredentialsFile = "/ruta/a/clave.json"
+        releaseNotes = "Primera distribución oficial de HelpWave"
+        testers = "elvia.arteaga98@gmail.com,cuchcafabrizzio@gmail.com"
     }
 }
 

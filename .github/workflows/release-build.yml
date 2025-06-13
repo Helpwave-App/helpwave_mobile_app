@@ -1,0 +1,64 @@
+name: Build & Distribute HelpWave
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_level:
+        description: "Tipo de actualización de versión"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      release_notes:
+        description: "Notas de la versión"
+        required: true
+
+jobs:
+  release:
+    name: 🚀 Publicar nueva versión HelpWave
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: 🧰 Instalar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.22.x"
+
+      - name: 📦 Instalar dependencias
+        run: flutter pub get
+
+      - name: 🆙 Incrementar versión (pubspec + changelog + commit)
+        run: ./scripts/bump_version.sh "${{ github.event.inputs.bump_level }}" "${{ github.event.inputs.release_notes }}"
+
+      - name: 🔐 Hacer push automático
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref_name }}
+
+      - name: 🏷️ Crear Git Tag
+        run: |
+          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
+          git tag "v$VERSION"
+          git push origin "v$VERSION"
+
+      - name: 🏗️ Compilar APK release
+        run: flutter build apk --release
+
+      - name: 🚀 Distribuir con Firebase App Distribution
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: ./scripts/deploy.sh "${{ github.event.inputs.release_notes }}"
+
+      # Opcional: subir APK como artefacto
+      - name: 📤 Subir artefacto de APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: HelpWave-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
