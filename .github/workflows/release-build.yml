@@ -37,18 +37,18 @@ jobs:
       - name: 📦 Instalar dependencias
         run: flutter pub get
 
-      - name: 📤 Extraer versión desde pubspec.yaml
-        id: extract_version
-        run: |
-          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
       - name: 🛠️ Dar permisos de ejecución al script de versionado
         run: chmod +x ./scripts/bump_version.sh
 
       - name: 🆙 Incrementar versión si es workflow_dispatch
         if: github.event_name == 'workflow_dispatch'
         run: ./scripts/bump_version.sh "${{ github.event.inputs.bump_level }}" "${{ github.event.inputs.release_notes }}"
+
+      - name: 📤 Extraer versión desde pubspec.yaml
+        id: extract_version
+        run: |
+          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: 🔐 Hacer push automático si es workflow_dispatch
         if: github.event_name == 'workflow_dispatch'
@@ -62,7 +62,7 @@ jobs:
         run: |
           VERSION=${{ steps.extract_version.outputs.version }}
           echo "Buscando changelog para la versión $VERSION..."
-          BODY=$(awk "/^## \\[$VERSION\\]/,/^## \\[/" CHANGELOG.md | tail -n +2 | head -n -1)
+          BODY=$(awk "/^## \\[$VERSION\\]/,/^## \\[/" CHANGELOG.md | tail -n +2 | head -n -1 || true)
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$BODY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
