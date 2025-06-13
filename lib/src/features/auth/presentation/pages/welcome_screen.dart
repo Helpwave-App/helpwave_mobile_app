@@ -88,47 +88,45 @@ class WelcomeScreen extends StatelessWidget {
       body: Column(
         children: [
           const SizedBox(height: 100),
-          Center(
-            child: Column(
-              children: [
-                Hero(
-                  tag: 'app-logo',
-                  child: CircleAvatar(
-                    radius: 48,
-                    backgroundColor: theme.surface,
-                    child: Icon(
-                      Icons.volunteer_activism,
-                      color: theme.tertiary,
-                      size: 48,
+          Expanded(
+            child: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Hero(
+                    tag: 'app-logo',
+                    child: Image.asset(
+                      'lib/src/assets/images/logo-white.png',
+                      width: 180,
+                      fit: BoxFit.contain,
                     ),
                   ),
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  LocaleKeys.auth_welcome_title.tr(),
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 26,
-                    fontWeight: FontWeight.bold,
-                    color: theme.surface,
-                  ),
-                ),
-                const SizedBox(height: 12),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: Text(
-                    LocaleKeys.auth_welcome_subtitle.tr(),
+                  const SizedBox(height: 40),
+                  Text(
+                    LocaleKeys.auth_welcome_title.tr(),
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: theme.surface.withOpacity(0.9),
-                      fontSize: 16,
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: theme.surface,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40),
+                    child: Text(
+                      LocaleKeys.auth_welcome_subtitle.tr(),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: theme.surface.withOpacity(0.9),
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-          const Spacer(),
           Container(
             padding: const EdgeInsets.all(24),
             decoration: BoxDecoration(
@@ -156,7 +154,7 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

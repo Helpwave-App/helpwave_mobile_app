@@ -73,23 +73,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
             const SizedBox(height: 80),
             Hero(
               tag: 'app-logo',
-              child: CircleAvatar(
-                radius: 40,
-                backgroundColor: theme.surface,
-                child: Icon(
-                  Icons.account_balance_wallet,
-                  color: theme.tertiary,
-                  size: 40,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text(
-              'HelpWave',
-              style: TextStyle(
-                color: theme.surface,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+              child: Image.asset(
+                'lib/src/assets/images/logo-white.png',
+                width: 180,
+                fit: BoxFit.contain,
               ),
             ),
             const SizedBox(height: 30),

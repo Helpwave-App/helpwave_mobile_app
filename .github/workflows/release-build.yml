@@ -1,0 +1,110 @@
+name: Build & Distribute HelpWave
+
+on:
+  workflow_dispatch:
+    inputs:
+      bump_level:
+        description: "Tipo de actualización de versión"
+        required: true
+        default: "patch"
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      release_notes:
+        description: "Notas de la versión"
+        required: true
+
+  push:
+    branches:
+      - "release/**"
+
+jobs:
+  release:
+    name: 🚀 Publicar nueva versión HelpWave
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔄 Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: 🔄 Asegurar HEAD actualizado antes de versionar
+        if: github.event_name == 'workflow_dispatch'
+        run: git pull --rebase
+
+      - name: 🧰 Instalar Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.24.5"
+
+      - name: 📦 Instalar dependencias
+        run: flutter pub get
+
+      - name: 🛠️ Dar permisos de ejecución al script de versionado
+        run: chmod +x ./scripts/bump_version.sh
+
+      - name: 🆙 Incrementar versión si es workflow_dispatch
+        if: github.event_name == 'workflow_dispatch'
+        run: ./scripts/bump_version.sh "${{ github.event.inputs.bump_level }}" "${{ github.event.inputs.release_notes }}"
+
+      - name: 🔐 Push automático de cambios
+        if: github.event_name == 'workflow_dispatch'
+        uses: ad-m/github-push-action@v0.8.0
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref_name }}
+
+      - name: 📤 Extraer versión desde pubspec.yaml
+        id: extract_version
+        run: |
+          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: 📄 Extraer changelog de la versión
+        id: extract_changelog
+        run: |
+          VERSION=${{ steps.extract_version.outputs.version }}
+          echo "Buscando changelog para la versión $VERSION..."
+          BODY=$(awk "/^## \\[$VERSION\\]/,/^## \\[/" CHANGELOG.md | tail -n +2 | head -n -1)
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 🏷️ Crear Git Tag
+        run: |
+          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
+          git tag -f "v$VERSION"
+          git push -f origin "v$VERSION"
+
+      - name: 🏗️ Compilar APK release
+        run: flutter build apk --release
+
+      - name: 🔧 Instalar Firebase CLI
+        run: curl -sL https://firebase.tools | bash
+
+      - name: 🛠️ Dar permisos de ejecución al script de despliegue
+        run: chmod +x ./scripts/deploy.sh
+
+      - name: 🚀 Distribuir con Firebase App Distribution
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        run: |
+          NOTES="${{ github.event.inputs.release_notes || 'Distribución automática desde rama release' }}"
+          ./scripts/deploy.sh "$NOTES"
+
+      - name: 📤 Subir artefacto de APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: HelpWave-APK
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: 📦 Crear GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.extract_version.outputs.version }}
+          name: Release v${{ steps.extract_version.outputs.version }}
+          body: ${{ steps.extract_changelog.outputs.changelog }}
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
