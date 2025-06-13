@@ -3,7 +3,7 @@
 import 'package:firebase_core/firebase_core.dart'
     show Firebase, FirebaseOptions;
 import 'package:flutter/foundation.dart'
-    show defaultTargetPlatform, kIsWeb, TargetPlatform;
+    show defaultTargetPlatform, TargetPlatform;
 
 /// Default [FirebaseOptions] for use with your Firebase apps.
 
@@ -18,9 +18,6 @@ const String imageBaseUrl =
 
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
-    if (kIsWeb) {
-      return web;
-    }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
@@ -31,13 +28,6 @@ class DefaultFirebaseOptions {
           'DefaultFirebaseOptions have not been configured for macos - '
           'you can reconfigure this by running the FlutterFire CLI again.',
         );
-      case TargetPlatform.windows:
-        return windows;
-      case TargetPlatform.linux:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for linux - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
       default:
         throw UnsupportedError(
           'DefaultFirebaseOptions are not supported for this platform.',
@@ -45,19 +35,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyD1Il8eRarJ0liUnlEFCjeS1J-bk08dFp0',
-    appId: '1:576719437400:web:7d19ab90fe6228f52d542d',
-    messagingSenderId: '576719437400',
-    projectId: 'helpwave-bfcb0',
-    authDomain: 'helpwave-bfcb0.firebaseapp.com',
-    storageBucket: 'helpwave-bfcb0.firebasestorage.app',
-    measurementId: 'G-SN6C3MV856',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAvU1apdU1F2K8L0yTiNA2ME-mfw8eTV4U',
-    appId: '1:576719437400:android:443846195d47e99d2d542d',
+    appId: '1:576719437400:android:ce6faf4a8b78c0f02d542d',
     messagingSenderId: '576719437400',
     projectId: 'helpwave-bfcb0',
     storageBucket: 'helpwave-bfcb0.firebasestorage.app',
@@ -65,20 +45,10 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyCjSxd9RZD6XdpAwujvbE9_mykF1t8HAwM',
-    appId: '1:576719437400:ios:85a461b3e67714572d542d',
+    appId: '1:576719437400:ios:3fe2f9166522b09f2d542d',
     messagingSenderId: '576719437400',
     projectId: 'helpwave-bfcb0',
     storageBucket: 'helpwave-bfcb0.firebasestorage.app',
     iosBundleId: 'com.example.helpwaveMobileApp',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyD1Il8eRarJ0liUnlEFCjeS1J-bk08dFp0',
-    appId: '1:576719437400:web:0b80f9b075f48bc42d542d',
-    messagingSenderId: '576719437400',
-    projectId: 'helpwave-bfcb0',
-    authDomain: 'helpwave-bfcb0.firebaseapp.com',
-    storageBucket: 'helpwave-bfcb0.firebasestorage.app',
-    measurementId: 'G-DJ9VQXZTQE',
   );
 }
