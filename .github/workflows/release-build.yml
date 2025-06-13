@@ -32,7 +32,7 @@ jobs:
       - name: 🧰 Instalar Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.22.1"
+          flutter-version: "3.24.5"
 
       - name: 📦 Instalar dependencias
         run: flutter pub get
