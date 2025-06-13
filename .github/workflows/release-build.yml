@@ -69,3 +69,29 @@ jobs:
         with:
           name: HelpWave-APK
           path: build/app/outputs/flutter-apk/app-release.apk
+
+      - name: 📦 Crear GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.extract_version.outputs.version }}
+          name: Release v${{ steps.extract_version.outputs.version }}
+          body: ${{ steps.extract_changelog.outputs.changelog }}
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 📤 Extraer versión desde pubspec.yaml
+        id: extract_version
+        run: |
+          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: 📄 Extraer changelog de la versión
+        id: extract_changelog
+        run: |
+          VERSION=${{ steps.extract_version.outputs.version }}
+          echo "Buscando changelog para la versión $VERSION..."
+          BODY=$(awk "/^## v$VERSION\$/,/^## v/" CHANGELOG.md | head -n -1 | tail -n +2)
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT

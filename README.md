@@ -108,3 +108,6 @@ Uso permitido con fines educativos, de investigación o sin fines de lucro.
 
 Proyecto desarrollado como parte del trabajo de investigación para el título profesional en Ingeniería de Software.  
 Inspirado por iniciativas de microvoluntariado digital.
+
+🔽 [Descargar última versión APK](https://github.com/Helpwave-App/helpwave_mobile_app/releases/latest/download/app-release.apk)
+
