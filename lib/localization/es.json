@@ -1,0 +1,410 @@
+{
+    "auth": {
+        "signIn": {
+            "title": "Iniciar Sesión",
+            "username": "Usuario",
+            "usernameRequired": "El usuario es obligatorio",
+            "password": "Contraseña",
+            "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+            "signInButton": "Iniciar Sesión",
+            "forgotPassword": "¿Olvidaste tu contraseña?",
+            "noAccount": "¿No tienes una cuenta?",
+            "registerNow": "Regístrate ahora",
+            "invalidCredentials": "Nombre de usuario o contraseña inválidos",
+            "incorrectCredentials": "Nombre de usuario o contraseña incorrectos"
+        },
+        "welcome": {
+            "title": "Bienvenido a HelpWave",
+            "subtitle": "Una comunidad donde ayudar y recibir ayuda es parte de lo mismo: cuidarnos entre todos.",
+            "signIn": "Iniciar sesión",
+            "createAccount": "Crear cuenta"
+        },
+        "permissions": {
+            "title": "Permisos requeridos",
+            "description": "Para funcionar correctamente, HelpWave necesita acceso a:\n\n- Notificaciones (para avisarte de solicitudes)\n- Micrófono y Cámara (para videollamadas)",
+            "accept": "Aceptar y continuar",
+            "snackbar": "Debes aceptar todos los permisos para continuar.",
+            "notification": "notificaciones",
+            "microphone": "micrófono",
+            "camera": "cámara"
+        },
+        "userType": {
+            "title": "Tipo de usuario",
+            "requester": "Asistido",
+            "volunteer": "Voluntario",
+            "next": "Siguiente"
+        },
+        "termsAndConditions": {
+            "title": "Términos y condiciones",
+            "description": "Al usar esta aplicación, aceptas participar de una comunidad basada en el respeto, la colaboración y la ayuda mutua.\n\nTe comprometes a brindar y recibir asistencia con buena voluntad, a respetar la privacidad de los demás usuarios y a utilizar esta plataforma exclusivamente para los fines permitidos.\n\nHelpWave no se responsabiliza por el contenido de las interacciones, pero se reserva el derecho de suspender cuentas en caso de mal uso.",
+            "acceptLabel": "He leído y acepto los términos y condiciones.",
+            "next": "Siguiente"
+        },
+        "signUpForm": {
+            "fields": {
+                "name": "Nombre",
+                "lastName": "Apellido",
+                "phoneNumber": "Número de teléfono",
+                "email": "Correo electrónico",
+                "username": "Nombre de usuario",
+                "password": "Contraseña",
+                "language": "Idioma"
+            },
+            "errors": {
+                "required": "Este campo es obligatorio",
+                "onlyLetters": "Usa solo letras y espacios válidos",
+                "phoneNumber": "Ingresa un número de 9 dígitos válido",
+                "email": "Ingresa un correo electrónico válido",
+                "username": "Usa al menos 6 caracteres alfanuméricos",
+                "passwordMinLength": "La contraseña debe tener al menos 6 caracteres",
+                "unknownError": "Error desconocido",
+                "internalError": "Error interno: faltan campos de usuario o contraseña.",
+                "unexpectedError": "Ocurrió un error inesperado. Intenta de nuevo.",
+                "loading_languages": "Error al cargar los idiomas disponibles."
+            },
+            "haveAccount": "¿Ya tienes una cuenta?",
+            "signIn": "Inicia sesión"
+        },
+        "signUpRequester": {
+            "title": "Registro para recibir ayuda",
+            "fields": {
+                "name": "Nombre",
+                "lastname": "Apellido",
+                "phoneNumber": "Número de teléfono",
+                "username": "Nombre de usuario",
+                "password": "Contraseña"
+            },
+            "buttonText": "Finalizar registro"
+        },
+        "signUpVolunteer": {
+            "title": "Registro como Voluntario",
+            "fields": {
+                "name": "Nombre",
+                "lastname": "Apellido",
+                "email": "Correo electrónico",
+                "username": "Nombre de usuario",
+                "password": "Contraseña"
+            },
+            "buttonText": "Siguiente"
+        },
+        "volunteerSkills": {
+            "generalAssistanceMandatory": "La habilidad \"Asistencia General\" es obligatoria para todos los voluntarios.",
+            "errorSavingSkills": "Error al guardar habilidades",
+            "helpAreasQuestion": "¿En qué áreas puedes brindar ayuda?",
+            "multipleOptionsAllowed": "Puedes marcar más de una opción",
+            "errorLoadingSkills": "Error al cargar habilidades: {}",
+            "mandatory": "Obligatoria",
+            "next": "Siguiente"
+        },
+        "volunteerAvailability": {
+            "title": "Disponibilidad",
+            "subtitle": "¿En qué días y horarios puedes brindar ayuda?",
+            "errorSavingAvailability": "Error al guardar disponibilidad",
+            "finishRegistration": "Finalizar registro"
+        },
+        "registrationCompleted": {
+            "title": "¡Registro completo!",
+            "message": "Tu cuenta ha sido creada exitosamente. A partir de ahora, puedes comenzar a usar la aplicación.",
+            "subtitle": "Gracias por unirte a HelpWave.",
+            "goHome": "Ir al inicio",
+            "loginError": "Error al iniciar sesión: {}",
+            "iconLabel": "Ícono de registro exitoso"
+        },
+        "registrationCompletedRequester": {
+            "title": "¡Te has registrado con éxito!",
+            "message": "Bienvenido a HelpWave. Aquí encontrarás voluntarios listos para ayudarte con lo que necesites, cuando lo necesites.",
+            "subtitle": "Gracias por confiar en nuestra comunidad solidaria."
+        },
+        "registrationCompletedVolunteer": {
+            "title": "¡Gracias por registrarte como voluntario!",
+            "message": "Ahora formas parte de HelpWave, donde podrás brindar apoyo a personas que lo necesitan de forma remota.",
+            "subtitle": "Tu tiempo y ayuda pueden marcar una gran diferencia."
+        }
+    },
+    "availability": {
+        "addTimeModal": {
+            "title": "Agregar horario para",
+            "startTime": "Hora de inicio",
+            "endTime": "Hora de fin",
+            "applyToAll": "Aplicar a todos los días",
+            "cancel": "Cancelar",
+            "save": "Guardar",
+            "error_invalidTimeRange": "La hora de fin debe ser posterior a la hora de inicio"
+        },
+        "controller": {
+            "error_minOneAvailability": "Debes tener al menos una disponibilidad",
+            "success_deleted": "Horario eliminado exitosamente",
+            "error_deleteServer": "Error al eliminar disponibilidad del servidor",
+            "error_delete": "Error al eliminar"
+        }
+    },
+    "gamification": {
+        "endVideocall": {
+            "title": "Videollamada Finalizada",
+            "congrats": "¡Gracias por tu ayuda!",
+            "progressInfo": "Ya has asistido a {{assistances}} personas. Estás a {{missing}} asistencias de alcanzar el nivel ",
+            "goHome": "Ir a inicio",
+            "report": "Reportar incidente",
+            "reportHint": "¿Tuviste algún inconveniente? Puedes reportarlo aquí.",
+            "error": "Error al cargar el progreso: {{error}}"
+        },
+        "insigniaProgressWidget": {
+            "current": "Nivel actual",
+            "next": "Siguiente nivel"
+        }
+    },
+    "home": {
+        "widget": {
+            "settingsTooltip": "Configuración",
+            "selectSkillHint": "Selecciona una habilidad"
+        },
+        "requester": {
+            "greeting": "¡Hola, {firstName} {lastName}!",
+            "subtitle": "¿Listo para recibir ayuda hoy?",
+            "buttonText": "Solicitar\nasistencia",
+            "sessionExpired": "Sesión expirada. Inicia sesión de nuevo."
+        },
+        "volunteer": {
+            "greeting": "¡Hola, {firstName} {lastName}!",
+            "subtitle": "¿Listo para brindar ayuda hoy?",
+            "buttonText": "Aceptar\nsolicitud",
+            "sessionExpired": "Sesión expirada. Inicia sesión de nuevo."
+        }
+    },
+    "notification": {
+        "infoDialog": {
+            "accept": "Aceptar"
+        },
+        "requestDialog": {
+            "title": "Nueva solicitud de ayuda",
+            "requester": "Nombre del solicitante",
+            "skill": "Habilidad solicitada",
+            "accept": "Aceptar",
+            "reject": "Rechazar"
+        },
+        "handler": {
+            "unknownSkill": "Desconocida",
+            "unknownName": "Desconocido",
+            "unknownLastName": "Desconocido",
+            "alreadyAnsweredTitle": "¡Gracias por tu disposición!",
+            "alreadyAnsweredMessage": "Otro voluntario ya respondió a esta solicitud. Apreciamos mucho tu intención de ayudar 😊."
+        }
+    },
+    "profile": {
+        "user_info_screen": {
+            "app_bar": {
+                "title": "Información de usuario"
+            },
+            "error": {
+                "loading": "Error",
+                "no_profile": "No se pudo cargar el perfil."
+            },
+            "stats": {
+                "score": "Puntaje",
+                "level": "Nivel",
+                "assistances": "Asistencias"
+            },
+            "form": {
+                "email": "Correo electrónico",
+                "phone": "Teléfono",
+                "birthday": "Fecha de nacimiento (dd/mm/yyyy)",
+                "birthday_picker": "Selecciona tu fecha de nacimiento"
+            },
+            "validation": {
+                "email_required": "El correo es requerido",
+                "email_invalid": "Correo inválido",
+                "phone_required": "El teléfono es requerido",
+                "birthday_required": "La fecha es requerida",
+                "birthday_invalid": "Formato de fecha inválido"
+            }
+        },
+        "controller": {
+            "error_invalidDate": "Fecha de nacimiento inválida.",
+            "success_profileUpdated": "Perfil editado exitosamente.",
+            "error_saving": "Error al guardar los cambios."
+        }
+    },
+    "reports": {
+        "report_screen": {
+            "title": "Reporte de incidente",
+            "description": "Lamentamos mucho que hayas tenido una mala experiencia. Por favor, coméntanos lo sucedido para poder brindar una solución.",
+            "comment_hint": "Comentario (opcional)",
+            "submit_button": "Enviar reporte",
+            "snackbar": {
+                "select_reason": "Selecciona un motivo de reporte",
+                "profile_not_found": "Error: perfil no encontrado",
+                "success": "Reporte enviado con éxito",
+                "error": "Error"
+            },
+            "error": {
+                "loading": "Error al cargar los motivos"
+            }
+        }
+    },
+    "reviews": {
+        "review_controller": {
+            "validation_empty_comment": "El comentario no puede estar vacío.",
+            "error_submission": "Error al enviar la reseña"
+        },
+        "review_screen": {
+            "appbar_title": "Reseña de Videollamada",
+            "form_title": "Ayúdanos a mejorar",
+            "form_subtitle": "Evalúa los siguientes aspectos",
+            "form_volunteer_rating": "Puntúa la atención del voluntario*",
+            "form_call_rating": "Puntúa la videollamada*",
+            "form_comment_label": "Comentario (opcional)",
+            "form_submit_button": "Enviar reseña",
+            "form_report_button": "Reportar incidente",
+            "form_report_hint": "¿Tuviste algún inconveniente? Puedes reportarlo aquí.",
+            "snackbar_success": "Reseña enviada con éxito"
+        }
+    },
+    "settings": {
+        "profile": {
+            "title": "Mi perfil",
+            "options": {
+                "userInfo": "Información de usuario",
+                "skills": "Habilidades",
+                "availability": "Disponibilidad"
+            },
+            "error": {
+                "roleLoad": "Error al cargar el rol"
+            }
+        },
+        "settings": {
+            "title": "Configuración",
+            "options": {
+                "viewProfile": "Ver perfil",
+                "settings": "Ajustes",
+                "helpCenter": "Centro de ayuda",
+                "logout": "Cerrar sesión"
+            },
+            "dialog": {
+                "logoutTitle": "Confirmar cierre de sesión",
+                "logoutMessage": "¿Estás seguro de que deseas cerrar sesión?",
+                "cancel": "Cancelar",
+                "confirm": "Cerrar sesión"
+            },
+            "screen": {
+                "title": "Ajustes",
+                "notifications": "Notificaciones",
+                "open_system_settings": "Abrir configuración del sistema",
+                "theme": {
+                    "section_title": "Tema de la aplicación",
+                    "select_theme": {
+                        "button": "Seleccionar tema",
+                        "dialog": {
+                            "title": "Selecciona un tema",
+                            "light": "Claro",
+                            "dark": "Oscuro",
+                            "system_default": "Predeterminado del sistema"
+                        }
+                    }
+
+                },
+                "general":{
+                    "section_title": "General",
+                    "about": {
+                        "button": "Acerca de HelpWave",
+                        "dialog":{
+                            "title": "Síguenos en redes sociales",
+                            "close": "Cerrar"
+                        }
+                    }
+                },
+                "language": {
+                    "section_title": "Idioma",
+                    "select_language": {
+                        "button": "Seleccionar idioma",
+                        "screen": {
+                            "languages_list": "Lista de idiomas",
+                            "add_language": "Agregar idioma",
+                            "error":"Error al cargar el progreso: {{error}}",
+                            "snackbar":{
+                                "deleted": "Idioma eliminado exitosamente.",
+                                "error": "Se produjo un error: {}",
+                                "added": "Idioma añadido exitosamente."
+                            },
+                            "dialog":{
+                                "title": "Selecciona Idioma",
+                                "no_languages": "Ya has agregado todos los idiomas disponibles",
+                                "label": "Idioma",
+                                "cancel": "Cancelar",
+                                "accept": "Aceptar"
+                            }
+                        }
+                    }
+                }
+            },
+            "help_center": {
+                "title": "Centro de ayuda",
+                "help_faq": {
+                    "n1": "¿Cómo puedo solicitar ayuda en HelpWave?",
+                    "n2": "¿Qué tipo de asistencia puedo recibir a través de la app?",
+                    "n3": "¿Quiénes pueden ofrecer ayuda como voluntarios?",
+                    "n4": "¿Cómo se protege mi privacidad durante una videollamada?",
+                    "n5": "¿Qué debo hacer si no recibo respuesta tras solicitar ayuda?",
+                    "n6": "¿Cómo califico la atención recibida después de una sesión?"
+                },
+                "help_faq_answer": {
+                    "n1": "Para solicitar ayuda, ve a la pantalla principal y selecciona una categoría según tu necesidad. Un voluntario será notificado y podrá asistirte mediante una videollamada.",
+                    "n2": "Puedes recibir apoyo en tareas digitales, técnicas y cotidianas, como configurar dispositivos, entender documentos u organizar tu agenda.",
+                    "n3": "Cualquier persona con las habilidades adecuadas y disposición para ayudar puede ser voluntaria. HelpWave verifica el perfil de cada voluntario para garantizar calidad y confianza.",
+                    "n4": "Utilizamos cifrado de extremo a extremo para proteger tus llamadas. Además, no se graban videos ni audios, y los datos personales se mantienen confidenciales.",
+                    "n5": "Si no recibes respuesta, puedes volver a intentar la solicitud o esperar unos minutos. Es posible que los voluntarios no estén disponibles temporalmente.",
+                    "n6": "Al finalizar la sesión, se te pedirá que califiques tu experiencia. Esto ayuda a mejorar el servicio y reconocer el trabajo de los voluntarios."
+                }
+            }
+        }
+    },
+    "skills": {
+        "userSkills": {
+            "title": "Habilidades",
+            "dialog": {
+                "confirmDeletionTitle": "Confirmar eliminación",
+                "confirmDeletionMessage": "¿Estás seguro de eliminar esta habilidad?",
+                "cancel": "Cancelar",
+                "confirm": "Eliminar"
+            },
+            "snackbar": {
+                "keepAtLeastOneSkill": "Debes mantener al menos una habilidad."
+            },
+            "label": {
+                "selectSkill": "Selecciona una habilidad"
+            },
+            "button": {
+                "addSkill": "Agregar habilidad"
+            }
+        }
+    },
+    "videocalls": {
+        "connectingScreen": {
+            "appBarTitle": "Conectando...",
+            "establishingConnection": "Estableciendo conexión...",
+            "searchingAssistance": "Estamos buscando la mejor asistencia para ti.",
+            "cancel": "Cancelar",
+            "cancelRequestTitle": "Cancelar solicitud",
+            "cancelRequestQuestion": "¿Estás seguro de que deseas cancelar tu solicitud de ayuda?",
+            "no": "No",
+            "yesCancel": "Sí, cancelar",
+            "cancelFailed": "No se pudo cancelar la solicitud",
+            "tips": {
+                "tip1": "Recuerda tener buena iluminación para que te vean mejor.",
+                "tip2": "Mantén tu cámara enfocando el objeto o situación con la que necesitas ayuda.",
+                "tip3": "Habla con claridad y despacio, especialmente si tu conexión es lenta.",
+                "tip4": "Si no entiendes algo, puedes pedir que te lo repitan sin problema.",
+                "tip5": "Ten a la mano lo que necesitas para aprovechar mejor la videollamada."
+            }
+        },
+        "videocall_screen": {
+            "title": "Videollamada",
+            "error_init_call": "Error al iniciar videollamada: {}",
+            "confirm_end_call_title": "¿Deseas finalizar la videollamada?",
+            "confirm_end_call_content": "Esta acción terminará la llamada y no podrás retomarla.",
+            "waiting_other_user": "Esperando a otro usuario...",
+            "remote_camera_off": "Cámara remota apagada",
+            "cancel": "Cancelar",
+            "end_call": "Finalizar"
+        }
+    }
+}
