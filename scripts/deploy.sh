@@ -7,7 +7,7 @@ if [ -z "$1" ]; then
 fi
 
 NOTES=$1
-APP_ID="1:576719437400:android:443846195d47e99d2d542d"
+APP_ID="1:576719437400:android:ce6faf4a8b78c0f02d542d"
 TESTERS="cuchcafabrizzio@gmail.com,elvia.arteaga98@gmail.com,elvitagu98@hotmail.com"
 VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}')
 VERSION_NAME=${VERSION%%+*}
