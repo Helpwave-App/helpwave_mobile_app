@@ -70,8 +70,8 @@ jobs:
       - name: 🏷️ Crear Git Tag
         run: |
           VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
-          git tag "v$VERSION"
-          git push origin "v$VERSION"
+          git tag -f "v$VERSION"
+          git push -f origin "v$VERSION"
 
       - name: 🏗️ Compilar APK release
         run: flutter build apk --release
