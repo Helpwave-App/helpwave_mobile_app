@@ -11,7 +11,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.helpwave_mobile_app"
+    namespace = "org.helpwave.app"
     compileSdk = 35
     ndkVersion = flutter.ndkVersion
 

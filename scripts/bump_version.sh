@@ -19,6 +19,16 @@ fi
 PUBSPEC="pubspec.yaml"
 CHANGELOG="CHANGELOG.md"
 
+if [[ ! -f "$PUBSPEC" ]]; then
+  echo "❌ No se encontró el archivo $PUBSPEC"
+  exit 1
+fi
+
+if [[ ! -f "$CHANGELOG" ]]; then
+  echo "⚠️ No se encontró $CHANGELOG. Se creará uno nuevo."
+  touch "$CHANGELOG"
+fi
+
 CURRENT_VERSION=$(grep "^version:" $PUBSPEC | awk '{print $2}')
 IFS='+' read -r VERSION_NAME VERSION_CODE <<< "$CURRENT_VERSION"
 IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION_NAME"

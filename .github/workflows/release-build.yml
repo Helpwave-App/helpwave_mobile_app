@@ -43,16 +43,6 @@ jobs:
           VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
           echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
-      - name: 📄 Extraer changelog de la versión
-        id: extract_changelog
-        run: |
-          VERSION=${{ steps.extract_version.outputs.version }}
-          echo "Buscando changelog para la versión $VERSION..."
-          BODY=$(awk "/^## v$VERSION\$/,/^## v/" CHANGELOG.md | head -n -1 | tail -n +2)
-          echo "changelog<<EOF" >> $GITHUB_OUTPUT
-          echo "$BODY" >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
-
       - name: 🛠️ Dar permisos de ejecución al script de versionado
         run: chmod +x ./scripts/bump_version.sh
 
@@ -66,6 +56,16 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref_name }}
+
+      - name: 📄 Extraer changelog de la versión
+        id: extract_changelog
+        run: |
+          VERSION=${{ steps.extract_version.outputs.version }}
+          echo "Buscando changelog para la versión $VERSION..."
+          BODY=$(awk "/^## \\[$VERSION\\]/,/^## \\[/" CHANGELOG.md | tail -n +2 | head -n -1)
+          echo "changelog<<EOF" >> $GITHUB_OUTPUT
+          echo "$BODY" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: 🏷️ Crear Git Tag
         run: |

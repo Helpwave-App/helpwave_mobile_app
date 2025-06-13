@@ -1,4 +1,4 @@
-package com.example.helpwave_mobile_app
+package org.helpwave.app
 
 import io.flutter.embedding.android.FlutterActivity
 
