@@ -53,8 +53,7 @@ NEW_VERSION_CODE=$((VERSION_CODE + 1))
 NEW_VERSION="${NEW_VERSION_NAME}+${NEW_VERSION_CODE}"
 
 # 🔧 Actualizar pubspec.yaml
-sed -i.bak "s/^version: .*/version: ${NEW_VERSION}/" $PUBSPEC
-rm "${PUBSPEC}.bak"
+sed -i "s/^version: .*/version: ${NEW_VERSION}/" "$PUBSPEC"
 
 # 📝 Agregar al CHANGELOG.md
 DATE=$(date +'%Y-%m-%d')

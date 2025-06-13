@@ -29,6 +29,10 @@ jobs:
       - name: 🔄 Clonar repositorio
         uses: actions/checkout@v4
 
+      - name: 🔄 Asegurar HEAD actualizado antes de versionar
+        if: github.event_name == 'workflow_dispatch'
+        run: git pull --rebase
+
       - name: 🧰 Instalar Flutter
         uses: subosito/flutter-action@v2
         with:
@@ -44,15 +48,12 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: ./scripts/bump_version.sh "${{ github.event.inputs.bump_level }}" "${{ github.event.inputs.release_notes }}"
 
-      - name: 🔐 Hacer push automático si es workflow_dispatch
+      - name: 🔐 Push automático de cambios
         if: github.event_name == 'workflow_dispatch'
         uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref_name }}
-
-      - name: 🔄 Hacer pull para traer cambios recién committeados
-        run: git pull --rebase
 
       - name: 📤 Extraer versión desde pubspec.yaml
         id: extract_version
@@ -65,7 +66,7 @@ jobs:
         run: |
           VERSION=${{ steps.extract_version.outputs.version }}
           echo "Buscando changelog para la versión $VERSION..."
-          BODY=$(awk "/^## \\[$VERSION\\]/,/^## \\[/" CHANGELOG.md | tail -n +2 | head -n -1 || true)
+          BODY=$(awk "/^## \\[$VERSION\\]/,/^## \\[/" CHANGELOG.md | tail -n +2 | head -n -1)
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$BODY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
@@ -80,8 +81,7 @@ jobs:
         run: flutter build apk --release
 
       - name: 🔧 Instalar Firebase CLI
-        run: |
-          curl -sL https://firebase.tools | bash
+        run: curl -sL https://firebase.tools | bash
 
       - name: 🛠️ Dar permisos de ejecución al script de despliegue
         run: chmod +x ./scripts/deploy.sh
