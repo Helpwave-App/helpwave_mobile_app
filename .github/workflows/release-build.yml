@@ -44,18 +44,21 @@ jobs:
         if: github.event_name == 'workflow_dispatch'
         run: ./scripts/bump_version.sh "${{ github.event.inputs.bump_level }}" "${{ github.event.inputs.release_notes }}"
 
-      - name: 📤 Extraer versión desde pubspec.yaml
-        id: extract_version
-        run: |
-          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
-
       - name: 🔐 Hacer push automático si es workflow_dispatch
         if: github.event_name == 'workflow_dispatch'
         uses: ad-m/github-push-action@v0.8.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref_name }}
+
+      - name: 🔄 Hacer pull para traer cambios recién committeados
+        run: git pull --rebase
+
+      - name: 📤 Extraer versión desde pubspec.yaml
+        id: extract_version
+        run: |
+          VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}' | cut -d '+' -f1)
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: 📄 Extraer changelog de la versión
         id: extract_changelog
