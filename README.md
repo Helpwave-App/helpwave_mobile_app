@@ -15,6 +15,9 @@ HelpWave conecta a personas que requieren asistencia rápida con voluntarios dis
 - ✅ Evaluación posterior a la llamada
 - 🌟 Sistema de niveles por desempeño
 - 🌐 Gestión de idiomas y disponibilidad
+- 📊 Reporte de videollamadas
+- 🎨 Interfaz multilingüe (Easy Localization)
+- 🌓 Soporte de tema claro/oscuro
 
 ---
 
