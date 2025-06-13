@@ -16,6 +16,10 @@ on:
         description: "Notas de la versión"
         required: true
 
+  push:
+    branches:
+      - "release/**"
+
 jobs:
   release:
     name: 🚀 Publicar nueva versión HelpWave
