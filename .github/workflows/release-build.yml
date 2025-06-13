@@ -44,9 +44,15 @@ jobs:
       - name: 🛠️ Dar permisos de ejecución al script de versionado
         run: chmod +x ./scripts/bump_version.sh
 
+      - name: 📝 Escribir notas de versión en archivo temporal (soporte multilínea)
+        run: |
+          cat <<EOF > release_notes.txt
+          ${{ github.event.inputs.release_notes }}
+          EOF
+
       - name: 🆙 Incrementar versión si es workflow_dispatch
         if: github.event_name == 'workflow_dispatch'
-        run: ./scripts/bump_version.sh "${{ github.event.inputs.bump_level }}" "${{ github.event.inputs.release_notes }}"
+        run: ./scripts/bump_version.sh "${{ github.event.inputs.bump_level }}" "${{ github.event.inputs.release_notes }}" release_notes.txt
 
       - name: 🔐 Push automático de cambios
         if: github.event_name == 'workflow_dispatch'
@@ -86,12 +92,14 @@ jobs:
       - name: 🛠️ Dar permisos de ejecución al script de despliegue
         run: chmod +x ./scripts/deploy.sh
 
+      - name: 📝 Escribir notas de versión en archivo temporal
+        run: |
+          echo "${{ github.event.inputs.release_notes || 'Distribución automática desde rama release' }}" > release_notes.txt
+
       - name: 🚀 Distribuir con Firebase App Distribution
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-        run: |
-          NOTES="${{ github.event.inputs.release_notes || 'Distribución automática desde rama release' }}"
-          ./scripts/deploy.sh "$NOTES"
+        run: ./scripts/deploy.sh release_notes.txt
 
       - name: 📤 Subir artefacto de APK
         uses: actions/upload-artifact@v4

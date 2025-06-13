@@ -1,39 +1,22 @@
 #!/bin/bash
+
 set -e
 
-USAGE="Uso: ./scripts/bump_version.sh [patch|minor|major] \"Notas de la versión\""
-LEVEL=$1
-NOTES=$2
+BUMP_LEVEL=$1
+RELEASE_NOTES=$2
+RELEASE_NOTES_FILE=$3
 
-if [[ "$LEVEL" != "patch" && "$LEVEL" != "minor" && "$LEVEL" != "major" ]]; then
-  echo "$USAGE"
+if [[ -z "$BUMP_LEVEL" || -z "$RELEASE_NOTES" ]]; then
+  echo "❌ Uso: ./bump_version.sh [patch|minor|major] \"Notas breves\" [ruta_opcional_a_release_notes.txt]"
   exit 1
 fi
 
-if [[ -z "$NOTES" ]]; then
-  echo "❌ Debes proporcionar notas de la versión como segundo parámetro."
-  echo "$USAGE"
-  exit 1
-fi
+# Obtener versión actual
+CURRENT_VERSION=$(grep "^version:" pubspec.yaml | cut -d ' ' -f2 | cut -d '+' -f1)
+IFS='.' read -r MAJOR MINOR PATCH <<< "$CURRENT_VERSION"
 
-PUBSPEC="pubspec.yaml"
-CHANGELOG="CHANGELOG.md"
-
-if [[ ! -f "$PUBSPEC" ]]; then
-  echo "❌ No se encontró el archivo $PUBSPEC"
-  exit 1
-fi
-
-if [[ ! -f "$CHANGELOG" ]]; then
-  echo "⚠️ No se encontró $CHANGELOG. Se creará uno nuevo."
-  touch "$CHANGELOG"
-fi
-
-CURRENT_VERSION=$(grep "^version:" $PUBSPEC | awk '{print $2}')
-IFS='+' read -r VERSION_NAME VERSION_CODE <<< "$CURRENT_VERSION"
-IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION_NAME"
-
-case $LEVEL in
+# Incrementar versión según nivel
+case "$BUMP_LEVEL" in
   patch)
     PATCH=$((PATCH + 1))
     ;;
@@ -46,21 +29,37 @@ case $LEVEL in
     MINOR=0
     PATCH=0
     ;;
+  *)
+    echo "❌ Tipo de incremento inválido: $BUMP_LEVEL"
+    exit 1
+    ;;
 esac
 
-NEW_VERSION_NAME="${MAJOR}.${MINOR}.${PATCH}"
-NEW_VERSION_CODE=$((VERSION_CODE + 1))
-NEW_VERSION="${NEW_VERSION_NAME}+${NEW_VERSION_CODE}"
+NEW_VERSION="$MAJOR.$MINOR.$PATCH"
+BUILD_NUMBER=$(date +%s)
+NEW_VERSION_LINE="version: $NEW_VERSION+$BUILD_NUMBER"
 
-# 🔧 Actualizar pubspec.yaml
-sed -i "s/^version: .*/version: ${NEW_VERSION}/" "$PUBSPEC"
+# Reemplazar línea en pubspec.yaml
+sed -i "s/^version: .*/$NEW_VERSION_LINE/" pubspec.yaml
+echo "📌 Nueva versión: $NEW_VERSION_LINE"
 
-# 📝 Agregar al CHANGELOG.md
+# 📝 Formato de fecha
 DATE=$(date +'%Y-%m-%d')
-echo -e "## [$NEW_VERSION_NAME] - $DATE\n$NOTES\n" | cat - $CHANGELOG > temp && mv temp $CHANGELOG
 
-# ✅ Commit automático
-git config --global user.email "github-actions@helpwave.org"
-git config --global user.name "HelpWave CI"
-git add pubspec.yaml CHANGELOG.md
-git commit -m "🔖 Bump version to $NEW_VERSION"
+# 📄 Preparar bloque para el CHANGELOG.md
+echo "📄 Actualizando CHANGELOG.md..."
+
+CHANGELOG_ENTRY="## [$NEW_VERSION] - $DATE  🔖 $RELEASE_NOTES"
+
+# Añadir contenido de archivo de notas si existe
+if [[ -n "$RELEASE_NOTES_FILE" && -f "$RELEASE_NOTES_FILE" ]]; then
+  BODY=$(cat "$RELEASE_NOTES_FILE")
+  CHANGELOG_ENTRY="$CHANGELOG_ENTRY
+
+$BODY"
+fi
+
+# Insertar al inicio del CHANGELOG.md
+{ echo "$CHANGELOG_ENTRY"; echo; cat CHANGELOG.md; } > CHANGELOG.tmp && mv CHANGELOG.tmp CHANGELOG.md
+
+echo "✅ CHANGELOG.md actualizado correctamente."

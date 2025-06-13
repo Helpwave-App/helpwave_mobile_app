@@ -1,12 +1,18 @@
 #!/bin/bash
 
 if [ -z "$1" ]; then
-  echo "❌ Debes escribir una nota de versión."
-  echo "Uso: ./deploy.sh \"Notas de esta versión\""
+  echo "❌ Debes proporcionar la ruta a un archivo de notas de versión."
+  echo "Uso: ./deploy.sh ./release_notes.txt"
   exit 1
 fi
 
-NOTES=$1
+RELEASE_NOTES_FILE="$1"
+
+if [ ! -f "$RELEASE_NOTES_FILE" ]; then
+  echo "❌ El archivo $RELEASE_NOTES_FILE no existe."
+  exit 1
+fi
+
 APP_ID="1:576719437400:android:ce6faf4a8b78c0f02d542d"
 TESTERS="cuchcafabrizzio@gmail.com,elvia.arteaga98@gmail.com,elvitagu98@hotmail.com"
 VERSION=$(grep "^version:" pubspec.yaml | awk '{print $2}')
@@ -24,7 +30,7 @@ echo "🚀 Subiendo a Firebase App Distribution..."
 firebase appdistribution:distribute build/app/outputs/flutter-apk/app-release.apk \
   --app "$APP_ID" \
   --testers "$TESTERS" \
-  --release-notes "$NOTES"
+  --release-notes-file "$RELEASE_NOTES_FILE"
 
 if [ $? -eq 0 ]; then
   echo "✅ Distribución completada con éxito."
