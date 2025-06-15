@@ -36,7 +36,8 @@ void showAboutDialog(BuildContext context) {
       return AlertDialog(
         backgroundColor: theme.colorScheme.surface,
         title: Text(
-          LocaleKeys.settings_settings_screen_general_about_dialog_title.tr(),
+          LocaleKeys.configurations_settings_screen_general_about_dialog_title
+              .tr(),
           style: TextStyle(color: theme.colorScheme.onSurface),
         ),
         content: Column(
@@ -71,7 +72,8 @@ void showAboutDialog(BuildContext context) {
         actions: [
           TextButton(
             child: Text(
-              LocaleKeys.settings_settings_screen_general_about_dialog_close
+              LocaleKeys
+                  .configurations_settings_screen_general_about_dialog_close
                   .tr(),
               style: TextStyle(color: theme.colorScheme.primary),
             ),

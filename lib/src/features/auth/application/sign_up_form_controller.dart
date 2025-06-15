@@ -49,7 +49,6 @@ class SignUpFormController extends StateNotifier<Map<String, String>> {
         "email": _getFieldValue('email') ?? "",
         "phoneNumber": _getFieldValue('phoneNumber') ?? "",
         "scoreProfile": 0.0,
-        "idLevel": userType == "volunteer" ? 1 : 0,
       }
     };
 

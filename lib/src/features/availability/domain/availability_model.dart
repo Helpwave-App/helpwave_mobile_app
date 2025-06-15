@@ -1,6 +1,6 @@
 class Availability {
   final int? id;
-  final String day;
+  final int day;
   final String hourStart;
   final String hourEnd;
 
@@ -14,7 +14,7 @@ class Availability {
   factory Availability.fromJson(Map<String, dynamic> json) {
     return Availability(
       id: json['idAvailability'],
-      day: json['day'],
+      day: int.parse(json['day'].toString()),
       hourStart: json['hourStart'],
       hourEnd: json['hourEnd'],
     );

@@ -42,7 +42,7 @@
         },
         "signUpForm": {
             "fields": {
-                "name": "Nombre",
+                "firstName": "Nombre",
                 "lastName": "Apellido",
                 "phoneNumber": "Número de teléfono",
                 "email": "Correo electrónico",
@@ -259,11 +259,11 @@
             "snackbar_success": "Reseña enviada con éxito"
         }
     },
-    "settings": {
+    "configurations": {
         "profile": {
             "title": "Mi perfil",
             "options": {
-                "userInfo": "Información de usuario",
+                "userInfo": "Información del usuario",
                 "skills": "Habilidades",
                 "availability": "Disponibilidad"
             },
@@ -294,40 +294,36 @@
                     "select_theme": {
                         "button": "Seleccionar tema",
                         "dialog": {
-                            "title": "Selecciona un tema",
+                            "title": "Selecciona el tema de la aplicación",
                             "light": "Claro",
                             "dark": "Oscuro",
                             "system_default": "Predeterminado del sistema"
                         }
                     }
-
                 },
-                "general":{
+                "general": {
                     "section_title": "General",
                     "about": {
                         "button": "Acerca de HelpWave",
-                        "dialog":{
+                        "dialog": {
                             "title": "Síguenos en redes sociales",
                             "close": "Cerrar"
                         }
-                    }
-                },
-                "language": {
-                    "section_title": "Idioma",
+                    },
                     "select_language": {
                         "button": "Seleccionar idioma",
                         "screen": {
-                            "languages_list": "Lista de idiomas",
+                            "languages_list": "Idiomas disponibles",
                             "add_language": "Agregar idioma",
-                            "error":"Error al cargar el progreso: {{error}}",
-                            "snackbar":{
+                            "error": "Error al cargar el progreso: {{error}}",
+                            "snackbar": {
                                 "deleted": "Idioma eliminado exitosamente.",
                                 "error": "Se produjo un error: {}",
                                 "added": "Idioma añadido exitosamente."
                             },
-                            "dialog":{
-                                "title": "Selecciona Idioma",
-                                "no_languages": "Ya has agregado todos los idiomas disponibles",
+                            "dialog": {
+                                "title": "Seleccionar idioma",
+                                "no_languages": "Ya has agregado todos los idiomas disponibles.",
                                 "label": "Idioma",
                                 "cancel": "Cancelar",
                                 "accept": "Aceptar"

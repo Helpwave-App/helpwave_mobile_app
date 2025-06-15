@@ -259,7 +259,7 @@
             "snackbar_success": "Review submitted successfully"
         }
     },
-    "settings": {
+    "configurations": {
         "profile": {
             "title": "My Profile",
             "options": {

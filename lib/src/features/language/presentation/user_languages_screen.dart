@@ -18,7 +18,8 @@ class UserLanguagesScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          LocaleKeys.settings_settings_screen_general_select_language_button
+          LocaleKeys
+              .configurations_settings_screen_general_select_language_button
               .tr(),
         ),
         backgroundColor: theme.colorScheme.secondary,
@@ -29,7 +30,7 @@ class UserLanguagesScreen extends ConsumerWidget {
         error: (error, _) => Center(
           child: Text(
             LocaleKeys
-                .settings_settings_screen_general_select_language_screen_error
+                .configurations_settings_screen_general_select_language_screen_error
                 .tr(
               args: [error.toString()],
             ),
@@ -41,7 +42,7 @@ class UserLanguagesScreen extends ConsumerWidget {
             children: [
               Text(
                 LocaleKeys
-                    .settings_settings_screen_general_select_language_screen_languages_list
+                    .configurations_settings_screen_general_select_language_screen_languages_list
                     .tr(),
                 style: theme.textTheme.titleMedium,
               ),
@@ -62,7 +63,7 @@ class UserLanguagesScreen extends ConsumerWidget {
                                   SnackBar(
                                     content: Text(
                                       LocaleKeys
-                                          .settings_settings_screen_general_select_language_screen_snackbar_deleted
+                                          .configurations_settings_screen_general_select_language_screen_snackbar_deleted
                                           .tr(),
                                     ),
                                   ),
@@ -72,7 +73,7 @@ class UserLanguagesScreen extends ConsumerWidget {
                                   SnackBar(
                                     content: Text(
                                       LocaleKeys
-                                          .settings_settings_screen_general_select_language_screen_snackbar_error
+                                          .configurations_settings_screen_general_select_language_screen_snackbar_error
                                           .tr(args: [e.toString()]),
                                     ),
                                     backgroundColor: Colors.red,
@@ -94,7 +95,7 @@ class UserLanguagesScreen extends ConsumerWidget {
                       SnackBar(
                         content: Text(
                           LocaleKeys
-                              .settings_settings_screen_general_select_language_screen_snackbar_added
+                              .configurations_settings_screen_general_select_language_screen_snackbar_added
                               .tr(),
                         ),
                       ),
@@ -103,7 +104,7 @@ class UserLanguagesScreen extends ConsumerWidget {
                 },
                 icon: const Icon(Icons.add),
                 label: Text(LocaleKeys
-                    .settings_settings_screen_general_select_language_screen_add_language
+                    .configurations_settings_screen_general_select_language_screen_add_language
                     .tr()),
               ),
             ],
