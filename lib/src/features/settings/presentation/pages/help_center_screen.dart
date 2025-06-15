@@ -13,35 +13,41 @@ class HelpCenterScreen extends StatelessWidget {
 
     final faqs = [
       (
-        question: LocaleKeys.settings_settings_help_center_help_faq_n1,
-        answer: LocaleKeys.settings_settings_help_center_help_faq_answer_n1
+        question: LocaleKeys.configurations_settings_help_center_help_faq_n1,
+        answer:
+            LocaleKeys.configurations_settings_help_center_help_faq_answer_n1
       ),
       (
-        question: LocaleKeys.settings_settings_help_center_help_faq_n2,
-        answer: LocaleKeys.settings_settings_help_center_help_faq_answer_n2
+        question: LocaleKeys.configurations_settings_help_center_help_faq_n2,
+        answer:
+            LocaleKeys.configurations_settings_help_center_help_faq_answer_n2
       ),
       (
-        question: LocaleKeys.settings_settings_help_center_help_faq_n3,
-        answer: LocaleKeys.settings_settings_help_center_help_faq_answer_n3
+        question: LocaleKeys.configurations_settings_help_center_help_faq_n3,
+        answer:
+            LocaleKeys.configurations_settings_help_center_help_faq_answer_n3
       ),
       (
-        question: LocaleKeys.settings_settings_help_center_help_faq_n4,
-        answer: LocaleKeys.settings_settings_help_center_help_faq_answer_n4
+        question: LocaleKeys.configurations_settings_help_center_help_faq_n4,
+        answer:
+            LocaleKeys.configurations_settings_help_center_help_faq_answer_n4
       ),
       (
-        question: LocaleKeys.settings_settings_help_center_help_faq_n5,
-        answer: LocaleKeys.settings_settings_help_center_help_faq_answer_n5
+        question: LocaleKeys.configurations_settings_help_center_help_faq_n5,
+        answer:
+            LocaleKeys.configurations_settings_help_center_help_faq_answer_n5
       ),
       (
-        question: LocaleKeys.settings_settings_help_center_help_faq_n6,
-        answer: LocaleKeys.settings_settings_help_center_help_faq_answer_n6
+        question: LocaleKeys.configurations_settings_help_center_help_faq_n6,
+        answer:
+            LocaleKeys.configurations_settings_help_center_help_faq_answer_n6
       ),
     ];
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          LocaleKeys.settings_settings_help_center_title.tr(),
+          LocaleKeys.configurations_settings_help_center_title.tr(),
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: colorScheme.secondary,

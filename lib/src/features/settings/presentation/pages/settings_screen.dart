@@ -17,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         title: Text(
-          LocaleKeys.settings_settings_screen_title.tr(),
+          LocaleKeys.configurations_settings_screen_title.tr(),
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.secondary,
@@ -31,12 +31,13 @@ class SettingsScreen extends StatelessWidget {
           children: [
             _SettingsSectionHeader(
               icon: Icons.notifications,
-              title: LocaleKeys.settings_settings_screen_notifications.tr(),
+              title:
+                  LocaleKeys.configurations_settings_screen_notifications.tr(),
               theme: theme,
             ),
             ListTile(
               title: Text(LocaleKeys
-                  .settings_settings_screen_open_system_settings
+                  .configurations_settings_screen_open_system_settings
                   .tr()),
               contentPadding: EdgeInsets.zero,
               onTap: () {
@@ -47,13 +48,14 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 24),
             _SettingsSectionHeader(
               icon: Icons.contrast,
-              title:
-                  LocaleKeys.settings_settings_screen_theme_section_title.tr(),
+              title: LocaleKeys
+                  .configurations_settings_screen_theme_section_title
+                  .tr(),
               theme: theme,
             ),
             ListTile(
               title: Text(LocaleKeys
-                  .settings_settings_screen_theme_select_theme_button
+                  .configurations_settings_screen_theme_select_theme_button
                   .tr()),
               contentPadding: EdgeInsets.zero,
               onTap: () => showThemeSelectorDialog(context),
@@ -62,20 +64,21 @@ class SettingsScreen extends StatelessWidget {
             const SizedBox(height: 24),
             _SettingsSectionHeader(
               icon: Icons.info_outline,
-              title: LocaleKeys.settings_settings_screen_general_section_title
+              title: LocaleKeys
+                  .configurations_settings_screen_general_section_title
                   .tr(),
               theme: theme,
             ),
             ListTile(
               title: Text(LocaleKeys
-                  .settings_settings_screen_general_about_button
+                  .configurations_settings_screen_general_about_button
                   .tr()),
               contentPadding: EdgeInsets.zero,
               onTap: () => custom_about_dialog.showAboutDialog(context),
             ),
             ListTile(
               title: Text(LocaleKeys
-                  .settings_settings_screen_general_select_language_button
+                  .configurations_settings_screen_general_select_language_button
                   .tr()),
               contentPadding: EdgeInsets.zero,
               onTap: () {

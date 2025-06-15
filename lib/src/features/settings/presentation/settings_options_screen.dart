@@ -17,7 +17,7 @@ class SettingsOptionsScreen extends ConsumerWidget {
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         title: Text(
-          LocaleKeys.settings_settings_title.tr(),
+          LocaleKeys.configurations_settings_title.tr(),
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.secondary,
@@ -31,22 +31,24 @@ class SettingsOptionsScreen extends ConsumerWidget {
           children: [
             ListTile(
               leading: const Icon(Icons.person),
-              title:
-                  Text(LocaleKeys.settings_settings_options_viewProfile.tr()),
+              title: Text(
+                  LocaleKeys.configurations_settings_options_viewProfile.tr()),
               onTap: () {
                 Navigator.of(context).pushNamed(AppRouter.profileRoute);
               },
             ),
             ListTile(
               leading: const Icon(Icons.settings),
-              title: Text(LocaleKeys.settings_settings_options_settings.tr()),
+              title: Text(
+                  LocaleKeys.configurations_settings_options_settings.tr()),
               onTap: () {
                 Navigator.of(context).pushNamed(AppRouter.settingsRoute);
               },
             ),
             ListTile(
               leading: const Icon(Icons.help_outline),
-              title: Text(LocaleKeys.settings_settings_options_helpCenter.tr()),
+              title: Text(
+                  LocaleKeys.configurations_settings_options_helpCenter.tr()),
               onTap: () {
                 Navigator.of(context).pushNamed(AppRouter.helpCenterRoute);
               },
@@ -55,27 +57,31 @@ class SettingsOptionsScreen extends ConsumerWidget {
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
               title: Text(
-                LocaleKeys.settings_settings_options_logout.tr(),
+                LocaleKeys.configurations_settings_options_logout.tr(),
                 style: const TextStyle(color: Colors.red),
               ),
               onTap: () async {
                 final confirm = await showDialog<bool>(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: Text(
-                        LocaleKeys.settings_settings_dialog_logoutTitle.tr()),
-                    content: Text(
-                        LocaleKeys.settings_settings_dialog_logoutMessage.tr()),
+                    title: Text(LocaleKeys
+                        .configurations_settings_dialog_logoutTitle
+                        .tr()),
+                    content: Text(LocaleKeys
+                        .configurations_settings_dialog_logoutMessage
+                        .tr()),
                     actions: [
                       TextButton(
                         onPressed: () => Navigator.pop(context, false),
-                        child: Text(
-                            LocaleKeys.settings_settings_dialog_cancel.tr()),
+                        child: Text(LocaleKeys
+                            .configurations_settings_dialog_cancel
+                            .tr()),
                       ),
                       TextButton(
                         onPressed: () => Navigator.pop(context, true),
-                        child: Text(
-                            LocaleKeys.settings_settings_dialog_confirm.tr()),
+                        child: Text(LocaleKeys
+                            .configurations_settings_dialog_confirm
+                            .tr()),
                       ),
                     ],
                   ),
@@ -119,15 +125,34 @@ class SettingsOptionsScreen extends ConsumerWidget {
 }
 
 void clearUserSession(WidgetRef ref) {
+  // Autenticación
+  ref.invalidate(signUpFormControllerProvider);
+  ref.invalidate(authServiceProvider);
+
+  // Perfil e información
   ref.invalidate(profileFutureProvider);
   ref.invalidate(profileProvider);
   ref.invalidate(tempVolunteerProfileProvider);
+  ref.invalidate(userRoleProvider);
+  ref.invalidate(userInfoControllerProvider);
 
+  // Idiomas
+  ref.invalidate(userLanguagesProvider);
+  ref.invalidate(userLanguagesLoaderProvider);
+
+  // Habilidades y disponibilidad
   ref.invalidate(skillsFutureProvider);
   ref.invalidate(userSkillsProvider);
-  ref.invalidate(availabilityFutureProvider);
-
-  ref.invalidate(userRoleProvider);
-  ref.invalidate(signUpFormControllerProvider);
   ref.invalidate(userSkillsControllerProvider);
+  ref.invalidate(availabilityFutureProvider);
+  ref.invalidate(userAvailabilityControllerProvider);
+
+  // Gamificación
+  ref.invalidate(levelProgressControllerProvider);
+  ref.invalidate(levelCacheControllerProvider);
+
+  // Reportes y feedback
+  ref.invalidate(reviewControllerProvider);
+  ref.invalidate(typeReportsProvider);
+  ref.invalidate(reportSubmissionProvider);
 }

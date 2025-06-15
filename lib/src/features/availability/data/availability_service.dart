@@ -12,6 +12,8 @@ class AvailabilityService {
   static Future<bool> saveAvailability(AvailabilityPayload payload) async {
     final url = Uri.parse('$baseUrl/availabilities/batch');
 
+    print(jsonEncode(payload.toJson()));
+
     final response = await http.post(
       url,
       headers: {
@@ -23,6 +25,8 @@ class AvailabilityService {
     if (response.statusCode == 200 || response.statusCode == 201) {
       return true;
     } else {
+      print('Response code: ${response.statusCode}');
+      print('Body: ${response.body}');
       return false;
     }
   }
