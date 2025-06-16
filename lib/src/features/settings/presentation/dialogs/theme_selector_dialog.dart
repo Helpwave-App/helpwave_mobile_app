@@ -8,14 +8,16 @@ import '../../../../common/utils/constants/providers.dart';
 String getThemeModeLabel(ThemeMode mode) {
   switch (mode) {
     case ThemeMode.light:
-      return LocaleKeys.settings_settings_screen_theme_select_theme_dialog_light
+      return LocaleKeys
+          .configurations_settings_screen_theme_select_theme_dialog_light
           .tr();
     case ThemeMode.dark:
-      return LocaleKeys.settings_settings_screen_theme_select_theme_dialog_dark
+      return LocaleKeys
+          .configurations_settings_screen_theme_select_theme_dialog_dark
           .tr();
     case ThemeMode.system:
       return LocaleKeys
-          .settings_settings_screen_theme_select_theme_dialog_system_default
+          .configurations_settings_screen_theme_select_theme_dialog_system_default
           .tr();
   }
 }
@@ -33,7 +35,7 @@ void showThemeSelectorDialog(BuildContext context) {
             backgroundColor: theme.colorScheme.surface,
             title: Text(
               LocaleKeys
-                  .settings_settings_screen_theme_select_theme_dialog_title
+                  .configurations_settings_screen_theme_select_theme_dialog_title
                   .tr(),
               style: TextStyle(color: theme.colorScheme.onSurface),
             ),

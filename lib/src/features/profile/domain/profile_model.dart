@@ -19,7 +19,7 @@ class Profile {
     this.birthday,
     this.photoUrl = '',
     this.scoreProfile = 0.0,
-    this.level = 1,
+    required this.level,
     this.assistances = 0,
   });
 
@@ -35,7 +35,7 @@ class Profile {
           : null,
       photoUrl: json['photoUrl']?.toString() ?? '',
       scoreProfile: (json['scoreProfile'] as num?)?.toDouble() ?? 0.0,
-      level: (json['idLevel'] as int?) ?? 1,
+      level: json['idLevel'] ?? 1,
       assistances: json['assistances'] ?? 0,
     );
   }

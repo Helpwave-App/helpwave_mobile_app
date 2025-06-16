@@ -18,7 +18,7 @@ class ProfileScreen extends ConsumerWidget {
       backgroundColor: theme.colorScheme.surface,
       appBar: AppBar(
         title: Text(
-          LocaleKeys.settings_profile_title.tr(),
+          LocaleKeys.configurations_profile_title.tr(),
           style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
         ),
         backgroundColor: theme.colorScheme.secondary,
@@ -36,8 +36,8 @@ class ProfileScreen extends ConsumerWidget {
               children: [
                 ListTile(
                   leading: const Icon(Icons.info_outline),
-                  title:
-                      Text(LocaleKeys.settings_profile_options_userInfo.tr()),
+                  title: Text(
+                      LocaleKeys.configurations_profile_options_userInfo.tr()),
                   onTap: () {
                     ref.invalidate(profileFutureProvider);
                     Navigator.of(context).pushNamed(AppRouter.userInfoRoute);
@@ -46,8 +46,8 @@ class ProfileScreen extends ConsumerWidget {
                 if (isVolunteer)
                   ListTile(
                     leading: const Icon(Icons.star_outline),
-                    title:
-                        Text(LocaleKeys.settings_profile_options_skills.tr()),
+                    title: Text(
+                        LocaleKeys.configurations_profile_options_skills.tr()),
                     onTap: () {
                       Navigator.of(context).pushNamed(AppRouter.skillsRoute);
                     },
@@ -55,8 +55,9 @@ class ProfileScreen extends ConsumerWidget {
                 if (isVolunteer)
                   ListTile(
                     leading: const Icon(Icons.schedule),
-                    title: Text(
-                        LocaleKeys.settings_profile_options_availability.tr()),
+                    title: Text(LocaleKeys
+                        .configurations_profile_options_availability
+                        .tr()),
                     onTap: () {
                       Navigator.of(context)
                           .pushNamed(AppRouter.availabilityRoute);
@@ -68,7 +69,7 @@ class ProfileScreen extends ConsumerWidget {
         },
         loading: () => const Center(child: CircularProgressIndicator()),
         error: (error, _) => Center(
-            child: Text(LocaleKeys.settings_profile_error_roleLoad.tr())),
+            child: Text(LocaleKeys.configurations_profile_error_roleLoad.tr())),
       ),
     );
   }

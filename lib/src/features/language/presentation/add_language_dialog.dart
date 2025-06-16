@@ -16,7 +16,7 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
         builder: (context, setState) {
           return AlertDialog(
             title: Text(LocaleKeys
-                .settings_settings_screen_general_select_language_screen_dialog_title
+                .configurations_settings_screen_general_select_language_screen_dialog_title
                 .tr()),
             content: Consumer(
               builder: (context, ref, _) {
@@ -33,7 +33,7 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                     if (remaining.isEmpty) {
                       return Text(
                         LocaleKeys
-                            .settings_settings_screen_general_select_language_screen_dialog_no_languages
+                            .configurations_settings_screen_general_select_language_screen_dialog_no_languages
                             .tr(),
                         style: TextStyle(fontStyle: FontStyle.italic),
                       );
@@ -53,7 +53,7 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                       },
                       decoration: InputDecoration(
                         labelText: LocaleKeys
-                            .settings_settings_screen_general_select_language_screen_dialog_label
+                            .configurations_settings_screen_general_select_language_screen_dialog_label
                             .tr(),
                       ),
                       value: selectedLanguage,
@@ -70,7 +70,7 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                 onPressed: () => Navigator.of(context).pop(false),
                 child: Text(
                   LocaleKeys
-                      .settings_settings_screen_general_select_language_screen_dialog_cancel
+                      .configurations_settings_screen_general_select_language_screen_dialog_cancel
                       .tr(),
                 ),
               ),
@@ -85,7 +85,7 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                     : null,
                 child: Text(
                   LocaleKeys
-                      .settings_settings_screen_general_select_language_screen_dialog_accept
+                      .configurations_settings_screen_general_select_language_screen_dialog_accept
                       .tr(),
                 ),
               ),

@@ -61,7 +61,7 @@ class _VolunteerAvailabilityScreenState
       for (final slot in slots) {
         availList.add(
           Availability(
-            day: dayName,
+            day: _dayNameToNumber(dayName),
             hourStart: _formatTime24H(slot.start),
             hourEnd: _formatTime24H(slot.end),
           ),

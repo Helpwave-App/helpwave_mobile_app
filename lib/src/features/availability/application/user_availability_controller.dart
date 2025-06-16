@@ -24,7 +24,7 @@ class UserAvailabilityController
       final map = {for (final day in weekDays) day: <TimeRange>[]};
 
       for (final item in result) {
-        final dayName = weekDays[int.parse(item.day) - 1];
+        final dayName = weekDays[item.day - 1];
         final start = _parseTime(item.hourStart);
         final end = _parseTime(item.hourEnd);
         map[dayName]?.add(TimeRange(id: '${item.id}', start: start, end: end));
