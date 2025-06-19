@@ -172,7 +172,7 @@ class AppRouter {
         return const UserSkillsScreen();
 
       case availabilityRoute:
-        return UserAvailabilityScreen();
+        return const UserAvailabilityScreen();
 
       default:
         return const Scaffold(body: Center(child: Text('Ruta no encontrada')));

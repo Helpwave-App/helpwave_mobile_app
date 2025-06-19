@@ -35,7 +35,7 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                         LocaleKeys
                             .configurations_settings_screen_general_select_language_screen_dialog_no_languages
                             .tr(),
-                        style: TextStyle(fontStyle: FontStyle.italic),
+                        style: const TextStyle(fontStyle: FontStyle.italic),
                       );
                     }
 

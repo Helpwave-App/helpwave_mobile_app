@@ -11,9 +11,9 @@ class SignUpRequesterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      body: SignUpForm(
+      body: const SignUpForm(
         titleKey: LocaleKeys.auth_signUpRequester_title,
-        fields: const [
+        fields: [
           FormFieldData(
             labelKey: LocaleKeys.auth_signUpRequester_fields_name,
             translationKey: LocaleKeys.auth_signUpRequester_fields_name,
