@@ -127,7 +127,7 @@ class _CenteredDivider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
+      child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.9,
         child: const Divider(thickness: 1),
       ),
