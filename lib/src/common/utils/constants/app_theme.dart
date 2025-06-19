@@ -27,29 +27,29 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFF8BBF56),
+        backgroundColor: const Color(0xFF8BBF56),
         foregroundColor: Colors.white,
-        minimumSize: Size.fromHeight(50),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(
+        minimumSize: const Size.fromHeight(50),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: Color(0xFF8BBF56),
-        minimumSize: Size.fromHeight(50),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(
+        foregroundColor: const Color(0xFF8BBF56),
+        minimumSize: const Size.fromHeight(50),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
-        side: BorderSide(color: Color(0xFF8BBF56)),
+        side: const BorderSide(color: Color(0xFF8BBF56)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Color(0xFF049DBF),
+        foregroundColor: const Color(0xFF049DBF),
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(
@@ -90,29 +90,29 @@ class AppTheme {
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFF049DBF),
+        backgroundColor: const Color(0xFF049DBF),
         foregroundColor: Colors.black,
-        minimumSize: Size.fromHeight(50),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(
+        minimumSize: const Size.fromHeight(50),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
       ),
     ),
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: Color(0xFF049DBF),
-        minimumSize: Size.fromHeight(50),
-        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(
+        foregroundColor: const Color(0xFF049DBF),
+        minimumSize: const Size.fromHeight(50),
+        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+        shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
-        side: BorderSide(color: Color(0xFF049DBF)),
+        side: const BorderSide(color: Color(0xFF049DBF)),
       ),
     ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
-        foregroundColor: Color(0xFF84BF5A),
+        foregroundColor: const Color(0xFF84BF5A),
       ),
     ),
     inputDecorationTheme: const InputDecorationTheme(

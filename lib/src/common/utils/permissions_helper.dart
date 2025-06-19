@@ -63,8 +63,8 @@ Future<bool> checkAndRequestEssentialPermissions(BuildContext context) async {
     }
 
     if (Platform.isAndroid || Platform.isIOS) {
-      final notificationPermission = Permission.notification;
-      final notificationName = 'las notificaciones';
+      const notificationPermission = Permission.notification;
+      const notificationName = 'las notificaciones';
 
       if (await checkAndHandlePermanentDenial(
         context: context,

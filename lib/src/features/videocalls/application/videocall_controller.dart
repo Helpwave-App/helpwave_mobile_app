@@ -48,14 +48,14 @@ class VideoCallController {
 
   Future<void> _initEngine() async {
     _engine = createAgoraRtcEngine();
-    await _engine.initialize(RtcEngineContext(
+    await _engine.initialize(const RtcEngineContext(
       appId: AgoraConstants.appId,
       channelProfile: ChannelProfileType.channelProfileCommunication,
     ));
 
     await _engine.setVideoEncoderConfiguration(
-      VideoEncoderConfiguration(
-        dimensions: const VideoDimensions(width: 640, height: 360),
+      const VideoEncoderConfiguration(
+        dimensions: VideoDimensions(width: 640, height: 360),
         frameRate: 15,
         bitrate: 0,
         orientationMode: OrientationMode.orientationModeAdaptive,
@@ -128,7 +128,7 @@ class VideoCallController {
 
     await _engine.leaveChannel();
     await _engine.stopPreview();
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 1));
     await _engine.release();
 
     CallSession.currentChannel = null;

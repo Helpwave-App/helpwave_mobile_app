@@ -11,9 +11,9 @@ class SignUpVolunteerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.secondary,
-      body: SignUpForm(
+      body: const SignUpForm(
         titleKey: LocaleKeys.auth_signUpVolunteer_title,
-        fields: const [
+        fields: [
           FormFieldData(
             labelKey: LocaleKeys.auth_signUpVolunteer_fields_name,
             translationKey: LocaleKeys.auth_signUpVolunteer_fields_name,

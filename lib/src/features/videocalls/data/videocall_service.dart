@@ -46,7 +46,7 @@ class VideocallService {
   }
 
   Future<void> cancelRequest(idRequest) async {
-    final token = await FlutterSecureStorage().read(key: 'jwt_token');
+    final token = await const FlutterSecureStorage().read(key: 'jwt_token');
     final url = Uri.parse('$baseUrl/requests/cancel/$idRequest');
 
     try {
