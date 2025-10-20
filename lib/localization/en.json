@@ -187,7 +187,9 @@
             "unknownName": "Unknown",
             "unknownLastName": "Unknown",
             "alreadyAnsweredTitle": "Thank you for your willingness!",
-            "alreadyAnsweredMessage": "Another volunteer has already responded to this request. We really appreciate your intention to help 😊."
+            "alreadyAnsweredMessage": "Another volunteer has already responded to this request. We really appreciate your intention to help 😊.",
+            "requestCancelledTitle": "Request Cancelled",
+            "requestCancelledMessage": "The requester has cancelled the help request."
         }
     },
     "profile": {
@@ -400,7 +402,16 @@
             "waiting_other_user": "Waiting for another user...",
             "remote_camera_off": "Remote camera is off",
             "cancel": "Cancel",
-            "end_call": "End Call"
+                    "end_call": "End Call"
+        }
+    },
+    "requests": {
+        "history": {
+            "title": "Request History",
+            "empty": "You don't have any requests in your history yet.",
+            "error": "Failed to load data.",
+            "retry": "Retry"
         }
     }
 }
+            

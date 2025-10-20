@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../common/exceptions/api_exception.dart';
 import '../../../common/utils/constants/providers.dart';
@@ -30,24 +31,40 @@ class HomeController extends StateNotifier<HomeState> {
   }
 
   Future<void> handleHelpRequest(BuildContext context) async {
-    if (state.selectedSkill == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content:
-              Text('Por favor, selecciona una habilidad antes de continuar.'),
-        ),
-      );
-      return;
-    }
-
     state = state.copyWith(isLoading: true);
 
     try {
-      final hasPermissions = await checkAndRequestEssentialPermissions(context);
-      if (!hasPermissions) return;
+      final permissions = <Permission, String>{
+        Permission.camera: 'la cámara',
+        Permission.microphone: 'el micrófono',
+        Permission.notification: 'las notificaciones',
+      };
+
+      for (final entry in permissions.entries) {
+        final permission = entry.key;
+        final name = entry.value;
+
+        final isPermanentlyDenied = await checkAndHandlePermanentDenial(
+          context: context,
+          permission: permission,
+          permissionName: name,
+        );
+
+        if (isPermanentlyDenied) {
+          return;
+        }
+
+        final status = await permission.status;
+        if (!status.isGranted) {
+          final result = await permission.request();
+          if (!result.isGranted) {
+            return;
+          }
+        }
+      }
 
       final service = ref.read(videocallServiceProvider);
-      final idSkill = state.selectedSkill!.idSkill;
+      final idSkill = state.selectedSkill?.idSkill ?? 1;
       final idRequest = await service.createHelpRequest(idSkill: idSkill);
 
       if (!context.mounted) return;

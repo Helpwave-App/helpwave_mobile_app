@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:io';
 
 Future<bool> checkAndHandlePermanentDenial({
   required BuildContext context,
@@ -39,48 +38,4 @@ Future<bool> checkAndHandlePermanentDenial({
   return false;
 }
 
-Future<bool> checkAndRequestEssentialPermissions(BuildContext context) async {
-  try {
-    final permissions = <Permission, String>{
-      Permission.camera: 'la cámara',
-      Permission.microphone: 'el micrófono',
-    };
 
-    for (final entry in permissions.entries) {
-      final permission = entry.key;
-      final name = entry.value;
-
-      if (await checkAndHandlePermanentDenial(
-        context: context,
-        permission: permission,
-        permissionName: name,
-      )) return false;
-
-      if (!await permission.isGranted) {
-        final result = await permission.request();
-        if (!result.isGranted) return false;
-      }
-    }
-
-    if (Platform.isAndroid || Platform.isIOS) {
-      const notificationPermission = Permission.notification;
-      const notificationName = 'las notificaciones';
-
-      if (await checkAndHandlePermanentDenial(
-        context: context,
-        permission: notificationPermission,
-        permissionName: notificationName,
-      )) return false;
-
-      if (!await notificationPermission.isGranted) {
-        final result = await notificationPermission.request();
-        if (!result.isGranted) return false;
-      }
-    }
-
-    return true;
-  } catch (e) {
-    debugPrint('Error verificando permisos: $e');
-    return false;
-  }
-}

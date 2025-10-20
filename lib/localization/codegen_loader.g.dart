@@ -160,6 +160,8 @@ abstract class  LocaleKeys {
   static const notification_handler_unknownLastName = 'notification.handler.unknownLastName';
   static const notification_handler_alreadyAnsweredTitle = 'notification.handler.alreadyAnsweredTitle';
   static const notification_handler_alreadyAnsweredMessage = 'notification.handler.alreadyAnsweredMessage';
+  static const notification_handler_requestCancelledTitle = 'notification.handler.requestCancelledTitle';
+  static const notification_handler_requestCancelledMessage = 'notification.handler.requestCancelledMessage';
   static const notification_handler = 'notification.handler';
   static const notification = 'notification';
   static const profile_user_info_screen_app_bar_title = 'profile.user_info_screen.app_bar.title';
@@ -329,5 +331,11 @@ abstract class  LocaleKeys {
   static const videocalls_videocall_screen_end_call = 'videocalls.videocall_screen.end_call';
   static const videocalls_videocall_screen = 'videocalls.videocall_screen';
   static const videocalls = 'videocalls';
+  static const requests_history_title = 'requests.history.title';
+  static const requests_history_empty = 'requests.history.empty';
+  static const requests_history_error = 'requests.history.error';
+  static const requests_history_retry = 'requests.history.retry';
+  static const requests_history = 'requests.history';
+  static const requests = 'requests';
 
 }

@@ -86,6 +86,7 @@ class HelpWaveApp extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
       title: 'HelpWave',
       theme: AppTheme.lightTheme,

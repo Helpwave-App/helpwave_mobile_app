@@ -53,6 +53,13 @@ class SettingsOptionsScreen extends ConsumerWidget {
                 Navigator.of(context).pushNamed(AppRouter.helpCenterRoute);
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.history),
+              title: const Text('Historial de solicitudes'),
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRouter.requestHistoryRoute);
+              },
+            ),
             const Spacer(),
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),

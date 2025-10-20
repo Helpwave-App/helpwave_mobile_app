@@ -54,7 +54,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     debugPrint('🔐 Token: ${widget.token}');
     debugPrint('📡 Channel: ${widget.channel}');
     try {
-      await _controller.initialize();
+      await _controller.initialize(context);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -2,6 +2,7 @@ import 'package:agora_rtc_engine/agora_rtc_engine.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../common/utils/permissions_helper.dart';
 import '../../../common/utils/constants/agora_api.dart';
 import '../../../common/utils/constants/call_session.dart';
 import '../data/videocall_service.dart';
@@ -26,8 +27,8 @@ class VideoCallController {
 
   RtcEngine get engine => _engine;
 
-  Future<void> initialize() async {
-    await _requestPermissions();
+  Future<void> initialize(BuildContext context) async {
+    await _requestPermissions(context);
     await _initEngine();
     _registerEventHandlers();
     await _engine.enableVideo();
@@ -36,13 +37,34 @@ class VideoCallController {
     CallSession.currentChannel = channelName;
   }
 
-  Future<void> _requestPermissions() async {
-    final cameraStatus = await Permission.camera.request();
-    final micStatus = await Permission.microphone.request();
+  Future<void> _requestPermissions(BuildContext context) async {
+    final permissions = <Permission, String>{
+      Permission.camera: 'la cámara',
+      Permission.microphone: 'el micrófono',
+    };
 
-    if (!cameraStatus.isGranted || !micStatus.isGranted) {
-      throw Exception(
-          'Permisos de cámara y micrófono son necesarios para la videollamada.');
+    for (final entry in permissions.entries) {
+      final permission = entry.key;
+      final name = entry.value;
+
+      final isPermanentlyDenied = await checkAndHandlePermanentDenial(
+        context: context,
+        permission: permission,
+        permissionName: name,
+      );
+
+      if (isPermanentlyDenied) {
+        throw Exception(
+            'El permiso para $name ha sido denegado permanentemente.');
+      }
+
+      final status = await permission.status;
+      if (!status.isGranted) {
+        final result = await permission.request();
+        if (!result.isGranted) {
+          throw Exception('El permiso para $name es necesario.');
+        }
+      }
     }
   }
 

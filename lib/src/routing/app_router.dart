@@ -27,6 +27,7 @@ import '../features/settings/presentation/settings_options_screen.dart';
 import '../features/settings/presentation/pages/profile_screen.dart';
 import '../features/profile/presentation/user_info_screen.dart';
 import '../features/skills/presentation/user_skills_screen.dart';
+import '../features/requests/presentation/request_history_screen.dart';
 
 class AppRouter {
   static const String loadingRoute = '/';
@@ -58,6 +59,7 @@ class AppRouter {
   static const String userInfoRoute = '/user-info';
   static const String skillsRoute = '/skills';
   static const String availabilityRoute = '/availability';
+  static const String requestHistoryRoute = '/request-history';
 
   static Widget? getPageFromRoute(String routeName,
       {Map<String, dynamic>? args}) {
@@ -305,6 +307,9 @@ class AppRouter {
       case availabilityRoute:
         return MaterialPageRoute(
             builder: (_) => const UserAvailabilityScreen());
+
+      case requestHistoryRoute:
+        return MaterialPageRoute(builder: (_) => const RequestHistoryScreen());
 
       default:
         return MaterialPageRoute(

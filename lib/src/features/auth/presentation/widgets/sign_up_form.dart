@@ -141,6 +141,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
               tr(LocaleKeys.auth_signUpForm_errors_unknownError);
           setState(() {});
         }
+
+        _showError(result?['error']);
         return;
       }
 

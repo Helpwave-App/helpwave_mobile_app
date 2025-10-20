@@ -187,7 +187,9 @@
             "unknownName": "Desconocido",
             "unknownLastName": "Desconocido",
             "alreadyAnsweredTitle": "¡Gracias por tu disposición!",
-            "alreadyAnsweredMessage": "Otro voluntario ya respondió a esta solicitud. Agradecemos mucho tu intención de ayudar 😊."
+            "alreadyAnsweredMessage": "Otro voluntario ya respondió a esta solicitud. Agradecemos mucho tu intención de ayudar 😊.",
+            "requestCancelledTitle": "Solicitud cancelada",
+            "requestCancelledMessage": "El solicitante ha cancelado la solicitud de ayuda."
         }
     },
     "profile": {
@@ -400,7 +402,16 @@
             "waiting_other_user": "Esperando al otro usuario...",
             "remote_camera_off": "La cámara del otro usuario está apagada",
             "cancel": "Cancelar",
-            "end_call": "Finalizar llamada"
+                    "end_call": "Finalizar llamada"
         }
-    }
+    },
+    "requests": {
+        "history": {
+            "title": "Historial de solicitudes",
+            "empty": "Aún no tienes solicitudes en tu historial.",
+            "error": "La carga de datos falló.",
+            "retry": "Volver a intentar"
+        }
+    }               
 }
+            
