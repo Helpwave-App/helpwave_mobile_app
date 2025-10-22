@@ -16,10 +16,10 @@ class AddTimeModal extends StatefulWidget {
   });
 
   @override
-  _AddTimeModalState createState() => _AddTimeModalState();
+  AddTimeModalState createState() => AddTimeModalState();
 }
 
-class _AddTimeModalState extends State<AddTimeModal> {
+class AddTimeModalState extends State<AddTimeModal> {
   TimeOfDay? startTime;
   TimeOfDay? endTime;
   bool applyToAllDays = false;

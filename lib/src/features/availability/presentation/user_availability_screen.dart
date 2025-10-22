@@ -10,10 +10,10 @@ class UserAvailabilityScreen extends ConsumerStatefulWidget {
   const UserAvailabilityScreen({super.key});
 
   @override
-  _UserAvailabilityScreenState createState() => _UserAvailabilityScreenState();
+  UserAvailabilityScreenState createState() => UserAvailabilityScreenState();
 }
 
-class _UserAvailabilityScreenState
+class UserAvailabilityScreenState
     extends ConsumerState<UserAvailabilityScreen> {
   bool isEditing = false;
 
@@ -78,16 +78,15 @@ class _UserAvailabilityScreenState
                     onPressed: availability.values.any((s) => s.isNotEmpty)
                         ? () async {
                             final success = await controller.saveAvailability();
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(success
-                                      ? 'Disponibilidad guardada'
-                                      : 'Error al guardar disponibilidad'),
-                                ),
-                              );
-                              if (success) isEditing = false;
-                            }
+                            if (!mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(success
+                                    ? 'Disponibilidad guardada'
+                                    : 'Error al guardar disponibilidad'),
+                              ),
+                            );
+                            if (success) isEditing = false;
                           }
                         : null,
                     child: const Text('Guardar disponibilidad'),
@@ -177,7 +176,7 @@ class _UserAvailabilityScreenState
               ...slots.map(
                 (slot) {
                   final slotColor = slot.id == null
-                      ? theme.colorScheme.onTertiary.withOpacity(0.5)
+                      ? theme.colorScheme.onTertiary.withAlpha(128)
                       : theme.colorScheme.primary;
 
                   return ListTile(
@@ -216,13 +215,11 @@ class _UserAvailabilityScreenState
                                   await controller.removeTimeSlot(
                                       context, day, slot);
                                 } catch (e) {
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text('Error al eliminar: $e')),
-                                    );
-                                  }
+                                  if (!mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text('Error al eliminar: $e')),
+                                  );
                                 }
                               }
                             },

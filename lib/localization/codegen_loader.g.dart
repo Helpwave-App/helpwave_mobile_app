@@ -2,7 +2,7 @@
 
 // ignore_for_file: constant_identifier_names
 
-abstract class  LocaleKeys {
+abstract class LocaleKeys {
   static const auth_signIn_title = 'auth.signIn.title';
   static const auth_signIn_username = 'auth.signIn.username';
   static const auth_signIn_usernameRequired = 'auth.signIn.usernameRequired';
@@ -12,8 +12,10 @@ abstract class  LocaleKeys {
   static const auth_signIn_forgotPassword = 'auth.signIn.forgotPassword';
   static const auth_signIn_noAccount = 'auth.signIn.noAccount';
   static const auth_signIn_registerNow = 'auth.signIn.registerNow';
-  static const auth_signIn_invalidCredentials = 'auth.signIn.invalidCredentials';
-  static const auth_signIn_incorrectCredentials = 'auth.signIn.incorrectCredentials';
+  static const auth_signIn_invalidCredentials =
+      'auth.signIn.invalidCredentials';
+  static const auth_signIn_incorrectCredentials =
+      'auth.signIn.incorrectCredentials';
   static const auth_signIn = 'auth.signIn';
   static const auth_welcome_title = 'auth.welcome.title';
   static const auth_welcome_subtitle = 'auth.welcome.subtitle';
@@ -34,104 +36,177 @@ abstract class  LocaleKeys {
   static const auth_userType_next = 'auth.userType.next';
   static const auth_userType = 'auth.userType';
   static const auth_termsAndConditions_title = 'auth.termsAndConditions.title';
-  static const auth_termsAndConditions_description = 'auth.termsAndConditions.description';
-  static const auth_termsAndConditions_acceptLabel = 'auth.termsAndConditions.acceptLabel';
+  static const auth_termsAndConditions_description =
+      'auth.termsAndConditions.description';
+  static const auth_termsAndConditions_acceptLabel =
+      'auth.termsAndConditions.acceptLabel';
   static const auth_termsAndConditions_next = 'auth.termsAndConditions.next';
   static const auth_termsAndConditions = 'auth.termsAndConditions';
-  static const auth_signUpForm_fields_firstName = 'auth.signUpForm.fields.firstName';
-  static const auth_signUpForm_fields_lastName = 'auth.signUpForm.fields.lastName';
-  static const auth_signUpForm_fields_phoneNumber = 'auth.signUpForm.fields.phoneNumber';
+  static const auth_signUpForm_fields_firstName =
+      'auth.signUpForm.fields.firstName';
+  static const auth_signUpForm_fields_lastName =
+      'auth.signUpForm.fields.lastName';
+  static const auth_signUpForm_fields_phoneNumber =
+      'auth.signUpForm.fields.phoneNumber';
   static const auth_signUpForm_fields_email = 'auth.signUpForm.fields.email';
-  static const auth_signUpForm_fields_username = 'auth.signUpForm.fields.username';
-  static const auth_signUpForm_fields_password = 'auth.signUpForm.fields.password';
-  static const auth_signUpForm_fields_language = 'auth.signUpForm.fields.language';
+  static const auth_signUpForm_fields_username =
+      'auth.signUpForm.fields.username';
+  static const auth_signUpForm_fields_password =
+      'auth.signUpForm.fields.password';
+  static const auth_signUpForm_fields_language =
+      'auth.signUpForm.fields.language';
   static const auth_signUpForm_fields = 'auth.signUpForm.fields';
-  static const auth_signUpForm_errors_required = 'auth.signUpForm.errors.required';
-  static const auth_signUpForm_errors_onlyLetters = 'auth.signUpForm.errors.onlyLetters';
-  static const auth_signUpForm_errors_phoneNumber = 'auth.signUpForm.errors.phoneNumber';
+  static const auth_signUpForm_errors_required =
+      'auth.signUpForm.errors.required';
+  static const auth_signUpForm_errors_onlyLetters =
+      'auth.signUpForm.errors.onlyLetters';
+  static const auth_signUpForm_errors_phoneNumber =
+      'auth.signUpForm.errors.phoneNumber';
   static const auth_signUpForm_errors_email = 'auth.signUpForm.errors.email';
-  static const auth_signUpForm_errors_username = 'auth.signUpForm.errors.username';
-  static const auth_signUpForm_errors_passwordMinLength = 'auth.signUpForm.errors.passwordMinLength';
-  static const auth_signUpForm_errors_unknownError = 'auth.signUpForm.errors.unknownError';
-  static const auth_signUpForm_errors_internalError = 'auth.signUpForm.errors.internalError';
-  static const auth_signUpForm_errors_unexpectedError = 'auth.signUpForm.errors.unexpectedError';
-  static const auth_signUpForm_errors_loading_languages = 'auth.signUpForm.errors.loading_languages';
+  static const auth_signUpForm_errors_username =
+      'auth.signUpForm.errors.username';
+  static const auth_signUpForm_errors_passwordMinLength =
+      'auth.signUpForm.errors.passwordMinLength';
+  static const auth_signUpForm_errors_unknownError =
+      'auth.signUpForm.errors.unknownError';
+  static const auth_signUpForm_errors_internalError =
+      'auth.signUpForm.errors.internalError';
+  static const auth_signUpForm_errors_unexpectedError =
+      'auth.signUpForm.errors.unexpectedError';
+  static const auth_signUpForm_errors_loading_languages =
+      'auth.signUpForm.errors.loading_languages';
   static const auth_signUpForm_errors = 'auth.signUpForm.errors';
   static const auth_signUpForm_haveAccount = 'auth.signUpForm.haveAccount';
   static const auth_signUpForm_signIn = 'auth.signUpForm.signIn';
   static const auth_signUpForm = 'auth.signUpForm';
   static const auth_signUpRequester_title = 'auth.signUpRequester.title';
-  static const auth_signUpRequester_fields_name = 'auth.signUpRequester.fields.name';
-  static const auth_signUpRequester_fields_lastname = 'auth.signUpRequester.fields.lastname';
-  static const auth_signUpRequester_fields_phoneNumber = 'auth.signUpRequester.fields.phoneNumber';
-  static const auth_signUpRequester_fields_username = 'auth.signUpRequester.fields.username';
-  static const auth_signUpRequester_fields_password = 'auth.signUpRequester.fields.password';
+  static const auth_signUpRequester_fields_name =
+      'auth.signUpRequester.fields.name';
+  static const auth_signUpRequester_fields_lastname =
+      'auth.signUpRequester.fields.lastname';
+  static const auth_signUpRequester_fields_phoneNumber =
+      'auth.signUpRequester.fields.phoneNumber';
+  static const auth_signUpRequester_fields_username =
+      'auth.signUpRequester.fields.username';
+  static const auth_signUpRequester_fields_password =
+      'auth.signUpRequester.fields.password';
   static const auth_signUpRequester_fields = 'auth.signUpRequester.fields';
-  static const auth_signUpRequester_buttonText = 'auth.signUpRequester.buttonText';
+  static const auth_signUpRequester_buttonText =
+      'auth.signUpRequester.buttonText';
   static const auth_signUpRequester = 'auth.signUpRequester';
   static const auth_signUpVolunteer_title = 'auth.signUpVolunteer.title';
-  static const auth_signUpVolunteer_fields_name = 'auth.signUpVolunteer.fields.name';
-  static const auth_signUpVolunteer_fields_lastname = 'auth.signUpVolunteer.fields.lastname';
-  static const auth_signUpVolunteer_fields_email = 'auth.signUpVolunteer.fields.email';
-  static const auth_signUpVolunteer_fields_username = 'auth.signUpVolunteer.fields.username';
-  static const auth_signUpVolunteer_fields_password = 'auth.signUpVolunteer.fields.password';
+  static const auth_signUpVolunteer_fields_name =
+      'auth.signUpVolunteer.fields.name';
+  static const auth_signUpVolunteer_fields_lastname =
+      'auth.signUpVolunteer.fields.lastname';
+  static const auth_signUpVolunteer_fields_email =
+      'auth.signUpVolunteer.fields.email';
+  static const auth_signUpVolunteer_fields_username =
+      'auth.signUpVolunteer.fields.username';
+  static const auth_signUpVolunteer_fields_password =
+      'auth.signUpVolunteer.fields.password';
   static const auth_signUpVolunteer_fields = 'auth.signUpVolunteer.fields';
-  static const auth_signUpVolunteer_buttonText = 'auth.signUpVolunteer.buttonText';
+  static const auth_signUpVolunteer_buttonText =
+      'auth.signUpVolunteer.buttonText';
   static const auth_signUpVolunteer = 'auth.signUpVolunteer';
   static const auth_volunteerSkills_title = 'auth.volunteerSkills.title';
-  static const auth_volunteerSkills_selectMultipleOptions = 'auth.volunteerSkills.selectMultipleOptions';
-  static const auth_volunteerSkills_generalAssistanceMandatory = 'auth.volunteerSkills.generalAssistanceMandatory';
-  static const auth_volunteerSkills_errorSavingSkills = 'auth.volunteerSkills.errorSavingSkills';
-  static const auth_volunteerSkills_errorLoadingSkills = 'auth.volunteerSkills.errorLoadingSkills';
-  static const auth_volunteerSkills_mandatory = 'auth.volunteerSkills.mandatory';
+  static const auth_volunteerSkills_selectMultipleOptions =
+      'auth.volunteerSkills.selectMultipleOptions';
+  static const auth_volunteerSkills_generalAssistanceMandatory =
+      'auth.volunteerSkills.generalAssistanceMandatory';
+  static const auth_volunteerSkills_errorSavingSkills =
+      'auth.volunteerSkills.errorSavingSkills';
+  static const auth_volunteerSkills_errorLoadingSkills =
+      'auth.volunteerSkills.errorLoadingSkills';
+  static const auth_volunteerSkills_mandatory =
+      'auth.volunteerSkills.mandatory';
   static const auth_volunteerSkills_next = 'auth.volunteerSkills.next';
   static const auth_volunteerSkills = 'auth.volunteerSkills';
-  static const auth_volunteerAvailability_title = 'auth.volunteerAvailability.title';
-  static const auth_volunteerAvailability_subtitle = 'auth.volunteerAvailability.subtitle';
-  static const auth_volunteerAvailability_errorSavingAvailability = 'auth.volunteerAvailability.errorSavingAvailability';
-  static const auth_volunteerAvailability_finishRegistration = 'auth.volunteerAvailability.finishRegistration';
+  static const auth_volunteerAvailability_title =
+      'auth.volunteerAvailability.title';
+  static const auth_volunteerAvailability_subtitle =
+      'auth.volunteerAvailability.subtitle';
+  static const auth_volunteerAvailability_errorSavingAvailability =
+      'auth.volunteerAvailability.errorSavingAvailability';
+  static const auth_volunteerAvailability_finishRegistration =
+      'auth.volunteerAvailability.finishRegistration';
   static const auth_volunteerAvailability = 'auth.volunteerAvailability';
-  static const auth_registrationCompleted_title = 'auth.registrationCompleted.title';
-  static const auth_registrationCompleted_message = 'auth.registrationCompleted.message';
-  static const auth_registrationCompleted_subtitle = 'auth.registrationCompleted.subtitle';
-  static const auth_registrationCompleted_goHome = 'auth.registrationCompleted.goHome';
-  static const auth_registrationCompleted_loginError = 'auth.registrationCompleted.loginError';
-  static const auth_registrationCompleted_iconLabel = 'auth.registrationCompleted.iconLabel';
+  static const auth_registrationCompleted_title =
+      'auth.registrationCompleted.title';
+  static const auth_registrationCompleted_message =
+      'auth.registrationCompleted.message';
+  static const auth_registrationCompleted_subtitle =
+      'auth.registrationCompleted.subtitle';
+  static const auth_registrationCompleted_goHome =
+      'auth.registrationCompleted.goHome';
+  static const auth_registrationCompleted_loginError =
+      'auth.registrationCompleted.loginError';
+  static const auth_registrationCompleted_iconLabel =
+      'auth.registrationCompleted.iconLabel';
   static const auth_registrationCompleted = 'auth.registrationCompleted';
-  static const auth_registrationCompletedRequester_title = 'auth.registrationCompletedRequester.title';
-  static const auth_registrationCompletedRequester_message = 'auth.registrationCompletedRequester.message';
-  static const auth_registrationCompletedRequester_subtitle = 'auth.registrationCompletedRequester.subtitle';
-  static const auth_registrationCompletedRequester = 'auth.registrationCompletedRequester';
-  static const auth_registrationCompletedVolunteer_title = 'auth.registrationCompletedVolunteer.title';
-  static const auth_registrationCompletedVolunteer_message = 'auth.registrationCompletedVolunteer.message';
-  static const auth_registrationCompletedVolunteer_subtitle = 'auth.registrationCompletedVolunteer.subtitle';
-  static const auth_registrationCompletedVolunteer = 'auth.registrationCompletedVolunteer';
+  static const auth_registrationCompletedRequester_title =
+      'auth.registrationCompletedRequester.title';
+  static const auth_registrationCompletedRequester_message =
+      'auth.registrationCompletedRequester.message';
+  static const auth_registrationCompletedRequester_subtitle =
+      'auth.registrationCompletedRequester.subtitle';
+  static const auth_registrationCompletedRequester =
+      'auth.registrationCompletedRequester';
+  static const auth_registrationCompletedVolunteer_title =
+      'auth.registrationCompletedVolunteer.title';
+  static const auth_registrationCompletedVolunteer_message =
+      'auth.registrationCompletedVolunteer.message';
+  static const auth_registrationCompletedVolunteer_subtitle =
+      'auth.registrationCompletedVolunteer.subtitle';
+  static const auth_registrationCompletedVolunteer =
+      'auth.registrationCompletedVolunteer';
   static const auth = 'auth';
-  static const availability_addTimeModal_title = 'availability.addTimeModal.title';
-  static const availability_addTimeModal_startTime = 'availability.addTimeModal.startTime';
-  static const availability_addTimeModal_endTime = 'availability.addTimeModal.endTime';
-  static const availability_addTimeModal_applyToAll = 'availability.addTimeModal.applyToAll';
-  static const availability_addTimeModal_cancel = 'availability.addTimeModal.cancel';
-  static const availability_addTimeModal_save = 'availability.addTimeModal.save';
-  static const availability_addTimeModal_error_invalidTimeRange = 'availability.addTimeModal.error_invalidTimeRange';
+  static const availability_addTimeModal_title =
+      'availability.addTimeModal.title';
+  static const availability_addTimeModal_startTime =
+      'availability.addTimeModal.startTime';
+  static const availability_addTimeModal_endTime =
+      'availability.addTimeModal.endTime';
+  static const availability_addTimeModal_applyToAll =
+      'availability.addTimeModal.applyToAll';
+  static const availability_addTimeModal_cancel =
+      'availability.addTimeModal.cancel';
+  static const availability_addTimeModal_save =
+      'availability.addTimeModal.save';
+  static const availability_addTimeModal_error_invalidTimeRange =
+      'availability.addTimeModal.error_invalidTimeRange';
   static const availability_addTimeModal = 'availability.addTimeModal';
-  static const availability_controller_error_minOneAvailability = 'availability.controller.error_minOneAvailability';
-  static const availability_controller_success_deleted = 'availability.controller.success_deleted';
-  static const availability_controller_error_deleteServer = 'availability.controller.error_deleteServer';
-  static const availability_controller_error_delete = 'availability.controller.error_delete';
+  static const availability_controller_error_minOneAvailability =
+      'availability.controller.error_minOneAvailability';
+  static const availability_controller_success_deleted =
+      'availability.controller.success_deleted';
+  static const availability_controller_error_deleteServer =
+      'availability.controller.error_deleteServer';
+  static const availability_controller_error_delete =
+      'availability.controller.error_delete';
   static const availability_controller = 'availability.controller';
   static const availability = 'availability';
-  static const gamification_endVideocall_title = 'gamification.endVideocall.title';
-  static const gamification_endVideocall_congrats = 'gamification.endVideocall.congrats';
-  static const gamification_endVideocall_progressInfo = 'gamification.endVideocall.progressInfo';
-  static const gamification_endVideocall_goHome = 'gamification.endVideocall.goHome';
-  static const gamification_endVideocall_report = 'gamification.endVideocall.report';
-  static const gamification_endVideocall_reportHint = 'gamification.endVideocall.reportHint';
-  static const gamification_endVideocall_error = 'gamification.endVideocall.error';
+  static const gamification_endVideocall_title =
+      'gamification.endVideocall.title';
+  static const gamification_endVideocall_congrats =
+      'gamification.endVideocall.congrats';
+  static const gamification_endVideocall_progressInfo =
+      'gamification.endVideocall.progressInfo';
+  static const gamification_endVideocall_goHome =
+      'gamification.endVideocall.goHome';
+  static const gamification_endVideocall_report =
+      'gamification.endVideocall.report';
+  static const gamification_endVideocall_reportHint =
+      'gamification.endVideocall.reportHint';
+  static const gamification_endVideocall_error =
+      'gamification.endVideocall.error';
   static const gamification_endVideocall = 'gamification.endVideocall';
-  static const gamification_insigniaProgressWidget_current = 'gamification.insigniaProgressWidget.current';
-  static const gamification_insigniaProgressWidget_next = 'gamification.insigniaProgressWidget.next';
-  static const gamification_insigniaProgressWidget = 'gamification.insigniaProgressWidget';
+  static const gamification_insigniaProgressWidget_current =
+      'gamification.insigniaProgressWidget.current';
+  static const gamification_insigniaProgressWidget_next =
+      'gamification.insigniaProgressWidget.next';
+  static const gamification_insigniaProgressWidget =
+      'gamification.insigniaProgressWidget';
   static const gamification = 'gamification';
   static const home_widget_settingsTooltip = 'home.widget.settingsTooltip';
   static const home_widget_selectSkillHint = 'home.widget.selectSkillHint';
@@ -147,195 +222,352 @@ abstract class  LocaleKeys {
   static const home_volunteer_sessionExpired = 'home.volunteer.sessionExpired';
   static const home_volunteer = 'home.volunteer';
   static const home = 'home';
-  static const notification_infoDialog_accept = 'notification.infoDialog.accept';
+  static const notification_infoDialog_accept =
+      'notification.infoDialog.accept';
   static const notification_infoDialog = 'notification.infoDialog';
-  static const notification_requestDialog_title = 'notification.requestDialog.title';
-  static const notification_requestDialog_requester = 'notification.requestDialog.requester';
-  static const notification_requestDialog_skill = 'notification.requestDialog.skill';
-  static const notification_requestDialog_accept = 'notification.requestDialog.accept';
-  static const notification_requestDialog_reject = 'notification.requestDialog.reject';
+  static const notification_requestDialog_title =
+      'notification.requestDialog.title';
+  static const notification_requestDialog_requester =
+      'notification.requestDialog.requester';
+  static const notification_requestDialog_skill =
+      'notification.requestDialog.skill';
+  static const notification_requestDialog_accept =
+      'notification.requestDialog.accept';
+  static const notification_requestDialog_reject =
+      'notification.requestDialog.reject';
   static const notification_requestDialog = 'notification.requestDialog';
-  static const notification_handler_unknownSkill = 'notification.handler.unknownSkill';
-  static const notification_handler_unknownName = 'notification.handler.unknownName';
-  static const notification_handler_unknownLastName = 'notification.handler.unknownLastName';
-  static const notification_handler_alreadyAnsweredTitle = 'notification.handler.alreadyAnsweredTitle';
-  static const notification_handler_alreadyAnsweredMessage = 'notification.handler.alreadyAnsweredMessage';
-  static const notification_handler_requestCancelledTitle = 'notification.handler.requestCancelledTitle';
-  static const notification_handler_requestCancelledMessage = 'notification.handler.requestCancelledMessage';
+  static const notification_handler_unknownSkill =
+      'notification.handler.unknownSkill';
+  static const notification_handler_unknownName =
+      'notification.handler.unknownName';
+  static const notification_handler_unknownLastName =
+      'notification.handler.unknownLastName';
+  static const notification_handler_alreadyAnsweredTitle =
+      'notification.handler.alreadyAnsweredTitle';
+  static const notification_handler_alreadyAnsweredMessage =
+      'notification.handler.alreadyAnsweredMessage';
+  static const notification_handler_requestCancelledTitle =
+      'notification.handler.requestCancelledTitle';
+  static const notification_handler_requestCancelledMessage =
+      'notification.handler.requestCancelledMessage';
   static const notification_handler = 'notification.handler';
   static const notification = 'notification';
-  static const profile_user_info_screen_app_bar_title = 'profile.user_info_screen.app_bar.title';
-  static const profile_user_info_screen_app_bar = 'profile.user_info_screen.app_bar';
-  static const profile_user_info_screen_error_loading = 'profile.user_info_screen.error.loading';
-  static const profile_user_info_screen_error_no_profile = 'profile.user_info_screen.error.no_profile';
-  static const profile_user_info_screen_error = 'profile.user_info_screen.error';
-  static const profile_user_info_screen_stats_score = 'profile.user_info_screen.stats.score';
-  static const profile_user_info_screen_stats_level = 'profile.user_info_screen.stats.level';
-  static const profile_user_info_screen_stats_assistances = 'profile.user_info_screen.stats.assistances';
-  static const profile_user_info_screen_stats = 'profile.user_info_screen.stats';
-  static const profile_user_info_screen_form_email = 'profile.user_info_screen.form.email';
-  static const profile_user_info_screen_form_phone = 'profile.user_info_screen.form.phone';
-  static const profile_user_info_screen_form_birthday = 'profile.user_info_screen.form.birthday';
-  static const profile_user_info_screen_form_birthday_picker = 'profile.user_info_screen.form.birthday_picker';
+  static const profile_user_info_screen_app_bar_title =
+      'profile.user_info_screen.app_bar.title';
+  static const profile_user_info_screen_app_bar =
+      'profile.user_info_screen.app_bar';
+  static const profile_user_info_screen_error_loading =
+      'profile.user_info_screen.error.loading';
+  static const profile_user_info_screen_error_no_profile =
+      'profile.user_info_screen.error.no_profile';
+  static const profile_user_info_screen_error =
+      'profile.user_info_screen.error';
+  static const profile_user_info_screen_stats_score =
+      'profile.user_info_screen.stats.score';
+  static const profile_user_info_screen_stats_level =
+      'profile.user_info_screen.stats.level';
+  static const profile_user_info_screen_stats_assistances =
+      'profile.user_info_screen.stats.assistances';
+  static const profile_user_info_screen_stats =
+      'profile.user_info_screen.stats';
+  static const profile_user_info_screen_form_email =
+      'profile.user_info_screen.form.email';
+  static const profile_user_info_screen_form_phone =
+      'profile.user_info_screen.form.phone';
+  static const profile_user_info_screen_form_birthday =
+      'profile.user_info_screen.form.birthday';
+  static const profile_user_info_screen_form_birthday_picker =
+      'profile.user_info_screen.form.birthday_picker';
   static const profile_user_info_screen_form = 'profile.user_info_screen.form';
-  static const profile_user_info_screen_validation_email_required = 'profile.user_info_screen.validation.email_required';
-  static const profile_user_info_screen_validation_email_invalid = 'profile.user_info_screen.validation.email_invalid';
-  static const profile_user_info_screen_validation_phone_required = 'profile.user_info_screen.validation.phone_required';
-  static const profile_user_info_screen_validation_birthday_required = 'profile.user_info_screen.validation.birthday_required';
-  static const profile_user_info_screen_validation_birthday_invalid = 'profile.user_info_screen.validation.birthday_invalid';
-  static const profile_user_info_screen_validation = 'profile.user_info_screen.validation';
+  static const profile_user_info_screen_validation_email_required =
+      'profile.user_info_screen.validation.email_required';
+  static const profile_user_info_screen_validation_email_invalid =
+      'profile.user_info_screen.validation.email_invalid';
+  static const profile_user_info_screen_validation_phone_required =
+      'profile.user_info_screen.validation.phone_required';
+  static const profile_user_info_screen_validation_birthday_required =
+      'profile.user_info_screen.validation.birthday_required';
+  static const profile_user_info_screen_validation_birthday_invalid =
+      'profile.user_info_screen.validation.birthday_invalid';
+  static const profile_user_info_screen_validation =
+      'profile.user_info_screen.validation';
   static const profile_user_info_screen = 'profile.user_info_screen';
-  static const profile_controller_error_invalidDate = 'profile.controller.error_invalidDate';
-  static const profile_controller_success_profileUpdated = 'profile.controller.success_profileUpdated';
-  static const profile_controller_error_saving = 'profile.controller.error_saving';
+  static const profile_controller_error_invalidDate =
+      'profile.controller.error_invalidDate';
+  static const profile_controller_success_profileUpdated =
+      'profile.controller.success_profileUpdated';
+  static const profile_controller_error_saving =
+      'profile.controller.error_saving';
   static const profile_controller = 'profile.controller';
   static const profile = 'profile';
   static const reports_report_screen_title = 'reports.report_screen.title';
-  static const reports_report_screen_description = 'reports.report_screen.description';
-  static const reports_report_screen_comment_hint = 'reports.report_screen.comment_hint';
-  static const reports_report_screen_submit_button = 'reports.report_screen.submit_button';
-  static const reports_report_screen_snackbar_select_reason = 'reports.report_screen.snackbar.select_reason';
-  static const reports_report_screen_snackbar_profile_not_found = 'reports.report_screen.snackbar.profile_not_found';
-  static const reports_report_screen_snackbar_success = 'reports.report_screen.snackbar.success';
-  static const reports_report_screen_snackbar_error = 'reports.report_screen.snackbar.error';
-  static const reports_report_screen_snackbar = 'reports.report_screen.snackbar';
-  static const reports_report_screen_error_loading = 'reports.report_screen.error.loading';
+  static const reports_report_screen_description =
+      'reports.report_screen.description';
+  static const reports_report_screen_comment_hint =
+      'reports.report_screen.comment_hint';
+  static const reports_report_screen_submit_button =
+      'reports.report_screen.submit_button';
+  static const reports_report_screen_snackbar_select_reason =
+      'reports.report_screen.snackbar.select_reason';
+  static const reports_report_screen_snackbar_profile_not_found =
+      'reports.report_screen.snackbar.profile_not_found';
+  static const reports_report_screen_snackbar_success =
+      'reports.report_screen.snackbar.success';
+  static const reports_report_screen_snackbar_error =
+      'reports.report_screen.snackbar.error';
+  static const reports_report_screen_snackbar =
+      'reports.report_screen.snackbar';
+  static const reports_report_screen_error_loading =
+      'reports.report_screen.error.loading';
   static const reports_report_screen_error = 'reports.report_screen.error';
   static const reports_report_screen = 'reports.report_screen';
   static const reports = 'reports';
-  static const reviews_review_controller_validation_empty_comment = 'reviews.review_controller.validation_empty_comment';
-  static const reviews_review_controller_error_submission = 'reviews.review_controller.error_submission';
+  static const reviews_review_controller_validation_empty_comment =
+      'reviews.review_controller.validation_empty_comment';
+  static const reviews_review_controller_error_submission =
+      'reviews.review_controller.error_submission';
   static const reviews_review_controller = 'reviews.review_controller';
-  static const reviews_review_screen_appbar_title = 'reviews.review_screen.appbar_title';
-  static const reviews_review_screen_form_title = 'reviews.review_screen.form_title';
-  static const reviews_review_screen_form_subtitle = 'reviews.review_screen.form_subtitle';
-  static const reviews_review_screen_form_volunteer_rating = 'reviews.review_screen.form_volunteer_rating';
-  static const reviews_review_screen_form_call_rating = 'reviews.review_screen.form_call_rating';
-  static const reviews_review_screen_form_comment_label = 'reviews.review_screen.form_comment_label';
-  static const reviews_review_screen_form_submit_button = 'reviews.review_screen.form_submit_button';
-  static const reviews_review_screen_form_report_button = 'reviews.review_screen.form_report_button';
-  static const reviews_review_screen_form_report_hint = 'reviews.review_screen.form_report_hint';
-  static const reviews_review_screen_snackbar_success = 'reviews.review_screen.snackbar_success';
+  static const reviews_review_screen_appbar_title =
+      'reviews.review_screen.appbar_title';
+  static const reviews_review_screen_form_title =
+      'reviews.review_screen.form_title';
+  static const reviews_review_screen_form_subtitle =
+      'reviews.review_screen.form_subtitle';
+  static const reviews_review_screen_form_volunteer_rating =
+      'reviews.review_screen.form_volunteer_rating';
+  static const reviews_review_screen_form_call_rating =
+      'reviews.review_screen.form_call_rating';
+  static const reviews_review_screen_form_comment_label =
+      'reviews.review_screen.form_comment_label';
+  static const reviews_review_screen_form_submit_button =
+      'reviews.review_screen.form_submit_button';
+  static const reviews_review_screen_form_report_button =
+      'reviews.review_screen.form_report_button';
+  static const reviews_review_screen_form_report_hint =
+      'reviews.review_screen.form_report_hint';
+  static const reviews_review_screen_snackbar_success =
+      'reviews.review_screen.snackbar_success';
   static const reviews_review_screen = 'reviews.review_screen';
   static const reviews = 'reviews';
   static const configurations_profile_title = 'configurations.profile.title';
-  static const configurations_profile_options_userInfo = 'configurations.profile.options.userInfo';
-  static const configurations_profile_options_skills = 'configurations.profile.options.skills';
-  static const configurations_profile_options_availability = 'configurations.profile.options.availability';
-  static const configurations_profile_options = 'configurations.profile.options';
-  static const configurations_profile_error_roleLoad = 'configurations.profile.error.roleLoad';
+  static const configurations_profile_options_userInfo =
+      'configurations.profile.options.userInfo';
+  static const configurations_profile_options_skills =
+      'configurations.profile.options.skills';
+  static const configurations_profile_options_availability =
+      'configurations.profile.options.availability';
+  static const configurations_profile_options =
+      'configurations.profile.options';
+  static const configurations_profile_error_roleLoad =
+      'configurations.profile.error.roleLoad';
   static const configurations_profile_error = 'configurations.profile.error';
   static const configurations_profile = 'configurations.profile';
   static const configurations_settings_title = 'configurations.settings.title';
-  static const configurations_settings_options_viewProfile = 'configurations.settings.options.viewProfile';
-  static const configurations_settings_options_settings = 'configurations.settings.options.settings';
-  static const configurations_settings_options_helpCenter = 'configurations.settings.options.helpCenter';
-  static const configurations_settings_options_logout = 'configurations.settings.options.logout';
-  static const configurations_settings_options = 'configurations.settings.options';
-  static const configurations_settings_dialog_logoutTitle = 'configurations.settings.dialog.logoutTitle';
-  static const configurations_settings_dialog_logoutMessage = 'configurations.settings.dialog.logoutMessage';
-  static const configurations_settings_dialog_cancel = 'configurations.settings.dialog.cancel';
-  static const configurations_settings_dialog_confirm = 'configurations.settings.dialog.confirm';
-  static const configurations_settings_dialog = 'configurations.settings.dialog';
-  static const configurations_settings_screen_title = 'configurations.settings.screen.title';
-  static const configurations_settings_screen_notifications = 'configurations.settings.screen.notifications';
-  static const configurations_settings_screen_open_system_settings = 'configurations.settings.screen.open_system_settings';
-  static const configurations_settings_screen_theme_section_title = 'configurations.settings.screen.theme.section_title';
-  static const configurations_settings_screen_theme_select_theme_button = 'configurations.settings.screen.theme.select_theme.button';
-  static const configurations_settings_screen_theme_select_theme_dialog_title = 'configurations.settings.screen.theme.select_theme.dialog.title';
-  static const configurations_settings_screen_theme_select_theme_dialog_light = 'configurations.settings.screen.theme.select_theme.dialog.light';
-  static const configurations_settings_screen_theme_select_theme_dialog_dark = 'configurations.settings.screen.theme.select_theme.dialog.dark';
-  static const configurations_settings_screen_theme_select_theme_dialog_system_default = 'configurations.settings.screen.theme.select_theme.dialog.system_default';
-  static const configurations_settings_screen_theme_select_theme_dialog = 'configurations.settings.screen.theme.select_theme.dialog';
-  static const configurations_settings_screen_theme_select_theme = 'configurations.settings.screen.theme.select_theme';
-  static const configurations_settings_screen_theme = 'configurations.settings.screen.theme';
-  static const configurations_settings_screen_general_section_title = 'configurations.settings.screen.general.section_title';
-  static const configurations_settings_screen_general_about_button = 'configurations.settings.screen.general.about.button';
-  static const configurations_settings_screen_general_about_dialog_title = 'configurations.settings.screen.general.about.dialog.title';
-  static const configurations_settings_screen_general_about_dialog_close = 'configurations.settings.screen.general.about.dialog.close';
-  static const configurations_settings_screen_general_about_dialog = 'configurations.settings.screen.general.about.dialog';
-  static const configurations_settings_screen_general_about = 'configurations.settings.screen.general.about';
-  static const configurations_settings_screen_general_select_language_button = 'configurations.settings.screen.general.select_language.button';
-  static const configurations_settings_screen_general_select_language_screen_languages_list = 'configurations.settings.screen.general.select_language.screen.languages_list';
-  static const configurations_settings_screen_general_select_language_screen_add_language = 'configurations.settings.screen.general.select_language.screen.add_language';
-  static const configurations_settings_screen_general_select_language_screen_error = 'configurations.settings.screen.general.select_language.screen.error';
-  static const configurations_settings_screen_general_select_language_screen_snackbar_deleted = 'configurations.settings.screen.general.select_language.screen.snackbar.deleted';
-  static const configurations_settings_screen_general_select_language_screen_snackbar_error = 'configurations.settings.screen.general.select_language.screen.snackbar.error';
-  static const configurations_settings_screen_general_select_language_screen_snackbar_added = 'configurations.settings.screen.general.select_language.screen.snackbar.added';
-  static const configurations_settings_screen_general_select_language_screen_snackbar = 'configurations.settings.screen.general.select_language.screen.snackbar';
-  static const configurations_settings_screen_general_select_language_screen_dialog_title = 'configurations.settings.screen.general.select_language.screen.dialog.title';
-  static const configurations_settings_screen_general_select_language_screen_dialog_no_languages = 'configurations.settings.screen.general.select_language.screen.dialog.no_languages';
-  static const configurations_settings_screen_general_select_language_screen_dialog_label = 'configurations.settings.screen.general.select_language.screen.dialog.label';
-  static const configurations_settings_screen_general_select_language_screen_dialog_cancel = 'configurations.settings.screen.general.select_language.screen.dialog.cancel';
-  static const configurations_settings_screen_general_select_language_screen_dialog_accept = 'configurations.settings.screen.general.select_language.screen.dialog.accept';
-  static const configurations_settings_screen_general_select_language_screen_dialog = 'configurations.settings.screen.general.select_language.screen.dialog';
-  static const configurations_settings_screen_general_select_language_screen = 'configurations.settings.screen.general.select_language.screen';
-  static const configurations_settings_screen_general_select_language = 'configurations.settings.screen.general.select_language';
-  static const configurations_settings_screen_general = 'configurations.settings.screen.general';
-  static const configurations_settings_screen = 'configurations.settings.screen';
-  static const configurations_settings_help_center_title = 'configurations.settings.help_center.title';
-  static const configurations_settings_help_center_help_faq_n1 = 'configurations.settings.help_center.help_faq.n1';
-  static const configurations_settings_help_center_help_faq_n2 = 'configurations.settings.help_center.help_faq.n2';
-  static const configurations_settings_help_center_help_faq_n3 = 'configurations.settings.help_center.help_faq.n3';
-  static const configurations_settings_help_center_help_faq_n4 = 'configurations.settings.help_center.help_faq.n4';
-  static const configurations_settings_help_center_help_faq_n5 = 'configurations.settings.help_center.help_faq.n5';
-  static const configurations_settings_help_center_help_faq_n6 = 'configurations.settings.help_center.help_faq.n6';
-  static const configurations_settings_help_center_help_faq = 'configurations.settings.help_center.help_faq';
-  static const configurations_settings_help_center_help_faq_answer_n1 = 'configurations.settings.help_center.help_faq_answer.n1';
-  static const configurations_settings_help_center_help_faq_answer_n2 = 'configurations.settings.help_center.help_faq_answer.n2';
-  static const configurations_settings_help_center_help_faq_answer_n3 = 'configurations.settings.help_center.help_faq_answer.n3';
-  static const configurations_settings_help_center_help_faq_answer_n4 = 'configurations.settings.help_center.help_faq_answer.n4';
-  static const configurations_settings_help_center_help_faq_answer_n5 = 'configurations.settings.help_center.help_faq_answer.n5';
-  static const configurations_settings_help_center_help_faq_answer_n6 = 'configurations.settings.help_center.help_faq_answer.n6';
-  static const configurations_settings_help_center_help_faq_answer = 'configurations.settings.help_center.help_faq_answer';
-  static const configurations_settings_help_center = 'configurations.settings.help_center';
+  static const configurations_settings_options_viewProfile =
+      'configurations.settings.options.viewProfile';
+  static const configurations_settings_options_settings =
+      'configurations.settings.options.settings';
+  static const configurations_settings_options_helpCenter =
+      'configurations.settings.options.helpCenter';
+  static const configurations_settings_options_logout =
+      'configurations.settings.options.logout';
+  static const configurations_settings_options =
+      'configurations.settings.options';
+  static const configurations_settings_dialog_logoutTitle =
+      'configurations.settings.dialog.logoutTitle';
+  static const configurations_settings_dialog_logoutMessage =
+      'configurations.settings.dialog.logoutMessage';
+  static const configurations_settings_dialog_cancel =
+      'configurations.settings.dialog.cancel';
+  static const configurations_settings_dialog_confirm =
+      'configurations.settings.dialog.confirm';
+  static const configurations_settings_dialog =
+      'configurations.settings.dialog';
+  static const configurations_settings_screen_title =
+      'configurations.settings.screen.title';
+  static const configurations_settings_screen_notifications =
+      'configurations.settings.screen.notifications';
+  static const configurations_settings_screen_open_system_settings =
+      'configurations.settings.screen.open_system_settings';
+  static const configurations_settings_screen_theme_section_title =
+      'configurations.settings.screen.theme.section_title';
+  static const configurations_settings_screen_theme_select_theme_button =
+      'configurations.settings.screen.theme.select_theme.button';
+  static const configurations_settings_screen_theme_select_theme_dialog_title =
+      'configurations.settings.screen.theme.select_theme.dialog.title';
+  static const configurations_settings_screen_theme_select_theme_dialog_light =
+      'configurations.settings.screen.theme.select_theme.dialog.light';
+  static const configurations_settings_screen_theme_select_theme_dialog_dark =
+      'configurations.settings.screen.theme.select_theme.dialog.dark';
+  static const configurations_settings_screen_theme_select_theme_dialog_system_default =
+      'configurations.settings.screen.theme.select_theme.dialog.system_default';
+  static const configurations_settings_screen_theme_select_theme_dialog =
+      'configurations.settings.screen.theme.select_theme.dialog';
+  static const configurations_settings_screen_theme_select_theme =
+      'configurations.settings.screen.theme.select_theme';
+  static const configurations_settings_screen_theme =
+      'configurations.settings.screen.theme';
+  static const configurations_settings_screen_general_section_title =
+      'configurations.settings.screen.general.section_title';
+  static const configurations_settings_screen_general_about_button =
+      'configurations.settings.screen.general.about.button';
+  static const configurations_settings_screen_general_about_dialog_title =
+      'configurations.settings.screen.general.about.dialog.title';
+  static const configurations_settings_screen_general_about_dialog_close =
+      'configurations.settings.screen.general.about.dialog.close';
+  static const configurations_settings_screen_general_about_dialog =
+      'configurations.settings.screen.general.about.dialog';
+  static const configurations_settings_screen_general_about =
+      'configurations.settings.screen.general.about';
+  static const configurations_settings_screen_general_select_language_button =
+      'configurations.settings.screen.general.select_language.button';
+  static const configurations_settings_screen_general_select_language_screen_languages_list =
+      'configurations.settings.screen.general.select_language.screen.languages_list';
+  static const configurations_settings_screen_general_select_language_screen_add_language =
+      'configurations.settings.screen.general.select_language.screen.add_language';
+  static const configurations_settings_screen_general_select_language_screen_error =
+      'configurations.settings.screen.general.select_language.screen.error';
+  static const configurations_settings_screen_general_select_language_screen_snackbar_deleted =
+      'configurations.settings.screen.general.select_language.screen.snackbar.deleted';
+  static const configurations_settings_screen_general_select_language_screen_snackbar_error =
+      'configurations.settings.screen.general.select_language.screen.snackbar.error';
+  static const configurations_settings_screen_general_select_language_screen_snackbar_added =
+      'configurations.settings.screen.general.select_language.screen.snackbar.added';
+  static const configurations_settings_screen_general_select_language_screen_snackbar =
+      'configurations.settings.screen.general.select_language.screen.snackbar';
+  static const configurations_settings_screen_general_select_language_screen_dialog_title =
+      'configurations.settings.screen.general.select_language.screen.dialog.title';
+  static const configurations_settings_screen_general_select_language_screen_dialog_no_languages =
+      'configurations.settings.screen.general.select_language.screen.dialog.no_languages';
+  static const configurations_settings_screen_general_select_language_screen_dialog_label =
+      'configurations.settings.screen.general.select_language.screen.dialog.label';
+  static const configurations_settings_screen_general_select_language_screen_dialog_cancel =
+      'configurations.settings.screen.general.select_language.screen.dialog.cancel';
+  static const configurations_settings_screen_general_select_language_screen_dialog_accept =
+      'configurations.settings.screen.general.select_language.screen.dialog.accept';
+  static const configurations_settings_screen_general_select_language_screen_dialog =
+      'configurations.settings.screen.general.select_language.screen.dialog';
+  static const configurations_settings_screen_general_select_language_screen =
+      'configurations.settings.screen.general.select_language.screen';
+  static const configurations_settings_screen_general_select_language =
+      'configurations.settings.screen.general.select_language';
+  static const configurations_settings_screen_general =
+      'configurations.settings.screen.general';
+  static const configurations_settings_screen =
+      'configurations.settings.screen';
+  static const configurations_settings_help_center_title =
+      'configurations.settings.help_center.title';
+  static const configurations_settings_help_center_help_faq_n1 =
+      'configurations.settings.help_center.help_faq.n1';
+  static const configurations_settings_help_center_help_faq_n2 =
+      'configurations.settings.help_center.help_faq.n2';
+  static const configurations_settings_help_center_help_faq_n3 =
+      'configurations.settings.help_center.help_faq.n3';
+  static const configurations_settings_help_center_help_faq_n4 =
+      'configurations.settings.help_center.help_faq.n4';
+  static const configurations_settings_help_center_help_faq_n5 =
+      'configurations.settings.help_center.help_faq.n5';
+  static const configurations_settings_help_center_help_faq_n6 =
+      'configurations.settings.help_center.help_faq.n6';
+  static const configurations_settings_help_center_help_faq =
+      'configurations.settings.help_center.help_faq';
+  static const configurations_settings_help_center_help_faq_answer_n1 =
+      'configurations.settings.help_center.help_faq_answer.n1';
+  static const configurations_settings_help_center_help_faq_answer_n2 =
+      'configurations.settings.help_center.help_faq_answer.n2';
+  static const configurations_settings_help_center_help_faq_answer_n3 =
+      'configurations.settings.help_center.help_faq_answer.n3';
+  static const configurations_settings_help_center_help_faq_answer_n4 =
+      'configurations.settings.help_center.help_faq_answer.n4';
+  static const configurations_settings_help_center_help_faq_answer_n5 =
+      'configurations.settings.help_center.help_faq_answer.n5';
+  static const configurations_settings_help_center_help_faq_answer_n6 =
+      'configurations.settings.help_center.help_faq_answer.n6';
+  static const configurations_settings_help_center_help_faq_answer =
+      'configurations.settings.help_center.help_faq_answer';
+  static const configurations_settings_help_center =
+      'configurations.settings.help_center';
   static const configurations_settings = 'configurations.settings';
   static const configurations = 'configurations';
   static const skills_userSkills_title = 'skills.userSkills.title';
-  static const skills_userSkills_dialog_confirmDeletionTitle = 'skills.userSkills.dialog.confirmDeletionTitle';
-  static const skills_userSkills_dialog_confirmDeletionMessage = 'skills.userSkills.dialog.confirmDeletionMessage';
-  static const skills_userSkills_dialog_cancel = 'skills.userSkills.dialog.cancel';
-  static const skills_userSkills_dialog_confirm = 'skills.userSkills.dialog.confirm';
+  static const skills_userSkills_dialog_confirmDeletionTitle =
+      'skills.userSkills.dialog.confirmDeletionTitle';
+  static const skills_userSkills_dialog_confirmDeletionMessage =
+      'skills.userSkills.dialog.confirmDeletionMessage';
+  static const skills_userSkills_dialog_cancel =
+      'skills.userSkills.dialog.cancel';
+  static const skills_userSkills_dialog_confirm =
+      'skills.userSkills.dialog.confirm';
   static const skills_userSkills_dialog = 'skills.userSkills.dialog';
-  static const skills_userSkills_snackbar_keepAtLeastOneSkill = 'skills.userSkills.snackbar.keepAtLeastOneSkill';
+  static const skills_userSkills_snackbar_keepAtLeastOneSkill =
+      'skills.userSkills.snackbar.keepAtLeastOneSkill';
   static const skills_userSkills_snackbar = 'skills.userSkills.snackbar';
-  static const skills_userSkills_label_selectSkill = 'skills.userSkills.label.selectSkill';
+  static const skills_userSkills_label_selectSkill =
+      'skills.userSkills.label.selectSkill';
   static const skills_userSkills_label = 'skills.userSkills.label';
-  static const skills_userSkills_button_addSkill = 'skills.userSkills.button.addSkill';
+  static const skills_userSkills_button_addSkill =
+      'skills.userSkills.button.addSkill';
   static const skills_userSkills_button = 'skills.userSkills.button';
   static const skills_userSkills = 'skills.userSkills';
   static const skills = 'skills';
-  static const videocalls_connectingScreen_appBarTitle = 'videocalls.connectingScreen.appBarTitle';
-  static const videocalls_connectingScreen_establishingConnection = 'videocalls.connectingScreen.establishingConnection';
-  static const videocalls_connectingScreen_searchingAssistance = 'videocalls.connectingScreen.searchingAssistance';
-  static const videocalls_connectingScreen_cancel = 'videocalls.connectingScreen.cancel';
-  static const videocalls_connectingScreen_cancelRequestTitle = 'videocalls.connectingScreen.cancelRequestTitle';
-  static const videocalls_connectingScreen_cancelRequestQuestion = 'videocalls.connectingScreen.cancelRequestQuestion';
-  static const videocalls_connectingScreen_no = 'videocalls.connectingScreen.no';
-  static const videocalls_connectingScreen_yesCancel = 'videocalls.connectingScreen.yesCancel';
-  static const videocalls_connectingScreen_cancelFailed = 'videocalls.connectingScreen.cancelFailed';
-  static const videocalls_connectingScreen_tips_tip1 = 'videocalls.connectingScreen.tips.tip1';
-  static const videocalls_connectingScreen_tips_tip2 = 'videocalls.connectingScreen.tips.tip2';
-  static const videocalls_connectingScreen_tips_tip3 = 'videocalls.connectingScreen.tips.tip3';
-  static const videocalls_connectingScreen_tips_tip4 = 'videocalls.connectingScreen.tips.tip4';
-  static const videocalls_connectingScreen_tips_tip5 = 'videocalls.connectingScreen.tips.tip5';
-  static const videocalls_connectingScreen_tips = 'videocalls.connectingScreen.tips';
+  static const videocalls_connectingScreen_appBarTitle =
+      'videocalls.connectingScreen.appBarTitle';
+  static const videocalls_connectingScreen_establishingConnection =
+      'videocalls.connectingScreen.establishingConnection';
+  static const videocalls_connectingScreen_searchingAssistance =
+      'videocalls.connectingScreen.searchingAssistance';
+  static const videocalls_connectingScreen_cancel =
+      'videocalls.connectingScreen.cancel';
+  static const videocalls_connectingScreen_cancelRequestTitle =
+      'videocalls.connectingScreen.cancelRequestTitle';
+  static const videocalls_connectingScreen_cancelRequestQuestion =
+      'videocalls.connectingScreen.cancelRequestQuestion';
+  static const videocalls_connectingScreen_no =
+      'videocalls.connectingScreen.no';
+  static const videocalls_connectingScreen_yesCancel =
+      'videocalls.connectingScreen.yesCancel';
+  static const videocalls_connectingScreen_cancelFailed =
+      'videocalls.connectingScreen.cancelFailed';
+  static const videocalls_connectingScreen_tips_tip1 =
+      'videocalls.connectingScreen.tips.tip1';
+  static const videocalls_connectingScreen_tips_tip2 =
+      'videocalls.connectingScreen.tips.tip2';
+  static const videocalls_connectingScreen_tips_tip3 =
+      'videocalls.connectingScreen.tips.tip3';
+  static const videocalls_connectingScreen_tips_tip4 =
+      'videocalls.connectingScreen.tips.tip4';
+  static const videocalls_connectingScreen_tips_tip5 =
+      'videocalls.connectingScreen.tips.tip5';
+  static const videocalls_connectingScreen_tips =
+      'videocalls.connectingScreen.tips';
   static const videocalls_connectingScreen = 'videocalls.connectingScreen';
-  static const videocalls_videocall_screen_title = 'videocalls.videocall_screen.title';
-  static const videocalls_videocall_screen_error_init_call = 'videocalls.videocall_screen.error_init_call';
-  static const videocalls_videocall_screen_confirm_end_call_title = 'videocalls.videocall_screen.confirm_end_call_title';
-  static const videocalls_videocall_screen_confirm_end_call_content = 'videocalls.videocall_screen.confirm_end_call_content';
-  static const videocalls_videocall_screen_waiting_other_user = 'videocalls.videocall_screen.waiting_other_user';
-  static const videocalls_videocall_screen_remote_camera_off = 'videocalls.videocall_screen.remote_camera_off';
-  static const videocalls_videocall_screen_cancel = 'videocalls.videocall_screen.cancel';
-  static const videocalls_videocall_screen_end_call = 'videocalls.videocall_screen.end_call';
+  static const videocalls_videocall_screen_title =
+      'videocalls.videocall_screen.title';
+  static const videocalls_videocall_screen_error_init_call =
+      'videocalls.videocall_screen.error_init_call';
+  static const videocalls_videocall_screen_confirm_end_call_title =
+      'videocalls.videocall_screen.confirm_end_call_title';
+  static const videocalls_videocall_screen_confirm_end_call_content =
+      'videocalls.videocall_screen.confirm_end_call_content';
+  static const videocalls_videocall_screen_waiting_other_user =
+      'videocalls.videocall_screen.waiting_other_user';
+  static const videocalls_videocall_screen_remote_camera_off =
+      'videocalls.videocall_screen.remote_camera_off';
+  static const videocalls_videocall_screen_cancel =
+      'videocalls.videocall_screen.cancel';
+  static const videocalls_videocall_screen_end_call =
+      'videocalls.videocall_screen.end_call';
   static const videocalls_videocall_screen = 'videocalls.videocall_screen';
   static const videocalls = 'videocalls';
   static const requests_history_title = 'requests.history.title';
   static const requests_history_empty = 'requests.history.empty';
   static const requests_history_error = 'requests.history.error';
   static const requests_history_retry = 'requests.history.retry';
+  static const requests_history_request_of = 'requests.history.request_of';
+  static const requests_history_attended = 'requests.history.attended';
+  static const requests_history_cancelled = 'requests.history.cancelled';
+  static const requests_history_date = 'requests.history.date';
+  static const requests_history_duration = 'requests.history.duration';
   static const requests_history = 'requests.history';
   static const requests = 'requests';
-
 }

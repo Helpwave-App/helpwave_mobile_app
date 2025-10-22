@@ -115,6 +115,7 @@ class HomeWidget extends ConsumerWidget {
                     ),
                   ),
                   const SizedBox(height: 40),
+                  // ignore: deprecated_member_use
                   DropdownButtonFormField<Skill>(
                     value: state.selectedSkill,
                     isExpanded: true,

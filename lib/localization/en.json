@@ -410,7 +410,12 @@
             "title": "Request History",
             "empty": "You don't have any requests in your history yet.",
             "error": "Failed to load data.",
-            "retry": "Retry"
+            "retry": "Retry",
+            "request_of": "Request of",
+            "attended": "Attended",
+            "cancelled": "Cancelled",
+            "date": "Date",
+            "duration": "Duration"
         }
     }
 }

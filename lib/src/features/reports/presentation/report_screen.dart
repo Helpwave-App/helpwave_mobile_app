@@ -28,6 +28,7 @@ class _VideocallReportScreenState extends ConsumerState<ReportScreen> {
 
   Future<void> _submitReport() async {
     if (_selectedReasonId == null) {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content: Text(
@@ -45,14 +46,17 @@ class _VideocallReportScreenState extends ConsumerState<ReportScreen> {
     try {
       await ref.read(reportSubmissionProvider(report).future);
 
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
             content:
                 Text(LocaleKeys.reports_report_screen_snackbar_success.tr())),
       );
 
+      if (!context.mounted) return;
       Navigator.pushReplacementNamed(context, AppRouter.loadingRoute);
     } catch (e) {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -106,6 +110,7 @@ class _VideocallReportScreenState extends ConsumerState<ReportScreen> {
                             style: const TextStyle(fontSize: 16),
                           ),
                           const SizedBox(height: 24),
+                          // ignore: deprecated_member_use
                           ...types.map((type) => RadioListTile<int>(
                                 value: type.id,
                                 groupValue: _selectedReasonId,

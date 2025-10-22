@@ -56,6 +56,7 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                             .configurations_settings_screen_general_select_language_screen_dialog_label
                             .tr(),
                       ),
+                      // ignore: deprecated_member_use
                       value: selectedLanguage,
                     );
                   },
@@ -80,6 +81,7 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                         await ref
                             .read(userLanguagesProvider.notifier)
                             .addLanguage(selectedLanguage!);
+                        if (!context.mounted) return;
                         Navigator.of(context).pop(true);
                       }
                     : null,

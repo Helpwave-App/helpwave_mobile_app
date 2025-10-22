@@ -20,26 +20,19 @@ class _TermsAndConditionsScreenState extends State<TermsAndConditionsScreen> {
   UserType userType = UserType.requester;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final route = ModalRoute.of(context);
+    if (route != null && route.settings.arguments is Map<String, dynamic>) {
+      final args = route.settings.arguments as Map<String, dynamic>;
+      final typeString = args['userType'] as String?;
 
-    Future.microtask(() {
-      final route = ModalRoute.of(context);
-      if (route != null && route.settings.arguments is Map<String, dynamic>) {
-        final args = route.settings.arguments as Map<String, dynamic>;
-        final typeString = args['userType'] as String?;
-
-        if (typeString == 'volunteer') {
-          setState(() {
-            userType = UserType.volunteer;
-          });
-        } else {
-          setState(() {
-            userType = UserType.requester;
-          });
-        }
+      if (typeString == 'volunteer') {
+        userType = UserType.volunteer;
+      } else {
+        userType = UserType.requester;
       }
-    });
+    }
   }
 
   void _onCheckboxChanged(bool? value) {

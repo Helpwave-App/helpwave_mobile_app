@@ -95,6 +95,7 @@ class SettingsOptionsScreen extends ConsumerWidget {
                 );
 
                 if (confirm == true) {
+                  if (!context.mounted) return;
                   showDialog(
                     context: context,
                     barrierDismissible: false,

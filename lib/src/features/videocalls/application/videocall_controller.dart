@@ -54,6 +54,7 @@ class VideoCallController {
       );
 
       if (isPermanentlyDenied) {
+        if (!context.mounted) return;
         throw Exception(
             'El permiso para $name ha sido denegado permanentemente.');
       }

@@ -57,7 +57,7 @@ void showAboutDialog(BuildContext context) {
               subtitle: Text(
                 data['username'],
                 style: TextStyle(
-                  color: theme.colorScheme.onSurface.withOpacity(0.75),
+                  color: theme.colorScheme.onSurface.withAlpha(191),
                 ),
               ),
               onTap: () async {

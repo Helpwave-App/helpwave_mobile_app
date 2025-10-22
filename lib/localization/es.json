@@ -410,7 +410,12 @@
             "title": "Historial de solicitudes",
             "empty": "Aún no tienes solicitudes en tu historial.",
             "error": "La carga de datos falló.",
-            "retry": "Volver a intentar"
+            "retry": "Volver a intentar",
+            "request_of": "Solicitud de",
+            "attended": "Atendida",
+            "cancelled": "Cancelada",
+            "date": "Fecha",
+            "duration": "Duración"
         }
     }               
 }

@@ -9,6 +9,7 @@ Future<bool> checkAndHandlePermanentDenial({
   final status = await permission.status;
 
   if (status.isPermanentlyDenied) {
+    if (!context.mounted) return true;
     await showDialog(
       context: context,
       builder: (_) => AlertDialog(

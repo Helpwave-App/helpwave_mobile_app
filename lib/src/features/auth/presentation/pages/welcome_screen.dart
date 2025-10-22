@@ -57,6 +57,7 @@ class WelcomeScreen extends StatelessWidget {
       BuildContext context, String nextRoute) async {
     final hasPermissions = await _checkAllPermissions();
 
+    if (!context.mounted) return;
     if (hasPermissions) {
       // Si ya tiene todos los permisos, ir directamente a la ruta destino
       Navigator.of(context).push(
@@ -67,6 +68,7 @@ class WelcomeScreen extends StatelessWidget {
         ),
       );
     } else {
+      if (!context.mounted) return;
       // Si no tiene permisos, ir a la pantalla de permisos
       Navigator.of(context).push(
         animatedRouteTo(
@@ -118,7 +120,7 @@ class WelcomeScreen extends StatelessWidget {
                       LocaleKeys.auth_welcome_subtitle.tr(),
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        color: theme.surface.withOpacity(0.9),
+                        color: theme.surface.withAlpha(230),
                         fontSize: 16,
                       ),
                     ),

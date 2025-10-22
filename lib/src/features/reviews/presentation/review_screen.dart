@@ -126,6 +126,7 @@ class _ReviewForm extends ConsumerWidget {
                           .submitReview(idVideocall);
 
                       if (error == null) {
+                        if (!context.mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(LocaleKeys
@@ -133,9 +134,11 @@ class _ReviewForm extends ConsumerWidget {
                                 .tr()),
                           ),
                         );
+                        if (!context.mounted) return;
                         Navigator.pushReplacementNamed(
                             context, AppRouter.loadingRoute);
                       } else {
+                        if (!context.mounted) return;
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text(error)),
                         );

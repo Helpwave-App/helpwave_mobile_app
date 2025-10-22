@@ -97,7 +97,6 @@ Route animatedRouteTo(BuildContext context, String routeName,
           );
 
         case RouteTransitionType.fadeUp:
-        default:
           return FadeTransition(
             opacity: curved,
             child: SlideTransition(

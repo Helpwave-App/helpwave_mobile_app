@@ -90,6 +90,7 @@ class HomeController extends StateNotifier<HomeState> {
           errorMessage =
               'Error inesperado [${e.statusCode}]. Intenta nuevamente.';
       }
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(errorMessage),
@@ -97,6 +98,7 @@ class HomeController extends StateNotifier<HomeState> {
         ),
       );
     } catch (_) {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: const Text(

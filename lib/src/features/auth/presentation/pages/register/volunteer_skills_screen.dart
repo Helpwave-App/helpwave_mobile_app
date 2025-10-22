@@ -188,12 +188,12 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                     padding: const EdgeInsets.all(16),
                                     decoration: BoxDecoration(
                                       color: isSelected
-                                          ? theme.tertiary.withOpacity(0.2)
-                                          : theme.surface.withOpacity(0.1),
+                                          ? theme.tertiary.withAlpha(51)
+                                          : theme.surface.withAlpha(26),
                                       border: Border.all(
                                         color: isSelected
                                             ? theme.tertiary
-                                            : theme.primary.withOpacity(0.3),
+                                            : theme.primary.withAlpha(77),
                                         width: 2,
                                       ),
                                       borderRadius: BorderRadius.circular(12),
@@ -208,7 +208,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                               : Icons.circle_outlined,
                                           color: isSelected
                                               ? theme.tertiary
-                                              : theme.primary.withOpacity(0.6),
+                                              : theme.primary.withAlpha(153),
                                         ),
                                         const SizedBox(width: 12),
                                         Expanded(
@@ -227,7 +227,7 @@ class _VolunteerSkillsScreenState extends ConsumerState<VolunteerSkillsScreen> {
                                                 .auth_volunteerSkills_mandatory
                                                 .tr()),
                                             backgroundColor:
-                                                theme.primary.withOpacity(0.2),
+                                                theme.primary.withAlpha(51),
                                             labelStyle: TextStyle(
                                               color: theme.primary,
                                               fontWeight: FontWeight.w500,
