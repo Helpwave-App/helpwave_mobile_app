@@ -15,5 +15,5 @@ flutter pub run easy_localization:generate -S lib/localization -O lib/localizati
 If you encounter a dependency conflict with the `intl` package, you may need to update it first:
 
 ```shell
-flutter pub add intl:^0.20.2
+flutter pub add intl:^0.19.0
 ```
