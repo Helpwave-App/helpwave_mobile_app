@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../routing/app_router.dart';
+import '../../requests/application/request_history_controller.dart';
 
 class SettingsOptionsScreen extends ConsumerWidget {
   const SettingsOptionsScreen({super.key});
@@ -158,6 +159,9 @@ void clearUserSession(WidgetRef ref) {
   // Gamificación
   ref.invalidate(levelProgressControllerProvider);
   ref.invalidate(levelCacheControllerProvider);
+
+  // Solicitudes
+  ref.invalidate(requestHistoryControllerProvider);
 
   // Reportes y feedback
   ref.invalidate(reviewControllerProvider);

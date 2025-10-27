@@ -148,7 +148,7 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                     const SizedBox(height: 16),
                     // ignore: deprecated_member_use
                     DropdownButtonFormField<Map<String, dynamic>>(
-                      value: selected,
+                      initialValue: selected,
                       items: availableSkills
                           .map(
                             (skill) => DropdownMenuItem<Map<String, dynamic>>(

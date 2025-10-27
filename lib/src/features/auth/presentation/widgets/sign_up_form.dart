@@ -283,7 +283,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                       data: (languages) {
                         // ignore: deprecated_member_use
                         return DropdownButtonFormField<int>(
-                          value: _selectedLanguageId,
+                          initialValue: _selectedLanguageId,
                           decoration: InputDecoration(
                             labelText:
                                 tr(LocaleKeys.auth_signUpForm_fields_language),
