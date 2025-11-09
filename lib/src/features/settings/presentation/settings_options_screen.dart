@@ -56,7 +56,9 @@ class SettingsOptionsScreen extends ConsumerWidget {
             ),
             ListTile(
               leading: const Icon(Icons.history),
-              title: const Text('Historial de solicitudes'),
+              title: Text(LocaleKeys
+                  .configurations_settings_options_requestHistory
+                  .tr()),
               onTap: () {
                 Navigator.of(context).pushNamed(AppRouter.requestHistoryRoute);
               },

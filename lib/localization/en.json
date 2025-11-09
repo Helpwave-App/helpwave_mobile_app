@@ -26,7 +26,13 @@
             "snackbar": "You must accept all permissions to continue.",
             "notification": "notifications",
             "microphone": "microphone",
-            "camera": "camera"
+            "camera": "camera",
+            "dialog": {
+                "title": "Permission required",
+                "content": "The permission for {} has been permanently denied. Please enable it manually from the app settings.",
+                "cancel": "Cancel",
+                "openSettings": "Open settings"
+            }
         },
         "userType": {
             "title": "User Type",
@@ -107,7 +113,7 @@
             "message": "Your account has been successfully created. You can now start using the app.",
             "subtitle": "Thank you for joining HelpWave.",
             "goHome": "Go to home",
-            "loginError": "Login failed: {}",
+            "loginError": "Login failed: {}\n",
             "iconLabel": "Registration success icon"
         },
         "registrationCompletedRequester": {
@@ -122,6 +128,32 @@
         }
     },
     "availability": {
+        "screen": {
+            "title": "Availability",
+            "tooltip": {
+                "reload": "Reload Availability",
+                "edit": "Edit",
+                "add": "Add schedule"
+            },
+            "error": "Error: {}\n",
+            "success": {
+                "saved": "Availability saved"
+            },
+            "error_saving": "Error saving availability",
+            "noAvailability": "No availability registered",
+            "dialog": {
+                "confirmDelete": {
+                    "title": "Confirm deletion",
+                    "content": "Do you want to delete the schedule \"{}\"?",
+                    "cancel": "Cancel",
+                    "delete": "Delete"
+                }
+            },
+            "error_deleting": "Error deleting: {}\n",
+            "button": {
+                "save": "Save availability"
+            }
+        },
         "addTimeModal": {
             "title": "Add schedule for",
             "startTime": "Start time",
@@ -154,6 +186,20 @@
         }
     },
     "home": {
+        "controller": {
+            "errors": {
+                "rateLimit": "You have made a request recently. Please wait a moment before trying again.",
+                "invalidData": "Invalid data: check your profile or selected skill.",
+                "unauthorized": "Unauthorized. Please log in again.",
+                "unexpected": "Unexpected error [{}]. Please try again.",
+                "unknown": "An unexpected error occurred. Please try again later."
+            },
+            "permissions": {
+                "camera": "the camera",
+                "microphone": "the microphone",
+                "notification": "the notifications"
+            }
+        },
         "widget": {
             "settingsTooltip": "Settings",
             "selectSkillHint": "Select a skill"
@@ -169,6 +215,11 @@
             "subtitle": "Ready to provide help today?",
             "buttonText": "Accept\nrequest",
             "sessionExpired": "Session expired. Please log in again."
+        }
+    },
+    "language": {
+        "dialog": {
+            "error": "Error: {}\n"
         }
     },
     "notification": {
@@ -246,7 +297,8 @@
     "reviews": {
         "review_controller": {
             "validation_empty_comment": "Comment cannot be empty.",
-            "error_submission": "Error submitting review"
+            "error_submission": "Error submitting review",
+            "validation_rating_required": "You must provide a rating"
         },
         "review_screen": {
             "appbar_title": "Video Call Review",
@@ -259,6 +311,12 @@
             "form_report_button": "Report incident",
             "form_report_hint": "Had any issues? You can report them here.",
             "snackbar_success": "Review submitted successfully"
+        }
+    },
+    "routing": {
+        "errors": {
+            "missingArguments": "Missing arguments",
+            "routeNotFound": "Route not found"
         }
     },
     "configurations": {
@@ -279,7 +337,8 @@
                 "viewProfile": "View Profile",
                 "settings": "Settings",
                 "helpCenter": "Help Center",
-                "logout": "Log out"
+                "logout": "Log out",
+                "requestHistory": "Request History"
             },
             "dialog": {
                 "logoutTitle": "Confirm logout",
@@ -320,7 +379,7 @@
                             "error":"Error loading progress: {{error}}",
                             "snackbar":{
                                 "deleted": "Language successfully removed.",
-                                "error": "An error occurred: {}",
+                                "error": "An error occurred: {}\n",
                                 "added": "Language successfully added."
                             },
                             "dialog":{
@@ -396,13 +455,13 @@
         },
         "videocall_screen": {
             "title": "Video Call",
-            "error_init_call": "Error starting video call: {}",
+            "error_init_call": "Error starting video call: {}\n",
             "confirm_end_call_title": "Do you want to end the video call?",
             "confirm_end_call_content": "This action will end the call and you won't be able to resume it.",
             "waiting_other_user": "Waiting for another user...",
             "remote_camera_off": "Remote camera is off",
             "cancel": "Cancel",
-                    "end_call": "End Call"
+            "end_call": "End Call"
         }
     },
     "requests": {
@@ -419,4 +478,3 @@
         }
     }
 }
-            

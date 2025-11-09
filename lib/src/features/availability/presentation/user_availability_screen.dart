@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../common/utils/constants/week_days.dart';
 import '../application/user_availability_controller.dart';
@@ -25,8 +27,8 @@ class UserAvailabilityScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Disponibilidad',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        title: Text(LocaleKeys.availability_screen_title.tr(),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         backgroundColor: theme.colorScheme.secondary,
         foregroundColor: theme.colorScheme.onSecondary,
         elevation: 0,
@@ -42,13 +44,17 @@ class UserAvailabilityScreenState
                 isEditing = !isEditing;
               });
             },
-            tooltip: isEditing ? 'Recargar Disponibilidad' : 'Editar',
+            tooltip: isEditing
+                ? LocaleKeys.availability_screen_tooltip_reload.tr()
+                : LocaleKeys.availability_screen_tooltip_edit.tr(),
           ),
         ],
       ),
       body: availabilityState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(
+            child: Text(LocaleKeys.availability_screen_error
+                .tr(args: [e.toString()]))),
         data: (availability) => Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -82,14 +88,21 @@ class UserAvailabilityScreenState
                             ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(
                                 content: Text(success
-                                    ? 'Disponibilidad guardada'
-                                    : 'Error al guardar disponibilidad'),
+                                    ? LocaleKeys.availability_screen_success_saved
+                                        .tr()
+                                    : LocaleKeys.availability_screen_error_saving
+                                        .tr()),
                               ),
                             );
-                            if (success) isEditing = false;
+                            if (success) {
+                              setState(() {
+                                isEditing = false;
+                              });
+                            }
                           }
                         : null,
-                    child: const Text('Guardar disponibilidad'),
+                    child: Text(
+                        LocaleKeys.availability_screen_button_save.tr()),
                   ),
                 ),
               ]
@@ -158,7 +171,7 @@ class UserAvailabilityScreenState
                         },
                       );
                     },
-                    tooltip: 'Agregar horario',
+                    tooltip: LocaleKeys.availability_screen_tooltip_add.tr(),
                   ),
               ],
             ),
@@ -166,7 +179,7 @@ class UserAvailabilityScreenState
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  'No se ha registrado disponibilidad',
+                  LocaleKeys.availability_screen_noAvailability.tr(),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: Colors.grey,
                   ),
@@ -191,20 +204,30 @@ class UserAvailabilityScreenState
                               final confirm = await showDialog<bool>(
                                 context: context,
                                 builder: (ctx) => AlertDialog(
-                                  title: const Text('Confirmar eliminación'),
+                                  title: Text(LocaleKeys
+                                      .availability_screen_dialog_confirmDelete_title
+                                      .tr()),
                                   content: Text(
-                                    '¿Deseas eliminar el horario "${slot.formatStart(context)} - ${slot.formatEnd(context)}"?',
+                                    LocaleKeys
+                                        .availability_screen_dialog_confirmDelete_content
+                                        .tr(args: [
+                                      '${slot.formatStart(context)} - ${slot.formatEnd(context)}'
+                                    ]),
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.of(ctx).pop(false),
-                                      child: const Text('Cancelar'),
+                                      child: Text(LocaleKeys
+                                          .availability_screen_dialog_confirmDelete_cancel
+                                          .tr()),
                                     ),
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.of(ctx).pop(true),
-                                      child: const Text('Eliminar'),
+                                      child: Text(LocaleKeys
+                                          .availability_screen_dialog_confirmDelete_delete
+                                          .tr()),
                                     ),
                                   ],
                                 ),
@@ -218,7 +241,9 @@ class UserAvailabilityScreenState
                                   if (!mounted) return;
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                        content: Text('Error al eliminar: $e')),
+                                        content: Text(LocaleKeys
+                                            .availability_screen_error_deleting
+                                            .tr(args: [e.toString()]))),
                                   );
                                 }
                               }

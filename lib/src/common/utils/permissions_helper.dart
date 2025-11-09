@@ -1,5 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import '../../../../localization/codegen_loader.g.dart';
 
 Future<bool> checkAndHandlePermanentDenial({
   required BuildContext context,
@@ -13,22 +16,21 @@ Future<bool> checkAndHandlePermanentDenial({
     await showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Permiso requerido'),
+        title: Text(LocaleKeys.auth_permissions_dialog_title.tr()),
         content: Text(
-          'El permiso para $permissionName ha sido denegado permanentemente. '
-          'Por favor, habilítalo manualmente desde la configuración de la app.',
+          LocaleKeys.auth_permissions_dialog_content.tr(args: [permissionName]),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text(LocaleKeys.auth_permissions_dialog_cancel.tr()),
           ),
           TextButton(
             onPressed: () {
               openAppSettings();
               Navigator.pop(context);
             },
-            child: const Text('Abrir configuración'),
+            child: Text(LocaleKeys.auth_permissions_dialog_openSettings.tr()),
           ),
         ],
       ),
@@ -38,5 +40,3 @@ Future<bool> checkAndHandlePermanentDenial({
 
   return false;
 }
-
-

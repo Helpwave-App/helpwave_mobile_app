@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/exceptions/api_exception.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../common/utils/permissions_helper.dart';
@@ -35,9 +37,12 @@ class HomeController extends StateNotifier<HomeState> {
 
     try {
       final permissions = <Permission, String>{
-        Permission.camera: 'la cámara',
-        Permission.microphone: 'el micrófono',
-        Permission.notification: 'las notificaciones',
+        Permission.camera:
+            LocaleKeys.home_controller_permissions_camera.tr(),
+        Permission.microphone:
+            LocaleKeys.home_controller_permissions_microphone.tr(),
+        Permission.notification:
+            LocaleKeys.home_controller_permissions_notification.tr(),
       };
 
       for (final entry in permissions.entries) {
@@ -75,20 +80,18 @@ class HomeController extends StateNotifier<HomeState> {
       String errorMessage;
       switch (e.statusCode) {
         case 429:
-          errorMessage =
-              'Ya realizaste una solicitud recientemente. Espera un momento antes de volver a intentarlo.';
+          errorMessage = LocaleKeys.home_controller_errors_rateLimit.tr();
           break;
         case 400:
-          errorMessage =
-              'Datos inválidos: verifica tu perfil o habilidad seleccionada.';
+          errorMessage = LocaleKeys.home_controller_errors_invalidData.tr();
           break;
         case 401:
         case 403:
-          errorMessage = 'No autorizado. Por favor, inicia sesión nuevamente.';
+          errorMessage = LocaleKeys.home_controller_errors_unauthorized.tr();
           break;
         default:
-          errorMessage =
-              'Error inesperado [${e.statusCode}]. Intenta nuevamente.';
+          errorMessage = LocaleKeys.home_controller_errors_unexpected
+              .tr(args: [e.statusCode.toString()]);
       }
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
@@ -101,8 +104,7 @@ class HomeController extends StateNotifier<HomeState> {
       if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: const Text(
-              'Ocurrió un error inesperado. Intenta nuevamente más tarde.'),
+          content: Text(LocaleKeys.home_controller_errors_unknown.tr()),
           backgroundColor: Theme.of(context).colorScheme.error,
         ),
       );

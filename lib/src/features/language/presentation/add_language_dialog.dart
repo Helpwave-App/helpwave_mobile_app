@@ -62,7 +62,8 @@ Future<bool?> showAddLanguageDialog(BuildContext context, WidgetRef ref) {
                   },
                   loading: () =>
                       const Center(child: CircularProgressIndicator()),
-                  error: (e, _) => Text('Error: $e'),
+                  error: (e, _) =>
+                      Text(LocaleKeys.language_dialog_error.tr(args: [e.toString()])),
                 );
               },
             ),

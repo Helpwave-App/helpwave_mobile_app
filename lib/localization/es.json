@@ -26,7 +26,13 @@
             "snackbar": "Debes aceptar todos los permisos para continuar.",
             "notification": "notificaciones",
             "microphone": "micrófono",
-            "camera": "cámara"
+            "camera": "cámara",
+            "dialog": {
+                "title": "Permiso requerido",
+                "content": "El permiso para {} ha sido denegado permanentemente. Por favor, habilítalo manualmente desde la configuración de la app.",
+                "cancel": "Cancelar",
+                "openSettings": "Abrir configuración"
+            }
         },
         "userType": {
             "title": "Tipo de usuario",
@@ -122,6 +128,32 @@
         }
     },
     "availability": {
+        "screen": {
+            "title": "Disponibilidad",
+            "tooltip": {
+                "reload": "Recargar Disponibilidad",
+                "edit": "Editar",
+                "add": "Agregar horario"
+            },
+            "error": "Error: {}",
+            "success": {
+                "saved": "Disponibilidad guardada"
+            },
+            "error_saving": "Error al guardar disponibilidad",
+            "noAvailability": "No se ha registrado disponibilidad",
+            "dialog": {
+                "confirmDelete": {
+                    "title": "Confirmar eliminación",
+                    "content": "¿Deseas eliminar el horario \"{}\"?",
+                    "cancel": "Cancelar",
+                    "delete": "Eliminar"
+                }
+            },
+            "error_deleting": "Error al eliminar: {}",
+            "button": {
+                "save": "Guardar disponibilidad"
+            }
+        },
         "addTimeModal": {
             "title": "Agregar horario para",
             "startTime": "Hora de inicio",
@@ -154,6 +186,20 @@
         }
     },
     "home": {
+        "controller": {
+            "errors": {
+                "rateLimit": "Ya realizaste una solicitud recientemente. Espera un momento antes de volver a intentarlo.",
+                "invalidData": "Datos inválidos: verifica tu perfil o habilidad seleccionada.",
+                "unauthorized": "No autorizado. Por favor, inicia sesión nuevamente.",
+                "unexpected": "Error inesperado [{}]. Intenta nuevamente.",
+                "unknown": "Ocurrió un error inesperado. Intenta nuevamente más tarde."
+            },
+            "permissions": {
+                "camera": "la cámara",
+                "microphone": "el micrófono",
+                "notification": "las notificaciones"
+            }
+        },
         "widget": {
             "settingsTooltip": "Configuración",
             "selectSkillHint": "Selecciona una habilidad"
@@ -169,6 +215,11 @@
             "subtitle": "¿Listo para brindar ayuda hoy?",
             "buttonText": "Aceptar\nsolicitud",
             "sessionExpired": "Sesión expirada. Por favor, inicia sesión nuevamente."
+        }
+    },
+    "language": {
+        "dialog": {
+            "error": "Error: {}"
         }
     },
     "notification": {
@@ -246,7 +297,8 @@
     "reviews": {
         "review_controller": {
             "validation_empty_comment": "El comentario no puede estar vacío.",
-            "error_submission": "Error al enviar la reseña"
+            "error_submission": "Error al enviar la reseña",
+            "validation_rating_required": "Debe indicar una calificación"
         },
         "review_screen": {
             "appbar_title": "Evaluación de videollamada",
@@ -259,6 +311,12 @@
             "form_report_button": "Reportar incidente",
             "form_report_hint": "¿Tuviste algún problema? Puedes reportarlo aquí.",
             "snackbar_success": "Evaluación enviada correctamente"
+        }
+    },
+    "routing": {
+        "errors": {
+            "missingArguments": "Faltan argumentos",
+            "routeNotFound": "Ruta no encontrada"
         }
     },
     "configurations": {
@@ -279,7 +337,8 @@
                 "viewProfile": "Ver perfil",
                 "settings": "Configuración",
                 "helpCenter": "Centro de ayuda",
-                "logout": "Cerrar sesión"
+                "logout": "Cerrar sesión",
+                "requestHistory": "Historial de solicitudes"
             },
             "dialog": {
                 "logoutTitle": "Confirmar cierre de sesión",
@@ -402,7 +461,7 @@
             "waiting_other_user": "Esperando al otro usuario...",
             "remote_camera_off": "La cámara del otro usuario está apagada",
             "cancel": "Cancelar",
-                    "end_call": "Finalizar llamada"
+            "end_call": "Finalizar llamada"
         }
     },
     "requests": {
@@ -417,6 +476,5 @@
             "date": "Fecha",
             "duration": "Duración"
         }
-    }               
+    }
 }
-            

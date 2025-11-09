@@ -27,7 +27,8 @@ class ReviewController extends ChangeNotifier {
 
   Future<String?> submitReview(int idVideocall) async {
     if (volunteerRating == 0 || callRating == 0) {
-      return 'Debe indicar una calificación';
+      return LocaleKeys.reviews_review_controller_validation_rating_required
+          .tr();
     }
     isSubmitting = true;
     notifyListeners();
@@ -53,7 +54,7 @@ class ReviewController extends ChangeNotifier {
     } catch (e) {
       isSubmitting = false;
       notifyListeners();
-      return '${LocaleKeys.reviews_review_controller_error_submission.tr()}: $e';
+      return LocaleKeys.reviews_review_controller_error_submission.tr();
     }
   }
 }
