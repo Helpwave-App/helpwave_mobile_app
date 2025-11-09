@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../common/utils/constants/week_days.dart';
 import '../application/user_availability_controller.dart';
@@ -10,10 +12,10 @@ class UserAvailabilityScreen extends ConsumerStatefulWidget {
   const UserAvailabilityScreen({super.key});
 
   @override
-  _UserAvailabilityScreenState createState() => _UserAvailabilityScreenState();
+  UserAvailabilityScreenState createState() => UserAvailabilityScreenState();
 }
 
-class _UserAvailabilityScreenState
+class UserAvailabilityScreenState
     extends ConsumerState<UserAvailabilityScreen> {
   bool isEditing = false;
 
@@ -25,8 +27,8 @@ class _UserAvailabilityScreenState
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Disponibilidad',
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+        title: Text(LocaleKeys.availability_screen_title.tr(),
+            style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
         backgroundColor: theme.colorScheme.secondary,
         foregroundColor: theme.colorScheme.onSecondary,
         elevation: 0,
@@ -42,13 +44,17 @@ class _UserAvailabilityScreenState
                 isEditing = !isEditing;
               });
             },
-            tooltip: isEditing ? 'Recargar Disponibilidad' : 'Editar',
+            tooltip: isEditing
+                ? LocaleKeys.availability_screen_tooltip_reload.tr()
+                : LocaleKeys.availability_screen_tooltip_edit.tr(),
           ),
         ],
       ),
       body: availabilityState.when(
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Error: $e')),
+        error: (e, _) => Center(
+            child: Text(LocaleKeys.availability_screen_error
+                .tr(args: [e.toString()]))),
         data: (availability) => Padding(
           padding: const EdgeInsets.all(16),
           child: Column(
@@ -78,19 +84,25 @@ class _UserAvailabilityScreenState
                     onPressed: availability.values.any((s) => s.isNotEmpty)
                         ? () async {
                             final success = await controller.saveAvailability();
-                            if (context.mounted) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(
-                                  content: Text(success
-                                      ? 'Disponibilidad guardada'
-                                      : 'Error al guardar disponibilidad'),
-                                ),
-                              );
-                              if (success) isEditing = false;
+                            if (!mounted) return;
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content: Text(success
+                                    ? LocaleKeys.availability_screen_success_saved
+                                        .tr()
+                                    : LocaleKeys.availability_screen_error_saving
+                                        .tr()),
+                              ),
+                            );
+                            if (success) {
+                              setState(() {
+                                isEditing = false;
+                              });
                             }
                           }
                         : null,
-                    child: const Text('Guardar disponibilidad'),
+                    child: Text(
+                        LocaleKeys.availability_screen_button_save.tr()),
                   ),
                 ),
               ]
@@ -159,7 +171,7 @@ class _UserAvailabilityScreenState
                         },
                       );
                     },
-                    tooltip: 'Agregar horario',
+                    tooltip: LocaleKeys.availability_screen_tooltip_add.tr(),
                   ),
               ],
             ),
@@ -167,7 +179,7 @@ class _UserAvailabilityScreenState
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Text(
-                  'No se ha registrado disponibilidad',
+                  LocaleKeys.availability_screen_noAvailability.tr(),
                   style: theme.textTheme.bodyMedium?.copyWith(
                     color: Colors.grey,
                   ),
@@ -177,7 +189,7 @@ class _UserAvailabilityScreenState
               ...slots.map(
                 (slot) {
                   final slotColor = slot.id == null
-                      ? theme.colorScheme.onTertiary.withOpacity(0.5)
+                      ? theme.colorScheme.onTertiary.withAlpha(128)
                       : theme.colorScheme.primary;
 
                   return ListTile(
@@ -192,20 +204,30 @@ class _UserAvailabilityScreenState
                               final confirm = await showDialog<bool>(
                                 context: context,
                                 builder: (ctx) => AlertDialog(
-                                  title: const Text('Confirmar eliminación'),
+                                  title: Text(LocaleKeys
+                                      .availability_screen_dialog_confirmDelete_title
+                                      .tr()),
                                   content: Text(
-                                    '¿Deseas eliminar el horario "${slot.formatStart(context)} - ${slot.formatEnd(context)}"?',
+                                    LocaleKeys
+                                        .availability_screen_dialog_confirmDelete_content
+                                        .tr(args: [
+                                      '${slot.formatStart(context)} - ${slot.formatEnd(context)}'
+                                    ]),
                                   ),
                                   actions: [
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.of(ctx).pop(false),
-                                      child: const Text('Cancelar'),
+                                      child: Text(LocaleKeys
+                                          .availability_screen_dialog_confirmDelete_cancel
+                                          .tr()),
                                     ),
                                     TextButton(
                                       onPressed: () =>
                                           Navigator.of(ctx).pop(true),
-                                      child: const Text('Eliminar'),
+                                      child: Text(LocaleKeys
+                                          .availability_screen_dialog_confirmDelete_delete
+                                          .tr()),
                                     ),
                                   ],
                                 ),
@@ -216,13 +238,13 @@ class _UserAvailabilityScreenState
                                   await controller.removeTimeSlot(
                                       context, day, slot);
                                 } catch (e) {
-                                  if (context.mounted) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content:
-                                              Text('Error al eliminar: $e')),
-                                    );
-                                  }
+                                  if (!mounted) return;
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(LocaleKeys
+                                            .availability_screen_error_deleting
+                                            .tr(args: [e.toString()]))),
+                                  );
                                 }
                               }
                             },

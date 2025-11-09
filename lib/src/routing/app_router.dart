@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:helpwave_mobile_app/src/features/reports/presentation/report_screen.dart';
 import 'package:helpwave_mobile_app/src/features/reviews/presentation/review_screen.dart';
 import 'package:helpwave_mobile_app/src/features/availability/presentation/user_availability_screen.dart';
 import 'package:helpwave_mobile_app/src/features/settings/presentation/pages/help_center_screen.dart';
 
+import '../../../../localization/codegen_loader.g.dart';
 import '../common/pages/loading_screen.dart';
 import '../features/auth/presentation/pages/permissions_screen.dart';
 import '../features/auth/presentation/pages/welcome_screen.dart';
@@ -27,6 +29,7 @@ import '../features/settings/presentation/settings_options_screen.dart';
 import '../features/settings/presentation/pages/profile_screen.dart';
 import '../features/profile/presentation/user_info_screen.dart';
 import '../features/skills/presentation/user_skills_screen.dart';
+import '../features/requests/presentation/request_history_screen.dart';
 
 class AppRouter {
   static const String loadingRoute = '/';
@@ -58,6 +61,7 @@ class AppRouter {
   static const String userInfoRoute = '/user-info';
   static const String skillsRoute = '/skills';
   static const String availabilityRoute = '/availability';
+  static const String requestHistoryRoute = '/request-history';
 
   static Widget? getPageFromRoute(String routeName,
       {Map<String, dynamic>? args}) {
@@ -123,7 +127,10 @@ class AppRouter {
             !args.containsKey('channel') ||
             !args.containsKey('fullname') ||
             !args.containsKey('idVideocall')) {
-          return const Scaffold(body: Center(child: Text('Faltan argumentos')));
+          return Scaffold(
+              body: Center(
+                  child: Text(
+                      LocaleKeys.routing_errors_missingArguments.tr())));
         }
         return VideoCallScreen(
           token: args['token'],
@@ -134,19 +141,28 @@ class AppRouter {
 
       case reviewRoute:
         if (args == null || !args.containsKey('idVideocall')) {
-          return const Scaffold(body: Center(child: Text('Faltan argumentos')));
+          return Scaffold(
+              body: Center(
+                  child: Text(
+                      LocaleKeys.routing_errors_missingArguments.tr())));
         }
         return ReviewScreen(idVideocall: args['idVideocall'] as int? ?? 0);
 
       case endVideocallRoute:
         if (args == null || !args.containsKey('idVideocall')) {
-          return const Scaffold(body: Center(child: Text('Faltan argumentos')));
+          return Scaffold(
+              body: Center(
+                  child: Text(
+                      LocaleKeys.routing_errors_missingArguments.tr())));
         }
         return EndVideocallScreen(idVideocall: args['idVideocall'] as int);
 
       case reportRoute:
         if (args == null || !args.containsKey('idVideocall')) {
-          return const Scaffold(body: Center(child: Text('Faltan argumentos')));
+          return Scaffold(
+              body: Center(
+                  child: Text(
+                      LocaleKeys.routing_errors_missingArguments.tr())));
         }
         return ReportScreen(idVideocall: args['idVideocall'] as int);
 
@@ -175,7 +191,9 @@ class AppRouter {
         return const UserAvailabilityScreen();
 
       default:
-        return const Scaffold(body: Center(child: Text('Ruta no encontrada')));
+        return Scaffold(
+            body: Center(
+                child: Text(LocaleKeys.routing_errors_routeNotFound.tr())));
     }
   }
 
@@ -306,10 +324,14 @@ class AppRouter {
         return MaterialPageRoute(
             builder: (_) => const UserAvailabilityScreen());
 
+      case requestHistoryRoute:
+        return MaterialPageRoute(builder: (_) => const RequestHistoryScreen());
+
       default:
         return MaterialPageRoute(
-          builder: (_) => const Scaffold(
-            body: Center(child: Text('Ruta no encontrada')),
+          builder: (_) => Scaffold(
+            body: Center(
+                child: Text(LocaleKeys.routing_errors_routeNotFound.tr())),
           ),
         );
     }

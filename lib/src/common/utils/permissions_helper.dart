@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'dart:io';
+
+import '../../../../localization/codegen_loader.g.dart';
 
 Future<bool> checkAndHandlePermanentDenial({
   required BuildContext context,
@@ -10,25 +12,25 @@ Future<bool> checkAndHandlePermanentDenial({
   final status = await permission.status;
 
   if (status.isPermanentlyDenied) {
+    if (!context.mounted) return true;
     await showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        title: const Text('Permiso requerido'),
+        title: Text(LocaleKeys.auth_permissions_dialog_title.tr()),
         content: Text(
-          'El permiso para $permissionName ha sido denegado permanentemente. '
-          'Por favor, habilítalo manualmente desde la configuración de la app.',
+          LocaleKeys.auth_permissions_dialog_content.tr(args: [permissionName]),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: const Text('Cancelar'),
+            child: Text(LocaleKeys.auth_permissions_dialog_cancel.tr()),
           ),
           TextButton(
             onPressed: () {
               openAppSettings();
               Navigator.pop(context);
             },
-            child: const Text('Abrir configuración'),
+            child: Text(LocaleKeys.auth_permissions_dialog_openSettings.tr()),
           ),
         ],
       ),
@@ -37,50 +39,4 @@ Future<bool> checkAndHandlePermanentDenial({
   }
 
   return false;
-}
-
-Future<bool> checkAndRequestEssentialPermissions(BuildContext context) async {
-  try {
-    final permissions = <Permission, String>{
-      Permission.camera: 'la cámara',
-      Permission.microphone: 'el micrófono',
-    };
-
-    for (final entry in permissions.entries) {
-      final permission = entry.key;
-      final name = entry.value;
-
-      if (await checkAndHandlePermanentDenial(
-        context: context,
-        permission: permission,
-        permissionName: name,
-      )) return false;
-
-      if (!await permission.isGranted) {
-        final result = await permission.request();
-        if (!result.isGranted) return false;
-      }
-    }
-
-    if (Platform.isAndroid || Platform.isIOS) {
-      const notificationPermission = Permission.notification;
-      const notificationName = 'las notificaciones';
-
-      if (await checkAndHandlePermanentDenial(
-        context: context,
-        permission: notificationPermission,
-        permissionName: notificationName,
-      )) return false;
-
-      if (!await notificationPermission.isGranted) {
-        final result = await notificationPermission.request();
-        if (!result.isGranted) return false;
-      }
-    }
-
-    return true;
-  } catch (e) {
-    debugPrint('Error verificando permisos: $e');
-    return false;
-  }
 }

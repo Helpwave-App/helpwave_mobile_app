@@ -4,7 +4,7 @@ import '../../../common/utils/constants/providers.dart';
 import '../data/level_service.dart';
 import '../domain/level_progress.dart';
 
-class LevelProgressController extends AsyncNotifier<LevelProgressModel> {
+class LevelProgressController extends AutoDisposeAsyncNotifier<LevelProgressModel> {
   late final LevelService _service;
 
   @override

@@ -37,6 +37,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
     final permissionsAccepted = prefs.getBool('permissions_accepted') ?? false;
 
     if (permissionsAccepted) {
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         animatedRouteTo(
           context,
@@ -68,6 +69,7 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
 
       await FcmConfig.initializeFCM(requestPermission: false);
 
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(
         animatedRouteTo(
           context,
@@ -81,20 +83,24 @@ class _PermissionsScreenState extends State<PermissionsScreen> {
         permission: Permission.notification,
         permissionName: LocaleKeys.auth_permissions_notification.tr(),
       );
+      if (!mounted) return;
 
       final handledMicrophone = await checkAndHandlePermanentDenial(
         context: context,
         permission: Permission.microphone,
         permissionName: LocaleKeys.auth_permissions_microphone.tr(),
       );
+      if (!mounted) return;
 
       final handledCamera = await checkAndHandlePermanentDenial(
         context: context,
         permission: Permission.camera,
         permissionName: LocaleKeys.auth_permissions_camera.tr(),
       );
+      if (!mounted) return;
 
       if (!handledNotification && !handledMicrophone && !handledCamera) {
+        if (!mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(LocaleKeys.auth_permissions_snackbar.tr()),

@@ -93,11 +93,21 @@ class AuthService {
     final deviceTokenService = DeviceTokenService();
     final url = Uri.parse('$baseUrl/authenticate');
 
+    if (kDebugMode) {
+      print('→ POST $url');
+      print('→ Body: ${json.encode(request.toJson())}');
+    }
+
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json'},
       body: json.encode(request.toJson()),
     );
+
+    if (kDebugMode) {
+      print('← Status: ${response.statusCode}');
+      print('← Response: ${response.body}');
+    }
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
@@ -122,8 +132,10 @@ class AuthService {
       setupFCMTokenRefresh();
 
       return authResponse;
+    } else if (response.statusCode == 401) {
+      throw Exception('401: Credenciales inválidas');
     } else {
-      throw Exception('Credenciales inválidas');
+      throw Exception('Error ${response.statusCode}: ${response.body}');
     }
   }
 

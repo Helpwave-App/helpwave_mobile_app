@@ -87,6 +87,7 @@ class UserAvailabilityController
             .read(availabilityServiceProvider)
             .deleteAvailability(slot.id!);
         if (success) {
+          if (!context.mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content:
@@ -99,6 +100,7 @@ class UserAvailabilityController
         }
       } catch (e, st) {
         state = AsyncValue.error(e, st);
+        if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               content: Text(

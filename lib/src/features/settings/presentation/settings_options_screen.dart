@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import '../../../routing/app_router.dart';
+import '../../requests/application/request_history_controller.dart';
 
 class SettingsOptionsScreen extends ConsumerWidget {
   const SettingsOptionsScreen({super.key});
@@ -53,6 +54,15 @@ class SettingsOptionsScreen extends ConsumerWidget {
                 Navigator.of(context).pushNamed(AppRouter.helpCenterRoute);
               },
             ),
+            ListTile(
+              leading: const Icon(Icons.history),
+              title: Text(LocaleKeys
+                  .configurations_settings_options_requestHistory
+                  .tr()),
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRouter.requestHistoryRoute);
+              },
+            ),
             const Spacer(),
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
@@ -88,6 +98,7 @@ class SettingsOptionsScreen extends ConsumerWidget {
                 );
 
                 if (confirm == true) {
+                  if (!context.mounted) return;
                   showDialog(
                     context: context,
                     barrierDismissible: false,
@@ -150,6 +161,9 @@ void clearUserSession(WidgetRef ref) {
   // Gamificación
   ref.invalidate(levelProgressControllerProvider);
   ref.invalidate(levelCacheControllerProvider);
+
+  // Solicitudes
+  ref.invalidate(requestHistoryControllerProvider);
 
   // Reportes y feedback
   ref.invalidate(reviewControllerProvider);

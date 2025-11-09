@@ -68,6 +68,7 @@ class UserInfoController extends StateNotifier<bool> {
 
     state = false;
 
+    if (!context.mounted) return;
     if (result) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -78,6 +79,7 @@ class UserInfoController extends StateNotifier<bool> {
       ref.invalidate(profileFutureProvider);
       onSuccess?.call();
     } else {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(tr(LocaleKeys.profile_controller_error_saving))),
       );

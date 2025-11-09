@@ -58,6 +58,10 @@ void _handleNotification(
         await _handleVideocallEndNotification(data, navigatorKey);
         break;
 
+      case 'request_cancelled':
+        await _handleRequestCancelledNotification(data, navigatorKey);
+        break;
+
       default:
         print('🔔 Tipo de notificación desconocido: $type');
     }
@@ -67,6 +71,32 @@ void _handleNotification(
     _isProcessingNotification = false;
     print('🔥 Procesamiento de notificación completado');
   }
+}
+
+Future<void> _handleRequestCancelledNotification(
+  Map<String, dynamic> data,
+  GlobalKey<NavigatorState> navigatorKey,
+) async {
+  print('🚫 Procesando cancelación de solicitud...');
+
+  final context = navigatorKey.currentContext;
+  if (context == null) {
+    print('❌ No context available for request cancelled');
+    return;
+  }
+
+  // Close the request dialog if it's open
+  if (DialogManager.isDialogShown) {
+    Navigator.of(context).pop();
+  }
+
+  await showDialog(
+    context: context,
+    builder: (_) => InfoDialog(
+      title: tr(LocaleKeys.notification_handler_requestCancelledTitle),
+      message: tr(LocaleKeys.notification_handler_requestCancelledMessage),
+    ),
+  );
 }
 
 Future<void> _handleHelpRequestNotification(

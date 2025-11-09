@@ -141,6 +141,8 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
               tr(LocaleKeys.auth_signUpForm_errors_unknownError);
           setState(() {});
         }
+
+        _showError(result?['error']);
         return;
       }
 
@@ -166,10 +168,12 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           tr(LocaleKeys.auth_signUpForm_fields_password));
 
       if (usernameIndex == -1 || passwordIndex == -1) {
+        if (!mounted) return;
         _showError(tr(LocaleKeys.auth_signUpForm_errors_internalError));
         return;
       }
 
+      if (!mounted) return;
       Navigator.of(context).pushReplacement(animatedRouteTo(
         context,
         widget.nextRoute,
@@ -277,8 +281,9 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
                     }),
                     languagesAsync.when(
                       data: (languages) {
+                        // ignore: deprecated_member_use
                         return DropdownButtonFormField<int>(
-                          value: _selectedLanguageId,
+                          initialValue: _selectedLanguageId,
                           decoration: InputDecoration(
                             labelText:
                                 tr(LocaleKeys.auth_signUpForm_fields_language),

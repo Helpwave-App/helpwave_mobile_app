@@ -36,7 +36,7 @@ jobs:
       - name: 🧰 Instalar Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: "3.24.5"
+          flutter-version: "3.35.6"
 
       - name: 📦 Instalar dependencias
         run: flutter pub get
@@ -72,10 +72,14 @@ jobs:
         run: |
           VERSION=${{ steps.extract_version.outputs.version }}
           echo "Buscando changelog para la versión $VERSION..."
-          BODY=$(awk "/^## \\[$VERSION\\]/,/^## \\[/" CHANGELOG.md | tail -n +2 | head -n -1)
+          BODY=$(awk "/^## \\ionization$VERSION\]/,/^## \[/" CHANGELOG.md | tail -n +2 | head -n -1)
           echo "changelog<<EOF" >> $GITHUB_OUTPUT
           echo "$BODY" >> $GITHUB_OUTPUT
           echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: 📝 Escribir changelog en archivo de notas de versión
+        run: |
+          echo "${{ steps.extract_changelog.outputs.changelog }}" > release_notes.txt
 
       - name: 🏷️ Crear Git Tag
         run: |
@@ -91,10 +95,6 @@ jobs:
 
       - name: 🛠️ Dar permisos de ejecución al script de despliegue
         run: chmod +x ./scripts/deploy.sh
-
-      - name: 📝 Escribir notas de versión en archivo temporal
-        run: |
-          echo "${{ github.event.inputs.release_notes || 'Distribución automática desde rama release' }}" > release_notes.txt
 
       - name: 🚀 Distribuir con Firebase App Distribution
         env:

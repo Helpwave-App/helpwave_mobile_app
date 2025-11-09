@@ -1,4 +1,27 @@
-## [1.0.1] - 2025-06-19  🔖 Fixed language issue
+# Changelog
+
+## [1.0.3] - 2025-11-09
+
+### Fixed
+- Fix state issue in end videocall screen
+- Correct state management in request history view
+
+### Added
+- Apply localization to several files
+
+### Changed
+- Update Flutter version in GitHub Actions workflow
+
+## [1.0.2] - 2025-10-21 - Added request history view
+
+Se implementó la nueva vista de historial de solicitudes, con interfaces diferenciadas para solicitantes y voluntarios.
+
+- Los solicitantes pueden visualizar el estado de sus solicitudes (Atendidas o Canceladas).
+- Los voluntarios pueden consultar el historial de solicitudes que han atendido.
+
+Asimismo, se realizaron actualizaciones de Flutter y de las versiones de dependencias del proyecto, asegurando compatibilidad y mejoras de rendimiento en el entorno de desarrollo.
+
+## [1.0.1] - 2025-06-19  - Fixed language issue
 
 - Se resolvieron errores en la carga y visualización de textos traducidos en la aplicación.
 - Ajustes en el archivo de localización para mejorar la coherencia y precisión de las traducciones en español.

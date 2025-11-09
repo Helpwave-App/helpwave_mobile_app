@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-import '../../../../../localization/codegen_loader.g.dart';
+import '../../../../localization/codegen_loader.g.dart';
 import '../../../common/utils/constants/providers.dart';
 import 'add_language_dialog.dart';
 
@@ -59,6 +59,7 @@ class UserLanguagesScreen extends ConsumerWidget {
                                 await ref
                                     .read(userLanguagesProvider.notifier)
                                     .removeLanguage(languageName);
+                                if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -69,6 +70,7 @@ class UserLanguagesScreen extends ConsumerWidget {
                                   ),
                                 );
                               } catch (e) {
+                                if (!context.mounted) return;
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(
@@ -90,6 +92,7 @@ class UserLanguagesScreen extends ConsumerWidget {
               ElevatedButton.icon(
                 onPressed: () async {
                   final result = await showAddLanguageDialog(context, ref);
+                  if (!context.mounted) return;
                   if (result == true) {
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(

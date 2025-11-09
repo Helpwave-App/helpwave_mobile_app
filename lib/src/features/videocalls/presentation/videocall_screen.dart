@@ -54,17 +54,16 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     debugPrint('🔐 Token: ${widget.token}');
     debugPrint('📡 Channel: ${widget.channel}');
     try {
-      await _controller.initialize();
+      await _controller.initialize(context);
     } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-              content: Text(LocaleKeys
-                  .videocalls_videocall_screen_error_init_call
-                  .tr(args: [e.toString()]))),
-        );
-        Navigator.of(context).pop();
-      }
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text(LocaleKeys
+                .videocalls_videocall_screen_error_init_call
+                .tr(args: [e.toString()]))),
+      );
+      Navigator.of(context).pop();
       return;
     }
     if (mounted) {
@@ -268,12 +267,11 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
                       if (confirmed == true) {
                         await _controller.leave();
 
-                        if (mounted) {
-                          Navigator.of(context).pushReplacementNamed(
-                            AppRouter.reviewRoute,
-                            arguments: widget.idVideocall,
-                          );
-                        }
+                        if (!mounted) return;
+                        Navigator.of(context).pushReplacementNamed(
+                          AppRouter.reviewRoute,
+                          arguments: widget.idVideocall,
+                        );
                       }
                     },
                     heroTag: 'hangup',

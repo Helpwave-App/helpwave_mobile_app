@@ -42,6 +42,7 @@ void showThemeSelectorDialog(BuildContext context) {
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: ThemeMode.values.map((mode) {
+                // ignore: deprecated_member_use
                 return RadioListTile<ThemeMode>(
                   title: Text(
                     getThemeModeLabel(mode),

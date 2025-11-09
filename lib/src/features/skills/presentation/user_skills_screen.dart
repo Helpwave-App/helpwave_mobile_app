@@ -114,6 +114,7 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                                                 await controller.removeSkill(
                                                     skill['idSkillProfile']);
                                               } catch (e) {
+                                                if (!context.mounted) return;
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(
                                                   SnackBar(
@@ -123,6 +124,7 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                                               }
                                             }
                                           } else {
+                                            if (!context.mounted) return;
                                             ScaffoldMessenger.of(context)
                                                 .showSnackBar(
                                               SnackBar(
@@ -144,8 +146,9 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                   }),
                   if (isEditing) ...[
                     const SizedBox(height: 16),
+                    // ignore: deprecated_member_use
                     DropdownButtonFormField<Map<String, dynamic>>(
-                      value: selected,
+                      initialValue: selected,
                       items: availableSkills
                           .map(
                             (skill) => DropdownMenuItem<Map<String, dynamic>>(
@@ -167,6 +170,7 @@ class _UserSkillsScreenState extends ConsumerState<UserSkillsScreen> {
                         try {
                           await controller.addSelectedSkill();
                         } catch (e) {
+                          if (!context.mounted) return;
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text(e.toString())),
                           );
