@@ -141,7 +141,7 @@ final levelServiceProvider = Provider<LevelService>((ref) {
 });
 
 final levelProgressControllerProvider =
-    AsyncNotifierProvider<LevelProgressController, LevelProgressModel>(
+    AsyncNotifierProvider.autoDispose<LevelProgressController, LevelProgressModel>(
   () => LevelProgressController(),
 );
 
